@@ -103,7 +103,7 @@ button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}
 
 /* ========== APP ========== */
 #app{display:flex;min-height:100vh}
-aside{width:15rem;flex:none;background:var(--side);color:#e2e8f0;padding:1rem;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;overflow-y:auto;transition:width .25s ease}
+aside{width:17rem;flex:none;background:var(--side);color:#e2e8f0;padding:1rem;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;overflow-y:auto;transition:width .25s ease}
 aside .logo{width:2.5rem;height:2.5rem;object-fit:contain;margin-bottom:.25rem}
 aside .nm{font-weight:800;color:#fff;white-space:nowrap}
 .bd{display:inline-block;margin-top:.3rem;font-size:.7rem;font-weight:700;padding:.1rem .6rem;border-radius:99px;color:#fff;white-space:nowrap}
@@ -113,9 +113,19 @@ aside .nm{font-weight:800;color:#fff;white-space:nowrap}
 .bd.guru_bk{background:#0ea5e9}
 .bd.kurikulum{background:#8b5cf6}
 .bd.kepala_sekolah{background:#f97316}
-aside nav{margin-top:1.5rem;display:flex;flex-direction:column;gap:.22rem}
-#menu{display:flex;flex-direction:column;gap:.22rem;min-width:0}
-#menu .mg{margin:1.1rem .75rem .35rem;font-size:.72rem;font-weight:600;color:#7f95bb;letter-spacing:.055em;text-transform:uppercase;white-space:nowrap}
+
+aside nav{margin-top:1rem;display:flex;flex-direction:column;min-width:0}
+#menu{display:flex;flex-direction:column;min-width:0}
+
+/* Dropdown Styles */
+#menu .mg{display:flex;align-items:center;gap:.6rem;padding:.7rem .75rem;font-size:.75rem;font-weight:700;color:#7f95bb;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;user-select:none;transition:.15s;border-radius:.6rem;margin-top:.5rem}
+#menu .mg:hover{color:#fff;background:rgba(255,255,255,.05)}
+#menu .mg span{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mg-chevron{transition:transform .3s ease}
+#menu .mg[aria-expanded="false"] .mg-chevron{transform:rotate(-90deg)}
+.submenu{display:flex;flex-direction:column;gap:.22rem;overflow:hidden;transition:max-height .3s ease,opacity .3s ease;max-height:600px;opacity:1;margin-bottom:.5rem}
+.submenu.closed{max-height:0;opacity:0;margin-bottom:0;pointer-events:none}
+
 .mi{display:flex;align-items:center;gap:.75rem;width:100%;min-height:2.65rem;padding:.6rem .75rem;border:0;border-radius:.75rem;background:none;color:#cbd5e1;font-size:.875rem;font-weight:500;text-align:left;transition:.15s;position:relative}
 .mi svg{width:1.1rem;height:1.1rem;flex:none;opacity:.75}
 .mi:hover{background:rgba(14,165,233,.1);color:#fff}
@@ -297,9 +307,15 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
 .sidebar-toggle:hover{background:rgba(255,255,255,.1);color:#fff}
 @media(min-width:768px){
   .sidebar-toggle{display:flex}
-  aside.collapsed{width:4.5rem;padding:1rem .5rem}
-  aside.collapsed .nm,aside.collapsed .bd,aside.collapsed .mg,aside.collapsed .mi span,aside.collapsed .sidebar-toggle span{display:none}
+  aside.collapsed{width:5rem;padding:1rem 0.5rem}
+  aside.collapsed .nm,aside.collapsed .bd,aside.collapsed .sidebar-toggle span{display:none}
   aside.collapsed .logo{width:2rem;height:2rem;margin:0 auto 1rem}
+  
+  /* Collapsed menu adjustments */
+  aside.collapsed #menu .mg span, aside.collapsed #menu .mg-chevron { display: none; }
+  aside.collapsed #menu .mg { justify-content: center; margin-top: 0.5rem; padding: 0.4rem; }
+  aside.collapsed .submenu { display: flex !important; max-height: none !important; opacity: 1 !important; pointer-events: auto !important; margin-bottom: 0.5rem; }
+  
   aside.collapsed .mi{justify-content:center;padding:.75rem}
   aside.collapsed .mi svg{margin:0}
   aside.collapsed .mi.out{justify-content:center}
@@ -496,6 +512,24 @@ function start() {
 function nav(k) {
   clearInterval(QT); window.onbeforeunload = null;
   document.querySelectorAll('.mi').forEach(b => b.classList.toggle('on', b.id === 'n-' + k));
+  
+  // Auto-open the group containing the active menu item
+  const activeBtn = $('#n-' + k);
+  if (activeBtn) {
+    const sub = activeBtn.closest('.submenu');
+    if (sub && sub.classList.contains('closed')) {
+      sub.classList.remove('closed');
+      const groupEl = sub.previousElementSibling; // the .mg
+      if (groupEl) groupEl.setAttribute('aria-expanded', 'true');
+      
+      const groupId = sub.id.replace('sub-', '');
+      try {
+        let state = JSON.parse(localStorage.getItem('lms_menu_dd')) || {};
+        state[groupId] = true;
+        localStorage.setItem('lms_menu_dd', JSON.stringify(state));
+      } catch(e) {}
+    }
+  }
 }
 
 function toggleSidebar() {
@@ -508,6 +542,23 @@ try {
     document.querySelector('aside').classList.add('collapsed'); 
   }
 } catch (e) {}
+
+function toggleMenuGroup(id, el) {
+  const sub = $('#sub-' + id);
+  const isClosed = sub.classList.contains('closed');
+  if (isClosed) {
+    sub.classList.remove('closed');
+    el.setAttribute('aria-expanded', 'true');
+  } else {
+    sub.classList.add('closed');
+    el.setAttribute('aria-expanded', 'false');
+  }
+  try {
+    let state = JSON.parse(localStorage.getItem('lms_menu_dd')) || {};
+    state[id] = isClosed;
+    localStorage.setItem('lms_menu_dd', JSON.stringify(state));
+  } catch(e) {}
+}
 
 /* ===== MODAL & MOTIVASI ===== */
 function modal(title, fields, fn, cta) {
@@ -1145,58 +1196,105 @@ const ICON = {
   adminSchedules: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
   adminSync:      '<path d="M21 12a9 9 0 0 1-15.5 6.2M3 12a9 9 0 0 1 15.5-6.2M18.5 2v4h-4M5.5 22v-4h4"/>'
 };
+
 function buildMenu() {
   const rs = roles();
   const teacher = rs.includes('guru') || rs.includes('admin');
   const monitor = rs.includes('kepala_sekolah') || rs.includes('kurikulum') || rs.includes('admin');
   const canStudents = rs.includes('admin') || rs.includes('staff') || rs.includes('staf') || rs.includes('guru_bk');
   const canStaffData = rs.includes('admin') || rs.includes('staff') || rs.includes('staf');
+  
   const groups = [];
-  const dashLabel = monitor && !teacher ? 'Dashboard pengawasan' : 'Beranda';
-  groups.push({ group: '', items: [{ key: 'dash', label: dashLabel }] });
+  
+  // 1. Beranda / Dashboard
+  groups.push({ 
+    id: 'g-dash', 
+    icon: ICON.dash, 
+    label: monitor && !teacher ? 'Dashboard' : 'Beranda', 
+    items: [{ key: 'dash', label: monitor && !teacher ? 'Dashboard pengawasan' : 'Beranda' }] 
+  });
+
+  // 2. Pembelajaran
   if (teacher) {
-    groups.push({ group: 'Pembelajaran', items: [
+    groups.push({ id: 'g-learn', icon: ICON.home, label: 'Pembelajaran', items: [
       { key: 'home',    label: 'Kelas yang dikelola' },
       { key: 'tasks',   label: 'Tugas kelas' },
       { key: 'quizzes', label: 'Kuis kelas' },
       { key: 'news',    label: 'Pengumuman' }
     ]});
-    groups.push({ group: 'Penilaian', items: [
-      { key: 'review', label: 'Perlu dinilai' },
-      { key: 'recap',  label: monitor ? 'Rekap seluruh kelas' : 'Rekap nilai' }
-    ]});
   } else if (rs.includes('siswa')) {
-    groups.push({ group: 'Aktivitas belajar', items: [
+    groups.push({ id: 'g-learn', icon: ICON.home, label: 'Aktivitas Belajar', items: [
       { key: 'home',    label: 'Kelas saya' },
       { key: 'tasks',   label: 'Tugas saya' },
       { key: 'quizzes', label: 'Kuis saya' },
       { key: 'news',    label: 'Pengumuman' }
     ]});
-    groups.push({ group: 'Penilaian', items: [{ key: 'grades', label: 'Nilai saya' }] });
   } else if (monitor) {
-    groups.push({ group: 'Pengawasan', items: [{ key: 'recap', label: 'Rekap seluruh kelas' }] });
+    groups.push({ id: 'g-learn', icon: ICON.home, label: 'Aktivitas Belajar', items: [
+      { key: 'home',    label: 'Daftar Kelas' }
+    ]});
   }
+
+  // 3. Penilaian
+  if (teacher) {
+    groups.push({ id: 'g-grades', icon: ICON.grades, label: 'Penilaian', items: [
+      { key: 'review', label: 'Perlu dinilai' },
+      { key: 'recap',  label: monitor ? 'Rekap seluruh kelas' : 'Rekap nilai' }
+    ]});
+  } else if (rs.includes('siswa')) {
+    groups.push({ id: 'g-grades', icon: ICON.grades, label: 'Penilaian', items: [
+      { key: 'grades', label: 'Nilai saya' }
+    ]});
+  } else if (monitor) {
+    groups.push({ id: 'g-grades', icon: ICON.grades, label: 'Pengawasan', items: [
+      { key: 'recap',  label: 'Rekap seluruh kelas' }
+    ]});
+  }
+
+  // 4. Manajemen Data
   if (canStudents) {
     const items = [{ key: 'adminStudents', label: 'Data siswa' }, { key: 'adminClasses', label: 'Data kelas' }];
     if (canStaffData) {
       items.splice(1, 0, { key: 'adminTeachers',  label: 'Data guru' });
       items.push({ key: 'adminSchedules', label: 'Data jadwal' }, { key: 'adminSync', label: 'Sinkron Portal' });
     }
-    groups.push({ group: 'Manajemen Data', items });
+    groups.push({ id: 'g-data', icon: ICON.adminStudents, label: 'Manajemen Data', items });
   }
-  groups.push({ group: 'Akun', items: [{ key: 'profile', label: 'Profil & keamanan' }] });
+
+  // 5. Akun
+  groups.push({ id: 'g-akun', icon: ICON.profile, label: 'Akun', items: [
+    { key: 'profile', label: 'Profil & keamanan' }
+  ]});
+
+  // Render
+  let state = {};
+  try { state = JSON.parse(localStorage.getItem('lms_menu_dd')) || {}; } catch(e) {}
+
   const seen = new Set();
   $('#menu').innerHTML = groups.map(g => {
     const uniq = g.items.filter(i => { if (seen.has(i.key)) return false; seen.add(i.key); return true; });
     if (!uniq.length) return '';
-    return (g.group ? `<p class="mg">${g.group}</p>` : '')
-      + uniq.map(i => `<button class="mi" id="n-${i.key}" onclick="go('${i.key}')" type="button">
+    
+    const isOpen = state[g.id] !== false; 
+    const arrow = `<svg class="mg-chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>`;
+    
+    return `
+      <div class="mg" role="button" tabindex="0" aria-expanded="${isOpen}" onclick="toggleMenuGroup('${g.id}', this)">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0">${g.icon}</svg>
+        <span>${g.label}</span>
+        ${arrow}
+      </div>
+      <div class="submenu ${isOpen ? '' : 'closed'}" id="sub-${g.id}">
+        ${uniq.map(i => `<button class="mi" id="n-${i.key}" onclick="go('${i.key}')" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[i.key]}</svg>
           <span>${i.label}</span>
           <i class="nb" id="b-${i.key}" aria-label="Pemberitahuan"></i>
-        </button>`).join('');
+        </button>`).join('')}
+      </div>
+    `;
   }).join('');
 }
+
 const GO = {
   dash: () => vDash(), home: () => home(), tasks: () => vTasks(), quizzes: () => vQuiz(),
   news: () => vNews(), grades: () => grades(), review: () => vReview(), recap: () => vRecap(),
