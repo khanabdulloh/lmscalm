@@ -77,23 +77,26 @@
     pesanDiv.style.display = "none";
 
    // Ubah bagian ini di dalam event listener form
-try {
-  // PERBAIKAN CORS: Gunakan Content-Type text/plain untuk menghindari preflight
-  const response = await fetch(API_URL, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'text/plain;charset=utf-8',
-    },
-    body: JSON.stringify({
-      action: 'login',
-      username: username,
-      password: password
-    })
-  });
+    try {
+      // MENGGUNAKAN FORMDATA (URLSearchParams) UNTUK MENEMBUS CORS
+      const formData = new URLSearchParams();
+      formData.append('action', 'login');
+      formData.append('username', username);
+      formData.append('password', password);
 
-  const result = await response.json();
-  
-  // ... (kode di bawahnya biarkan sama seperti sebelumnya)
+      const response = await fetch(API_URL, {
+        method: 'POST',
+        redirect: 'follow',
+        body: formData // Kirim sebagai form data, bukan JSON
+      });
+
+      // Ambil respons mentah, lalu ubah ke JSON
+      const rawText = await response.text(); 
+      const result = JSON.parse(rawText);
+
+      // Jika berhasil
+      if (result.status === "success") {
+        // ... (kode sukses Anda biarkan sama)
 
       // Jika berhasil
       if (result.status === "success") {
