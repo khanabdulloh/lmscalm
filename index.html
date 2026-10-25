@@ -710,6 +710,24 @@ tbody tr:last-child td{border-bottom:0}
 [data-theme=dark] .ag h3 em{background:var(--soft)}
 [data-theme=dark] .empty::before{background-color:var(--soft)}
 .mi.top{margin-bottom:0;flex-wrap:nowrap;justify-content:flex-start;align-items:center}
+
+/* Pop up pesan harian */
+.quote-modal{position:relative;max-width:27rem;padding:2.6rem 2.2rem 2rem;text-align:center;color:#fff;border:1px solid rgba(255,255,255,.12);border-radius:1.8rem;background:radial-gradient(20rem 12rem at 100% 0,rgba(56,189,248,.28),transparent 70%),radial-gradient(16rem 10rem at 0 100%,rgba(214,180,106,.2),transparent 70%),linear-gradient(165deg,#0d46a3,#061a45);box-shadow:0 40px 90px -28px rgba(3,18,48,.8);overflow:hidden;animation:qIn .45s cubic-bezier(.2,.8,.2,1)}
+.quote-modal::before{content:"";position:absolute;top:-6rem;right:-6rem;width:15rem;height:15rem;border-radius:50%;border:1px solid rgba(255,255,255,.08);pointer-events:none}
+.quote-modal.out{animation:qOut .18s ease-in forwards}
+@keyframes qIn{from{opacity:0;transform:translateY(16px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes qOut{to{opacity:0;transform:translateY(8px) scale(.98)}}
+.quote-modal .qx{top:1rem;right:1rem;background:rgba(255,255,255,.1);color:#fff}
+.quote-modal .qx:hover{background:rgba(255,255,255,.2);color:#fff}
+.q-chip{display:inline-block;padding:.28rem .85rem;border-radius:99px;background:rgba(214,180,106,.16);border:1px solid rgba(214,180,106,.4);color:var(--gold);font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+.quote-modal h3{margin:1.1rem 0 .2rem;color:#fff;font-family:var(--serif);font-size:1.7rem;font-weight:500;letter-spacing:-.015em}
+.q-date{font-size:.8rem;color:rgba(255,255,255,.62)}
+.q-mark{display:block;width:2rem;height:2rem;margin:1.5rem auto .6rem;color:var(--gold);opacity:.9}
+.quote-text{margin:0;font-family:var(--serif);font-size:1.22rem;line-height:1.65;font-style:italic;color:rgba(255,255,255,.94);text-wrap:balance}
+.q-line{display:block;width:2.6rem;height:2px;margin:1.5rem auto 0;background:var(--gold)}
+.quote-btn{width:100%;margin-top:1.8rem;padding:.85rem 1rem;border:1px solid rgba(255,255,255,.28);border-radius:.9rem;background:rgba(255,255,255,.14);color:#fff;font-weight:700;font-size:.92rem;transition:.2s}
+.quote-btn:hover{background:rgba(255,255,255,.26);transform:translateY(-1px)}
+@media(max-width:480px){.quote-modal{padding:2.2rem 1.4rem 1.5rem}.quote-text{font-size:1.1rem}.quote-modal h3{font-size:1.45rem}}
 </style>
 </head>
 <body>
@@ -1045,37 +1063,80 @@ function modal(title, fields, fn, cta, opt) {
   };
 }
 
+const QUOTES = {
+  siswa: [
+    'Kemajuan besar lahir dari kebiasaan belajar kecil yang dijalankan setiap hari.',
+    'Tidak apa-apa belum paham. Bertanya adalah cara tercepat untuk mengerti.',
+    'Teliti hari ini adalah bekal percaya diri untuk ujian esok.',
+    'Setiap tugas yang selesai tepat waktu melatih tanggung jawab yang akan Anda bawa ke dunia kerja.',
+    'Keterampilan dibangun dari latihan berulang. Mulailah dari yang paling dekat.',
+    'Teman diskusi yang baik membuat materi sulit terasa lebih ringan.'
+  ],
+  guru: [
+    'Pembelajaran yang bermakna dimulai dari perhatian terhadap kebutuhan setiap peserta didik.',
+    'Umpan balik yang jelas dan tepat waktu membantu siswa tumbuh lebih percaya diri.',
+    'Hasil kuis adalah petunjuk tentang materi yang perlu diperdalam bersama.',
+    'Satu kalimat apresiasi hari ini dapat menjadi alasan siswa bertahan belajar.',
+    'Kelas yang tertata memberi ruang bagi siswa untuk fokus pada hal yang penting.',
+    'Kesabaran Anda hari ini adalah pelajaran yang diingat siswa bertahun-tahun kemudian.'
+  ],
+  kepala_sekolah: [
+    'Kepemimpinan yang baik dimulai dari mendengar, lalu mengarahkan dengan data dan teladan.',
+    'Budaya mutu tumbuh ketika setiap guru merasa dipercaya dan didukung.',
+    'Supervisi yang tepat sasaran membantu pembelajaran terus bergerak ke arah yang lebih baik.',
+    'Sekolah yang unggul dibangun dari ribuan keputusan kecil yang konsisten.',
+    'Terima kasih telah menjaga arah dan semangat seluruh warga sekolah.'
+  ],
+  kurikulum: [
+    'Kurikulum yang baik mudah dijalankan guru dan terasa bermanfaat bagi siswa.',
+    'Jadwal yang rapi memberi waktu belajar yang lebih tenang bagi seluruh kelas.',
+    'Rekap capaian belajar membantu menemukan kelas yang membutuhkan dukungan lebih awal.',
+    'Keselarasan antara perencanaan dan pelaksanaan adalah kunci mutu pembelajaran.',
+    'Terima kasih telah menata proses belajar agar berjalan selaras di setiap kelas.'
+  ],
+  guru_bk: [
+    'Mendengarkan dengan tulus sering kali sudah menjadi separuh dari bantuan.',
+    'Setiap siswa memiliki cerita. Perhatian Anda membuat mereka merasa dilihat.',
+    'Bimbingan yang baik menolong siswa menemukan arah, bukan sekadar menerima jawaban.',
+    'Kepercayaan dibangun pelan-pelan, dan menjadi dasar semua pendampingan.',
+    'Terima kasih telah menjadi tempat aman bagi siswa untuk bertumbuh.'
+  ],
+  staff: [
+    'Data yang tertata dan akurat menjadi fondasi layanan pembelajaran yang andal.',
+    'Ketelitian Anda membantu seluruh pengguna bekerja dengan lancar.',
+    'Pekerjaan administrasi yang rapi membuat guru lebih leluasa fokus mengajar.',
+    'Pelayanan yang ramah membuat setiap urusan terasa lebih mudah.',
+    'Terima kasih atas dedikasi Anda dalam menjaga kelancaran layanan sekolah.'
+  ],
+  admin: [
+    'Sistem yang andal bekerja tenang di belakang layar sehingga pembelajaran berjalan lancar.',
+    'Keamanan dan ketepatan data adalah bentuk kepedulian terhadap seluruh pengguna.',
+    'Pembaruan kecil yang dilakukan rutin menjaga layanan tetap stabil dan nyaman digunakan.',
+    'Terima kasih telah menjaga portal ini tetap siap melayani setiap hari.'
+  ]
+};
+const QLABEL = { siswa: 'Untuk Siswa', guru: 'Untuk Guru', kepala_sekolah: 'Untuk Kepala Sekolah', kurikulum: 'Untuk Kurikulum', guru_bk: 'Untuk Guru BK', staff: 'Untuk Staf Administrasi', admin: 'Untuk Administrator' };
 function showQuote() {
-  const qSiswa = [
-    { t: "Pemahaman yang kuat tumbuh dari kebiasaan belajar kecil yang dijalankan secara konsisten." },
-    { t: "Setiap soal yang dikerjakan dengan teliti adalah langkah menuju penguasaan materi." },
-    { t: "Bertanya adalah bagian dari belajar. Manfaatkan forum kelas untuk berdiskusi dengan guru dan teman." }
-  ];
-  const qGuru = [
-    { t: "Pembelajaran yang bermakna dimulai dari perhatian terhadap kebutuhan setiap peserta didik." },
-    { t: "Umpan balik yang jelas dan tepat waktu membantu peserta didik berkembang lebih percaya diri." },
-    { t: "Analisis hasil kuis dapat membantu menentukan materi yang perlu diperdalam bersama." }
-  ];
-  const qStaff = [
-    { t: "Data yang tertata dan akurat menjadi fondasi layanan pembelajaran yang andal." },
-    { t: "Ketelitian dalam pengelolaan data membantu seluruh pengguna bekerja dengan lancar." },
-    { t: "Terima kasih atas dedikasi Anda dalam menjaga kelancaran layanan sekolah." }
-  ];
-  let qList = qSiswa;
-  if (hasR('guru')) qList = qGuru;
-  else if (hasR('admin') || hasR('staff') || hasR('guru_bk') || hasR('kurikulum') || hasR('kepala_sekolah')) qList = qStaff;
-  
-  const q = qList[Math.floor(Math.random() * qList.length)];
-  
+  const mine = ['siswa', 'guru', 'kepala_sekolah', 'kurikulum', 'guru_bk', 'staff', 'admin'].filter(r => hasR(r) || (r === 'staff' && hasR('staf')));
+  const pool = [].concat(...mine.map(r => QUOTES[r])), q = pool.length ? pool : QUOTES.siswa;
+  const text = q[Math.floor(Math.random() * q.length)], badge = primaryBadge();
+  const first = esc(String(S.user.full_name || '').split(' ')[0]);
+  const tgl2 = new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long' });
   const m = document.createElement('div'); m.className = 'ov';
   m.innerHTML = `<div class="md quote-modal" role="dialog" aria-modal="true" aria-labelledby="qmt">
-    <div class="quote-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V21z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3z"/></svg></div>
-    <h3 id="qmt">Pesan Hari Ini</h3>
-    <p class="quote-text">“${q.t}”</p>
-    
-    <button type="button" class="quote-btn" onclick="this.closest('.ov').remove()">Lanjutkan</button>
+    <button type="button" class="mx qx" data-x aria-label="Tutup">${XICO}</button>
+    <span class="q-chip">${esc(QLABEL[badge] || 'Pesan Hari Ini')}</span>
+    <h3 id="qmt">${getGreeting()}, ${first}</h3>
+    <p class="q-date">${esc(tgl2)}</p>
+    <svg class="q-mark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.2 6C4.9 7.3 3.5 9.6 3.5 12.6V18h6v-6H6.3c.1-1.6.9-2.8 2.4-3.6L7.2 6Zm9.5 0c-2.3 1.3-3.7 3.6-3.7 6.6V18h6v-6h-3.2c.1-1.6.9-2.8 2.4-3.6L16.700 6Z"/></svg>
+    <p class="quote-text">${esc(text)}</p>
+    <span class="q-line" aria-hidden="true"></span>
+    <button type="button" class="quote-btn" data-x>Mulai belajar dan bekerja</button>
   </div>`;
-  m.onmousedown = e => { if (e.target === m) m.remove(); };
+  const kill = () => { const d = m.querySelector('.quote-modal'); if (d) d.classList.add('out'); setTimeout(() => m.remove(), 180); };
+  m._close = kill;
+  m.onmousedown = e => { if (e.target === m) kill(); };
+  m.querySelectorAll('[data-x]').forEach(b => b.onclick = kill);
   document.body.appendChild(m); trapFocus(m); m.querySelector('.quote-btn').focus();
 }
 
