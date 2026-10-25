@@ -611,7 +611,7 @@ body{background:radial-gradient(64rem 28rem at 100% -8%,#e4edfb,transparent 62%)
 
 <script src="config.js"></script>
 <script>
-const API = (() => { const u = String((window.LMS_CONFIG && window.LMS_CONFIG.apiUrl) || '').trim(); return /^https:\/\//i.test(u) ? u : ''; })();
+const API = (() => { const u = String((window.LMS_CONFIG && window.LMS_CONFIG.apiUrl) || 'https://script.google.com/macros/s/AKfycbwwxNMD1c_2GugaKiXlqicOW-NeUsYSL-WvJzAt4xXvH8dQjAfMD-epQubbhkXHhbwW_w/exec').trim(); return /^https:\/\//i.test(u) ? u : ''; })();
 let S = null, C = null, O = null, QT, CLOCK_INT;
 let _syncCred = [];
 let CUR = 'dash', CT = 'ann';
