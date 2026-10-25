@@ -323,6 +323,96 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
   aside.collapsed .sidebar-toggle{justify-content:center;padding:.5rem 0}
   aside.collapsed .sidebar-toggle svg{transform:rotate(180deg)}
 }
+
+/* ================================================================
+   THEME v2 — segar, bersih, modern (lapisan di atas gaya lama)
+   ================================================================ */
+:root{--bg:#f4f7fc;--line:#e5ebf4;--line2:#d5deec;--accent:#0ea5e9;--mint:#10b981;--r:1.1rem;
+--shadow-sm:0 1px 2px rgba(15,40,90,.04),0 6px 16px -8px rgba(15,40,90,.1);
+--shadow-md:0 12px 28px -14px rgba(15,40,90,.22);--shadow-lg:0 26px 50px -26px rgba(15,40,90,.32)}
+body{background:radial-gradient(60rem 26rem at 100% -8%,#e2edfc 0,transparent 62%),radial-gradient(44rem 22rem at -10% 110%,#e9f6f2 0,transparent 60%),var(--bg);background-attachment:fixed}
+
+/* ---- Sidebar ---- */
+aside{padding:1.1rem .85rem 1rem;background:linear-gradient(185deg,#0b3077 0%,#072155 55%,#051640 100%);box-shadow:6px 0 34px -16px rgba(5,20,60,.55);scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
+aside .logo{width:3rem;height:3rem;padding:.35rem;margin-bottom:.65rem;background:#fff;border-radius:.95rem;box-shadow:0 10px 20px -10px rgba(0,0,0,.55)}
+aside .nm{font-size:1.08rem;letter-spacing:.03em}
+.sb-user{margin-top:.5rem;font-size:.84rem;font-weight:600;color:#cddbf4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bd{margin-top:.4rem;font-size:.64rem;letter-spacing:.08em;padding:.22rem .7rem}
+aside nav{margin-top:.9rem}
+.sidebar-toggle{margin:.7rem 0 .2rem;background:rgba(255,255,255,.06)}
+#menu .mg{margin-top:.3rem;padding:.72rem .85rem;border-radius:.85rem;font-size:.84rem;letter-spacing:.01em;text-transform:none;font-weight:700;color:#c4d4f0}
+#menu .mg>svg:first-child{width:1.1rem;height:1.1rem;opacity:.9}
+#menu .mg:hover{background:rgba(255,255,255,.07);color:#fff}
+#menu .mg[aria-expanded="true"]{color:#fff;background:rgba(255,255,255,.09)}
+.mg-chevron{width:1rem;height:1rem;opacity:.75;flex:none}
+.submenu{margin:.2rem 0 .4rem 1.15rem;padding-left:.55rem;border-left:1px dashed rgba(255,255,255,.16);gap:.12rem;transition:max-height .32s ease,opacity .25s ease,margin .25s}
+.submenu.closed{margin:0 0 0 1.15rem}
+.mi{min-height:2.55rem;padding:.55rem .8rem;border-radius:.75rem;font-size:.86rem}
+.mi:hover{background:rgba(125,211,252,.12)}
+.mi.on{background:linear-gradient(90deg,rgba(56,189,248,.3),rgba(56,189,248,.07));color:#fff;box-shadow:none}
+.mi.on::before{left:-.55rem;top:.55rem;bottom:.55rem;background:linear-gradient(#7dd3fc,#38bdf8)}
+.mi.top{margin-top:.3rem;font-weight:700;color:#c4d4f0;padding:.72rem .85rem}
+.mi.top svg{width:1.1rem;height:1.1rem;opacity:.9}
+.mi.top.on{color:#fff}.mi.top.on::before{left:-.35rem}
+.mi.out{margin-top:auto;border-top:1px solid rgba(255,255,255,.1);border-radius:0 0 .75rem .75rem;padding-top:.9rem}
+@media(min-width:768px){aside{width:19.5rem}aside.collapsed{width:5rem;padding:1rem .5rem}aside.collapsed .sb-user{display:none}}
+@media(max-width:767px){.sb-user{display:none}}
+
+/* ---- Konten ---- */
+main{padding:2rem 2.5rem 4rem}
+.top h2{font-size:clamp(1.45rem,2.4vw,1.85rem)}
+.card{border-color:var(--line);border-radius:var(--r)}
+.card.cls:hover,button.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);border-color:#b9cbe8}
+.btn{background:linear-gradient(180deg,#1556c0,var(--navy));border-radius:.8rem;box-shadow:0 10px 18px -12px rgba(11,61,145,.85)}
+.btn:hover{background:linear-gradient(180deg,#0f49a8,var(--navyd))}
+.btn2{border-radius:.8rem}
+.badge.ok{background:#d9f7e8}.badge.warn{background:#fff1cf}
+
+/* ---- Hero & statistik ---- */
+.hero-dash{border-radius:1.4rem;padding:1.8rem 2.1rem;background:radial-gradient(38rem 16rem at 92% -25%,rgba(56,189,248,.38),transparent 62%),radial-gradient(22rem 14rem at 0 125%,rgba(214,180,106,.26),transparent 62%),linear-gradient(135deg,#0d46a3 0%,#082a6b 55%,#061a45 100%);box-shadow:0 24px 44px -24px rgba(8,42,107,.8)}
+.hero-text h2{font-size:clamp(1.5rem,2.6vw,2rem)}
+.hero-clock{padding:.85rem 1.3rem;border-radius:1rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.st{position:relative;overflow:hidden;padding:1.2rem 1.3rem 1.2rem 1.5rem;transition:transform .2s,box-shadow .2s}
+.st::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,#38bdf8,var(--navy))}
+.stats .st:nth-child(2)::before{background:linear-gradient(180deg,#34d399,#059669)}
+.stats .st:nth-child(3)::before{background:linear-gradient(180deg,#fbbf24,#d97706)}
+.stats .st:nth-child(4)::before{background:linear-gradient(180deg,#a78bfa,#6d28d9)}
+.stats .st:nth-child(5)::before{background:linear-gradient(180deg,#fb7185,#e11d48)}
+.st:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.qa{display:flex;align-items:center;gap:.9rem;width:100%;text-align:left;padding:1rem 1.1rem;border:1px solid var(--line);border-radius:var(--r);background:#fff;box-shadow:var(--shadow-sm);transition:.2s}
+.qa:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);border-color:#b9cbe8}
+.qa i{display:grid;place-items:center;flex:none;width:2.6rem;height:2.6rem;border-radius:.85rem;background:var(--soft);color:var(--navy)}
+.qa i svg{width:1.25rem;height:1.25rem}
+.qa b{display:block;font-size:.95rem;color:var(--navyd)}.qa small{color:var(--mut);font-size:.8rem}
+
+/* ---- Tabel & pencarian ---- */
+table{font-size:.86rem}
+th{position:sticky;top:0;z-index:1}
+tbody tr{transition:background .15s}tbody tr:hover{background:#f6f9fe}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap;margin-bottom:.9rem}
+.searchbox{position:relative;flex:1;min-width:12rem;max-width:23rem}
+.searchbox svg{position:absolute;left:.9rem;top:50%;width:1rem;height:1rem;transform:translateY(-50%);color:#8a99b2;pointer-events:none}
+.searchbox input{width:100%;padding:.65rem .9rem .65rem 2.5rem;border:1px solid var(--line2);border-radius:.85rem;background:#fff;font-size:.88rem;transition:border-color .16s,box-shadow .16s}
+.searchbox input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 4px rgba(11,61,145,.12)}
+.ro-chip{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .8rem;border-radius:99px;background:#eef6ff;border:1px solid #cfe3fb;color:#1e5aa8;font-size:.76rem;font-weight:700}
+
+/* ---- Loading skeleton & transisi halaman ---- */
+.skel-wrap{display:grid;gap:1rem}
+.skel{border-radius:1rem;background:linear-gradient(90deg,#e8eef8 25%,#f6f9fd 37%,#e8eef8 63%);background-size:400% 100%;animation:shim 1.3s ease infinite}
+@keyframes shim{0%{background-position:100% 50%}100%{background-position:0 50%}}
+#main>*{animation:fadeUp .38s cubic-bezier(.2,.7,.2,1) both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---- Tombol segarkan data ---- */
+.rf{position:fixed;right:1.1rem;bottom:1.1rem;z-index:30;display:grid;place-items:center;width:2.8rem;height:2.8rem;border:1px solid var(--line2);border-radius:50%;background:#fff;color:var(--navy);box-shadow:var(--shadow-md);transition:.2s}
+.rf svg{width:1.15rem;height:1.15rem}.rf:hover{background:var(--soft);transform:rotate(25deg)}
+.rf.spin-on svg{animation:sp .7s linear infinite}
+
+/* ---- Pop-up motivasi ---- */
+.quote-modal{border-radius:1.6rem;background:radial-gradient(18rem 10rem at 100% 0,rgba(56,189,248,.3),transparent 70%),radial-gradient(14rem 9rem at 0 100%,rgba(214,180,106,.22),transparent 70%),linear-gradient(165deg,#0d46a3,#061a45);box-shadow:0 36px 80px -24px rgba(3,18,48,.75)}
+.quote-icon{box-shadow:0 0 0 8px rgba(255,255,255,.07)}
+.quote-btn{background:rgba(255,255,255,.16)}
+@media(max-width:767px){main{padding:1.25rem 1rem 4rem}.rf{bottom:.9rem;right:.9rem}}
 </style>
 </head>
 <body>
@@ -375,7 +465,7 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
 <div id="app" class="hide">
   <header class="mbar"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt=""><b>SMK CALM</b><button onclick="document.querySelector('aside').classList.toggle('open')" aria-label="Buka menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></header>
   <aside aria-label="Menu utama">
-    <img class="logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt=""><p class="nm">SMK CALM</p><span class="bd" id="wr"></span>
+    <img class="logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt=""><p class="nm">SMK CALM</p><span class="bd" id="wr"></span><p class="sb-user" id="sbu"></p>
     
     <!-- TOMBOL LIPAT SIDEBAR -->
     <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Perkecil menu">
@@ -387,6 +477,7 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
     <button class="mi out" onclick="logout(true)" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg><span>Keluar</span></button>
   </aside>
   <main id="main"></main>
+  <button class="rf" id="rf" onclick="refreshData()" type="button" title="Segarkan data" aria-label="Segarkan data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-15.5 6.2M3 12a9 9 0 0 1 15.5-6.2M18.5 2v4h-4M5.5 22v-4h4"/></svg></button>
 </div>
 <div id="toast" class="hide" role="status"></div>
 
@@ -394,6 +485,7 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
 const API = "https://script.google.com/macros/s/AKfycbwwxNMD1c_2GugaKiXlqicOW-NeUsYSL-WvJzAt4xXvH8dQjAfMD-epQubbhkXHhbwW_w/exec";
 let S = null, C = null, O = null, QT, CLOCK_INT;
 let _syncCred = [];
+let CUR = 'dash', CT = 'ann';
 let _adminClassesCache = null, _adminTeachersCache = null, _adminSchedulesCache = null, _recapData = null, _openSeq = 0;
 try { S = JSON.parse(sessionStorage.getItem('lms')); } catch (e) {}
 
@@ -405,13 +497,24 @@ const isMonitor = () => hasR('kepala_sekolah') || hasR('kurikulum') || hasR('adm
 const isT = () => hasR('guru') || hasR('admin');
 const tgl = d => d ? new Date(d).toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'}) : '';
 const tglw = d => d ? new Date(d).toLocaleString('id-ID', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'}) : '';
-const view = h => { $('#main').innerHTML = h; window.scrollTo(0, 0); };
+const SKEL = '<div class="skel-wrap" aria-busy="true" aria-label="Memuat"><div class="skel" style="height:2rem;width:38%"></div><div class="skel" style="height:7rem"></div><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:1rem"><div class="skel" style="height:5.5rem"></div><div class="skel" style="height:5.5rem"></div><div class="skel" style="height:5.5rem"></div><div class="skel" style="height:5.5rem"></div></div><div class="skel" style="height:14rem"></div></div>';
+const view = h => { $('#main').innerHTML = /^<p class="empty">Memuat/.test(h) ? SKEL : h; window.scrollTo(0, 0); };
 
 function toast(m, err) {
   const t = $('#toast'); t.textContent = m; t.className = err ? 'e' : ''; clearTimeout(t._t);
   t._t = setTimeout(() => t.className = 'hide', 3500);
 }
-async function api(action, data = {}, ms = 30000) {
+/* ===== CACHE 5 MENIT =====
+   Hanya aksi BACA yang di-cache. Setiap aksi tulis (simpan/hapus/nilai/kirim tugas, dll.)
+   otomatis mengosongkan cache sehingga data selalu konsisten. Tombol bulat di pojok = segarkan manual. */
+const CACHE_TTL = 5 * 60 * 1000;
+const CACHE_READ = ['classes', 'classDetail', 'overview', 'myGrades', 'adminUsers', 'adminClasses', 'adminSchedules'];
+const _cache = new Map(), _inflight = new Map();
+let _gen = 0;
+const cacheClear = () => { _cache.clear(); _inflight.clear(); _gen++; };
+const cloneData = v => typeof structuredClone === 'function' ? structuredClone(v) : JSON.parse(JSON.stringify(v));
+
+async function rawApi(action, data, ms) {
   const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), ms);
   try {
     const r = await fetch(API, { method: 'POST', body: new URLSearchParams({ action, token: S ? S.token : '', ...data }), signal: ctl.signal });
@@ -421,6 +524,31 @@ async function api(action, data = {}, ms = 30000) {
   } catch (e) {
     throw new Error(e.name === 'AbortError' ? 'Server terlalu lama merespons. Coba lagi.' : e.message === 'Failed to fetch' ? 'Tidak dapat terhubung. Periksa internet Anda.' : e.message);
   } finally { clearTimeout(to); }
+}
+async function api(action, data = {}, ms = 30000, opt = {}) {
+  if (!CACHE_READ.includes(action)) {
+    try { return await rawApi(action, data, ms); } finally { cacheClear(); }
+  }
+  const key = (S ? S.token : '') + '|' + action + '|' + JSON.stringify(data);
+  if (!opt.fresh) {
+    const hit = _cache.get(key);
+    if (hit && Date.now() - hit.t < CACHE_TTL) return cloneData(hit.v);
+    if (_inflight.has(key)) return cloneData(await _inflight.get(key));
+  }
+  const gen = _gen, p = rawApi(action, data, ms);
+  _inflight.set(key, p);
+  try {
+    const v = await p;
+    if (gen === _gen) _cache.set(key, { t: Date.now(), v });
+    return cloneData(v);
+  } finally { if (_inflight.get(key) === p) _inflight.delete(key); }
+}
+function refreshData() {
+  if ($('.qbar')) { toast('Selesaikan kuis terlebih dahulu.', true); return; }
+  cacheClear();
+  const b = $('#rf'); b.classList.add('spin-on'); setTimeout(() => b.classList.remove('spin-on'), 900);
+  if (C && $('.cover')) reload(CT); else go(CUR);
+  toast('Data diperbarui');
 }
 
 /* ===== LOGIN & OTORISASI ===== */
@@ -477,7 +605,7 @@ $('#srvr').onclick = cekServer;
 
 function logout(call) {
   if (call && S) api('logout').catch(() => {});
-  S = null; sessionStorage.removeItem('lms');
+  S = null; sessionStorage.removeItem('lms'); sessionStorage.removeItem('quoteShown'); cacheClear(); clearInterval(CLOCK_INT); O = null; C = null;
   $('#app').classList.add('hide'); $('#login').classList.remove('hide'); $('#pw').value = ''; cekServer();
 }
 
@@ -498,6 +626,7 @@ function start() {
   const label = ({ admin:'ADMINISTRATOR', staff:'STAFF ADMINISTRASI', guru_bk:'GURU BK', kepala_sekolah:'KEPALA SEKOLAH', kurikulum:'KURIKULUM', guru:'GURU / PENGAJAR', siswa:'SISWA' })[badge] || 'PENGGUNA';
   $('#wr').textContent = label;
   $('#wr').className = 'bd ' + badge;
+  $('#sbu').textContent = S.user.full_name || '';
   document.querySelector('aside').classList.remove('open');
   buildMenu(); 
   
@@ -510,26 +639,11 @@ function start() {
   vDash();
 }
 function nav(k) {
-  clearInterval(QT); window.onbeforeunload = null;
+  clearInterval(QT); window.onbeforeunload = null; CUR = k;
+  if (k !== 'dash') clearInterval(CLOCK_INT);
   document.querySelectorAll('.mi').forEach(b => b.classList.toggle('on', b.id === 'n-' + k));
-  
-  // Auto-open the group containing the active menu item
-  const activeBtn = $('#n-' + k);
-  if (activeBtn) {
-    const sub = activeBtn.closest('.submenu');
-    if (sub && sub.classList.contains('closed')) {
-      sub.classList.remove('closed');
-      const groupEl = sub.previousElementSibling; // the .mg
-      if (groupEl) groupEl.setAttribute('aria-expanded', 'true');
-      
-      const groupId = sub.id.replace('sub-', '');
-      try {
-        let state = JSON.parse(localStorage.getItem('lms_menu_dd')) || {};
-        state[groupId] = true;
-        localStorage.setItem('lms_menu_dd', JSON.stringify(state));
-      } catch(e) {}
-    }
-  }
+  const sub = $('#n-' + k) && $('#n-' + k).closest('.submenu');
+  if (sub) setOpenGroup(sub.id.replace('sub-', ''));
 }
 
 function toggleSidebar() {
@@ -543,22 +657,16 @@ try {
   }
 } catch (e) {}
 
-function toggleMenuGroup(id, el) {
-  const sub = $('#sub-' + id);
-  const isClosed = sub.classList.contains('closed');
-  if (isClosed) {
-    sub.classList.remove('closed');
-    el.setAttribute('aria-expanded', 'true');
-  } else {
-    sub.classList.add('closed');
-    el.setAttribute('aria-expanded', 'false');
-  }
-  try {
-    let state = JSON.parse(localStorage.getItem('lms_menu_dd')) || {};
-    state[id] = isClosed;
-    localStorage.setItem('lms_menu_dd', JSON.stringify(state));
-  } catch(e) {}
+/* Akordeon: hanya satu grup terbuka dalam satu waktu */
+function setOpenGroup(id) {
+  document.querySelectorAll('#menu .submenu').forEach(sm => {
+    const open = sm.id === 'sub-' + id;
+    sm.classList.toggle('closed', !open);
+    const h = sm.previousElementSibling; if (h) h.setAttribute('aria-expanded', String(open));
+  });
+  try { localStorage.setItem('lms_menu_open', id || ''); } catch (e) {}
 }
+function toggleMenuGroup(id, el) { setOpenGroup(el.getAttribute('aria-expanded') === 'true' ? '' : id); }
 
 /* ===== MODAL & MOTIVASI ===== */
 function modal(title, fields, fn, cta) {
@@ -617,10 +725,11 @@ function showQuote() {
   m.innerHTML = `<div class="md quote-modal">
     <div class="quote-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></div>
     <h3>Pesan Inspirasi</h3>
-    <p class="quote-text">"${q.t}"</p>
+    <p class="quote-text">“${q.t}”</p>
     <p class="quote-author">— ${q.a}</p>
     <button class="quote-btn" onclick="this.closest('.ov').remove()">Semangat! Mulai Bekerja</button>
   </div>`;
+  m.onmousedown = e => { if (e.target === m) m.remove(); };
   document.body.appendChild(m);
 }
 
@@ -646,9 +755,39 @@ function getGreeting() {
   return 'Selamat Malam';
 }
 
+const heroHTML = msg => `<div class="hero-dash"><div class="hero-text"><h2>${getGreeting()}, ${esc(String(S.user.full_name || '').split(' ')[0])}</h2><p>${msg}</p></div><div class="hero-clock"><div class="clock-time" id="dash-clock">--:--:--</div><div class="clock-date">${new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</div></div></div>`;
+
+/* Beranda khusus Staff TU & Guru BK (ringkasan data sekolah, memakai cache 5 menit) */
+async function vDashData() {
+  nav('dash'); view('<p class="empty">Memuat...</p>');
+  const write = canManageStaffData();
+  try {
+    const [us, cl, sc] = await Promise.all([api('adminUsers'), api('adminClasses'), write ? api('adminSchedules') : Promise.resolve(null)]);
+    const act = x => String(x.status || '').toLowerCase() === 'aktif';
+    const has = (x, r) => String(x.role).toLowerCase() === r || String(x.extra_roles || '').toLowerCase().split(/[,;|]/).includes(r);
+    const siswa = us.users.filter(x => has(x, 'siswa')), guru = us.users.filter(x => has(x, 'guru'));
+    const stats = write
+      ? [['Total siswa', siswa.length], ['Siswa aktif', siswa.filter(act).length], ['Total guru', guru.length], ['Total kelas', cl.classes.length], ['Jadwal', sc.schedules.length]]
+      : [['Total siswa', siswa.length], ['Siswa aktif', siswa.filter(act).length], ['Total kelas', cl.classes.length]];
+    const qa = (k, ic, t, d) => `<button class="qa" onclick="go('${k}')" type="button"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICON[ic]}</svg></i><span><b>${t}</b><small>${d}</small></span></button>`;
+    const links = [qa('adminStudents', 'adminStudents', 'Data siswa', write ? 'Kelola akun & status siswa' : 'Lihat data siswa')];
+    if (write) links.push(qa('adminTeachers', 'adminTeachers', 'Data guru', 'Kelola akun guru'));
+    links.push(qa('adminClasses', 'adminClasses', 'Data kelas', write ? 'Kelola kelas & guru pengampu' : 'Lihat daftar kelas'));
+    if (write) links.push(qa('adminSchedules', 'adminSchedules', 'Data jadwal', 'Atur jadwal pelajaran'));
+    view(`<div class="top"><div><h2>Beranda</h2><p>Ringkasan data sekolah.</p></div></div>
+      ${heroHTML(write ? 'Kelola data siswa, guru, kelas, dan jadwal dengan rapi.' : 'Anda dapat melihat data siswa dan kelas untuk keperluan bimbingan.')}
+      ${write ? '' : '<div class="walert info" style="margin-bottom:1.2rem">Akun Guru BK memiliki akses <b>lihat saja</b>. Perubahan data dilakukan oleh administrator atau staf TU.</div>'}
+      <div class="stats">${stats.map(([l, n]) => `<div class="card st"><small>${l}</small><b>${n}</b></div>`).join('')}</div>
+      <div class="sec"><h3>Akses cepat</h3></div>
+      <div class="grid">${links.join('')}</div>`);
+    startClock();
+  } catch (e) { view(`<div class="card empty"><b>Data gagal dimuat</b>${esc(e.message)}<br><br><button class="btn" onclick="go('dash')">Coba lagi</button></div>`); }
+}
+
 function vDash() {
   const tanggal = new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
   const monitor = isMonitor(), teacher = isT();
+  if (!monitor && !teacher && !hasR('siswa') && (hasR('staff') || hasR('staf') || hasR('guru_bk'))) return vDashData();
   
   if (monitor && !teacher) {
     return page('dash', 'Dashboard pengawasan', 'Selamat datang di pusat kendali LMS.', () => {
@@ -682,12 +821,15 @@ function vDash() {
       return diff > -86400000 && diff < (3 * 86400000); // H-3 hingga kemarin
     });
 
+    const gp = O.submissions.filter(s => s.score !== '' && s.score !== null).map(s => Number(s.score) / (Number(asgOf(s.assignment_id).max_score) || 100) * 100)
+      .concat(O.attempts.filter(a => a.submitted && Number(a.max) > 0).map(a => Number(a.score) / Number(a.max) * 100)).filter(Number.isFinite);
+    const avgTxt = gp.length ? (Math.round(gp.reduce((x, y) => x + y, 0) / gp.length * 10) / 10).toLocaleString('id-ID') + '%' : '-';
     const ung = O.submissions.filter(s => s.score === '');
     const qTodo = O.quizzes.filter(q => !O.attempts.some(a => a.quiz_id === q.id && a.submitted)).length;
     
     const stats = t
       ? [['Kelas diampu', O.classes.length], ['Perlu dinilai', ung.length], ['Tugas', O.assignments.length], ['Kuis', O.quizzes.length]]
-      : [['Kelas diikuti', O.classes.length], ['Tugas belum dikumpulkan', todo.length], ['Kuis belum dikerjakan', qTodo], ['Rata-rata nilai', '-']];
+      : [['Kelas diikuti', O.classes.length], ['Tugas belum dikumpulkan', todo.length], ['Kuis belum dikerjakan', qTodo], ['Rata-rata nilai', avgTxt]];
       
     const left = t
       ? (ung.slice(0, 5).map(s => row(s.full_name, esc(asgOf(s.assignment_id).title) + ' • ' + esc(cname(asgOf(s.assignment_id).class_id)), '<span class="badge warn">Nilai</span>', `openClass('${asgOf(s.assignment_id).class_id}','asg')`)).join('') || '<p class="empty">Semua pengumpulan sudah dinilai.</p>')
@@ -768,7 +910,7 @@ const isReadOnlyMonitor = () => !!C && C.access_mode === 'monitor_readonly';
 const empty = (t, s) => `<div class="card empty"><b>${t}</b>${s}</div>`;
 
 function drawClass(tab) {
-  const { cls } = C, t = canManageCurrentClass(), readOnly = isReadOnlyMonitor();
+  CT = tab; const { cls } = C, t = canManageCurrentClass(), readOnly = isReadOnlyMonitor();
   const add = (label, fn) => t ? `<div class="row" style="margin-bottom:14px"><button class="btn" onclick="${fn}">${label}</button></div>` : '';
   let body = '';
   if (tab === 'ann') body = add('Buat pengumuman', 'addAnn()') + (C.announcements.map(a => `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${esc(a.author)} • ${tgl(a.created)}</div><p>${esc(a.body)}</p></div>`).join('') || empty('Belum ada pengumuman', 'Pengumuman dari guru akan tampil di sini.'));
@@ -907,6 +1049,13 @@ async function delPost(id) {
 /* ===== ADMIN DATA ===== */
 function canManageStudents()   { return hasR('admin') || hasR('staff') || hasR('staf') || hasR('guru_bk'); }
 function canManageStaffData()  { return hasR('admin') || hasR('staff') || hasR('staf'); }
+function writeOnly() { if (!canManageStaffData()) { toast('Akses hanya-lihat. Perubahan data dilakukan oleh administrator atau staf TU.', true); return false; } return true; }
+function sinkronOnly() { if (!hasR('admin')) { toast('Sinkron Portal khusus administrator.', true); vDash(); return false; } return true; }
+const searchBox = ph => `<div class="searchbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input type="search" placeholder="${ph}" oninput="tblFilter(this)" aria-label="Cari"></div>`;
+function tblFilter(inp) {
+  const q = inp.value.trim().toLowerCase(), t = $('#main').querySelector('table'); if (!t) return;
+  t.querySelectorAll('tbody tr').forEach(tr => { tr.style.display = !q || tr.textContent.toLowerCase().includes(q) ? '' : 'none'; });
+}
 function adminOnly() { if (!canManageStudents()) { toast('Menu ini memerlukan akses administrasi sekolah.', true); vDash(); return false; } return true; }
 const roleLabel = r => ({siswa:'Siswa',guru:'Guru',admin:'Administrator',staff:'Staff Administrasi',staf:'Staff Administrasi',guru_bk:'Guru BK',kurikulum:'Kurikulum',kepala_sekolah:'Kepala Sekolah'}[String(r||'').toLowerCase()] || r || '—');
 
@@ -916,9 +1065,14 @@ async function adminUsersPage(role) {
   nav(role === 'siswa' ? 'adminStudents' : 'adminTeachers'); view('<p class="empty">Memuat data akun...</p>');
   try {
     const {users} = await api('adminUsers');
+    const w = canManageStaffData(), nm = role === 'siswa' ? 'siswa' : 'guru';
     const list = users.filter(x => String(x.role).toLowerCase() === role || String(x.extra_roles||'').toLowerCase().split(/[,;|]/).includes(role));
-    view(`<div class="top"><div><h2>Data ${role === 'siswa' ? 'Siswa' : 'Guru'}</h2><p>Kelola akun, status akses, reset sandi, serta impor dan ekspor data.</p></div><div class="acts"><button class="btn2" onclick="downloadUserTemplate('${role}')">Template CSV</button><button class="btn2" onclick="exportAdminUsers('${role}')">Ekspor CSV</button><button class="btn2" onclick="importAdminUsers('${role}')">Impor CSV</button><button class="btn" onclick="editAdminUser('${role}')">+ Tambah ${role === 'siswa' ? 'siswa' : 'guru'}</button></div></div>
-    <div class="card" style="overflow-x:auto;padding:0"><table style="margin:0"><thead><tr><th>Nama</th><th>Username</th><th>Peran</th><th>Status</th><th>Aksi</th></tr></thead><tbody>${list.map(x=>`<tr><td><b>${esc(x.full_name)}</b><div class="meta">${esc(x.email||'')}</div></td><td>${esc(x.username)}</td><td>${esc(roleLabel(x.role))}${x.extra_roles ? `<div class="meta">Tambahan: ${esc(x.extra_roles)}</div>`:''}</td><td><span class="badge ${String(x.status).toLowerCase()==='aktif'?'ok':'warn'}">${esc(x.status||'—')}</span></td><td><div class="acts" style="justify-content:flex-start"><button class="btn2" style="padding:.4rem .8rem" onclick="editAdminUser('${role}','${esc(x.user_id)}')">Ubah</button><button class="btn2" style="padding:.4rem .8rem" onclick="resetAdminAccount('${esc(x.user_id)}','${esc(x.username)}')">Reset</button><button class="link" onclick="deleteAdminUser('${esc(x.user_id)}','${esc(x.full_name)}','${role}')">Hapus</button></div></td></tr>`).join('') || `<tr><td colspan="5" style="text-align:center;padding:2rem">Belum ada data ${role === 'siswa' ? 'siswa' : 'guru'}.</td></tr>`}</tbody></table></div>`);
+    const acts = w
+      ? `<button class="btn2" onclick="downloadUserTemplate('${role}')">Template CSV</button><button class="btn2" onclick="exportAdminUsers('${role}')">Ekspor CSV</button><button class="btn2" onclick="importAdminUsers('${role}')">Impor CSV</button><button class="btn" onclick="editAdminUser('${role}')">+ Tambah ${nm}</button>`
+      : `<button class="btn2" onclick="exportAdminUsers('${role}')">Ekspor CSV</button>`;
+    view(`<div class="top"><div><h2>Data ${role === 'siswa' ? 'Siswa' : 'Guru'}</h2><p>${w ? 'Kelola akun, status akses, reset sandi, serta impor dan ekspor data.' : 'Daftar akun untuk dilihat. <span class="ro-chip">Hanya lihat</span>'}</p></div><div class="acts">${acts}</div></div>
+    <div class="toolbar">${searchBox('Cari nama, username, atau status...')}<span class="meta">${list.length} data</span></div>
+    <div class="card" style="overflow-x:auto;padding:0"><table style="margin:0"><thead><tr><th>Nama</th><th>Username</th><th>Peran</th><th>Status</th>${w ? '<th>Aksi</th>' : ''}</tr></thead><tbody>${list.map(x=>`<tr><td><b>${esc(x.full_name)}</b><div class="meta">${esc(x.email||'')}</div></td><td>${esc(x.username)}</td><td>${esc(roleLabel(x.role))}${x.extra_roles ? `<div class="meta">Tambahan: ${esc(x.extra_roles)}</div>`:''}</td><td><span class="badge ${String(x.status).toLowerCase()==='aktif'?'ok':'warn'}">${esc(x.status||'—')}</span></td>${w ? `<td><div class="acts" style="justify-content:flex-start"><button class="btn2" style="padding:.4rem .8rem" onclick="editAdminUser('${role}','${esc(x.user_id)}')">Ubah</button><button class="btn2" style="padding:.4rem .8rem" onclick="resetAdminAccount('${esc(x.user_id)}','${esc(x.username)}')">Reset</button><button class="link" onclick="deleteAdminUser('${esc(x.user_id)}','${esc(x.full_name)}','${role}')">Hapus</button></div></td>` : ''}</tr>`).join('') || `<tr><td colspan="${w ? 5 : 4}" style="text-align:center;padding:2rem">Belum ada data ${nm}.</td></tr>`}</tbody></table></div>`);
   } catch(e) { view(`<div class="card empty"><b>Data belum dapat dimuat</b>${esc(e.message)}<p><button class="btn2" onclick="adminUsersPage('${role}')">Coba lagi</button></p></div>`); }
 }
 function csvCell(v) { 
@@ -957,13 +1111,13 @@ async function exportAdminUsers(role) {
   } catch(e){toast(e.message,true);}
 }
 function downloadUserTemplate(role) {
-  if(!adminOnly() || (role==='guru'&&!canManageStaffData())) return;
+  if(!writeOnly() || (role==='guru'&&!canManageStaffData())) return;
   const headers=['full_name','username','role','extra_roles','email','status','password'];
   downloadCsv(`template-impor-${role}-lms-calm.csv`,[headers,[role==='siswa'?'Nama Siswa':'Nama Guru','username_baru',role,'','', 'aktif','SandiAwalMinimal8']]);
   toast('Template CSV diunduh. Ganti contoh dengan data sebenarnya.');
 }
 function importAdminUsers(role) {
-  if(!adminOnly() || (role==='guru'&&!canManageStaffData())) return;
+  if(!writeOnly() || (role==='guru'&&!canManageStaffData())) return;
   modal(`Impor data ${role==='siswa'?'siswa':'guru'}`,[{n:'csv_file',l:'Pilih file CSV (maks. 5 MB)',t:'file'},{n:'policy',l:'Cara impor',t:'select',v:'upsert',opts:[{v:'upsert',l:'Perbarui username yang sudah ada, tambah yang baru'}]}],async d=>{
     const encoded=d.file_data; if(!encoded) throw new Error('Pilih file CSV terlebih dahulu.');
     if(encoded.length>7*1024*1024) throw new Error('File CSV maksimal 5 MB.');
@@ -988,7 +1142,7 @@ function importAdminUsers(role) {
   },'Mulai impor');
 }
 async function editAdminUser(role, id) {
-  if (!adminOnly()) return;
+  if (!writeOnly()) return;
   let user = null;
   if (id) { try { user = (await api('adminUsers')).users.find(x=>x.user_id===id); } catch(e) { toast(e.message,true); return; } if (!user) return toast('Akun tidak ditemukan.',true); }
   const roleOpts = hasR('admin') ? [{v:role,l:roleLabel(role)},{v:'guru',l:'Guru'},{v:'siswa',l:'Siswa'},{v:'guru_bk',l:'Guru BK'},{v:'staff',l:'Staff Administrasi'},{v:'kurikulum',l:'Kurikulum'},{v:'kepala_sekolah',l:'Kepala Sekolah'},{v:'admin',l:'Administrator'}]
@@ -1006,12 +1160,12 @@ async function editAdminUser(role, id) {
   modal(user?'Ubah akun':'Tambah akun '+roleLabel(role),fields,async d=>{ await api('adminSaveUser',d); toast(user?'Data akun diperbarui':'Akun berhasil dibuat'); adminUsersPage(role); },user?'Simpan perubahan':'Buat akun');
 }
 async function resetAdminAccount(id, username) {
-  if (!adminOnly() || !confirm(`Reset sandi akun ${username}? Sandi sementara baru akan ditampilkan satu kali.`)) return;
+  if (!writeOnly() || !confirm(`Reset sandi akun ${username}? Sandi sementara baru akan ditampilkan satu kali.`)) return;
   try { const r=await api('adminResetAccount',{user_id:id}); modal('Sandi sementara akun',[{n:'username',l:'Username',v:r.username,r:false},{n:'temporary_password',l:'Sandi sementara — salin dan berikan melalui jalur aman',v:r.temporary_password,r:false}],async()=>{},'Tutup'); }
   catch(e) { toast(e.message,true); }
 }
 async function deleteAdminUser(id, name, role) {
-  if (!adminOnly() || !confirm(`Hapus akun ${name}? Riwayat penilaian akan dipertahankan, tetapi akun tidak bisa digunakan lagi.`)) return;
+  if (!writeOnly() || !confirm(`Hapus akun ${name}? Riwayat penilaian akan dipertahankan, tetapi akun tidak bisa digunakan lagi.`)) return;
   try { await api('adminDeleteUser',{user_id:id}); toast('Akun dihapus'); adminUsersPage(role || 'siswa'); }
   catch(e) { toast(e.message,true); }
 }
@@ -1019,15 +1173,16 @@ async function deleteAdminUser(id, name, role) {
 async function adminClassesPage() {
   if (!adminOnly()) return; nav('adminClasses'); view('<p class="empty">Memuat data kelas...</p>');
   try {
-    const r = await api('adminClasses');
+    const r = await api('adminClasses'), w = canManageStaffData();
     _adminTeachersCache = [{v:'',l:'— Belum ditentukan —'},...r.teachers.map(t=>({v:t.user_id,l:t.full_name}))];
     _adminClassesCache = r.classes;
-    view(`<div class="top"><div><h2>Data Kelas</h2><p>Perbarui nama, mata pelajaran, dan guru pengampu.</p></div><button class="btn" onclick="editAdminClass()">+ Tambah kelas</button></div>
-    <div class="card" style="overflow-x:auto;padding:0"><table style="margin:0"><thead><tr><th>Kelas</th><th>Mata pelajaran</th><th>Guru pengampu</th><th>Kode gabung</th><th>Aksi</th></tr></thead><tbody>${r.classes.map(c=>`<tr><td><b>${esc(c.name)}</b><div class="meta">${esc(c.description||'')}</div></td><td>${esc(c.subject||'—')}</td><td>${esc(c.teacher_name||'—')}</td><td><code>${esc(c.code||'—')}</code></td><td><div class="acts" style="justify-content:flex-start"><button class="btn2" style="padding:.4rem .8rem" onclick="editAdminClass('${esc(c.id)}')">Ubah</button><button class="link" onclick="deleteAdminClass('${esc(c.id)}','${esc(c.name)}')">Hapus</button></div></td></tr>`).join('')||'<tr><td colspan="5" style="text-align:center;padding:2rem">Belum ada kelas.</td></tr>'}</tbody></table></div>`);
+    view(`<div class="top"><div><h2>Data Kelas</h2><p>${w ? 'Perbarui nama, mata pelajaran, dan guru pengampu.' : 'Daftar kelas untuk dilihat. <span class="ro-chip">Hanya lihat</span>'}</p></div>${w ? '<button class="btn" onclick="editAdminClass()">+ Tambah kelas</button>' : ''}</div>
+    <div class="toolbar">${searchBox('Cari kelas, mapel, atau guru...')}<span class="meta">${r.classes.length} kelas</span></div>
+    <div class="card" style="overflow-x:auto;padding:0"><table style="margin:0"><thead><tr><th>Kelas</th><th>Mata pelajaran</th><th>Guru pengampu</th>${w ? '<th>Kode gabung</th><th>Aksi</th>' : ''}</tr></thead><tbody>${r.classes.map(c=>`<tr><td><b>${esc(c.name)}</b><div class="meta">${esc(c.description||'')}</div></td><td>${esc(c.subject||'—')}</td><td>${esc(c.teacher_name||'—')}</td>${w ? `<td><code>${esc(c.code||'—')}</code></td><td><div class="acts" style="justify-content:flex-start"><button class="btn2" style="padding:.4rem .8rem" onclick="editAdminClass('${esc(c.id)}')">Ubah</button><button class="link" onclick="deleteAdminClass('${esc(c.id)}','${esc(c.name)}')">Hapus</button></div></td>` : ''}</tr>`).join('')||`<tr><td colspan="${w ? 5 : 3}" style="text-align:center;padding:2rem">Belum ada kelas.</td></tr>`}</tbody></table></div>`);
   } catch(e) { view(`<div class="card empty">${esc(e.message)}<p><button class="btn2" onclick="adminClassesPage()">Coba lagi</button></p></div>`); }
 }
 function editAdminClass(id) {
-  if(!adminOnly()) return;
+  if(!writeOnly()) return;
   const c=(_adminClassesCache||[]).find(x=>x.id===id)||{};
   modal(id?'Ubah kelas':'Tambah kelas',[
     {n:'name',l:'Nama kelas',v:c.name||''},
@@ -1038,7 +1193,7 @@ function editAdminClass(id) {
   ],async d=>{await api('adminSaveClass',d);toast('Data kelas disimpan');adminClassesPage();});
 }
 async function deleteAdminClass(id,name) {
-  if(!adminOnly()||!confirm(`Hapus kelas ${name}? Kelas yang masih memiliki anggota/aktivitas tidak dapat dihapus.`))return;
+  if(!writeOnly()||!confirm(`Hapus kelas ${name}? Kelas yang masih memiliki anggota/aktivitas tidak dapat dihapus.`))return;
   try{await api('adminDeleteClass',{class_id:id});toast('Kelas dihapus');adminClassesPage();}catch(e){toast(e.message,true);}
 }
 
@@ -1076,7 +1231,7 @@ function syncStepsHTML(step) {
   return `<div class="wiz">${steps.map(s => `<div class="wstep${s.k===step?' on':s.k<step?' done':''}"><i>${s.k<step?'✓':s.k}</i>${s.l}</div>`).join('')}</div>`;
 }
 async function adminSyncPage() {
-  if (!canManageStaffData()) { toast('Sinkronisasi hanya dapat dijalankan administrator atau staf administrasi.', true); vDash(); return; }
+  if (!sinkronOnly()) return;
   nav('adminSync');
   view(`<div class="top"><div><h2>Sinkron Portal Akademik</h2><p>Ambil data siswa, guru, kelas, dan jadwal dari Portal Akademik. Data di Portal tidak diubah.</p></div></div>
     ${syncStepsHTML(1)}
@@ -1140,7 +1295,7 @@ function syncRender(r) {
     </div>`;
 }
 async function syncApply(sig, total) {
-  if (!canManageStaffData()) return;
+  if (!hasR('admin')) return;
   if (!confirm(`Terapkan ${total} perubahan ke LMS?\n\n• Data Portal Akademik TIDAK akan diubah.\n• Cadangan spreadsheet LMS dibuat otomatis di Google Drive sebelum data ditulis.\n\nLanjutkan?`)) return;
   $('#main').innerHTML = syncStepsHTML(3) + `<div class="wcard"><h4>Langkah 3 — Menerapkan perubahan</h4><p class="sub">Sedang menulis ke spreadsheet LMS. Jangan tutup halaman ini.</p><p class="empty">Memproses...</p></div>`;
   try {
@@ -1256,7 +1411,8 @@ function buildMenu() {
     const items = [{ key: 'adminStudents', label: 'Data siswa' }, { key: 'adminClasses', label: 'Data kelas' }];
     if (canStaffData) {
       items.splice(1, 0, { key: 'adminTeachers',  label: 'Data guru' });
-      items.push({ key: 'adminSchedules', label: 'Data jadwal' }, { key: 'adminSync', label: 'Sinkron Portal' });
+      items.push({ key: 'adminSchedules', label: 'Data jadwal' });
+      if (rs.includes('admin')) items.push({ key: 'adminSync', label: 'Sinkron Portal' });
     }
     groups.push({ id: 'g-data', icon: ICON.adminStudents, label: 'Manajemen Data', items });
   }
@@ -1266,32 +1422,20 @@ function buildMenu() {
     { key: 'profile', label: 'Profil & keamanan' }
   ]});
 
-  // Render
-  let state = {};
-  try { state = JSON.parse(localStorage.getItem('lms_menu_dd')) || {}; } catch(e) {}
-
+  // Render (akordeon: satu grup terbuka; grup berisi 1 menu tampil sebagai menu langsung)
+  let saved = ''; try { saved = localStorage.getItem('lms_menu_open') || ''; } catch (e) {}
   const seen = new Set();
-  $('#menu').innerHTML = groups.map(g => {
-    const uniq = g.items.filter(i => { if (seen.has(i.key)) return false; seen.add(i.key); return true; });
-    if (!uniq.length) return '';
-    
-    const isOpen = state[g.id] !== false; 
-    const arrow = `<svg class="mg-chevron" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>`;
-    
-    return `
-      <div class="mg" role="button" tabindex="0" aria-expanded="${isOpen}" onclick="toggleMenuGroup('${g.id}', this)">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0">${g.icon}</svg>
-        <span>${g.label}</span>
-        ${arrow}
-      </div>
-      <div class="submenu ${isOpen ? '' : 'closed'}" id="sub-${g.id}">
-        ${uniq.map(i => `<button class="mi" id="n-${i.key}" onclick="go('${i.key}')" type="button">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[i.key]}</svg>
-          <span>${i.label}</span>
-          <i class="nb" id="b-${i.key}" aria-label="Pemberitahuan"></i>
-        </button>`).join('')}
-      </div>
-    `;
+  const prepared = groups.map(g => Object.assign({}, g, { items: g.items.filter(i => { if (seen.has(i.key)) return false; seen.add(i.key); return true; }) })).filter(g => g.items.length);
+  const multi = prepared.filter(g => g.items.length > 1);
+  const openId = multi.some(g => g.id === saved) ? saved : (multi[0] ? multi[0].id : '');
+  const arrow = '<svg class="mg-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>';
+  const itemBtn = (i, top) => `<button class="mi${top ? ' top' : ''}" id="n-${i.key}" onclick="go('${i.key}')" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[i.key]}</svg><span>${i.label}</span><i class="nb" id="b-${i.key}" aria-label="Pemberitahuan"></i></button>`;
+  $('#menu').innerHTML = prepared.map(g => {
+    if (g.items.length === 1) return itemBtn(g.items[0], true);
+    const isOpen = g.id === openId;
+    return `<div class="mg" role="button" tabindex="0" aria-expanded="${isOpen}" onclick="toggleMenuGroup('${g.id}', this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleMenuGroup('${g.id}', this)}">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0">${g.icon}</svg><span>${g.label}</span>${arrow}</div>
+      <div class="submenu ${isOpen ? '' : 'closed'}" id="sub-${g.id}">${g.items.map(i => itemBtn(i, false)).join('')}</div>`;
   }).join('');
 }
 
@@ -1309,8 +1453,7 @@ function go(k) { document.querySelector('aside').classList.remove('open'); (GO[k
 function setBadge(k, n) { const b = $('#b-' + k); if (b) b.textContent = n > 0 ? (n > 99 ? '99+' : n) : ''; }
 
 async function loadO(force) {
-  if (!force && O) return O;
-  O = await api('overview');
+  O = await api('overview', {}, 30000, { fresh: !!force });
   const t = isT(), monitor = isMonitor();
   const visibleAssignmentIds = O.assignments.map(a => a.id);
   if (!t && !monitor) setBadge('tasks', O.assignments.filter(a => !subOf(a)).length);
