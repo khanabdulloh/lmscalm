@@ -76,21 +76,24 @@
     btnSubmit.disabled = true;
     pesanDiv.style.display = "none";
 
-   try {
-      // PERBAIKAN CORS: Menambahkan headers text/plain
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'text/plain;charset=utf-8', // Trik agar tidak diblokir CORS
-        },
-        body: JSON.stringify({
-          action: 'login',
-          username: username,
-          password: password
-        })
-      });
+   // Ubah bagian ini di dalam event listener form
+try {
+  // PERBAIKAN CORS: Gunakan Content-Type text/plain untuk menghindari preflight
+  const response = await fetch(API_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'text/plain;charset=utf-8',
+    },
+    body: JSON.stringify({
+      action: 'login',
+      username: username,
+      password: password
+    })
+  });
 
-      const result = await response.json();
+  const result = await response.json();
+  
+  // ... (kode di bawahnya biarkan sama seperti sebelumnya)
 
       // Jika berhasil
       if (result.status === "success") {
