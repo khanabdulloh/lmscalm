@@ -893,6 +893,44 @@ button.kp{cursor:pointer;transition:transform .18s,box-shadow .18s}button.kp:hov
 .emc{margin-bottom:1.2rem}.emc .emh{margin-bottom:.9rem}.emc h3{font-size:1.02rem;color:var(--navyd);margin:.35rem 0 .2rem}.emc p{font-size:.86rem;color:var(--mut)}.emc .row{display:flex;flex-wrap:wrap;gap:.6rem}
 .offbar{position:fixed;left:50%;bottom:calc(1rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:70;max-width:calc(100vw - 2rem);padding:.6rem 1.1rem;border-radius:99px;background:#1f2937;color:#fff;font-size:.82rem;font-weight:600;box-shadow:var(--shadow-lg)}
 @media(max-width:640px){.fbd{margin-left:0}.eb{flex-wrap:wrap}.fbar .fsr{max-width:none;flex-basis:100%}}
+
+/* ===== Penyempurnaan v3: minimalis, tenang, profesional ===== */
+:root{--r:.9rem;--rad:.9rem}
+:root:not([data-theme=dark]){--bg:#f6f8fb;--line:#e8edf4;--line2:#d9e1ed;--shadow-sm:0 1px 2px rgba(16,32,64,.05);--shadow-md:0 10px 26px -14px rgba(16,32,64,.18)}
+:root:not([data-theme=dark]) body{background:var(--bg)}
+/* tipografi: sans bersih untuk antarmuka, serif hanya untuk identitas (login & sampul) */
+.top h2,.md h3,.qc h4,.qq h3,.rv h4,.qres h3,.qi h3,.hero-text h2{font-family:inherit;font-weight:700;letter-spacing:-.02em}
+.top h2{font-size:clamp(1.4rem,2.2vw,1.7rem)}
+.st b,.wstat b{font-family:inherit;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+/* sidebar datar */
+aside{background:#0b2559;box-shadow:none;border-right:1px solid rgba(255,255,255,.06)}
+.submenu{border-left-color:rgba(255,255,255,.08)}
+.mi:hover{background:rgba(255,255,255,.06)}
+.mi.on{background:rgba(255,255,255,.1);box-shadow:none}
+.mi.on::before{width:2px;background:#fff}
+/* kartu, tombol, lencana */
+.card{box-shadow:var(--shadow-sm)}
+.card.cls:hover,button.card:hover,.kc:hover,.qa:hover,.st:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.kc .kwm{display:none}.kc::before,.cls::before{height:2px}
+.btn{background:var(--navy);box-shadow:none;border-radius:.7rem;font-weight:600}
+.btn:hover{background:var(--navyd);box-shadow:none;transform:none}
+.btn2{border-radius:.7rem;font-weight:600}
+.badge{font-weight:600}
+.pill.on{background:var(--navy)}
+/* sampul & hero lebih tenang */
+.hero-dash,.cover{background:linear-gradient(135deg,#0b3d91,#0a2a63);box-shadow:none}
+.hero-dash{border-radius:1.1rem;padding:1.5rem 1.75rem}.hero-dash::before,.ls::before{display:none}
+.hero-clock{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);backdrop-filter:none}
+/* statistik netral, tanpa warna-warni */
+.st::before{display:none}.st{padding:1.1rem 1.25rem}.st b{font-size:2rem}
+.ph{background:var(--soft);border:0;box-shadow:none;border-radius:.8rem}
+/* tabel */
+th{background:transparent;font-size:.72rem;border-bottom:1px solid var(--line2)}
+tbody tr:hover{background:var(--soft)}
+/* fokus & gerak */
+.fld:focus,.md input:focus,.md textarea:focus,.md select:focus,.searchbox input:focus,.fq input:focus,.fnew:focus{box-shadow:var(--ring)}
+#main>*{animation-duration:.22s}
+@media(max-width:767px){.btn,.btn2,.pill,.mi{min-height:2.75rem}}
 </style>
 </head>
 <body>
@@ -1540,7 +1578,7 @@ async function home() {
     const items = classes.map(c => { const k = jurOf(c); return { c, k, d: JUR[k] }; });
     const used = [...new Set(items.map(x => x.k))];
     const cta = t ? '<button class="btn" onclick="newClass()">+ Buat kelas</button>' : student ? '<button class="btn" onclick="joinClass()">+ Gabung kelas</button>' : '';
-    const card = ({ c, k, d }, i) => `<button class="kc" type="button" data-j="${k}" data-q="${esc((String(c.name || '') + ' ' + (c.subject || '') + ' ' + (c.teacher_name || '') + ' ' + d.n).toLowerCase())}" style="--c1:${d.c[0]};--c2:${d.c[1]};animation-delay:${Math.min(i, 12) * 40}ms" onclick="openClass('${esc(c.id)}')">
+    const card = ({ c, k, d }, i) => `<button class="kc" type="button" data-j="${k}" data-q="${esc((String(c.name || '') + ' ' + (c.subject || '') + ' ' + (c.teacher_name || '') + ' ' + d.n).toLowerCase())}" style="--c1:${d.c[0]};--c2:${d.c[1]};animation-delay:${Math.min(i, 12) * 40}ms" onclick="openClass(${esc(JSON.stringify(String(c.id)))})">
         <span class="kwm" aria-hidden="true">${jIcon(d.i)}</span>
         <span class="ktop"><span class="kic" aria-hidden="true">${jIcon(d.i)}</span><span class="ktag">${esc(d.n)}</span></span>
         <h3>${esc(c.name)}</h3><span class="ks">${esc(c.subject || 'Mata pelajaran')}</span>
@@ -1622,13 +1660,13 @@ function asgCard(a, t) {
   if (t) {
     foot = `<details><summary>${subs.length} pengumpulan</summary>${subs.map(s => `<div class="sr"><div><b>${esc(s.full_name)}</b><br>${s.file_url ? `<a href="${esc(s.file_url)}" target="_blank" rel="noopener">Buka berkas</a> ` : ''}<span class="meta">${esc(s.note || '')}</span></div>
       <input id="sc-${s.id}" type="number" min="0" max="${a.max_score}" value="${esc(s.score)}" placeholder="/${a.max_score}" aria-label="Nilai"><input id="fb-${s.id}" value="${esc(s.feedback || '')}" placeholder="Umpan balik" aria-label="Umpan balik">
-      <button class="btn" onclick="gradeIt('${s.id}')">Simpan nilai</button></div>`).join('') || '<p class="meta" style="margin-top:8px">Belum ada pengumpulan.</p>'}</details>`;
+      <button class="btn" onclick="gradeIt(${esc(JSON.stringify(String(s.id)))})">Simpan nilai</button></div>`).join('') || '<p class="meta" style="margin-top:8px">Belum ada pengumpulan.</p>'}</details>`;
   } else if (isReadOnlyMonitor()) {
     foot = `<details><summary>${subs.length} pengumpulan • mode pemantauan</summary>${subs.map(s => `<div class="sr"><div><b>${esc(s.full_name)}</b></div><span class="badge ${s.score !== '' ? 'ok' : 'warn'}">${s.score !== '' ? `Nilai ${esc(s.score)}/${a.max_score}` : 'Belum dinilai'}</span></div>`).join('') || '<p class="meta" style="margin-top:8px">Belum ada pengumpulan.</p>'}</details>`;
   } else {
     const s = subs[0];
     foot = `<div class="row" style="justify-content:space-between;align-items:center;margin-top:10px"><span class="badge ${s ? (s.score !== '' ? 'ok' : 'warn') : ''}">${s ? (s.score !== '' ? `Nilai ${s.score}/${a.max_score}` : 'Menunggu penilaian') : 'Belum dikumpulkan'}</span>
-      <button class="btn${s ? '2' : ''}" onclick="submitIt('${a.id}')">${s ? 'Kumpulkan ulang' : 'Kumpulkan tugas'}</button></div>${s && s.feedback ? `<p class="meta">Umpan balik: ${esc(s.feedback)}</p>` : ''}`;
+      <button class="btn${s ? '2' : ''}" onclick="submitIt(${esc(JSON.stringify(String(a.id)))})">${s ? 'Kumpulkan ulang' : 'Kumpulkan tugas'}</button></div>${s && s.feedback ? `<p class="meta">Umpan balik: ${esc(s.feedback)}</p>` : ''}`;
   }
   return `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${a.due ? 'Batas: ' + tgl(a.due) + ' • ' : ''}Nilai maksimal ${a.max_score}</div>${a.description ? `<p>${esc(a.description)}</p>` : ''}${foot}</div>`;
 }
@@ -1750,10 +1788,10 @@ function quizCard(q) {
   const chips = [q.qcount + ' soal', q.duration + ' menit', c.qt ? c.qt + ' detik/soal' : '', c.shuf ? 'Soal diacak' : '', c.pass ? 'Ketuntasan ≥ ' + c.pass : ''].filter(Boolean).map(x => `<span>${x}</span>`).join('');
   const rows = at.map(a => `<div class="qr"><span>${esc(a.full_name)}</span><b>${a.submitted ? a.score + '/' + a.max : 'Sedang dikerjakan'}</b></div>`).join('') || '<p class="meta">Belum ada hasil.</p>';
   let foot, done = false;
-  if (t || ro) foot = `<div class="qft"><div class="qst"><div><b>${fin.length}</b><small>selesai</small></div><div><b>${fin.length ? avg : '–'}</b><small>rata-rata</small></div><div class="qbm"><i style="width:${avg}%"></i></div></div></div><details><summary>Lihat hasil siswa${ro ? ' • pemantauan' : ''}</summary>${rows}</details>${fin.length ? `<div style="margin-top:.8rem"><button class="btn2" onclick="quizStats('${q.id}')">Analisis soal</button></div>` : ''}`;
+  if (t || ro) foot = `<div class="qft"><div class="qst"><div><b>${fin.length}</b><small>selesai</small></div><div><b>${fin.length ? avg : '–'}</b><small>rata-rata</small></div><div class="qbm"><i style="width:${avg}%"></i></div></div></div><details><summary>Lihat hasil siswa${ro ? ' • pemantauan' : ''}</summary>${rows}</details>${fin.length ? `<div style="margin-top:.8rem"><button class="btn2" onclick="quizStats(${esc(JSON.stringify(String(q.id)))})">Analisis soal</button></div>` : ''}`;
   else { const a = at[0]; done = !!(a && a.submitted);
     const pass = done && c.pass ? (pc(a) >= c.pass ? '<span class="badge ok">Tuntas</span>' : '<span class="badge warn">Belum tuntas</span>') : '';
-    foot = `<div class="qft">${done ? `<div class="qsc">${a.score}<small> / ${a.max}</small></div>${pass}${c.rev === 0 ? '' : `<button class="btn2" onclick="reviewQuiz('${q.id}')">Lihat pembahasan</button>`}` : `<span class="badge${a ? ' warn' : ''}">${a ? 'Sedang dikerjakan' : 'Belum dikerjakan'}</span><button class="btn" onclick="startQuiz('${q.id}')">${a ? 'Lanjutkan' : 'Mulai kuis'}</button>`}</div>`; }
+    foot = `<div class="qft">${done ? `<div class="qsc">${a.score}<small> / ${a.max}</small></div>${pass}${c.rev === 0 ? '' : `<button class="btn2" onclick="reviewQuiz(${esc(JSON.stringify(String(q.id)))})">Lihat pembahasan</button>`}` : `<span class="badge${a ? ' warn' : ''}">${a ? 'Sedang dikerjakan' : 'Belum dikerjakan'}</span><button class="btn" onclick="startQuiz(${esc(JSON.stringify(String(q.id)))})">${a ? 'Lanjutkan' : 'Mulai kuis'}</button>`}</div>`; }
   return `<div class="card qc${done ? ' done' : ''}"><div class="qch"><span class="qic">${QICO}</span><div><h4>${esc(q.title)}</h4><div class="qchips">${chips}</div></div></div>${text ? `<p>${esc(text)}</p>` : ''}${foot}</div>`;
 }
 
@@ -1948,7 +1986,7 @@ function frCard(p, rp) {
   const reps = (rp[p.id] || []).slice().sort((a, b) => (yes(b, 'best') - yes(a, 'best')) || String(a.created).localeCompare(String(b.created)));
   const ro = isReadOnlyMonitor(), closed = yes(p, 'closed');
   const replies = reps.length ? `<div class="fr">${reps.map(r => `<div class="item${yes(r, 'best') ? ' best' : ''}${yes(r, 'hidden') ? ' hid' : ''}">${frHead(r, false)}<p class="fb">${esc(r.body)}</p>${frActs(r, false)}</div>`).join('')}</div>` : '';
-  const form = ro ? '' : closed ? '<p class="meta" style="margin-top:.8rem">Utas ini ditutup oleh guru. Balasan baru tidak dapat ditambahkan.</p>' : `<div class="fq"><input id="rp-${esc(p.id)}" maxlength="2000" placeholder="Tulis balasan" aria-label="Balasan" onkeydown="if(event.key==='Enter')sendPost('${esc(p.id)}')"><button class="btn2" type="button" onclick="sendPost('${esc(p.id)}')">Balas</button></div>`;
+  const form = ro ? '' : closed ? '<p class="meta" style="margin-top:.8rem">Utas ini ditutup oleh guru. Balasan baru tidak dapat ditambahkan.</p>' : `<div class="fq"><input id="rp-${esc(p.id)}" maxlength="2000" placeholder="Tulis balasan" aria-label="Balasan" onkeydown="if(event.key==='Enter')sendPost(${esc(JSON.stringify(String(p.id)))})"><button class="btn2" type="button" onclick="sendPost(${esc(JSON.stringify(String(p.id)))})">Balas</button></div>`;
   return `<div class="card item${yes(p, 'pinned') ? ' pinned' : ''}${yes(p, 'hidden') ? ' hid' : ''}">${frHead(p, true)}${p.title ? `<h4 class="ft">${esc(p.title)}</h4>` : ''}<p class="fb">${esc(p.body)}</p>${frActs(p, true)}${replies}${form}</div>`;
 }
 function frList() {
@@ -2835,9 +2873,13 @@ function attInput(d) {
   var jt = function (x) { try { return new Date(x).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } };
   var sj = se ? '<p class="meta" style="margin-bottom:.8rem">Pertemuan ' + (dar ? 'daring' + (se.platform ? ' • ' + esc(se.platform) : '') + ' • ' + Object.keys(jd).length + ' siswa telah bergabung' : se.mode === 'mandiri' ? 'belajar mandiri' : 'tatap muka') + (se.topic ? ' • Topik: ' + esc(se.topic) : '') + '</p>' : '';
   if (!AT.st.length) { $('#atb').innerHTML = '<div class="card empty"><b>Belum ada siswa di kelas ini</b>Siswa bergabung memakai kode kelas.</div>'; return; }
-  AT.st.forEach(function (s) { var r = d.records[s.user_id]; AT.marks[s.user_id] = r ? r.status : 'H'; });
+  /* Usulan dari data Gabung: hanya untuk pertemuan daring yang presensinya belum dicatat. Guru tetap harus mengonfirmasi dengan menekan Simpan. */
+  var sug = dar && !d.saved && Object.keys(jd).length > 0;
+  AT.st.forEach(function (s) { var r = d.records[s.user_id]; AT.marks[s.user_id] = r ? r.status : (sug ? (jd[s.user_id] ? 'H' : 'A') : 'H'); });
+  if (sug) sj += '<div class="walert info" style="margin-bottom:.8rem">Usulan otomatis dari data tombol Gabung: siswa yang sudah bergabung diusulkan <b>Hadir daring</b>, yang belum bergabung diusulkan <b>Alpa</b>. Periksa, ubah bila perlu (misalnya Sakit atau Izin), lalu tekan Simpan presensi untuk mengonfirmasi.</div>';
   var rows = AT.st.map(function (s) {
     var r = d.records[s.user_id] || {}, u = esc(s.user_id);
+    if (sug && !d.records[s.user_id] && jd[s.user_id] && !r.note) r = { note: 'Hadir daring' };
     return '<div class="at-r" data-u="' + u + '"><b>' + esc(s.full_name) + (dar ? '<small class="at-j">' + (jd[s.user_id] ? 'Bergabung ' + esc(jt(jd[s.user_id])) : 'Belum bergabung') + '</small>' : '') + '</b><div class="at-s">' + ['H', 'S', 'I', 'A'].map(function (k) {
       return '<button type="button" class="pill' + (AT.marks[s.user_id] === k ? ' on' : '') + '" data-u="' + u + '" data-s="' + k + '" onclick="attSet(this)" aria-label="' + ATL[k] + '">' + ATL[k] + '</button>';
     }).join('') + '</div><input class="at-n" data-n="' + u + '" maxlength="120" placeholder="Catatan (opsional)" value="' + esc(r.note || '') + '" aria-label="Catatan"></div>';
@@ -2972,7 +3014,7 @@ var HM_DAYS = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
 var HM_SHORT = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
 function hmMode() { return isT() ? 'teacher' : isMonitor() ? 'monitor' : 'student'; }
 function hmDayIdx(d) { return (d.getDay() + 6) % 7; }
-function hmMin(t) { var m = String(t || '').match(/^(\d{1,2}):(\d{2})/); return m ? (+m[1]) * 60 + (+m[2]) : -1; }
+function hmMin(t) { var m = String(t == null ? '' : t).trim().match(/^(\d{1,2}):(\d{2})$/); if (!m) return -1; var h = Number(m[1]), n = Number(m[2]); return h >= 0 && h <= 23 && n >= 0 && n <= 59 ? h * 60 + n : -1; }
 function hmNowMin() { var n = new Date(); return n.getHours() * 60 + n.getMinutes(); }
 function hmSapa() { return userFullName(); }
 function hmTod() { var h = new Date().getHours(); return h < 11 ? 'pagi' : h < 15 ? 'siang' : h < 19 ? 'sore' : 'malam'; }
@@ -3107,7 +3149,7 @@ function hmGoAtt(cid) { AT.cid = cid; AT.tab = 'in'; AT.date = todayStr(); go('a
 
 function hmSched() {
   var el = $('#hm-sched'); if (!el || !HM.data) return;
-  var mode = hmMode(), nowI = hmDayIdx(new Date()), nowM = hmNowMin(), by = {}, done = HM.data.done_today || [];
+  var mode = hmMode(), nowI = hmDayIdx(new Date()), nowM = hmNowMin(), by = {}, done = (HM.data.done_today || []).map(String);
   HM_DAYS.forEach(function (d) { by[d] = []; });
   HM.data.schedules.forEach(function (s) { if (by[s.day]) by[s.day].push(s); });
   HM_DAYS.forEach(function (d) { by[d].sort(function (a, b) { return hmMin(a.start_time) - hmMin(b.start_time); }); });
@@ -3121,11 +3163,11 @@ function hmSched() {
   var isToday = HM.day === HM_DAYS[nowI], list = by[HM.day] || [], nextDone = false;
   var items = list.map(function (s) {
     var a = hmMin(s.start_time), b = hmMin(s.end_time), st = '';
-    if (isToday) { if (nowM >= b) st = 'done'; else if (nowM >= a) st = 'live'; else if (!nextDone) { st = 'next'; nextDone = true; } }
+    if (isToday && a >= 0 && b > a) { if (nowM >= b) st = 'done'; else if (nowM >= a) st = 'live'; else if (!nextDone) { st = 'next'; nextDone = true; } }
     var title = s.subject || s.class_name || 'Pelajaran', meta = [(s.subject && s.class_name && s.subject !== s.class_name) ? s.class_name : '', s.room ? 'Ruang ' + s.room : '', mode !== 'teacher' ? s.teacher_name : ''].filter(Boolean).map(esc).join(' • ');
     var tag = st === 'live' ? '<span class="badge ok">Berlangsung</span>' : st === 'next' ? '<span class="badge warn">Berikutnya</span>' : st === 'done' ? '<span class="badge">Selesai</span>' : '';
     var pg = st === 'live' && b > a ? '<div class="hm-pg" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + Math.round((nowM - a) / (b - a) * 100) + '"><i style="width:' + Math.min(100, Math.max(0, (nowM - a) / (b - a) * 100)) + '%"></i></div>' : '';
-    var act = (mode === 'teacher' && isToday && nowM >= a && done.indexOf(s.class_id) === -1) ? '<button type="button" class="hm-act" onclick="hmGoAtt(\'' + esc(s.class_id) + '\')">Isi presensi</button>' : '';
+    var act = (mode === 'teacher' && isToday && a >= 0 && b > a && nowM >= a && done.indexOf(String(s.class_id)) === -1) ? '<button type="button" class="hm-act" onclick="hmGoAtt(\'' + esc(s.class_id) + '\')">Isi presensi</button>' : '';
     var dt = hmDateOf(HM.day), se = hmSes(s.class_id, dt), sx = hmSesTxt(se);
     return '<div class="hm-it ' + st + '"><div class="hm-t"><b>' + esc(s.start_time) + '</b>' + esc(s.end_time) + '</div><div class="hm-b"><div class="hm-bh"><strong>' + esc(title) + '</strong>' + tag + '</div>' + (meta ? '<span class="m">' + meta + '</span>' : '') + (s.notes ? '<span class="m">' + esc(s.notes) + '</span>' : '') + sx + pg + hmBtns(act, s, dt, se, isToday, mode) + '</div></div>';
   }).join('');
@@ -3165,9 +3207,9 @@ function hmAtt() {
   return stu ? hmAttStu(el, cl) : hmAttStaff(el, cl);
 }
 function hmAttStaff(el, cl) {
-  if (!cl.some(function (c) { return c.class_id === HM.cid; })) HM.cid = (cl.find(function (c) { return c.meetings.length; }) || cl[0]).class_id;
-  var c = cl.find(function (x) { return x.class_id === HM.cid; }), m = c.meetings, s = c.sum;
-  var opts = cl.map(function (x) { return '<option value="' + esc(x.class_id) + '"' + (x.class_id === HM.cid ? ' selected' : '') + '>' + esc(x.class_name) + '</option>'; }).join('');
+  if (!cl.some(function (c) { return String(c.class_id) === String(HM.cid); })) HM.cid = (cl.find(function (c) { return c.meetings && c.meetings.length; }) || cl[0]).class_id;
+  var c = cl.find(function (x) { return String(x.class_id) === String(HM.cid); }), m = c.meetings || [], s = c.sum;
+  var opts = cl.map(function (x) { return '<option value="' + esc(x.class_id) + '"' + (String(x.class_id) === String(HM.cid) ? ' selected' : '') + '>' + esc(x.class_name) + '</option>'; }).join('');
   var head = '<div class="hm-h"><div><h3>Kehadiran per pertemuan</h3><small>' + (c.total_meetings ? c.total_meetings + ' pertemuan tercatat' + (c.total_meetings > m.length ? ', ' + m.length + ' terakhir ditampilkan' : '') : 'Belum ada presensi') + '</small></div></div>'
     + '<div class="hm-top"><select class="sel" aria-label="Pilih kelas" onchange="HM.cid=this.value;hmAtt()">' + opts + '</select><button type="button" class="link" onclick="go(\'attendance\')">Buka presensi</button></div>';
   if (!m.length) { el.innerHTML = head + '<div class="hm-empty"><b>Belum ada presensi di kelas ini</b>' + (isT() ? 'Catat presensi pertama untuk melihat grafiknya.' : 'Grafik muncul setelah guru mencatat presensi.') + '</div>'; return; }
