@@ -8,6 +8,8 @@
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
 <meta name="theme-color" content="#0b3d91">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -541,6 +543,33 @@ body{background:radial-gradient(64rem 28rem at 100% -8%,#e4edfb,transparent 62%)
 .hlp-i{margin-top:0;border-top:0;padding-top:0}.hlp-i[open] summary{color:var(--navy)}
 .hlp-f{margin-top:1.4rem;padding:1.1rem 1.2rem;border-radius:1rem;background:var(--soft);border:1px solid var(--line);font-size:.84rem;line-height:1.65;color:var(--mut)}.hlp-f b{display:block;margin-bottom:.2rem;color:var(--navyd);font-size:.9rem}
 .pf-hint{margin:.2rem 0 1rem;font-size:.82rem;color:var(--mut);line-height:1.6}
+
+/* ===== Tambahan: toolbar, notifikasi, pencarian, mode gelap ===== */
+:root{--card:#fff}
+#tb{position:fixed;top:.65rem;right:1rem;z-index:45;display:flex;gap:.4rem}
+#tb button{position:relative;display:grid;place-items:center;width:2.3rem;height:2.3rem;border:1px solid var(--line2);border-radius:50%;background:var(--card);color:var(--navy);box-shadow:var(--shadow-sm);transition:.2s}
+#tb button:hover{border-color:var(--navy);transform:translateY(-1px)}
+#tb svg{width:1.05rem;height:1.05rem}
+#nb{position:absolute;top:-.3rem;right:-.3rem;min-width:1.1rem;height:1.1rem;padding:0 .3rem;border-radius:99px;background:#dc2626;color:#fff;font-size:.65rem;font-weight:700;display:grid;place-items:center}
+#np{position:fixed;top:3.5rem;right:1rem;z-index:46;width:min(24rem,calc(100vw - 2rem));max-height:70vh;overflow:auto;background:var(--card);border:1px solid var(--line2);border-radius:1rem;box-shadow:var(--shadow-lg);padding:.5rem}
+#np h4{padding:.5rem .7rem;font-size:.85rem;color:var(--navyd)}
+.ni{display:flex;gap:.7rem;width:100%;text-align:left;padding:.65rem .7rem;border:0;background:none;border-radius:.7rem}
+.ni:hover{background:var(--soft)}.ni b{display:block;font-size:.85rem}.ni small{color:var(--mut);font-size:.76rem}
+.ni .dt{flex:none;width:.5rem;height:.5rem;margin-top:.45rem;border-radius:50%;background:var(--line2)}
+.ni.n .dt{background:var(--navy)}.ni.u .dt{background:#dc2626}
+.ag h3{margin:1.2rem 0 .5rem;font-size:.82rem;letter-spacing:.04em;text-transform:uppercase;color:var(--mut)}
+.ag h3.late{color:#b4232f}
+@media(min-width:768px){main{padding-top:3.4rem}}
+[data-theme=dark]{color-scheme:dark;--ink:#e4ebf7;--mut:#a3b3cc;--faint:#7f8fa8;--line:#22314d;--line2:#2c3d5c;--bg:#0b1322;--soft:#15223b;--card:#111b30;--navy:#5b8ff0;--navyd:#d6e4ff;--shadow-sm:0 2px 8px rgba(0,0,0,.35);--shadow-md:0 8px 24px -10px rgba(0,0,0,.5);--shadow-lg:0 20px 40px -20px rgba(0,0,0,.6)}
+[data-theme=dark] body{background:var(--bg)}
+[data-theme=dark] :is(.card,.md,.rf,.pill,.md input[type=file],.oi input[data-o]){background:var(--card)}
+[data-theme=dark] :is(.md input,.md textarea,.md select){background:#0d1628;color:var(--ink)}
+[data-theme=dark] .pill:hover{background:var(--soft)}
+[data-theme=dark] .pill.on,[data-theme=dark] .btn{background:var(--navy);color:#fff}
+[data-theme=dark] .btn:hover{background:#3a6fd0}
+[data-theme=dark] .badge{background:#1d2c48;color:#c3d1ea}
+[data-theme=dark] .badge.ok{background:#064e3b;color:#a7f3d0}
+[data-theme=dark] .badge.warn{background:#5a3a07;color:#fde68a}
 </style>
 </head>
 <body>
@@ -589,6 +618,8 @@ body{background:radial-gradient(64rem 28rem at 100% -8%,#e4edfb,transparent 62%)
 </div>
 
 <div id="app" class="hide">
+  <div id="tb"><button type="button" onclick="openSearch()" title="Cari (Ctrl+K)" aria-label="Cari"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button><button type="button" onclick="toggleTheme()" title="Mode gelap/terang" aria-label="Ganti tema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></button><button type="button" id="nbtn" onclick="toggleNotifs(event)" title="Notifikasi" aria-label="Notifikasi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span id="nb" class="hide"></span></button></div>
+  <div id="np" class="hide" role="dialog" aria-label="Notifikasi"></div>
   <header class="mbar"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt=""><b>SMK CALM</b><button onclick="document.querySelector('aside').classList.toggle('open')" aria-label="Buka menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></header>
   <aside aria-label="Menu utama">
     <img class="logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt=""><p class="nm">SMK CALM</p><span class="bd" id="wr"></span><p class="sb-user" id="sbu"></p>
@@ -748,7 +779,7 @@ $('#srvr').onclick = cekServer;
 
 function logout(call) {
   if (call && S) api('logout').catch(() => {});
-  S = null; sessionStorage.removeItem('lms'); sessionStorage.removeItem('quoteShown'); cacheClear(); clearInterval(CLOCK_INT); O = null; C = null;
+  S = null; document.documentElement.removeAttribute('data-theme'); sessionStorage.removeItem('lms'); sessionStorage.removeItem('quoteShown'); cacheClear(); clearInterval(CLOCK_INT); O = null; C = null;
   $('#app').classList.add('hide'); $('#login').classList.remove('hide'); $('#pw').value = ''; cekServer();
 }
 
@@ -777,6 +808,7 @@ function start() {
     sessionStorage.setItem('quoteShown', '1');
   }
 
+  applyTheme(); setTimeout(() => { loadO().catch(() => {}); }, 400);
   vDash();
 }
 function nav(k) {
@@ -1809,6 +1841,7 @@ function buildMenu() {
       { key: 'home',    label: 'Kelas yang dikelola' },
       { key: 'tasks',   label: 'Tugas kelas' },
       { key: 'quizzes', label: 'Kuis kelas' },
+      { key: 'agenda',  label: 'Agenda & tenggat' },
       { key: 'news',    label: 'Pengumuman' }
     ]});
   } else if (rs.includes('siswa')) {
@@ -1816,6 +1849,7 @@ function buildMenu() {
       { key: 'home',    label: 'Kelas saya' },
       { key: 'tasks',   label: 'Tugas saya' },
       { key: 'quizzes', label: 'Kuis saya' },
+      { key: 'agenda',  label: 'Agenda & tenggat' },
       { key: 'news',    label: 'Pengumuman' }
     ]});
   } else if (monitor) {
@@ -1872,7 +1906,7 @@ function buildMenu() {
 const GO = {
   dash: () => vDash(), home: () => home(), tasks: () => vTasks(), quizzes: () => vQuiz(),
   news: () => vNews(), grades: () => grades(), review: () => vReview(), recap: () => vRecap(),
-  profile: () => vProfile(),
+  profile: () => vProfile(), agenda: () => vAgenda(),
   adminStudents:  () => adminUsersPage('siswa'),
   adminTeachers:  () => adminUsersPage('guru'),
   adminClasses:   () => adminClassesPage(),
@@ -1888,6 +1922,7 @@ async function loadO(force) {
   const visibleAssignmentIds = O.assignments.map(a => a.id);
   if (!t && !monitor) setBadge('tasks', O.assignments.filter(a => !subOf(a)).length);
   else if (t) setBadge('review', O.submissions.filter(s => visibleAssignmentIds.includes(s.assignment_id) && s.score === '').length);
+  try { updateNotifs(); } catch (e) {}
   return O;
 }
 async function page(k, title, sub, render, force) {
@@ -2036,6 +2071,111 @@ async function grades() {
 }
 
 try { const ru = localStorage.getItem('lms_u'); if (ru) { $('#u').value = ru; $('#rem').checked = true; } } catch (x) {}
+
+/* ===== Tema, notifikasi, agenda, pencarian, PWA ===== */
+function themeOn() { var v = null; try { v = localStorage.getItem('lms_theme'); } catch (e) {} return v ? v === 'dark' : !!(window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches); }
+function applyTheme() { var on = !!S && themeOn(), r = document.documentElement; if (on) r.setAttribute('data-theme', 'dark'); else r.removeAttribute('data-theme'); var m = document.querySelector('meta[name=theme-color]'); if (m) m.content = on ? '#0b1322' : '#0b3d91'; }
+function toggleTheme() { try { localStorage.setItem('lms_theme', themeOn() ? 'light' : 'dark'); } catch (e) {} applyTheme(); }
+
+var NL = [];
+function seenKey() { return 'lms_seen_' + (S ? S.user.user_id : ''); }
+function seenGet() { try { return JSON.parse(localStorage.getItem(seenKey())) || {}; } catch (e) { return {}; } }
+function buildNotifs() {
+  if (!S || !O) return [];
+  var now = Date.now(), DAY = 86400000, L = [], t = isT(), me = String(S.user.user_id), seen = seenGet();
+  var oc = function (cid, tab) { return "openClass('" + cid + "','" + tab + "')"; };
+  if (!t && hasR('siswa')) {
+    O.assignments.forEach(function (a) {
+      var s = subOf(a);
+      if (s && s.score !== '' && s.score != null) L.push({ id: 'g:' + s.id, t: 'Nilai tugas sudah keluar', m: a.title + ' • ' + s.score + '/' + a.max_score, k: oc(a.class_id, 'asg') });
+      else if (!s && a.due) {
+        var dl = new Date(a.due).getTime();
+        if (now > dl + DAY) L.push({ id: 'l:' + a.id, u: 1, t: 'Tugas melewati batas waktu', m: a.title + ' • ' + cname(a.class_id), k: oc(a.class_id, 'asg') });
+        else if (dl + DAY - now < 3 * DAY) L.push({ id: 'd:' + a.id, u: 1, t: 'Tenggat segera berakhir', m: a.title + ' • ' + tgl(a.due), k: oc(a.class_id, 'asg') });
+      }
+    });
+    O.quizzes.forEach(function (q) {
+      var at = O.attempts.find(function (x) { return x.quiz_id === q.id && String(x.user_id) === me; });
+      if (!at || !at.submitted) L.push({ id: 'q:' + q.id, t: 'Kuis menunggu dikerjakan', m: q.title + ' • ' + cname(q.class_id), k: oc(q.class_id, 'qz') });
+    });
+  }
+  if (t) {
+    O.assignments.forEach(function (a) {
+      var n = O.submissions.filter(function (s) { return s.assignment_id === a.id && (s.score === '' || s.score == null); }).length;
+      if (n) L.push({ id: 'r:' + a.id + ':' + n, u: 1, t: n + ' pengumpulan perlu dinilai', m: a.title + ' • ' + cname(a.class_id), k: oc(a.class_id, 'asg') });
+    });
+  }
+  (O.announcements || []).forEach(function (n) {
+    if (now - new Date(n.created).getTime() < 7 * DAY) L.push({ id: 'a:' + n.id, t: 'Pengumuman: ' + n.title, m: cname(n.class_id), k: oc(n.class_id, 'ann') });
+  });
+  L.forEach(function (x) { x.n = !seen[x.id]; });
+  return L.sort(function (a, b) { return (b.u || 0) - (a.u || 0) || (b.n | 0) - (a.n | 0); });
+}
+function updateNotifs() {
+  NL = buildNotifs(); var c = NL.filter(function (x) { return x.n; }).length, b = $('#nb');
+  if (b) { b.textContent = c > 9 ? '9+' : c; b.classList.toggle('hide', !c); }
+}
+function closeNotifs() { var p = $('#np'); if (p) p.classList.add('hide'); }
+function toggleNotifs(e) {
+  if (e) e.stopPropagation();
+  var p = $('#np'); if (!p.classList.contains('hide')) { closeNotifs(); return; }
+  updateNotifs();
+  p.innerHTML = '<h4>Notifikasi</h4>' + (NL.length ? NL.map(function (x) {
+    return '<button type="button" class="ni' + (x.u ? ' u' : x.n ? ' n' : '') + '" onclick="closeNotifs();' + x.k + '"><i class="dt"></i><span><b>' + esc(x.t) + '</b><small>' + esc(x.m) + '</small></span></button>';
+  }).join('') : '<p class="empty" style="padding:1.2rem .8rem">Belum ada notifikasi. Semuanya sudah terkendali.</p>');
+  p.classList.remove('hide');
+  var seen = seenGet(); NL.forEach(function (x) { seen[x.id] = 1; });
+  try { localStorage.setItem(seenKey(), JSON.stringify(seen)); } catch (x) {}
+  var b = $('#nb'); if (b) b.classList.add('hide');
+}
+
+function vAgenda() {
+  return page('agenda', 'Agenda &amp; tenggat', 'Tenggat tugas yang perlu perhatian Anda.', function () {
+    var t = isT(), now = Date.now(), DAY = 86400000, g = { late: [], today: [], week: [], later: [] };
+    O.assignments.forEach(function (a) {
+      if (!a.due || (!t && subOf(a))) return;
+      var d = new Date(a.due).getTime() + DAY - now;
+      if (d < 0) { if (!t) g.late.push(a); } else if (d < DAY) g.today.push(a); else if (d < 7 * DAY) g.week.push(a); else g.later.push(a);
+    });
+    Object.keys(g).forEach(function (k) { g[k].sort(function (a, b) { return String(a.due).localeCompare(String(b.due)); }); });
+    var sec = function (cls, ttl, list) {
+      return list.length ? '<h3 class="' + cls + '">' + ttl + ' (' + list.length + ')</h3><div class="card">' + list.map(function (a) {
+        return row(a.title, esc(cname(a.class_id)) + ' • ' + dueTxt(a), t ? '<span class="badge">' + O.submissions.filter(function (s) { return s.assignment_id === a.id; }).length + ' terkumpul</span>' : tagDue(a), "openClass('" + a.class_id + "','asg')");
+      }).join('') + '</div>' : '';
+    };
+    var out = sec('late', 'Terlambat', g.late) + sec('', 'Hari ini', g.today) + sec('', '7 hari ke depan', g.week) + sec('', 'Selanjutnya', g.later);
+    return '<div class="ag">' + (out || '<div class="card empty"><b>Tidak ada tenggat mendesak</b>Semua tugas sudah beres.</div>') + '</div>';
+  });
+}
+
+function openSearch() {
+  if (!S || $('#gs')) return;
+  var m = document.createElement('div'); m.className = 'ov'; m.id = 'gs'; m.style.alignItems = 'flex-start';
+  m.innerHTML = '<div class="md" role="dialog" aria-modal="true" aria-label="Pencarian" style="margin-top:8vh;max-width:36rem"><input id="gsq" type="search" placeholder="Cari kelas, tugas, kuis, atau menu…" autocomplete="off" style="margin:0"><div id="gsr" style="margin-top:.8rem"></div></div>';
+  document.body.appendChild(m);
+  m.addEventListener('mousedown', function (e) { if (e.target === m) m.remove(); });
+  var idx = [];
+  document.querySelectorAll('#menu .mi').forEach(function (b) { if (b.id && b.id.indexOf('n-') === 0) idx.push({ l: b.textContent.replace(/\d+\+?$/, '').trim(), s: 'Menu', k: "go('" + b.id.slice(2) + "')" }); });
+  if (O) {
+    O.classes.forEach(function (c) { idx.push({ l: c.name, s: 'Kelas • ' + (c.subject || ''), k: "openClass('" + c.id + "')" }); });
+    O.assignments.forEach(function (a) { idx.push({ l: a.title, s: 'Tugas • ' + cname(a.class_id), k: "openClass('" + a.class_id + "','asg')" }); });
+    O.quizzes.forEach(function (q) { idx.push({ l: q.title, s: 'Kuis • ' + cname(q.class_id), k: "openClass('" + q.class_id + "','qz')" }); });
+  }
+  var q = $('#gsq'), r = $('#gsr');
+  function draw() {
+    var v = q.value.trim().toLowerCase(), hit = idx.filter(function (x) { return !v || (x.l + ' ' + x.s).toLowerCase().indexOf(v) > -1; }).slice(0, 12);
+    r.innerHTML = hit.map(function (x) { return row(x.l, esc(x.s), '', "document.getElementById('gs').remove();" + x.k); }).join('') || '<p class="empty">Tidak ada hasil.</p>';
+  }
+  q.oninput = draw; draw(); q.focus();
+}
+document.addEventListener('keydown', function (e) {
+  if (!S) return;
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openSearch(); }
+  else if (e.key === 'Escape') { closeNotifs(); var g = $('#gs'); if (g) g.remove(); }
+});
+document.addEventListener('click', function (e) { var p = $('#np'); if (p && !p.classList.contains('hide') && !p.contains(e.target)) closeNotifs(); });
+if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(function () {});
+
 if (S) start(); else cekServer();
 
 document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; const o = [...document.querySelectorAll('.ov')].pop(); if (o && !o.classList.contains('dg')) { o._close ? o._close() : o.remove(); } });
