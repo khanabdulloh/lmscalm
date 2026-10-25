@@ -856,6 +856,18 @@ tbody tr:last-child td{border-bottom:0}
 @media(max-width:1000px){.two{grid-template-columns:minmax(0,1fr)}}
 .sec{gap:.5rem;flex-wrap:wrap}.sec h3{min-width:0}
 .hm-days{position:relative}
+/* ===== Dashboard profesional: ringkasan ringkas, nada netral dan santun ===== */
+.kp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(12.5rem,1fr));gap:1rem;margin-bottom:1.4rem}
+.kp{display:flex;flex-direction:column;gap:.18rem;padding:1.05rem 1.25rem 1.05rem 1.35rem;text-align:left;font:inherit;color:inherit;width:100%;position:relative;overflow:hidden;min-width:0}
+.kp::before{content:"";position:absolute;left:0;top:.9rem;bottom:.9rem;width:3px;border-radius:0 3px 3px 0;background:var(--navy)}
+button.kp{cursor:pointer;transition:transform .18s,box-shadow .18s}button.kp:hover{transform:translateY(-2px)}button.kp:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+.kp .kl{font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--mut)}
+.kp .kv{font-family:var(--serif);font-size:2rem;font-weight:600;line-height:1.15;color:var(--navyd);font-variant-numeric:tabular-nums}
+.kp .ks{font-size:.8rem;line-height:1.45;color:var(--mut)}
+.kp-rm{margin-bottom:1.4rem;border-left:3px solid var(--gold);padding:1.1rem 1.3rem}
+.kp-rm h3{font-size:.98rem;font-weight:700;color:var(--navyd)}.kp-rm>p{font-size:.84rem;color:var(--mut);margin:.2rem 0 .5rem}
+.kp-ri{display:flex;justify-content:space-between;gap:.8rem;flex-wrap:wrap;padding:.55rem 0;border-top:1px solid var(--line);font-size:.88rem}.kp-ri b{color:var(--ink)}.kp-ri span{color:var(--mut)}
+.kp-foot{margin-top:1.2rem;font-size:.78rem;line-height:1.6;color:var(--mut)}
 </style>
 </head>
 <body>
@@ -1302,9 +1314,11 @@ async function vDashData() {
     const act = x => String(x.status || '').toLowerCase() === 'aktif';
     const has = (x, r) => String(x.role).toLowerCase() === r || String(x.extra_roles || '').toLowerCase().split(/[,;|]/).includes(r);
     const siswa = us.users.filter(x => has(x, 'siswa')), guru = us.users.filter(x => has(x, 'guru')), staf = us.users.filter(x => inGroup(x, 'staf'));
-    const stats = write
-      ? [['Total siswa', siswa.length], ['Siswa aktif', siswa.filter(act).length], ['Total guru', guru.length]].concat(hasR('admin') ? [['Total staf', staf.length]] : [], [['Total kelas', cl.classes.length], ['Jadwal', sc.schedules.length]])
-      : [['Total siswa', siswa.length], ['Siswa aktif', siswa.filter(act).length], ['Total kelas', cl.classes.length]];
+    const kps = [kpi('Siswa', siswa.length, siswa.filter(act).length + ' akun aktif')];
+    if (write) kps.push(kpi('Guru', guru.length, guru.filter(act).length + ' akun aktif'));
+    if (write && hasR('admin')) kps.push(kpi('Staf & pimpinan', staf.length, 'akun terdaftar'));
+    kps.push(kpi('Kelas', cl.classes.length, 'terdaftar di LMS'));
+    if (write) kps.push(kpi('Jadwal', sc.schedules.length, 'sesi pelajaran'));
     const qa = (k, ic, t, d) => `<button class="qa" onclick="go('${k}')" type="button"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICON[ic]}</svg></i><span><b>${t}</b><small>${d}</small></span></button>`;
     const links = [qa('adminStudents', 'adminStudents', 'Data siswa', write ? 'Kelola akun dan status siswa' : 'Lihat data siswa')];
     if (write) links.push(qa('adminTeachers', 'adminTeachers', 'Data guru', 'Kelola akun guru'));
@@ -1314,7 +1328,7 @@ async function vDashData() {
     view(`<div class="top"><div><h2>Beranda</h2><p>Ringkasan data akademik sekolah.</p></div></div>
       ${heroHTML(write ? 'Kelola data siswa, guru, kelas, dan jadwal sekolah secara terpusat.' : 'Anda dapat melihat data siswa dan kelas untuk keperluan bimbingan.')}
       ${write ? '' : '<div class="walert info" style="margin-bottom:1.2rem">Akun Guru BK memiliki akses <b>lihat saja</b>. Perubahan data dilakukan oleh administrator atau staf administrasi.</div>'}
-      <div class="stats">${stats.map(([l, n]) => `<div class="card st"><small>${l}</small><b>${n}</b></div>`).join('')}</div>
+      <div class="kp-grid">${kps.join('')}</div>
       <div class="sec"><h3>Akses cepat</h3></div>
       <div class="grid">${links.join('')}</div>`);
     startClock();
@@ -1330,10 +1344,14 @@ function vDash() {
     return page('dash', 'Dashboard pengawasan', 'Ringkasan pengelolaan dan pengawasan pembelajaran.', () => {
       return `
       ${hmHero()}
-      <div class="stats">
-        ${[['Total kelas', O.classes.length], ['Total tugas', O.assignments.length], ['Pengumpulan tugas', O.submissions.length], ['Total kuis', O.quizzes.length]].map(([l,n]) => `<div class="card st"><small>${l}</small><b>${n}</b></div>`).join('')}
+      <div class="kp-grid">
+        ${kpi('Kelas aktif', O.classes.length, 'dalam pemantauan')}
+        ${kpi('Sesi hari ini', '–', 'Memuat jadwal…', '', 'kp-s')}
+        ${kpi('Presensi hari ini', '–', 'Memuat data…', '', 'kp-p')}
+        ${kpi('Pengumpulan tugas', O.submissions.length, 'dari ' + O.assignments.length + ' tugas')}
       </div>
-      ${hmWidgets()}`;
+      ${hmWidgets()}
+      <p class="kp-foot">Ringkasan pengawasan menampilkan data agregat pembelajaran untuk mendukung layanan sekolah. Data ini bukan penilaian terhadap guru maupun siswa secara perseorangan.</p>`;
     });
   }
 
@@ -1354,32 +1372,33 @@ function vDash() {
     const ung = O.submissions.filter(s => s.score === '');
     const qTodo = O.quizzes.filter(q => !O.attempts.some(a => a.quiz_id === q.id && a.submitted)).length;
     
+    const nxt = todo.find(a => a.due);
     const stats = t
-      ? [['Kelas diampu', O.classes.length], ['Perlu dinilai', ung.length], ['Tugas', O.assignments.length], ['Kuis', O.quizzes.length]]
-      : [['Kelas diikuti', O.classes.length], ['Tugas belum dikumpulkan', todo.length], ['Kuis belum dikerjakan', qTodo], ['Rata-rata nilai', avgTxt]];
-      
+      ? [kpi('Sesi mengajar hari ini', '–', 'Memuat jadwal…', '', 'kp-s'), kpi('Presensi hari ini', '–', 'Memuat data…', '', 'kp-p'),
+         kpi('Menunggu penilaian', ung.length, ung.length ? 'dari ' + O.submissions.length + ' pengumpulan' : 'Seluruh pengumpulan telah dinilai', "go('review')"),
+         kpi('Kelas diampu', O.classes.length, O.assignments.length + ' tugas • ' + O.quizzes.length + ' kuis', "go('home')")]
+      : [kpi('Pelajaran hari ini', '–', 'Memuat jadwal…', '', 'kp-s'),
+         kpi('Tugas menunggu', todo.length, todo.length ? (nxt ? 'Terdekat: ' + tgl(nxt.due) : 'Tanpa batas waktu') : 'Seluruh tugas telah dikumpulkan', "go('tasks')"),
+         kpi('Kuis tersedia', qTodo, qTodo ? 'Belum dikerjakan' : 'Tidak ada kuis tertunda', "go('quizzes')"),
+         kpi('Rata-rata nilai', avgTxt, gp.length ? 'dari ' + gp.length + ' penilaian' : 'Belum ada penilaian', "go('grades')")];
+
     const left = t
       ? (ung.slice(0, 5).map(s => row(s.full_name, esc(asgOf(s.assignment_id).title) + ' • ' + esc(cname(asgOf(s.assignment_id).class_id)), '<span class="badge warn">Perlu dinilai</span>', `openClass('${asgOf(s.assignment_id).class_id}','asg')`)).join('') || '<p class="empty">Seluruh pengumpulan tugas telah dinilai.</p>')
-      : (todo.slice(0, 5).map(a => row(a.title, esc(cname(a.class_id)) + ' • ' + dueTxt(a), tagDue(a), `openClass('${a.class_id}','asg')`)).join('') || '<p class="empty">Seluruh tugas telah diselesaikan.</p>');
+      : (todo.slice(0, 5).map(a => row(a.title, esc(cname(a.class_id)) + ' • ' + dueTxt(a), tagDue(a), `openClass('${a.class_id}','asg')`)).join('') || '<p class="empty">Seluruh tugas telah dikumpulkan.</p>');
     const news = O.announcements.slice(0, 4).map(a => row(a.title, esc(cname(a.class_id)) + ' • ' + tgl(a.created), '', `openClass('${a.class_id}','ann')`)).join('') || '<p class="empty">Belum ada pengumuman.</p>';
     
     return `
       ${hmHero()}
 
-      ${reminders.length ? `
-      <div class="card" style="border-left:4px solid #f59e0b; margin-bottom:1.5rem; background:#fffbeb">
-        <div class="sec"><h3 style="color:#92400e"><svg style="width:1.2rem;height:1.2rem;vertical-align:-3px;margin-right:5px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg> Pengingat Tenggat Tugas</h3></div>
-        <p style="font-size:.9rem;color:#92400e;margin-bottom:.8rem">Tugas berikut mendekati atau baru saja melewati batas pengumpulan:</p>
-        ${reminders.map(a => `<div style="padding:.5rem 0;border-bottom:1px solid #fde68a;font-size:.9rem"><b>${esc(a.title)}</b> - <span style="color:#b45309">${dueTxt(a)}</span></div>`).join('')}
-      </div>` : ''}
+      ${reminders.length ? `<section class="card kp-rm" aria-label="Tenggat terdekat"><h3>Tenggat terdekat</h3><p>Tugas berikut memiliki batas pengumpulan dalam waktu dekat.</p>${reminders.map(a => `<div class="kp-ri"><b>${esc(a.title)}</b><span>${esc(dueTxt(a))}</span></div>`).join('')}</section>` : ''}
 
-      <div class="stats">${stats.map(([l, n]) => `<div class="card st"><small>${l}</small><b>${n}</b></div>`).join('')}</div>
-      
+      <div class="kp-grid">${stats.join('')}</div>
+
       ${hmWidgets()}
 
       <div class="two">
         <div class="card">
-          <div class="sec"><h3>${t ? 'Menunggu penilaian' : 'Tugas yang perlu dikerjakan'}</h3><button class="link" onclick="go('${t ? 'review' : 'tasks'}')">Lihat semua</button></div>
+          <div class="sec"><h3>${t ? 'Menunggu penilaian' : 'Tugas yang menunggu'}</h3><button class="link" onclick="go('${t ? 'review' : 'tasks'}')">Lihat semua</button></div>
           ${left}
         </div>
         <div class="card">
@@ -2275,8 +2294,12 @@ const asgOf = id => O.assignments.find(a => a.id === id) || {};
 const isLate = a => a.due && Date.now() > new Date(a.due).getTime() + 86400000;
 const dueTxt = a => a.due ? 'Batas ' + tgl(a.due) : 'Tanpa batas waktu';
 const pills = (cur, list, fn) => `<div class="pills">${list.map(([k, l, n]) => `<button class="pill${k === cur ? ' on' : ''}" onclick="${fn}('${k}')">${l}<i>${n}</i></button>`).join('')}</div>`;
+const kpi = (label, val, sub, click, id) => {
+  const inn = '<span class="kl">' + esc(label) + '</span><b class="kv"' + (id ? ' id="' + id + '"' : '') + '>' + esc(val) + '</b><span class="ks"' + (id ? ' id="' + id + 's"' : '') + '>' + esc(sub) + '</span>';
+  return click ? '<button type="button" class="card kp" onclick="' + click + '">' + inn + '</button>' : '<div class="card kp">' + inn + '</div>';
+};
 const row = (title, meta, right, click) => `<button class="li" onclick="${click}"><span class="lt"><b>${esc(title)}</b><small>${meta}</small></span>${right}</button>`;
-const tagDue = a => isLate(a) ? '<span class="badge warn">Terlambat</span>' : a.due ? `<span class="badge">${tgl(a.due)}</span>` : '';
+const tagDue = a => isLate(a) ? '<span class="badge warn">Melewati batas</span>' : a.due ? `<span class="badge">${tgl(a.due)}</span>` : '';
 const asgTag = a => { const s = subOf(a); return s ? (s.score !== '' ? `<span class="badge ok">Nilai ${s.score}/${a.max_score}</span>` : '<span class="badge warn">Menunggu nilai</span>') : tagDue(a); };
 
 function vTasks(f) {
@@ -2578,7 +2601,7 @@ function attSave() {
     .then(function () { toast('Presensi tersimpan.'); attLoad(); })
     .catch(function (e) { toast(e.message, true); if (b) b.disabled = false; });
 }
-var ATC = { H: '#10b981', S: '#f59e0b', I: '#0ea5e9', A: '#e11d48' };
+var ATC = { H: '#10b981', S: '#f59e0b', I: '#0ea5e9', A: '#64748b' };
 var ATP = [['all', 'Semua periode'], ['week', '7 hari terakhir'], ['month', 'Bulan ini'], ['prev', 'Bulan lalu'], ['custom', 'Pilih tanggal']];
 function pad2(n) { return ('0' + n).slice(-2); }
 function ymd(d) { return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
@@ -2742,14 +2765,26 @@ function hmLoad() {
   var n = ++HM.seq;
   api('dashHome', {}).then(function (d) {
     if (n !== HM.seq || !$('#hm-sched')) return;
-    HM.data = d; HM.day = ''; hmSched(); hmAtt(); hmLineSet();
+    HM.data = d; HM.day = ''; hmSched(); hmAtt(); hmLineSet(); hmFill();
   }).catch(function (e) {
     if (n !== HM.seq) return;
     var m = '<div class="hm-empty"><b>Data belum dapat dimuat</b>' + esc(e.message) + '<br><br><button class="btn2" type="button" onclick="hmLoad()">Coba lagi</button></div>';
     ['#hm-sched', '#hm-att'].forEach(function (id) { if ($(id)) $(id).innerHTML = m; });
   });
 }
-function hmTick() { if (!$('#hm-sched') || !HM.data) return; hmSched(); hmLineSet(); }
+function hmFill() {
+  var d = HM.data; if (!d) return;
+  var td = hmToday(), now = hmNowMin(), ids = {}, dn = (d.done_today || []).map(String);
+  var set = function (id, v, s) { var a = $('#' + id), b = $('#' + id + 's'); if (a) a.textContent = v; if (b) b.textContent = s; };
+  td.forEach(function (s) { ids[String(s.class_id)] = 1; });
+  var cls = Object.keys(ids), nxt = td.find(function (s) { return hmMin(s.start_time) > now; }), last = td.length ? hmMin(td[td.length - 1].end_time) : -1;
+  set('kp-s', td.length, !td.length ? 'Tidak ada jadwal hari ini' : now >= last ? 'Seluruh sesi hari ini telah selesai' : nxt ? 'Berikutnya pukul ' + nxt.start_time : 'Sesi sedang berlangsung');
+  if (hmMode() !== 'student') {
+    var ok = cls.filter(function (c) { return dn.indexOf(c) > -1; }).length;
+    set('kp-p', cls.length ? ok + '/' + cls.length : '–', !cls.length ? 'Tidak ada sesi hari ini' : ok === cls.length ? 'Presensi hari ini lengkap' : (cls.length - ok) + ' kelas menunggu presensi');
+  }
+}
+function hmTick() { if (!$('#hm-sched') || !HM.data) return; hmSched(); hmLineSet(); hmFill(); }
 function hmDay(i) { HM.day = HM_DAYS[i]; hmSched(); }
 function hmGoAtt(cid) { AT.cid = cid; AT.tab = 'in'; AT.date = todayStr(); go('attendance'); }
 
@@ -2784,7 +2819,7 @@ function hmSched() {
   if (on && bar) bar.scrollLeft = on.offsetLeft - (bar.clientWidth - on.clientWidth) / 2;
 }
 
-function hmCol(p) { return p >= 85 ? '#10b981' : p >= 70 ? '#f59e0b' : '#e11d48'; }
+function hmCol(p) { return p >= 85 ? '#10b981' : '#d97706'; }
 function hmRing(p) {
   var c = 2 * Math.PI * 42;
   return '<svg viewBox="0 0 100 100" class="hm-ring" role="img" aria-label="Kehadiran ' + p + ' persen"><circle cx="50" cy="50" r="42" class="hm-rt"/><circle cx="50" cy="50" r="42" class="hm-rp" stroke-dasharray="' + (c * p / 100).toFixed(1) + ' ' + c.toFixed(1) + '" transform="rotate(-90 50 50)" style="stroke:' + hmCol(p) + '"/><text x="50" y="56" text-anchor="middle" class="hm-rn">' + p + '%</text></svg>';
