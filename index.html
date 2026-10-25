@@ -90,6 +90,40 @@ button,input,textarea{font:inherit;color:inherit}button{cursor:pointer}
 .accr{display:inline-flex;align-items:center;gap:.6rem}
 .accr svg{width:1.6rem;height:1.6rem;color:var(--gold);flex:none}
 .accr span{display:flex;flex-direction:column;line-height:1.25}.accr b{font-size:.8rem;color:#fff}.accr small{font-size:.7rem;color:rgba(255,255,255,.6)}
+/* ===== LOGIN: penyempurnaan minimalis ===== */
+.lw{grid-template-columns:minmax(0,5fr) minmax(0,6fr);background:#fff}
+.ls{gap:2.5rem;background:radial-gradient(70% 50% at 0 0,rgba(74,118,201,.26),transparent 65%),linear-gradient(165deg,#0c3f94 0%,#0a2f72 50%,#071a40 100%)}
+.ls::before{content:"";position:absolute;z-index:-1;inset:auto;top:-9rem;right:-9rem;width:26rem;height:26rem;border-radius:50%;border:1px solid rgba(255,255,255,.07);background:none;-webkit-mask-image:none;mask-image:none}
+.ls::after{opacity:.7}
+.lg{box-shadow:0 6px 16px -10px rgba(0,0,0,.5)}
+.hero-l{max-width:28rem}
+.hero-l h1{font-size:clamp(2.4rem,4vw,3.4rem);line-height:1.05;font-weight:500}
+.hero-l h1::after{margin-top:1.3rem}
+.hero-l p{margin-top:1.2rem;max-width:23rem;font-size:.95rem;color:rgba(255,255,255,.72)}
+.fe{gap:1.15rem;margin-top:2.4rem;max-width:25rem}
+.fe li{padding:0;border:0;gap:1rem}
+.fe li:hover{background:none}
+.fe li::after{display:none!important}
+.fi{width:2.5rem;height:2.5rem;border-radius:50%;background:transparent;box-shadow:inset 0 0 0 1px rgba(255,255,255,.24);color:#eaf1ff}
+.fi::after{display:none}
+.fi svg{width:1.15rem;height:1.15rem}
+.fe b{font-size:.9rem;font-weight:600}
+.fe div>span{font-size:.78rem;color:rgba(255,255,255,.6)}
+.lf{padding-top:1.1rem}
+.lm{background:#fff;padding:clamp(1.5rem,5vh,3.5rem) clamp(1.25rem,4vw,3.5rem)}
+.lc{max-width:24rem;padding:0;background:none;border:0;border-radius:0;box-shadow:none}
+.lc h2{font-size:2rem;font-weight:600;letter-spacing:-.02em}
+.lc .sub{margin:.45rem 0 2rem;font-size:.9rem}
+.fl{font-size:.8rem;font-weight:600;color:var(--ink)}
+.fd{margin-bottom:1.15rem}
+.fld{min-height:3rem;background:#fff;border-radius:.75rem}
+.fld:focus{box-shadow:0 0 0 4px rgba(11,61,145,.14)}
+.rem{margin:.2rem 0 1.4rem;font-size:.8rem}
+.sb{min-height:3rem;border-radius:.75rem;background:var(--navy);font-size:.92rem;font-weight:600;box-shadow:0 1px 2px rgba(7,26,64,.2),0 14px 24px -16px rgba(11,61,145,.9)}
+.sb:hover:not(:disabled){background:var(--navyd)}
+.srv{margin-top:1.5rem}
+.help{margin-top:1rem;padding-top:1.1rem}
+.fe b{display:block;width:fit-content;padding-bottom:.3rem;margin-bottom:.3rem;border-bottom:2px solid var(--gold)}
 /* ===== APP ===== */
 #app{display:flex;min-height:100vh}
 aside{width:15rem;flex:none;background:var(--side);color:#e2e8f0;padding:1rem;position:sticky;top:0;height:100vh;display:flex;flex-direction:column}
@@ -153,7 +187,7 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
 .md input:focus,.md textarea:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 4px rgba(11,61,145,.16)}
 #toast{position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%);background:var(--navyx);color:#fff;padding:.7rem 1.3rem;border-radius:.8rem;font-size:.85rem;z-index:60;box-shadow:0 10px 30px -10px rgba(0,0,0,.4)}
 #toast.e{background:#be123c}
-@media(max-width:900px){.lw{grid-template-columns:1fr}.ls{display:none}.mbrand{display:flex}.lc{padding:1.8rem 1.4rem 1.3rem;margin:auto}}
+@media(max-width:900px){.lw{grid-template-columns:1fr}.ls{display:none}.mbrand{display:flex}.lc{margin:auto}.lm{padding-top:2rem}}
 @media(max-width:767px){
  #app{flex-direction:column}
  .mbar{display:flex;position:sticky;top:0;z-index:40;align-items:center;gap:.75rem;background:var(--side);color:#fff;padding:.65rem 1rem;box-shadow:0 2px 8px rgba(0,0,0,.2)}
@@ -172,16 +206,16 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
   <div class="ls">
     <div class="br"><span class="lg"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt="Logo SMK CALM"></span><div><b>SMK CALM</b><small>Yayasan Al-Musaddadiyah Garut</small></div></div>
     <div class="hero-l">
-      <h1>Belajar lebih terarah, dalam satu portal.</h1>
-      <p>Kelas, materi, tugas, dan nilai tersusun rapi. Guru menyampaikan pembelajaran, siswa menyelesaikannya dari mana saja.</p>
-      <ul class="fe"><li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6M12 10h.01"/></svg></span><div><b>Kelas</b><span>Gabung dengan kode kelas, semua pelajaran ada di satu tempat</span></div></li><li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3Z"/><path d="M5 17a3 3 0 0 1 3-3h11M9 8h6M9 11h4"/></svg></span><div><b>Materi</b><span>Berkas dan tautan dari guru, siap dibuka kapan saja</span></div></li><li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="17" rx="2.5"/><path d="M9 4V3h6v1M8.5 12.5l2 2 4.5-4.5M8.5 18h7"/></svg></span><div><b>Tugas</b><span>Kumpulkan sebelum batas waktu dan pantau statusnya</span></div></li><li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-7M22 20H2"/><path d="m3 7 5-3 5 4 7-5"/></svg></span><div><b>Nilai</b><span>Lihat nilai dan umpan balik langsung dari guru</span></div></li></ul>
+      <h1>Portal LMS</h1>
+      <p>Sistem manajemen pembelajaran SMK CALM yang menyatukan pengelolaan kelas, materi, penugasan, dan penilaian, dengan akses sesuai peran guru dan siswa.</p>
+      <ul class="fe"><li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6M12 10h.01"/></svg></span><div><b>Kelas</b><span>Pengelolaan kelas dan keanggotaan peserta didik</span></div></li><li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3Z"/><path d="M5 17a3 3 0 0 1 3-3h11M9 8h6M9 11h4"/></svg></span><div><b>Materi</b><span>Distribusi materi pembelajaran yang terstruktur</span></div></li><li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="17" rx="2.5"/><path d="M9 4V3h6v1M8.5 12.5l2 2 4.5-4.5M8.5 18h7"/></svg></span><div><b>Tugas</b><span>Penugasan dan pengumpulan dengan batas waktu yang jelas</span></div></li><li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-7M22 20H2"/><path d="m3 7 5-3 5 4 7-5"/></svg></span><div><b>Nilai</b><span>Penilaian terdokumentasi beserta umpan balik guru</span></div></li></ul>
     </div>
     <div class="lf"><p class="accr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.4 1.8 3-.2 1 2.8 2.5 1.7-.9 2.9.9 2.9-2.5 1.7-1 2.8-3-.2L12 21l-2.4-1.8-3 .2-1-2.8-2.5-1.7.9-2.9-.9-2.9 2.5-1.7 1-2.8 3 .2z"/><path d="m9 12 2 2 4-4"/></svg><span><b>Terakreditasi A</b><small>BAN-PDM</small></span></p><p>&copy; 2026 SMKS Ciledug Al-Musaddadiyah Garut</p></div>
   </div>
   <div class="lm"><div class="lc">
     <div class="mbrand"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt="Logo SMK CALM"><div><b>SMK CALM</b><small>Portal LMS</small></div></div>
     <form id="lform" novalidate>
-      <h2>Selamat datang kembali</h2><p class="sub">Masuk dengan akun sekolah Anda untuk melanjutkan.</p>
+      <h2>Selamat datang</h2><p class="sub">Masuk untuk melanjutkan belajar.</p>
       <label class="fl" for="u">Username / NISN / NIP</label>
       <div class="fd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><input id="u" class="fld" placeholder="Masukkan username" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false"></div>
       <div class="labrow"><label class="fl" for="pw">Sandi</label><span id="caps" class="caps hide" role="status">Caps Lock aktif</span></div>
