@@ -742,7 +742,7 @@ $('#lform').addEventListener('submit', async e => {
   b.disabled = false; b.textContent = 'Masuk';
 });
 $('#eye').onclick = () => { const p = $('#pw'); const show = p.type === 'password'; p.type = show ? 'text' : 'password'; $('#eye').setAttribute('aria-label', show ? 'Sembunyikan sandi' : 'Tampilkan sandi'); };
-$('#pw').addEventListener('keydown', e => $('#caps').classList.toggle('hide', !e.getModifierState('CapsLock')));
+$('#pw').addEventListener('keydown', e => { if(e && e.getModifierState) { $('#caps').classList.toggle('hide', !e.getModifierState('CapsLock')); } });
 $('#pw').addEventListener('blur', () => $('#caps').classList.add('hide'));
 
 async function cekServer() {
