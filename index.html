@@ -1021,6 +1021,51 @@ body:has(.qbar) .rf{display:none}
  .mbrand{flex-direction:row;gap:.7rem;margin-bottom:.9rem;text-align:left}
  .mbrand img{width:2.8rem;height:2.8rem;padding:.35rem}
 }
+
+/* ===== Sidebar v6: ringkas, tenang, profesional (hanya CSS; logika menu & cache tidak diubah) ===== */
+aside .logo{border-radius:.7rem;box-shadow:none}
+aside .nm{font-size:1rem;font-weight:700;letter-spacing:.01em;line-height:1.25}
+aside .bd[class]{background:rgba(255,255,255,.08);color:#d6e2f7;font-size:.62rem;font-weight:600;letter-spacing:.09em;padding:.2rem .65rem .2rem .55rem;margin-top:.45rem}
+aside .bd[class]::before{content:"";width:.4rem;height:.4rem;border-radius:50%;background:var(--bdc,#7dd3fc);flex:none}
+.bd.guru,.bd.admin{--bdc:#34d399}.bd.siswa{--bdc:#fbbf24}.bd.staff{--bdc:#818cf8}.bd.guru_bk{--bdc:#38bdf8}.bd.kurikulum{--bdc:#a78bfa}.bd.kepala_sekolah{--bdc:#fb923c}
+.sb-user{margin-top:.35rem;font-size:.8rem;font-weight:500;color:#9fb3d6}
+aside nav{margin-top:1.1rem}
+#menu .mg{margin-top:.15rem;padding:.6rem .75rem;border-radius:.6rem;font-size:.82rem;font-weight:600;letter-spacing:0;color:#aebfdc;transition:background-color .15s,color .15s}
+#menu .mg>svg:first-child{width:1.05rem;height:1.05rem;opacity:.8}
+#menu .mg:hover{background:rgba(255,255,255,.05);color:#fff}
+#menu .mg[aria-expanded="true"]{background:none;color:#fff}
+#menu .mg[aria-expanded="true"]:hover{background:rgba(255,255,255,.05)}
+.mg-chevron{width:.9rem;height:.9rem;opacity:.5}
+.submenu{margin:.1rem 0 .5rem 1.1rem;padding-left:.6rem;border-left:1px solid rgba(255,255,255,.08);gap:.1rem}
+.submenu.closed{margin:0 0 0 1.1rem}
+.mi{padding:.5rem .75rem;border-radius:.6rem;font-size:.84rem;font-weight:500;gap:.7rem;color:#b9c8e4;transition:background-color .15s,color .15s}
+.mi svg{width:1.1rem;height:1.1rem;stroke-width:1.6;opacity:.7}
+.mi:hover{background:rgba(255,255,255,.05);color:#fff}
+.mi.on{background:rgba(255,255,255,.08);color:#fff;font-weight:600}
+.mi.on::before{left:calc(-.6rem - 1px);top:.45rem;bottom:.45rem;width:2px;background:#7db4ff}
+.mi.top{margin-top:.15rem;padding:.6rem .75rem;gap:.6rem;font-weight:600;color:#aebfdc}
+.mi.top svg{width:1.05rem;height:1.05rem;opacity:.8}
+.mi.top.on,.mi.top:hover{color:#fff}.mi.top.on svg,.mi.top:hover svg{opacity:1}
+.nb{min-width:1.15rem;padding:.18rem .4rem;font-size:.62rem;background:#e5484d;box-shadow:none}
+.mi.hp{color:#9fb3d6}.mi.hp:hover{color:#fff}
+.mi.hp.hide+.mi.hp{margin-top:auto}
+.mi.out{padding-top:.5rem;border-radius:.6rem;color:#e8c070}.mi.out:hover{background:rgba(255,255,255,.06);color:#f4d28a}
+@media(min-width:768px){
+ aside{padding:1.35rem 1rem 1rem}
+ aside.collapsed{padding:1.25rem .5rem 1rem}
+ aside .logo{width:2.5rem;height:2.5rem;padding:.3rem;margin-bottom:.8rem}
+ aside:not(.collapsed) .bd[class]{display:inline-flex;align-items:center;gap:.4rem}
+ .sidebar-toggle{position:absolute;top:1.3rem;right:.9rem;width:1.9rem;height:1.9rem;margin:0;padding:0;justify-content:center;border-radius:.55rem;background:none;color:#8ea4cc}
+ .sidebar-toggle span{display:none}
+ .sidebar-toggle svg{width:1rem;height:1rem}
+ .sidebar-toggle:hover{background:rgba(255,255,255,.08);color:#fff}
+ aside.collapsed .sidebar-toggle{position:static;margin:0 auto .9rem;padding:0}
+ aside.collapsed .submenu{margin-left:0;padding-left:0;border-left:0}
+ aside.collapsed .mi{gap:0}
+ aside.collapsed .mi span{display:none}
+ .mi{min-height:2.4rem}
+}
+@media(min-width:1024px){aside{width:17.5rem}}
 </style>
 </head>
 <body>
