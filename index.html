@@ -728,6 +728,61 @@ tbody tr:last-child td{border-bottom:0}
 .quote-btn{width:100%;margin-top:1.8rem;padding:.85rem 1rem;border:1px solid rgba(255,255,255,.28);border-radius:.9rem;background:rgba(255,255,255,.14);color:#fff;font-weight:700;font-size:.92rem;transition:.2s}
 .quote-btn:hover{background:rgba(255,255,255,.26);transform:translateY(-1px)}
 @media(max-width:480px){.quote-modal{padding:2.2rem 1.4rem 1.5rem}.quote-text{font-size:1.1rem}.quote-modal h3{font-size:1.45rem}}
+
+/* Infografis presensi & cetak */
+.at-ba{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.at-cu{display:inline-flex;align-items:center;gap:.4rem}.at-cu i{font-style:normal;font-size:.8rem;color:var(--mut)}
+.at-cu .sel{min-width:0;width:9.5rem;font-family:inherit}
+.at-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:.9rem;margin:.6rem 0 1rem}
+.at-k{padding:1rem 1.2rem}.at-k small{display:block;font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--mut)}
+.at-k b{display:block;margin-top:.25rem;font-family:var(--serif);font-size:1.9rem;font-weight:600;color:var(--navyd);line-height:1.1}
+.at-k.ok b{color:#047857}.at-k.bad b{color:#be123c}
+.at-info{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr) minmax(0,1fr);gap:1rem;align-items:stretch}
+@media(max-width:1000px){.at-info{grid-template-columns:1fr 1fr}.at-c2{grid-column:1/-1;order:3}}
+@media(max-width:600px){.at-info{grid-template-columns:1fr}}
+.at-dw{display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;justify-content:center}
+.at-dn{width:9.5rem;height:9.5rem;flex:none}
+.at-dv{font-family:var(--serif);font-size:1.7rem;font-weight:600;fill:var(--navyd)}.at-dl{font-size:.62rem;fill:var(--mut);letter-spacing:.06em;text-transform:uppercase}
+.at-lg{list-style:none;display:grid;gap:.45rem;min-width:8rem;font-size:.84rem}
+.at-lg li{display:flex;align-items:center;gap:.55rem}.at-lg i{width:.65rem;height:.65rem;border-radius:3px;flex:none}
+.at-lg span{flex:1;color:var(--mut)}.at-lg b{font-weight:700}.at-lg small{width:2.6rem;text-align:right;color:var(--faint);font-size:.74rem}
+.at-tr{display:flex;align-items:flex-end;gap:.3rem;height:9.5rem;padding-top:.4rem;overflow-x:auto}
+.at-bw{flex:1 0 1.1rem;max-width:2.2rem;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:.25rem}
+.at-bw .at-b{display:block;width:100%;border-radius:.35rem .35rem .15rem .15rem;min-height:3px;transition:opacity .15s}.at-bw:hover .at-b{opacity:.75}
+.at-bw small{font-size:.58rem;color:var(--faint);white-space:nowrap}
+.at-cap{font-size:.76rem;color:var(--mut);line-height:1.6;margin-top:.5rem}
+.at-wl{list-style:none}.at-wl li{display:flex;justify-content:space-between;gap:.6rem;padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.86rem}.at-wl li:last-child{border:0}.at-wl b{color:#be123c}
+.at-pb{display:flex;align-items:center;gap:.6rem}.at-pb b{width:2.8rem;text-align:right;font-size:.82rem}
+.at-bar-t{flex:1;height:.5rem;border-radius:99px;background:var(--line);overflow:hidden}.at-bar-t i{display:block;height:100%;border-radius:inherit;background:var(--navy)}
+.at-bar-t i.ok{background:#10b981}.at-bar-t i.mid{background:#f59e0b}.at-bar-t i.bad{background:#e11d48}
+.at-hr{grid-template-columns:minmax(0,1fr) auto}
+#prn{display:none}
+@media print{
+ @page{size:A4;margin:14mm 14mm 16mm}
+ html,body{background:#fff!important}
+ body>*:not(#prn){display:none!important}
+ #prn{display:block!important;color:#111;font:12px/1.5 'Plus Jakarta Sans',Arial,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ #prn .pr-h{display:flex;align-items:center;gap:.7rem;padding-bottom:.6rem;border-bottom:2px solid #0b3d91;margin-bottom:.9rem}
+ #prn .pr-h img{width:2.6rem;height:2.6rem;object-fit:contain}
+ #prn .pr-h b{display:block;font-size:1.05rem;color:#0b3d91;letter-spacing:.02em}#prn .pr-h span{font-size:.78rem;color:#555}
+ #prn h1{font-family:Georgia,'Times New Roman',serif;font-size:1.4rem;font-weight:600;margin:.2rem 0 .3rem;color:#0a2250}
+ #prn .pr-sub{font-size:.82rem;color:#333;margin-bottom:.9rem}
+ #prn .pr-k{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem;margin-bottom:.9rem}
+ #prn .pr-k div{padding:.5rem .7rem;border:1px solid #d3dcea;border-radius:.4rem;background:#f5f8fd}
+ #prn .pr-k small{display:block;font-size:.66rem;color:#555;text-transform:uppercase;letter-spacing:.04em}#prn .pr-k b{font-size:1rem;color:#0a2250}
+ #prn table{width:100%;border-collapse:collapse;font-size:.82rem}
+ #prn th{background:#0b3d91!important;color:#fff!important;padding:.4rem .5rem;text-align:center;font-size:.72rem;position:static}
+ #prn td{padding:.32rem .5rem;border-bottom:1px solid #dfe5ef;text-align:center}
+ #prn td.l,#prn th:nth-child(2){text-align:left}
+ #prn tbody tr:nth-child(even){background:#f8fafd!important}
+ #prn tr{break-inside:avoid}#prn thead{display:table-header-group}
+ #prn tr.lw td{color:#b4232f;font-weight:700}
+ #prn .pr-n{margin-top:.7rem;font-size:.72rem;color:#555}
+ #prn .pr-sg{display:grid;grid-template-columns:1fr 1fr;margin-top:1.6rem;break-inside:avoid}
+ #prn .pr-sg p{margin:0}#prn .pr-sg span{display:block;height:3.2rem}#prn .pr-sg b{border-bottom:1px solid #111;padding-bottom:.1rem}
+}
+[data-theme=dark] .at-k b,[data-theme=dark] .at-dv{color:var(--navyd)}
+[data-theme=dark] .at-k.ok b{color:#6ee7b7}[data-theme=dark] .at-k.bad b,[data-theme=dark] .at-wl b{color:#fda4af}
 </style>
 </head>
 <body>
@@ -2394,7 +2449,7 @@ document.addEventListener('click', function (e) { var p = $('#np'); if (p && !p.
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(function () {});
 
 /* ===== Presensi ===== */
-var AT = { cid: '', date: '', tab: 'in', seq: 0, st: [], marks: {} };
+var AT = { cid: '', date: '', tab: 'in', seq: 0, st: [], marks: {}, rp: 'all', from: '', to: '' };
 var ATL = { H: 'Hadir', S: 'Sakit', I: 'Izin', A: 'Alpa' };
 function todayStr() { var d = new Date(); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
 function attIsStu() { return hasR('siswa') && !isT() && !isMonitor(); }
@@ -2412,6 +2467,7 @@ function vAttendance() {
     return '<div class="at-bar"><select class="sel" aria-label="Pilih kelas" onchange="AT.cid=this.value;attLoad()">' + opts + '</select>'
       + (isT() ? '<button type="button" class="pill' + (AT.tab === 'in' ? ' on' : '') + '" onclick="attTab(\'in\')">Input presensi</button><button type="button" class="pill' + (AT.tab === 'rec' ? ' on' : '') + '" onclick="attTab(\'rec\')">Rekap</button>' : '')
       + (AT.tab === 'in' ? '<input type="date" class="sel" id="atd" value="' + AT.date + '" max="' + todayStr() + '" aria-label="Tanggal" onchange="AT.date=this.value||todayStr();attLoad()">' : '')
+      + (AT.tab === 'rec' ? attPeriodUI() : '')
       + '</div><div id="atb"></div>';
   }).then(function () { if ($('#atb')) attLoad(); });
 }
@@ -2420,7 +2476,7 @@ function attLoad() {
   var ok = function (fn) { return function (d) { if (n === AT.seq && $('#atb')) fn(d); }; }, bad = function (e) { if (n === AT.seq) attErr(e); };
   if (attIsStu()) api('attendanceRecap', {}).then(ok(attStudent)).catch(bad);
   else if (AT.tab === 'in') api('attendanceGet', { class_id: AT.cid, date: AT.date }).then(ok(attInput)).catch(bad);
-  else api('attendanceRecap', { class_id: AT.cid }).then(ok(attRecap)).catch(bad);
+  else api('attendanceRecap', { class_id: AT.cid, from: AT.from, to: AT.to }).then(ok(attRecap)).catch(bad);
 }
 function attCount() {
   var c = { H: 0, S: 0, I: 0, A: 0 }; AT.st.forEach(function (s) { c[AT.marks[s.user_id]]++; });
@@ -2459,12 +2515,61 @@ function attSave() {
     .then(function () { toast('Presensi tersimpan.'); attLoad(); })
     .catch(function (e) { toast(e.message, true); if (b) b.disabled = false; });
 }
+var ATC = { H: '#10b981', S: '#f59e0b', I: '#0ea5e9', A: '#e11d48' };
+var ATP = [['all', 'Semua periode'], ['week', '7 hari terakhir'], ['month', 'Bulan ini'], ['prev', 'Bulan lalu'], ['custom', 'Pilih tanggal']];
+function pad2(n) { return ('0' + n).slice(-2); }
+function ymd(d) { return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate()); }
+function fmtD(x) { if (!x) return ''; var a = String(x).slice(0, 10).split('-'); return new Date(+a[0], +a[1] - 1, +a[2]).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }); }
+function fmtS(x) { var a = String(x).slice(0, 10).split('-'); return +a[2] + '/' + +a[1]; }
+function attRangeTxt() { if (AT.from && AT.to) return fmtD(AT.from) + ' – ' + fmtD(AT.to); if (AT.from) return 'Sejak ' + fmtD(AT.from); if (AT.to) return 'Sampai ' + fmtD(AT.to); return 'Seluruh periode'; }
+function attPeriodUI() {
+  return '<select class="sel" id="atp" aria-label="Periode rekap" onchange="attPeriod(this.value)">' + ATP.map(function (o) { return '<option value="' + o[0] + '"' + (o[0] === AT.rp ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select>'
+    + '<span id="atcu" class="at-cu' + (AT.rp === 'custom' ? '' : ' hide') + '"><input type="date" class="sel" id="atf" value="' + AT.from + '" max="' + todayStr() + '" aria-label="Dari tanggal" onchange="attCustom()"><i>sampai</i><input type="date" class="sel" id="att" value="' + AT.to + '" max="' + todayStr() + '" aria-label="Sampai tanggal" onchange="attCustom()"></span>';
+}
+function attPeriod(v) {
+  AT.rp = v; var n = new Date(), t = ymd(n);
+  if (v === 'all') { AT.from = ''; AT.to = ''; }
+  else if (v === 'week') { var w = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 6); AT.from = ymd(w); AT.to = t; }
+  else if (v === 'month') { AT.from = ymd(new Date(n.getFullYear(), n.getMonth(), 1)); AT.to = t; }
+  else if (v === 'prev') { AT.from = ymd(new Date(n.getFullYear(), n.getMonth() - 1, 1)); AT.to = ymd(new Date(n.getFullYear(), n.getMonth(), 0)); }
+  var cu = $('#atcu'); if (cu) cu.classList.toggle('hide', v !== 'custom');
+  if (v !== 'custom') attLoad();
+}
+function attCustom() {
+  var f = $('#atf').value, t = $('#att').value;
+  if (f && t && f > t) { toast('Tanggal mulai tidak boleh setelah tanggal akhir.', true); return; }
+  AT.from = f; AT.to = t; attLoad();
+}
+function attSum(rows) { var c = { H: 0, S: 0, I: 0, A: 0 }; rows.forEach(function (r) { c.H += r.H; c.S += r.S; c.I += r.I; c.A += r.A; }); c.total = c.H + c.S + c.I + c.A; c.pct = c.total ? Math.round(c.H / c.total * 100) : 0; return c; }
+function attDonut(c) {
+  var t = c.H + c.S + c.I + c.A, R = 52, L = 2 * Math.PI * R, off = 0, seg = '';
+  if (t) ['H', 'S', 'I', 'A'].forEach(function (k) { if (!c[k]) return; var len = c[k] / t * L; seg += '<circle cx="70" cy="70" r="' + R + '" fill="none" stroke="' + ATC[k] + '" stroke-width="16" stroke-dasharray="' + len.toFixed(2) + ' ' + (L - len).toFixed(2) + '" stroke-dashoffset="' + (-off).toFixed(2) + '"/>'; off += len; });
+  return '<svg viewBox="0 0 140 140" class="at-dn" role="img" aria-label="Persentase kehadiran ' + c.pct + ' persen"><g transform="rotate(-90 70 70)"><circle cx="70" cy="70" r="' + R + '" fill="none" stroke="var(--line)" stroke-width="16"/>' + seg + '</g><text x="70" y="72" text-anchor="middle" class="at-dv">' + (t ? c.pct + '%' : '–') + '</text><text x="70" y="90" text-anchor="middle" class="at-dl">kehadiran</text></svg>';
+}
+function attLegend(c) {
+  var t = c.total || 1;
+  return '<ul class="at-lg">' + ['H', 'S', 'I', 'A'].map(function (k) { return '<li><i style="background:' + ATC[k] + '"></i><span>' + ATL[k] + '</span><b>' + c[k] + '</b><small>' + Math.round(c[k] / t * 100) + '%</small></li>'; }).join('') + '</ul>';
+}
 function attRecap(d) {
-  if (!d.rows.length) { $('#atb').innerHTML = '<div class="card empty"><b>Belum ada siswa di kelas ini</b></div>'; return; }
+  if (!d.rows.length) { $('#atb').innerHTML = '<div class="card empty"><b>Belum ada siswa di kelas ini</b>Siswa bergabung otomatis melalui sinkronisasi atau memakai kode kelas.</div>'; return; }
   window._attRows = d;
-  $('#atb').innerHTML = '<div class="at-h" style="border:0"><span>' + esc(d.class_name) + ' • ' + d.sessions + ' pertemuan tercatat</span><button type="button" class="pill" onclick="attCsv()">Unduh CSV</button></div><div class="card" style="overflow-x:auto"><table class="at-t"><thead><tr><th>Nama</th><th>Hadir</th><th>Sakit</th><th>Izin</th><th>Alpa</th><th>Kehadiran</th></tr></thead><tbody>'
-    + d.rows.map(function (r) { return '<tr><td>' + esc(r.full_name) + '</td><td>' + r.H + '</td><td>' + r.S + '</td><td>' + r.I + '</td><td>' + r.A + '</td><td><span class="badge' + (!r.total ? '' : r.pct < 75 ? ' warn' : ' ok') + '">' + (r.total ? r.pct + '%' : '-') + '</span></td></tr>'; }).join('')
-    + '</tbody></table></div><p style="margin-top:.7rem;font-size:.78rem;color:var(--mut)">Kehadiran dihitung dari jumlah Hadir dibagi seluruh pertemuan tercatat. Merah/kuning berarti di bawah 75%.</p>';
+  var agg = attSum(d.rows), low = d.rows.filter(function (r) { return r.total && r.pct < 75; }).sort(function (a, b) { return a.pct - b.pct; });
+  var kpi = [['Pertemuan', d.sessions, ''], ['Jumlah siswa', d.rows.length, ''], ['Rata-rata kehadiran', agg.total ? agg.pct + '%' : '–', agg.total ? (agg.pct >= 90 ? 'ok' : agg.pct >= 75 ? '' : 'bad') : ''], ['Perlu perhatian', low.length, low.length ? 'bad' : 'ok']];
+  var dl = Array.isArray(d.daily) ? d.daily.slice(-30) : null;
+  var trend = dl && dl.length
+    ? '<div class="at-tr" role="img" aria-label="Tren kehadiran per pertemuan">' + dl.map(function (x) { return '<span class="at-bw" title="' + fmtD(x.date) + ' • Hadir ' + x.H + ', Sakit ' + x.S + ', Izin ' + x.I + ', Alpa ' + x.A + ' (' + x.pct + '%)"><b class="at-b" style="height:' + Math.max(x.pct, 3) + '%;background:' + (x.pct >= 90 ? ATC.H : x.pct >= 75 ? ATC.S : ATC.A) + '"></b><small>' + fmtS(x.date) + '</small></span>'; }).join('') + '</div><p class="at-cap">Persentase hadir per pertemuan' + (d.daily.length > 30 ? ' (30 pertemuan terakhir)' : '') + '. Hijau ≥ 90%, kuning ≥ 75%, merah di bawahnya.</p>'
+    : '<p class="empty" style="padding:1.5rem 0">Grafik tren akan tampil setelah backend diperbarui dan ada catatan presensi.</p>';
+  var watch = low.length
+    ? '<ul class="at-wl">' + low.slice(0, 5).map(function (r) { return '<li><span>' + esc(r.full_name) + '</span><b>' + r.pct + '%</b></li>'; }).join('') + '</ul>' + (low.length > 5 ? '<p class="at-cap">dan ' + (low.length - 5) + ' siswa lainnya pada tabel di bawah.</p>' : '')
+    : '<p class="at-cap" style="padding:.4rem 0">Seluruh siswa memiliki kehadiran minimal 75%.</p>';
+  $('#atb').innerHTML = '<div class="at-h" style="border:0;padding-bottom:.4rem"><span><b style="color:var(--ink)">' + esc(d.class_name) + '</b> • ' + attRangeTxt() + '</span><span class="at-ba"><button type="button" class="pill" onclick="attCsv()">Unduh CSV</button><button type="button" class="btn" style="padding:.45rem 1rem" onclick="attPrint(\'class\')">Cetak / Simpan PDF</button></span></div>'
+    + '<div class="at-kpi">' + kpi.map(function (k) { return '<div class="card at-k ' + k[2] + '"><small>' + k[0] + '</small><b>' + k[1] + '</b></div>'; }).join('') + '</div>'
+    + '<div class="at-info"><div class="card at-c1"><div class="sec"><h3>Komposisi kehadiran</h3></div><div class="at-dw">' + attDonut(agg) + attLegend(agg) + '</div></div>'
+    + '<div class="card at-c2"><div class="sec"><h3>Tren per pertemuan</h3></div>' + trend + '</div>'
+    + '<div class="card at-c3"><div class="sec"><h3>Perlu perhatian</h3></div>' + watch + '</div></div>'
+    + '<div class="card" style="overflow-x:auto;padding:0;margin-top:1rem"><table class="at-t"><thead><tr><th>Nama</th><th>Hadir</th><th>Sakit</th><th>Izin</th><th>Alpa</th><th style="min-width:9rem">Kehadiran</th></tr></thead><tbody>'
+    + d.rows.map(function (r) { var c = !r.total ? '' : r.pct < 75 ? 'bad' : r.pct < 90 ? 'mid' : 'ok'; return '<tr><td>' + esc(r.full_name) + '</td><td>' + r.H + '</td><td>' + r.S + '</td><td>' + r.I + '</td><td>' + r.A + '</td><td><div class="at-pb"><span class="at-bar-t"><i class="' + c + '" style="width:' + (r.total ? r.pct : 0) + '%"></i></span><b>' + (r.total ? r.pct + '%' : '-') + '</b></div></td></tr>'; }).join('')
+    + '</tbody></table></div><p class="at-cap" style="margin-top:.7rem">Kehadiran dihitung dari jumlah Hadir dibagi seluruh pertemuan yang tercatat pada periode terpilih. Batas perhatian: di bawah 75%.</p>';
 }
 function attCsv() {
   var d = window._attRows; if (!d) return;
@@ -2472,11 +2577,48 @@ function attCsv() {
 }
 function attStudent(d) {
   if (!d.classes.length) { $('#atb').innerHTML = '<div class="card empty"><b>Belum ada data presensi</b>Rekap muncul setelah guru mencatat kehadiran.</div>'; return; }
-  $('#atb').innerHTML = '<div class="at-g">' + d.classes.map(function (c) {
-    return '<div class="card"><small style="color:var(--mut)">' + esc(c.class_name) + '</small><div class="at-p">' + (c.total ? c.pct + '%' : '-') + '</div><div style="margin:.5rem 0 .7rem;font-size:.8rem;color:var(--mut)">kehadiran dari ' + c.total + ' pertemuan</div><span class="badge ok">Hadir ' + c.H + '</span> <span class="badge">Sakit ' + c.S + '</span> <span class="badge">Izin ' + c.I + '</span> <span class="badge warn">Alpa ' + c.A + '</span></div>';
-  }).join('') + '</div>' + (d.recent.length ? '<div class="card"><b>Riwayat terbaru</b>' + d.recent.map(function (r) {
-    return '<div class="at-r"><span><b>' + esc(r.class_name) + '</b><br><small style="color:var(--mut)">' + tgl(r.date) + (r.note ? ' • ' + esc(r.note) : '') + '</small></span><span class="badge' + (r.status === 'H' ? ' ok' : r.status === 'A' ? ' warn' : '') + '">' + ATL[r.status] + '</span></div>';
-  }).join('') + '</div>' : '');
+  window._attStu = d;
+  var agg = attSum(d.classes);
+  $('#atb').innerHTML = '<div class="at-h" style="border:0;padding-bottom:.4rem"><span>Ringkasan seluruh kelas Anda</span><span class="at-ba"><button type="button" class="btn" style="padding:.45rem 1rem" onclick="attPrint(\'student\')">Cetak / Simpan PDF</button></span></div>'
+    + '<div class="card" style="margin-bottom:1rem"><div class="at-dw">' + attDonut(agg) + attLegend(agg) + '</div></div>'
+    + '<div class="at-g">' + d.classes.map(function (c) {
+      return '<div class="card"><small style="color:var(--mut)">' + esc(c.class_name) + '</small><div class="at-p">' + (c.total ? c.pct + '%' : '-') + '</div><span class="at-bar-t" style="display:block;margin:.3rem 0 .6rem"><i class="' + (!c.total ? '' : c.pct < 75 ? 'bad' : c.pct < 90 ? 'mid' : 'ok') + '" style="width:' + (c.total ? c.pct : 0) + '%"></i></span><div style="margin:0 0 .7rem;font-size:.8rem;color:var(--mut)">kehadiran dari ' + c.total + ' pertemuan</div><span class="badge ok">Hadir ' + c.H + '</span> <span class="badge">Sakit ' + c.S + '</span> <span class="badge">Izin ' + c.I + '</span> <span class="badge warn">Alpa ' + c.A + '</span></div>';
+    }).join('') + '</div>' + (d.recent.length ? '<div class="card"><b>Riwayat terbaru</b>' + d.recent.map(function (r) {
+      return '<div class="at-r at-hr"><span><b>' + esc(r.class_name) + '</b><br><small style="color:var(--mut)">' + tgl(r.date) + (r.note ? ' • ' + esc(r.note) : '') + '</small></span><span class="badge' + (r.status === 'H' ? ' ok' : r.status === 'A' ? ' warn' : '') + '">' + ATL[r.status] + '</span></div>';
+    }).join('') + '</div>' : '');
+}
+
+/* Cetak laporan presensi (A4) — pengguna memilih "Simpan sebagai PDF" pada dialog cetak */
+function attPrint(kind) {
+  var logo = (document.querySelector('aside .logo') || {}).src || '', now = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+  var head = function (title, sub) { return '<div class="pr-h"><img src="' + esc(logo) + '" alt=""><div><b>SMK CALM</b><span>Yayasan Al-Musaddadiyah Garut</span></div></div><h1>' + esc(title) + '</h1><p class="pr-sub">' + sub + '</p>'; };
+  var body = '', fname = 'rekap-presensi';
+  if (kind === 'class') {
+    var d = window._attRows; if (!d) return;
+    var agg = attSum(d.rows), low = d.rows.filter(function (r) { return r.total && r.pct < 75; }).length;
+    fname = 'presensi-' + d.class_name.replace(/\W+/g, '-').toLowerCase();
+    body = head('Rekap Presensi Kehadiran Siswa', '<b>Kelas:</b> ' + esc(d.class_name) + ' &nbsp;•&nbsp; <b>Periode:</b> ' + attRangeTxt() + ' &nbsp;•&nbsp; <b>Pertemuan tercatat:</b> ' + d.sessions)
+      + '<div class="pr-k"><div><small>Jumlah siswa</small><b>' + d.rows.length + '</b></div><div><small>Rata-rata kehadiran</small><b>' + (agg.total ? agg.pct + '%' : '-') + '</b></div><div><small>Hadir / Sakit / Izin / Alpa</small><b>' + agg.H + ' / ' + agg.S + ' / ' + agg.I + ' / ' + agg.A + '</b></div><div><small>Kehadiran &lt; 75%</small><b>' + low + ' siswa</b></div></div>'
+      + '<table><thead><tr><th style="width:2rem">No</th><th>Nama siswa</th><th>H</th><th>S</th><th>I</th><th>A</th><th>Pert.</th><th>Kehadiran</th></tr></thead><tbody>'
+      + d.rows.map(function (r, i) { return '<tr class="' + (r.total && r.pct < 75 ? 'lw' : '') + '"><td>' + (i + 1) + '</td><td class="l">' + esc(r.full_name) + '</td><td>' + r.H + '</td><td>' + r.S + '</td><td>' + r.I + '</td><td>' + r.A + '</td><td>' + r.total + '</td><td><b>' + (r.total ? r.pct + '%' : '-') + '</b></td></tr>'; }).join('')
+      + '</tbody></table><p class="pr-n">Keterangan: H = Hadir, S = Sakit, I = Izin, A = Alpa. Kehadiran = H ÷ seluruh pertemuan tercatat. Baris tebal merah menandakan kehadiran di bawah 75%.</p>'
+      + '<div class="pr-sg"><div></div><div><p>Garut, ' + now + '</p><p>Guru Pengampu,</p><span></span><b>' + esc(d.teacher_name || S.user.full_name) + '</b></div></div>';
+  } else {
+    var s2 = window._attStu; if (!s2) return;
+    fname = 'rekap-presensi-' + String(S.user.full_name || '').replace(/\W+/g, '-').toLowerCase();
+    var g = attSum(s2.classes);
+    body = head('Rekap Presensi Kehadiran', '<b>Nama:</b> ' + esc(S.user.full_name) + ' &nbsp;•&nbsp; <b>Dicetak:</b> ' + now)
+      + '<div class="pr-k"><div><small>Jumlah kelas</small><b>' + s2.classes.length + '</b></div><div><small>Rata-rata kehadiran</small><b>' + (g.total ? g.pct + '%' : '-') + '</b></div><div><small>Hadir / Sakit</small><b>' + g.H + ' / ' + g.S + '</b></div><div><small>Izin / Alpa</small><b>' + g.I + ' / ' + g.A + '</b></div></div>'
+      + '<table><thead><tr><th style="width:2rem">No</th><th>Kelas</th><th>H</th><th>S</th><th>I</th><th>A</th><th>Pert.</th><th>Kehadiran</th></tr></thead><tbody>'
+      + s2.classes.map(function (c, i) { return '<tr class="' + (c.total && c.pct < 75 ? 'lw' : '') + '"><td>' + (i + 1) + '</td><td class="l">' + esc(c.class_name) + '</td><td>' + c.H + '</td><td>' + c.S + '</td><td>' + c.I + '</td><td>' + c.A + '</td><td>' + c.total + '</td><td><b>' + (c.total ? c.pct + '%' : '-') + '</b></td></tr>'; }).join('')
+      + '</tbody></table><p class="pr-n">Keterangan: H = Hadir, S = Sakit, I = Izin, A = Alpa. Dokumen ini dicetak dari Portal LMS SMK CALM.</p>';
+  }
+  var old = document.getElementById('prn'); if (old) old.remove();
+  var el = document.createElement('div'); el.id = 'prn'; el.innerHTML = body; document.body.appendChild(el);
+  var t0 = document.title; document.title = fname;
+  var done = function () { document.title = t0; var e = document.getElementById('prn'); if (e) e.remove(); window.removeEventListener('afterprint', done); };
+  window.addEventListener('afterprint', done);
+  setTimeout(function () { window.print(); }, 150);
 }
 
 if (S) start(); else cekServer();
