@@ -3,7 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>LMS SMK CALM</title>
+<title>Portal LMS | SMK CALM</title>
+<meta name="description" content="Portal LMS SMK CALM: platform pembelajaran terpadu untuk pengelolaan kelas, materi, penugasan, kuis, dan penilaian.">
+<meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0b3d91">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,7 +18,6 @@ button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}
 :focus-visible{outline:2px solid #f59e0b;outline-offset:2px}
 .hide{display:none!important}
 
-/* ========== LOGIN ========== */
 .lw{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);min-height:100vh;min-height:100dvh;background:#fff}
 .ls{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:2.5rem;padding:clamp(2rem,5vh,3.25rem) clamp(2rem,4vw,4rem);color:#fff;background:radial-gradient(70% 50% at 0 0,rgba(74,118,201,.3),transparent 65%),linear-gradient(165deg,#0c3f94 0%,#0a2f72 50%,#071a40 100%)}
 .ls::before{content:"";position:absolute;z-index:-1;top:-9rem;right:-9rem;width:26rem;height:26rem;border-radius:50%;border:1px solid rgba(255,255,255,.08)}
@@ -101,7 +102,6 @@ button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}
 .rhint{display:flex;gap:.55rem;align-items:flex-start;margin:.9rem 0 1.4rem;padding:.7rem .85rem;border-radius:.8rem;background:#f4f7fc;font-size:.78rem;line-height:1.6;color:#53647f}
 .rhint::before{content:"";flex:none;width:.4rem;height:.4rem;margin-top:.5rem;border-radius:50%;background:var(--gold)}
 
-/* ========== APP ========== */
 #app{display:flex;min-height:100vh}
 aside{width:17rem;flex:none;background:var(--side);color:#e2e8f0;padding:1rem;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;overflow-y:auto;transition:width .25s ease}
 aside .logo{width:2.5rem;height:2.5rem;object-fit:contain;margin-bottom:.25rem}
@@ -117,7 +117,6 @@ aside .nm{font-weight:800;color:#fff;white-space:nowrap}
 aside nav{margin-top:1rem;display:flex;flex-direction:column;min-width:0}
 #menu{display:flex;flex-direction:column;min-width:0}
 
-/* Dropdown Styles */
 #menu .mg{display:flex;align-items:center;gap:.6rem;padding:.7rem .75rem;font-size:.75rem;font-weight:700;color:#7f95bb;letter-spacing:.05em;text-transform:uppercase;cursor:pointer;user-select:none;transition:.15s;border-radius:.6rem;margin-top:.5rem}
 #menu .mg:hover{color:#fff;background:rgba(255,255,255,.05)}
 #menu .mg span{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -150,7 +149,6 @@ main{flex:1;min-width:0;max-width:80rem;padding:2rem 2.5rem 3rem;margin:0 auto}
 .card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.25rem;box-shadow:var(--shadow-sm);transition:box-shadow .2s}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(17rem,1fr));gap:1rem}
 
-/* Dashboard Hero */
 .hero-dash{position:relative;overflow:hidden;border-radius:1.25rem;background:linear-gradient(135deg,#0c3f94 0%,#071a40 100%);color:#fff;padding:1.5rem 2rem;margin-bottom:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;box-shadow:0 12px 30px -10px rgba(11,61,145,.4)}
 .hero-dash::before{content:"";position:absolute;right:-5%;top:-50%;width:300px;height:300px;background:radial-gradient(circle,rgba(255,255,255,.1) 0%,transparent 70%);border-radius:50%}
 .hero-text h2{font-family:var(--serif);font-size:1.8rem;font-weight:500;margin-bottom:.3rem;letter-spacing:-.02em}
@@ -190,30 +188,32 @@ details{margin-top:.8rem;border-top:1px solid var(--line);padding-top:.8rem}summ
 .sr input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(11,61,145,.16)}
 table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left;padding:.8rem .7rem;border-bottom:1px solid var(--line)}th{color:var(--mut);font-weight:700;background:var(--bg);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}
 
-/* MODAL */
 .ov{position:fixed;inset:0;background:rgba(7,20,46,.6);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;justify-content:center;align-items:center;overflow-y:auto;padding:clamp(.75rem,3vw,1.5rem);z-index:50;animation:ovIn .2s ease-out}
-.md{background:#fff;border-radius:1.5rem;padding:clamp(1.5rem,3vw,2rem);width:100%;max-width:32rem;max-height:calc(100dvh - 2rem);overflow:auto;margin:auto;box-shadow:0 30px 80px -20px rgba(3,18,48,.6);animation:mdIn .25s cubic-bezier(.2,.75,.25,1)}
+.md{position:relative;background:#fff;border-radius:1.5rem;padding:clamp(1.5rem,3vw,2rem);width:100%;max-width:32rem;max-height:calc(100dvh - 2rem);overflow:auto;margin:auto;box-shadow:0 30px 80px -20px rgba(3,18,48,.6);animation:mdIn .25s cubic-bezier(.2,.75,.25,1);border:1px solid rgba(255,255,255,.6)}
 .md.wide{max-width:48rem}
-.md h3{font-family:var(--serif);font-size:1.7rem;letter-spacing:-.02em;color:var(--navyd);margin-bottom:.4rem}
-.md .md-sub{font-size:.85rem;color:var(--mut);margin-bottom:1.5rem}
+.md h3{font-family:var(--serif);font-size:1.55rem;font-weight:600;letter-spacing:-.015em;color:var(--navyd);margin-bottom:.4rem;padding-right:2rem}
+.md .md-sub{margin:.4rem 0 1.4rem;font-size:.88rem;line-height:1.65;color:var(--mut)}
 .md label{display:block;font-size:.8rem;font-weight:700;margin-bottom:1.2rem;color:#34445f}
 .md input,.md textarea,.md select{display:block;width:100%;margin-top:.5rem;padding:.8rem .9rem;border:1px solid var(--line2);border-radius:.8rem;font-size:.95rem;background:#f8faff;font-weight:400;transition:border-color .16s,box-shadow .16s,background .16s}
 .md input[type=file]{padding:.7rem;background:#fff}
 .md textarea{min-height:6rem;resize:vertical}
 .md input:focus,.md textarea:focus,.md select:focus{outline:none;border-color:#7194d2;background:#fff;box-shadow:0 0 0 4px rgba(11,61,145,.11)}
-.md .row{position:sticky;bottom:-2rem;padding-top:1.2rem;margin-top:.5rem;background:linear-gradient(180deg,rgba(255,255,255,0),#fff 25%)}
-.md .btn,.md .btn2{min-height:2.8rem;padding:.7rem 1.2rem;border-radius:.8rem}
+.md .row{position:sticky;bottom:0;z-index:2;display:flex;gap:.6rem;justify-content:flex-end;padding:1.1rem 0 0;margin-top:.6rem;background:linear-gradient(180deg,rgba(255,255,255,0) 0,#fff 28%)}
+.md .btn,.md .btn2{min-height:2.8rem;padding:.7rem 1.2rem;border-radius:.8rem;min-width:6.5rem}
+.md .mx{position:absolute;top:.85rem;right:1rem;width:2.1rem;height:2.1rem;border:0;border-radius:50%;background:var(--bg);font-size:1.3rem;line-height:1;color:var(--mut);display:grid;place-items:center;transition:background .18s,color .18s;z-index:3}
+.md .mx:hover{background:var(--soft);color:var(--navy)}
 @keyframes ovIn{from{opacity:0}to{opacity:1}}@keyframes mdIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
 
-/* MOTIVASI MODAL */
-.quote-modal{text-align:center;max-width:26rem;background:linear-gradient(165deg,#0c3f94,#071a40);color:#fff;border:1px solid rgba(255,255,255,.1)}
-.quote-modal h3{color:#fff;font-size:1.8rem;margin-bottom:1rem}
-.quote-icon{width:3.5rem;height:3.5rem;margin:0 auto 1.5rem;background:rgba(255,255,255,.15);border-radius:50%;display:grid;place-items:center;color:var(--gold)}
-.quote-icon svg{width:1.8rem;height:1.8rem}
-.quote-text{font-family:var(--serif);font-size:1.15rem;line-height:1.6;font-style:italic;color:rgba(255,255,255,.9);margin-bottom:1.5rem}
-.quote-author{font-weight:700;font-size:.85rem;letter-spacing:.05em;text-transform:uppercase;color:var(--gold)}
-.quote-btn{background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3);margin-top:2rem;width:100%;padding:.8rem;border-radius:.8rem;font-weight:700;cursor:pointer;transition:.2s}
-.quote-btn:hover{background:rgba(255,255,255,.25)}
+/* Catatan Pembelajaran — modal elegan */
+.quote-modal{position:relative;text-align:center;max-width:26rem;background:radial-gradient(16rem 9rem at 100% 0,rgba(56,189,248,.22),transparent 70%),radial-gradient(12rem 8rem at 0 100%,rgba(214,180,106,.18),transparent 70%),linear-gradient(165deg,#0d46a3 0%,#082a6b 55%,#061a45 100%);color:#fff;border:1px solid rgba(255,255,255,.14);box-shadow:0 36px 80px -24px rgba(3,18,48,.78);border-radius:1.6rem}
+.quote-modal h3{color:#fff;font-size:1.5rem;margin-bottom:1rem;padding-right:0;letter-spacing:-.01em}
+.quote-icon{width:3.4rem;height:3.4rem;margin:0 auto 1.4rem;background:rgba(255,255,255,.14);border-radius:50%;display:grid;place-items:center;color:var(--gold);box-shadow:0 0 0 8px rgba(255,255,255,.06)}
+.quote-icon svg{width:1.7rem;height:1.7rem}
+.quote-text{font-family:var(--serif);font-size:1.08rem;line-height:1.7;color:rgba(255,255,255,.92);margin-bottom:1.4rem;letter-spacing:.005em}
+.quote-author{font-weight:700;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+.quote-btn{display:block;width:100%;margin-top:1.6rem;padding:.8rem 1rem;border-radius:.8rem;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.26);color:#fff;font-weight:700;font-size:.9rem;cursor:pointer;transition:background .2s,border-color .2s,transform .12s}
+.quote-btn:hover{background:rgba(255,255,255,.24);border-color:rgba(255,255,255,.4)}
+.quote-btn:active{transform:translateY(1px)}
 
 #toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--navyx);color:#fff;padding:.8rem 1.5rem;border-radius:.85rem;font-size:.9rem;z-index:60;box-shadow:0 10px 30px -10px rgba(0,0,0,.5);animation:mdIn .2s ease-out}
 #toast.e{background:#be123c}
@@ -274,7 +274,6 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
 .pwf input{display:block;width:100%;margin-top:.4rem;padding:.75rem 1rem;border:1px solid var(--line2);border-radius:.75rem;font-size:.95rem;font-weight:400;background:#f8faff}
 .pwf input:focus{outline:none;border-color:var(--navy);background:#fff;box-shadow:0 0 0 4px rgba(11,61,145,.14)}
 
-/* ========== SYNC WIZARD ========== */
 .wiz{display:flex;gap:.4rem;margin-bottom:1.5rem;overflow-x:auto;padding-bottom:.2rem}
 .wstep{display:flex;align-items:center;gap:.55rem;padding:.6rem 1.1rem;border-radius:99px;background:#fff;border:1px solid var(--line2);font-size:.8rem;font-weight:600;color:var(--mut);white-space:nowrap;transition:.2s}
 .wstep i{display:grid;place-items:center;width:1.5rem;height:1.5rem;border-radius:50%;background:var(--bg);color:var(--mut);font-style:normal;font-size:.75rem;font-weight:700}
@@ -302,7 +301,6 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
 .walert.danger{background:#fef2f2;border-color:#fecaca;color:#991b1b}
 .wactions{display:flex;justify-content:space-between;gap:.75rem;flex-wrap:wrap;margin-top:1.2rem}
 
-/* ========== SIDEBAR TOGGLE ========== */
 .sidebar-toggle{display:none;width:100%;padding:.6rem .75rem;margin:.5rem 0 1rem;border:0;border-radius:.75rem;background:rgba(255,255,255,.05);color:#cbd5e1;font-size:.8rem;font-weight:600;cursor:pointer;transition:.15s;align-items:center;gap:.75rem}
 .sidebar-toggle:hover{background:rgba(255,255,255,.1);color:#fff}
 @media(min-width:768px){
@@ -310,12 +308,9 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
   aside.collapsed{width:5rem;padding:1rem 0.5rem}
   aside.collapsed .nm,aside.collapsed .bd,aside.collapsed .sidebar-toggle span{display:none}
   aside.collapsed .logo{width:2rem;height:2rem;margin:0 auto 1rem}
-  
-  /* Collapsed menu adjustments */
   aside.collapsed #menu .mg span, aside.collapsed #menu .mg-chevron { display: none; }
   aside.collapsed #menu .mg { justify-content: center; margin-top: 0.5rem; padding: 0.4rem; }
   aside.collapsed .submenu { display: flex !important; max-height: none !important; opacity: 1 !important; pointer-events: auto !important; margin-bottom: 0.5rem; }
-  
   aside.collapsed .mi{justify-content:center;padding:.75rem}
   aside.collapsed .mi svg{margin:0}
   aside.collapsed .mi.out{justify-content:center}
@@ -324,15 +319,11 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
   aside.collapsed .sidebar-toggle svg{transform:rotate(180deg)}
 }
 
-/* ================================================================
-   THEME v2 — segar, bersih, modern (lapisan di atas gaya lama)
-   ================================================================ */
 :root{--bg:#f4f7fc;--line:#e5ebf4;--line2:#d5deec;--accent:#0ea5e9;--mint:#10b981;--r:1.1rem;
 --shadow-sm:0 1px 2px rgba(15,40,90,.04),0 6px 16px -8px rgba(15,40,90,.1);
 --shadow-md:0 12px 28px -14px rgba(15,40,90,.22);--shadow-lg:0 26px 50px -26px rgba(15,40,90,.32)}
 body{background:radial-gradient(60rem 26rem at 100% -8%,#e2edfc 0,transparent 62%),radial-gradient(44rem 22rem at -10% 110%,#e9f6f2 0,transparent 60%),var(--bg);background-attachment:fixed}
 
-/* ---- Sidebar ---- */
 aside{padding:1.1rem .85rem 1rem;background:linear-gradient(185deg,#0b3077 0%,#072155 55%,#051640 100%);box-shadow:6px 0 34px -16px rgba(5,20,60,.55);scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
 aside .logo{width:3rem;height:3rem;padding:.35rem;margin-bottom:.65rem;background:#fff;border-radius:.95rem;box-shadow:0 10px 20px -10px rgba(0,0,0,.55)}
 aside .nm{font-size:1.08rem;letter-spacing:.03em}
@@ -358,7 +349,6 @@ aside nav{margin-top:.9rem}
 @media(min-width:768px){aside{width:19.5rem}aside.collapsed{width:5rem;padding:1rem .5rem}aside.collapsed .sb-user{display:none}}
 @media(max-width:767px){.sb-user{display:none}}
 
-/* ---- Konten ---- */
 main{padding:2rem 2.5rem 4rem}
 .top h2{font-size:clamp(1.45rem,2.4vw,1.85rem)}
 .card{border-color:var(--line);border-radius:var(--r)}
@@ -368,7 +358,6 @@ main{padding:2rem 2.5rem 4rem}
 .btn2{border-radius:.8rem}
 .badge.ok{background:#d9f7e8}.badge.warn{background:#fff1cf}
 
-/* ---- Hero & statistik ---- */
 .hero-dash{border-radius:1.4rem;padding:1.8rem 2.1rem;background:radial-gradient(38rem 16rem at 92% -25%,rgba(56,189,248,.38),transparent 62%),radial-gradient(22rem 14rem at 0 125%,rgba(214,180,106,.26),transparent 62%),linear-gradient(135deg,#0d46a3 0%,#082a6b 55%,#061a45 100%);box-shadow:0 24px 44px -24px rgba(8,42,107,.8)}
 .hero-text h2{font-size:clamp(1.5rem,2.6vw,2rem)}
 .hero-clock{padding:.85rem 1.3rem;border-radius:1rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
@@ -385,7 +374,6 @@ main{padding:2rem 2.5rem 4rem}
 .qa i svg{width:1.25rem;height:1.25rem}
 .qa b{display:block;font-size:.95rem;color:var(--navyd)}.qa small{color:var(--mut);font-size:.8rem}
 
-/* ---- Tabel & pencarian ---- */
 table{font-size:.86rem}
 th{position:sticky;top:0;z-index:1}
 tbody tr{transition:background .15s}tbody tr:hover{background:#f6f9fe}
@@ -396,25 +384,17 @@ tbody tr{transition:background .15s}tbody tr:hover{background:#f6f9fe}
 .searchbox input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 4px rgba(11,61,145,.12)}
 .ro-chip{display:inline-flex;align-items:center;gap:.4rem;padding:.3rem .8rem;border-radius:99px;background:#eef6ff;border:1px solid #cfe3fb;color:#1e5aa8;font-size:.76rem;font-weight:700}
 
-/* ---- Loading skeleton & transisi halaman ---- */
 .skel-wrap{display:grid;gap:1rem}
 .skel{border-radius:1rem;background:linear-gradient(90deg,#e8eef8 25%,#f6f9fd 37%,#e8eef8 63%);background-size:400% 100%;animation:shim 1.3s ease infinite}
 @keyframes shim{0%{background-position:100% 50%}100%{background-position:0 50%}}
 #main>*{animation:fadeUp .38s cubic-bezier(.2,.7,.2,1) both}
 @keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 
-/* ---- Tombol segarkan data ---- */
 .rf{position:fixed;right:1.1rem;bottom:1.1rem;z-index:30;display:grid;place-items:center;width:2.8rem;height:2.8rem;border:1px solid var(--line2);border-radius:50%;background:#fff;color:var(--navy);box-shadow:var(--shadow-md);transition:.2s}
 .rf svg{width:1.15rem;height:1.15rem}.rf:hover{background:var(--soft);transform:rotate(25deg)}
 .rf.spin-on svg{animation:sp .7s linear infinite}
-
-/* ---- Pop-up motivasi ---- */
-.quote-modal{border-radius:1.6rem;background:radial-gradient(18rem 10rem at 100% 0,rgba(56,189,248,.3),transparent 70%),radial-gradient(14rem 9rem at 0 100%,rgba(214,180,106,.22),transparent 70%),linear-gradient(165deg,#0d46a3,#061a45);box-shadow:0 36px 80px -24px rgba(3,18,48,.75)}
-.quote-icon{box-shadow:0 0 0 8px rgba(255,255,255,.07)}
-.quote-btn{background:rgba(255,255,255,.16)}
 @media(max-width:767px){main{padding:1.25rem 1rem 4rem}.rf{bottom:.9rem;right:.9rem}}
 
-/* ---- Kartu kelas (minimalis, ikon per jurusan) ---- */
 .kgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(16.5rem,1fr));gap:1.1rem}
 .kc{--c1:#0b3d91;--c2:#38bdf8;position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;gap:.3rem;width:100%;min-height:11.5rem;padding:1.3rem 1.3rem 1.1rem;text-align:left;border:1px solid var(--line);border-radius:1.25rem;background:#fff;box-shadow:var(--shadow-sm);transition:transform .22s,box-shadow .22s,border-color .22s;animation:fadeUp .45s cubic-bezier(.2,.7,.2,1) both}
 .kc::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:linear-gradient(90deg,var(--c1),var(--c2))}
@@ -435,7 +415,6 @@ tbody tr{transition:background .15s}tbody tr:hover{background:#f6f9fe}
 .kfoot .kgo{flex:none;width:1.05rem;height:1.05rem;margin-left:auto;color:var(--c1);opacity:.45;transition:transform .2s,opacity .2s}
 .kc:hover .kgo{opacity:1;transform:translateX(3px)}
 
-/* ---- Indikator pengambilan data ---- */
 .ldr{position:fixed;left:0;right:0;top:0;height:3px;z-index:80;overflow:hidden;opacity:0;transition:opacity .2s;pointer-events:none}
 .ldr.on{opacity:1}
 .ldr span{position:absolute;top:0;bottom:0;width:42%;background:linear-gradient(90deg,transparent,#38bdf8,#0b3d91,#d6b46a,transparent);animation:ldrmove 1.1s ease-in-out infinite}
@@ -447,14 +426,12 @@ tbody tr{transition:background .15s}tbody tr:hover{background:#f6f9fe}
 @keyframes ldb{0%,80%,100%{transform:scale(.6);opacity:.5}40%{transform:scale(1);opacity:1}}
 @media(max-width:767px){.ldc{top:4.4rem}}
 
-/* ===== PREMIUM LAYER v2 ===== */
 :root{--ink:#14213d;--bg:#f3f6fb;--shadow-sm:0 1px 2px rgba(10,34,80,.05),0 6px 16px -8px rgba(10,34,80,.1);--shadow-md:0 14px 34px -16px rgba(10,34,80,.26);--r:1.2rem}
 body{background:radial-gradient(64rem 28rem at 100% -8%,#e4edfb,transparent 62%),radial-gradient(40rem 22rem at -5% 105%,#f7f0de,transparent 60%),var(--bg);background-attachment:fixed}
 ::selection{background:#cfe0ff}html{scroll-behavior:smooth}*{scrollbar-width:thin;scrollbar-color:#c3cfe3 transparent}
 .card{box-shadow:var(--shadow-sm);border-color:#e3e9f3}
 .btn{transition:transform .15s,box-shadow .2s}.btn:hover{transform:translateY(-1px)}.btn:active{transform:none}.btn:disabled,.btn2:disabled{opacity:.45;cursor:not-allowed;transform:none}
 .pill.on{background:linear-gradient(180deg,#1556c0,var(--navy))}
-/* --- Kuis: kartu --- */
 .qc{position:relative;overflow:hidden;margin-bottom:1rem;padding:1.4rem 1.5rem}
 .qc::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(var(--navy),#4a76c9)}.qc.done::before{background:linear-gradient(#059669,#34d399)}
 .qch{display:flex;gap:1rem;align-items:flex-start}
@@ -467,13 +444,11 @@ body{background:radial-gradient(64rem 28rem at 100% -8%,#e4edfb,transparent 62%)
 .qst{display:flex;align-items:center;gap:1.4rem;flex:1;min-width:14rem}.qst div:not(.qbm){line-height:1.1}.qst b{display:block;font-size:1.3rem;color:var(--navyd)}.qst small{font-size:.7rem;color:var(--mut)}
 .qbm{flex:1;height:.45rem;border-radius:99px;background:var(--line);overflow:hidden}.qbm i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--navy),#4a76c9)}
 .qc details{margin-top:.9rem}.qc summary{cursor:pointer;font-size:.85rem;font-weight:700;color:var(--navy)}
-/* --- Kuis: modal pembuka --- */
-.qi{max-width:27rem;text-align:center}.qi h3{font-family:var(--serif);font-size:1.6rem;color:var(--navyd)}
+.qi{max-width:27rem;text-align:center}.qi h3{font-family:var(--serif);font-size:1.6rem;color:var(--navyd);padding-right:0}
 .qi-ic{display:grid;place-items:center;width:3.6rem;height:3.6rem;margin:0 auto 1rem;border-radius:1.1rem;color:#fff;background:linear-gradient(140deg,#1556c0,#0a2250);box-shadow:0 14px 24px -12px rgba(11,61,145,.8)}.qi-ic svg{width:1.7rem;height:1.7rem}
 .qi .sub{margin:.4rem 0 1.2rem;color:var(--mut);font-size:.92rem}
 .qi-g{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-bottom:1.1rem}.qi-g div{padding:.8rem .4rem;border-radius:.9rem;background:var(--soft)}.qi-g b{display:block;font-size:1.4rem;color:var(--navy)}.qi-g small{font-size:.72rem;color:var(--mut);font-weight:600}
 .qi-l{list-style:none;text-align:left;font-size:.84rem;color:var(--mut);display:grid;gap:.5rem;margin-bottom:.6rem}.qi-l li{padding-left:1.4rem;position:relative}.qi-l li::before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:800}
-/* --- Kuis: pengerjaan siswa --- */
 .qbar{border-radius:1.1rem}.qpg{height:.35rem;margin:-.55rem .4rem 1.2rem;border-radius:99px;background:var(--line);overflow:hidden}.qpg i{display:block;height:100%;width:0;background:linear-gradient(90deg,#1556c0,var(--gold));transition:width .35s}
 .qw{display:grid;grid-template-columns:minmax(0,1fr) 16rem;gap:1.2rem;align-items:start}
 .qq{background:#fff;border:1px solid var(--line);border-radius:1.3rem;padding:clamp(1.2rem,3vw,2rem);box-shadow:var(--shadow-md);animation:fadeUp .3s both}
@@ -495,7 +470,6 @@ body{background:radial-gradient(64rem 28rem at 100% -8%,#e4edfb,transparent 62%)
 .qring{position:relative;width:10rem;height:10rem;margin:0 auto 1.2rem}.qring svg{transform:rotate(-90deg)}.qring circle{fill:none;stroke-width:10;stroke-linecap:round}.qring .bg{stroke:var(--line)}.qring .fg{stroke:var(--navy);stroke-dasharray:314;transition:stroke-dashoffset 1.2s cubic-bezier(.2,.7,.2,1)}
 .qring b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--serif);font-size:2.4rem;color:var(--navyd)}
 .qres h3{font-family:var(--serif);font-size:1.7rem;color:var(--navyd)}.qres p{color:var(--mut);margin:.5rem 0 1.4rem;font-size:.92rem}
-/* --- Kuis: pembuat (guru) --- */
 .qset{display:grid;grid-template-columns:1fr 1fr;gap:.2rem 1rem;padding:1rem;margin-bottom:1rem;border:1px solid var(--line);border-radius:1rem;background:var(--soft)}.qset .full{grid-column:1/-1}
 .qpre{display:flex;gap:.4rem;flex-wrap:wrap;margin:-.2rem 0 .8rem}.qpre button{border:1px solid var(--line2);background:#fff;border-radius:99px;padding:.25rem .8rem;font-size:.78rem;font-weight:700;color:var(--navy)}.qpre button:hover,.qpre button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
 .sw{display:flex!important;align-items:center;gap:.6rem;padding:.55rem .8rem;margin:.2rem 0;border-radius:.8rem;background:#fff;border:1px solid var(--line);font-size:.85rem;font-weight:600}.sw input{width:1.05rem;height:1.05rem;accent-color:var(--navy);margin:0}
@@ -505,7 +479,6 @@ body{background:radial-gradient(64rem 28rem at 100% -8%,#e4edfb,transparent 62%)
 .qsum{position:sticky;top:0;z-index:2;margin:-.2rem 0 1rem;padding:.5rem .9rem;border-radius:.8rem;background:var(--navyd);color:#fff;font-size:.8rem;font-weight:600}
 @media(max-width:900px){.qw{grid-template-columns:1fr}.qside{position:static;order:-1}.qnav{grid-template-columns:repeat(8,1fr)}.qset{grid-template-columns:1fr}}
 
-/* --- Pembahasan & analisis --- */
 .rv{margin-bottom:1rem;border-left:4px solid var(--line2)}.rv.g{border-left-color:#10b981}.rv.b{border-left-color:#f59e0b}
 .rvh{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;font-size:.8rem;color:var(--mut)}.rv h4{font-family:var(--serif);font-size:1.15rem;margin-bottom:.9rem;white-space:pre-wrap}
 .rv .qo{cursor:default}.rv .qo:hover{transform:none;border-color:var(--line2)}.rv .qo em{margin-left:auto;font-style:normal;font-size:.72rem;font-weight:800}
@@ -515,7 +488,6 @@ body{background:radial-gradient(64rem 28rem at 100% -8%,#e4edfb,transparent 62%)
 .stb{padding:.8rem 0;border-bottom:1px solid var(--line);font-size:.88rem}.stb small{color:var(--mut);font-weight:600}
 .stbar{height:.5rem;margin:.5rem 0 .3rem;border-radius:99px;background:var(--line);overflow:hidden}.stbar i{display:block;height:100%;border-radius:inherit}.stbar .easy{background:#10b981}.stbar .mid{background:#f59e0b}.stbar .hard{background:#e11d48}
 
-/* ===== LOGIN: pas di layar pendek (tidak terpotong) ===== */
 @media(min-width:901px){
  .lw{height:100vh;height:100dvh;min-height:0;overflow:hidden}
  .ls{min-height:0;overflow:hidden}.lm{min-height:0;overflow-y:auto;scrollbar-width:none}.lm::-webkit-scrollbar{display:none}
@@ -532,24 +504,67 @@ body{background:radial-gradient(64rem 28rem at 100% -8%,#e4edfb,transparent 62%)
 @media(min-width:901px) and (max-height:720px){
  .fe,.hero-l>p{display:none}.ls{justify-content:flex-start}.hero-l{margin-top:auto}.lf{margin-top:auto}
  .rx small{display:none}.rt{padding:.55rem 2rem .55rem .7rem}.rg{gap:.45rem}.lc h2{font-size:1.55rem}.lc .sub{margin-bottom:.7rem}
- .rhint{margin:.5rem 0 .7rem;font-size:.74rem;line-height:1.45}.help{display:none}
+ .rhint{margin:.5rem 0 .7rem;font-size:.74rem;line-height:1.45}.help{margin-top:.5rem;padding-top:.6rem}
 }
+
+.dlg{max-width:26rem;text-align:center;padding:2rem 1.75rem 1.5rem}
+.dgi{display:grid;place-items:center;width:3.4rem;height:3.4rem;margin:0 auto 1rem;border-radius:50%;background:var(--soft);color:var(--navy)}.dgi svg{width:1.55rem;height:1.55rem}
+.dlg.danger .dgi{background:#fdecee;color:#be123c}.dlg.warn .dgi{background:#fff4d6;color:#b45309}.dlg.key .dgi{background:#eef3fb;color:var(--navy)}.dlg.ok .dgi{background:#d9f7e8;color:#047857}
+.dgm{margin:.6rem 0 1.4rem;font-size:.9rem;line-height:1.65;color:var(--mut)}.dgm p+p{margin-top:.5rem}.dgm ul{margin:.7rem 0 0;padding:.8rem 1rem .8rem 1.9rem;border-radius:.8rem;background:var(--bg);text-align:left;font-size:.84rem}.dgm li+li{margin-top:.3rem}
+.dga{display:flex;gap:.6rem;justify-content:center}.dga .btn,.dga .btn2{flex:1;max-width:11rem;min-height:2.8rem}
+.btn.dgd{background:linear-gradient(180deg,#d6314b,#b4232f);box-shadow:0 10px 18px -12px rgba(190,18,60,.85)}
+#toast{display:flex;align-items:center;gap:.7rem;max-width:min(92vw,28rem);padding:.75rem 1.2rem .75rem .85rem;border-radius:1rem;background:#fff;color:var(--ink);font-size:.88rem;font-weight:600;border:1px solid var(--line);box-shadow:0 18px 40px -16px rgba(7,26,64,.4);animation:tIn .3s cubic-bezier(.2,.8,.2,1)}
+#toast .ti{flex:none;display:grid;place-items:center;width:1.6rem;height:1.6rem;border-radius:50%;background:#d9f7e8;color:#047857;font-style:normal;font-size:.8rem;font-weight:800}
+#toast.e{background:#fff;border-color:#f4c7cd}#toast.e .ti{background:#fdecee;color:#be123c}
+@keyframes tIn{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+
+/* Pusat Bantuan — desain elegan */
+.hlp{max-width:46rem;padding:0;overflow:hidden}
+.hlp-head{padding:clamp(1.4rem,3vw,1.8rem) clamp(1.3rem,3vw,1.8rem) 1rem;background:radial-gradient(28rem 12rem at 100% -10%,rgba(56,189,248,.16),transparent 65%),radial-gradient(20rem 10rem at 0 110%,rgba(214,180,106,.12),transparent 65%),linear-gradient(160deg,#0c3f94 0%,#071a40 100%);color:#fff;position:relative}
+.hlp-head .mx{background:rgba(255,255,255,.14);color:#fff}
+.hlp-head .mx:hover{background:rgba(255,255,255,.24);color:#fff}
+.hlp-k{display:inline-block;margin-bottom:.5rem;font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.hlp-head h3{color:#fff;font-size:1.55rem;margin-bottom:.35rem;padding-right:0}
+.hlp-head .md-sub{color:rgba(255,255,255,.78);margin:0;font-size:.86rem;line-height:1.6}
+.hlp-body{padding:1.2rem clamp(1.3rem,3vw,1.8rem) 1.6rem}
+.hlp-search{position:relative;margin-bottom:.9rem}
+.hlp-search svg{position:absolute;left:1rem;top:50%;width:1.05rem;height:1.05rem;transform:translateY(-50%);color:#8a99b2;pointer-events:none}
+.hlp-search input{width:100%;padding:.75rem .9rem .75rem 2.7rem;border:1px solid var(--line2);border-radius:.9rem;background:#f8faff;font-size:.9rem;transition:border-color .16s,box-shadow .16s,background .16s}
+.hlp-search input:focus{outline:none;border-color:var(--navy);background:#fff;box-shadow:0 0 0 4px rgba(11,61,145,.11)}
+.hlp-cats{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid var(--line)}
+.hlp-cat{padding:.4rem .9rem;border:1px solid var(--line2);border-radius:99px;background:#fff;font-size:.78rem;font-weight:600;color:var(--mut);transition:.15s;cursor:pointer}
+.hlp-cat:hover{border-color:#b9cbe8;background:#f8faff;color:var(--navy)}
+.hlp-cat.on{background:var(--navy);border-color:var(--navy);color:#fff;box-shadow:0 4px 12px -6px rgba(11,61,145,.6)}
+.hlp-list{max-height:min(48vh,26rem);overflow-y:auto;padding-right:.2rem;scrollbar-width:thin;scrollbar-color:#c3cfe3 transparent}
+.hlp-i{border-bottom:1px solid var(--line)}
+.hlp-i:last-child{border-bottom:0}
+.hlp-i summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;padding:1rem .2rem;font-weight:700;font-size:.92rem;color:var(--navyd);line-height:1.45;transition:color .15s}
+.hlp-i summary:hover{color:var(--navy)}
+.hlp-i summary::-webkit-details-marker{display:none}
+.hlp-i summary::after{content:"";flex:none;width:1.4rem;height:1.4rem;margin-top:.1rem;border-radius:50%;background:var(--soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230b3d91' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center/60% no-repeat;transition:transform .25s,background-color .15s}
+.hlp-i[open] summary::after{transform:rotate(180deg);background-color:#dbe7fb}
+.hlp-i p{padding:.2rem 2.4rem 1.1rem .2rem;font-size:.875rem;line-height:1.75;color:#3a4a66;animation:fadeUp .25s both}
+.hlp-empty{text-align:center;padding:2.4rem 1rem;color:var(--mut);font-size:.9rem}
+.hlp-empty b{display:block;font-size:1rem;color:var(--ink);margin-bottom:.35rem}
+.hlp-foot{padding:.9rem clamp(1.3rem,3vw,1.8rem);background:var(--bg);border-top:1px solid var(--line);font-size:.8rem;color:var(--mut);text-align:center}
+.hlp-foot b{color:var(--navyd)}
+
+.mi.hp{margin-top:auto}.mi.hp+.mi.out{margin-top:0;border-top:0}
 </style>
 </head>
 <body>
 
-<!-- ========== HALAMAN LOGIN ========== -->
 <div id="login" class="lw">
   <div class="ls">
     <div class="br"><span class="lg"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt="Logo SMK CALM"></span><div><b>SMK CALM</b><small>Yayasan Al-Musaddadiyah Garut</small></div></div>
     <div class="hero-l">
       <h1>Portal LMS</h1>
-      <p>Sistem manajemen pembelajaran SMK CALM yang menyatukan pengelolaan kelas, materi, penugasan, dan penilaian, dengan akses sesuai peran guru dan siswa.</p>
+      <p>Platform pembelajaran terpadu SMK CALM untuk pengelolaan kelas, materi, penugasan, kuis, dan penilaian, dengan hak akses yang disesuaikan bagi setiap peran.</p>
       <ul class="fe">
-        <li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6M12 10h.01"/></svg></span><div><b>Kelas</b><span>Pengelolaan kelas dan keanggotaan peserta didik</span></div></li>
-        <li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3Z"/><path d="M5 17a3 3 0 0 1 3-3h11M9 8h6M9 11h4"/></svg></span><div><b>Materi</b><span>Distribusi materi pembelajaran yang terstruktur</span></div></li>
-        <li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="17" rx="2.5"/><path d="M9 4V3h6v1M8.5 12.5l2 2 4.5-4.5M8.5 18h7"/></svg></span><div><b>Tugas</b><span>Penugasan dan pengumpulan dengan batas waktu yang jelas</span></div></li>
-        <li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V11M10 20V5M16 20v-7M22 20H2"/><path d="m3 7 5-3 5 4 7-5"/></svg></span><div><b>Nilai</b><span>Penilaian terdokumentasi beserta umpan balik guru</span></div></li>
+        <li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6M12 10h.01"/></svg></span><div><b>Kelas</b><span>Pengelolaan kelas dan keanggotaan peserta didik secara terstruktur</span></div></li>
+        <li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3Z"/><path d="M5 17a3 3 0 0 1 3-3h11M9 8h6M9 11h4"/></svg></span><div><b>Materi</b><span>Penyampaian materi pembelajaran yang tertata dan mudah diakses</span></div></li>
+        <li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="17" rx="2.5"/><path d="M9 4V3h6v1M8.5 12.5l2 2 4.5-4.5M8.5 18h7"/></svg></span><div><b>Tugas &amp; Kuis</b><span>Penugasan dan kuis dengan tenggat waktu yang jelas</span></div></li>
+        <li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V11M10 20V5M16 20v-7M22 20H2"/><path d="m3 7 5-3 5 4 7-5"/></svg></span><div><b>Nilai</b><span>Penilaian terdokumentasi disertai umpan balik dari guru</span></div></li>
       </ul>
     </div>
     <div class="lf"><p class="accr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.4 1.8 3-.2 1 2.8 2.5 1.7-.9 2.9.9 2.9-2.5 1.7-1 2.8-3-.2L12 21l-2.4-1.8-3 .2-1-2.8-2.5-1.7.9-2.9-.9-2.9 2.5-1.7 1-2.8 3 .2z"/><path d="m9 12 2 2 4-4"/></svg><span><b>Terakreditasi A</b><small>BAN-PDM</small></span></p><p>&copy; 2026 SMKS Ciledug Al-Musaddadiyah Garut</p></div>
@@ -557,15 +572,15 @@ body{background:radial-gradient(64rem 28rem at 100% -8%,#e4edfb,transparent 62%)
   <div class="lm"><div class="lc">
     <div class="mbrand"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt="Logo SMK CALM"><div><b>SMK CALM</b><small>Portal LMS</small></div></div>
     <form id="lform" novalidate>
-      <h2>Selamat datang</h2><p class="sub">Masuk untuk melanjutkan belajar.</p>
+      <h2>Selamat datang</h2><p class="sub">Silakan masuk untuk mengakses ruang pembelajaran Anda dengan aman.</p>
       <div class="rh"><p class="rlab" id="rl">Masuk sebagai</p><button type="button" class="adm" data-r="admin" role="radio" aria-checked="false" aria-label="Masuk sebagai Administrator" title="Akses pengelolaan sistem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.7a8 8 0 0 1-1.6.9l-.3 1.8h-2.8l-.3-1.8a8 8 0 0 1-1.6-.9l-1.7.7-1.4-2.4 1.4-1.1a7 7 0 0 1 0-1.9l-1.4-1.1 1.4-2.4 1.7.7a8 8 0 0 1 1.6-.9l.3-1.8h2.8l.3 1.8a8 8 0 0 1 1.6.9l1.7-.7 1.4 2.4-1.4 1.1a7 7 0 0 1 0 1.9Z"/></svg><span>Administrator</span></button></div>
       <div class="rg" role="radiogroup" aria-labelledby="rl">
-        <button type="button" class="rt" data-r="siswa" role="radio" aria-checked="true" aria-label="Masuk sebagai Siswa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg><span class="rx"><b>Siswa</b><small>Belajar &amp; kumpulkan tugas</small></span></button>
-        <button type="button" class="rt" data-r="guru" role="radio" aria-checked="false" aria-label="Masuk sebagai Guru"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2ZM22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7Z"/></svg><span class="rx"><b>Guru</b><small>Kelola kelas &amp; penilaian</small></span></button>
-        <button type="button" class="rt" data-r="kepala_sekolah" role="radio" aria-checked="false" aria-label="Masuk sebagai Kepala Sekolah"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-6h6v6M9 10h.01M15 10h.01"/></svg><span class="rx"><b>Kepala Sekolah</b><small>Pengawasan pembelajaran</small></span></button>
-        <button type="button" class="rt" data-r="kurikulum" role="radio" aria-checked="false" aria-label="Masuk sebagai Kurikulum"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4zM8 8h8M8 12h8M8 16h5"/><path d="m16 16 1.5 1.5L21 14"/></svg><span class="rx"><b>Kurikulum</b><small>Monitoring seluruh kelas</small></span></button>
-        <button type="button" class="rt" data-r="guru_bk" role="radio" aria-checked="false" aria-label="Masuk sebagai Guru BK"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3-6 8-6s8 2 8 6M12 11v5M9.5 13.5h5"/></svg><span class="rx"><b>Guru BK</b><small>Data siswa &amp; kelas</small></span></button>
-        <button type="button" class="rt" data-r="staff" role="radio" aria-checked="false" aria-label="Masuk sebagai Staff Administrasi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16M6 21V7l6-4 6 4v14M9 11h6M9 15h6"/></svg><span class="rx"><b>Staff Administrasi</b><small>Kelola data sekolah</small></span></button>
+        <button type="button" class="rt" data-r="siswa" role="radio" aria-checked="true" aria-label="Masuk sebagai Siswa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg><span class="rx"><b>Siswa</b><small>Ikuti pembelajaran dan tugas</small></span></button>
+        <button type="button" class="rt" data-r="guru" role="radio" aria-checked="false" aria-label="Masuk sebagai Guru"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2ZM22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7Z"/></svg><span class="rx"><b>Guru</b><small>Kelola kelas dan penilaian</small></span></button>
+        <button type="button" class="rt" data-r="kepala_sekolah" role="radio" aria-checked="false" aria-label="Masuk sebagai Kepala Sekolah"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-6h6v6M9 10h.01M15 10h.01"/></svg><span class="rx"><b>Kepala Sekolah</b><small>Supervisi pembelajaran</small></span></button>
+        <button type="button" class="rt" data-r="kurikulum" role="radio" aria-checked="false" aria-label="Masuk sebagai Kurikulum"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4zM8 8h8M8 12h8M8 16h5"/><path d="m16 16 1.5 1.5L21 14"/></svg><span class="rx"><b>Kurikulum</b><small>Pemantauan seluruh kelas</small></span></button>
+        <button type="button" class="rt" data-r="guru_bk" role="radio" aria-checked="false" aria-label="Masuk sebagai Guru BK"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3-6 8-6s8 2 8 6M12 11v5M9.5 13.5h5"/></svg><span class="rx"><b>Guru BK</b><small>Data siswa dan kelas</small></span></button>
+        <button type="button" class="rt" data-r="staff" role="radio" aria-checked="false" aria-label="Masuk sebagai Staf Administrasi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21h16M6 21V7l6-4 6 4v14M9 11h6M9 15h6"/></svg><span class="rx"><b>Staf Administrasi</b><small>Administrasi data sekolah</small></span></button>
       </div>
       <p class="rhint" id="rhint" aria-live="polite"></p>
       <label class="fl" for="u" id="ulab">Username</label>
@@ -576,25 +591,22 @@ body{background:radial-gradient(64rem 28rem at 100% -8%,#e4edfb,transparent 62%)
       <label class="rem"><input type="checkbox" id="rem"><span>Ingat username saya</span></label>
       <p id="lmsg" class="alert hide" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span></span></p>
       <button class="sb" id="lbtn">Masuk</button>
-      <div class="srv" id="srv" data-s=""><i class="dot"></i><span id="srvt">Mengecek server...</span><button type="button" class="link hide" id="srvr">Coba lagi</button></div>
+      <div class="srv" id="srv" data-s=""><i class="dot"></i><span id="srvt">Memeriksa koneksi layanan…</span><button type="button" class="link hide" id="srvr">Coba lagi</button></div>
     </form>
-    <p class="help">Lupa sandi? Hubungi pihak sekolah.</p>
+    <p class="help"><button type="button" class="link" onclick="openFaq()">Pusat Bantuan</button><span>Lupa sandi? Hubungi administrator sekolah.</span></p>
   </div></div>
 </div>
 
-<!-- ========== HALAMAN APLIKASI ========== -->
 <div id="app" class="hide">
   <header class="mbar"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt=""><b>SMK CALM</b><button onclick="document.querySelector('aside').classList.toggle('open')" aria-label="Buka menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></header>
   <aside aria-label="Menu utama">
     <img class="logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt=""><p class="nm">SMK CALM</p><span class="bd" id="wr"></span><p class="sb-user" id="sbu"></p>
-    
-    <!-- TOMBOL LIPAT SIDEBAR -->
     <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Perkecil menu">
       <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
       <span>Perkecil Menu</span>
     </button>
-    
     <nav id="menu" aria-label="Navigasi LMS"></nav>
+    <button class="mi hp" onclick="openFaq()" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></svg><span>Pusat Bantuan</span></button>
     <button class="mi out" onclick="logout(true)" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg><span>Keluar</span></button>
   </aside>
   <main id="main"></main>
@@ -604,8 +616,9 @@ body{background:radial-gradient(64rem 28rem at 100% -8%,#e4edfb,transparent 62%)
 <div id="ldr" class="ldr" aria-hidden="true"><span></span></div>
 <div id="ldc" class="ldc" role="status" aria-live="polite"><i></i><i></i><i></i><b id="ldt">Mengambil data…</b></div>
 
+<script src="config.js"></script>
 <script>
-const API = "https://script.google.com/macros/s/AKfycbwwxNMD1c_2GugaKiXlqicOW-NeUsYSL-WvJzAt4xXvH8dQjAfMD-epQubbhkXHhbwW_w/exec";
+const API = (window.LMS_CONFIG && window.LMS_CONFIG.apiUrl) || '';
 let S = null, C = null, O = null, QT, CLOCK_INT;
 let _syncCred = [];
 let CUR = 'dash', CT = 'ann';
@@ -625,10 +638,10 @@ const SKEL_GRID = '<div class="skel-wrap" aria-busy="true" aria-label="Memuat da
 const view = h => { $('#main').innerHTML = /^<p class="empty">Memuat daftar kelas/.test(h) ? SKEL_GRID : /^<p class="empty">Memuat/.test(h) ? SKEL : h; window.scrollTo(0, 0); };
 
 function toast(m, err) {
-  const t = $('#toast'); t.textContent = m; t.className = err ? 'e' : ''; clearTimeout(t._t);
-  t._t = setTimeout(() => t.className = 'hide', 3500);
+  const t = $('#toast'); t.innerHTML = `<i class="ti">${err ? '!' : '✓'}</i><span></span>`; t.lastChild.textContent = m;
+  t.className = err ? 'e' : ''; t.setAttribute('role', err ? 'alert' : 'status'); clearTimeout(t._t);
+  t._t = setTimeout(() => t.className = 'hide', err ? 5500 : 3500);
 }
-/* ===== INDIKATOR PENGAMBILAN DATA (muncul jika proses > 0,18 detik, tidak berkedip untuk data cepat) ===== */
 let _busy = 0, _ldTimer = null;
 function loaderOn(txt) {
   _busy++;
@@ -642,9 +655,6 @@ function loaderOff() {
   if (!_busy) { clearTimeout(_ldTimer); $('#ldr').classList.remove('on'); $('#ldc').classList.remove('on'); }
 }
 
-/* ===== CACHE 5 MENIT =====
-   Hanya aksi BACA yang di-cache. Setiap aksi tulis (simpan/hapus/nilai/kirim tugas, dll.)
-   otomatis mengosongkan cache sehingga data selalu konsisten. Tombol bulat di pojok = segarkan manual. */
 const CACHE_TTL = 5 * 60 * 1000;
 const CACHE_READ = ['classes', 'classDetail', 'overview', 'myGrades', 'adminUsers', 'adminClasses', 'adminSchedules'];
 const _cache = new Map(), _inflight = new Map();
@@ -653,15 +663,16 @@ const cacheClear = () => { _cache.clear(); _inflight.clear(); _gen++; };
 const cloneData = v => typeof structuredClone === 'function' ? structuredClone(v) : JSON.parse(JSON.stringify(v));
 
 async function rawApi(action, data, ms) {
+  if (!API) throw new Error('Layanan belum dikonfigurasi. Silakan hubungi administrator sistem.');
   loaderOn(CACHE_READ.includes(action) ? 'Mengambil data…' : 'Memproses…');
   const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), ms);
   try {
     const r = await fetch(API, { method: 'POST', body: new URLSearchParams({ action, token: S ? S.token : '', ...data }), signal: ctl.signal });
     const j = await r.json();
-    if (j.status !== 'success') { if (j.code === 'auth') logout(); throw new Error(j.message || 'Permintaan gagal.'); }
+    if (j.status !== 'success') { if (j.code === 'auth') logout(); throw new Error(j.message || 'Permintaan tidak dapat diproses. Silakan coba kembali.'); }
     return j;
   } catch (e) {
-    throw new Error(e.name === 'AbortError' ? 'Server terlalu lama merespons. Coba lagi.' : e.message === 'Failed to fetch' ? 'Tidak dapat terhubung. Periksa internet Anda.' : e.message);
+    throw new Error(e.name === 'AbortError' ? 'Layanan memerlukan waktu lebih lama dari biasanya. Silakan coba kembali.' : e.message === 'Failed to fetch' ? 'Koneksi tidak tersedia. Periksa jaringan internet Anda, lalu coba kembali.' : e.message);
   } finally { clearTimeout(to); loaderOff(); }
 }
 async function api(action, data = {}, ms = 30000, opt = {}) {
@@ -683,23 +694,22 @@ async function api(action, data = {}, ms = 30000, opt = {}) {
   } finally { if (_inflight.get(key) === p) _inflight.delete(key); }
 }
 function refreshData() {
-  if ($('.qbar')) { toast('Selesaikan kuis terlebih dahulu.', true); return; }
+  if ($('.qbar')) { toast('Mohon selesaikan kuis yang sedang berlangsung terlebih dahulu.', true); return; }
   cacheClear();
   const b = $('#rf'); b.classList.add('spin-on'); setTimeout(() => b.classList.remove('spin-on'), 900);
   if (C && $('.cover')) reload(CT); else go(CUR);
-  toast('Data diperbarui');
+  toast('Data berhasil diperbarui');
 }
 
-/* ===== LOGIN & OTORISASI ===== */
 const lerr = m => { const a = $('#lmsg'); a.querySelector('span').textContent = m || ''; a.classList.toggle('hide', !m); };
 const ROLES = {
-  siswa:          { nama: 'Siswa',              label: 'Username siswa / NISN', ph: 'Masukkan username siswa', hint: 'Siswa masuk dengan username dan sandi awal dari sekolah, lalu bergabung ke kelas menggunakan kode dari guru.' },
-  guru:           { nama: 'Guru',               label: 'Username guru / NIP',   ph: 'Username dari administrator', hint: 'Guru dapat mengelola kelas, materi, tugas, kuis, dan penilaian.' },
-  kepala_sekolah: { nama: 'Kepala Sekolah',     label: 'Username Kepala Sekolah', ph: 'Username dari administrator', hint: 'Melihat rekap seluruh kelas untuk pengawasan pembelajaran. Hak ubah nilai tidak diberikan otomatis.' },
-  kurikulum:      { nama: 'Kurikulum',          label: 'Username Kurikulum',     ph: 'Username dari administrator', hint: 'Memantau aktivitas seluruh kelas dan rekap pembelajaran. Guru dengan tugas tambahan dapat memiliki kedua peran.' },
-  admin:          { nama: 'Administrator',      label: 'Username administrator', ph: 'Username administrator', hint: 'Akses khusus pengelolaan sistem dan seluruh kelas.' },
-  guru_bk:        { nama: 'Guru BK',            label: 'Username Guru BK',       ph: 'Username dari administrator', hint: 'Mengelola data siswa dan kelas sesuai kewenangan BK.' },
-  staff:          { nama: 'Staff Administrasi', label: 'Username staf administrasi', ph: 'Username dari administrator', hint: 'Mengelola data siswa, guru, kelas, dan jadwal sekolah.' }
+  siswa:          { nama: 'Siswa',              label: 'Username siswa / NISN', ph: 'Masukkan username siswa', hint: 'Gunakan username dan sandi awal dari sekolah. Setelah masuk, bergabunglah ke kelas dengan kode dari guru.' },
+  guru:           { nama: 'Guru',               label: 'Username guru / NIP',   ph: 'Username dari administrator sekolah', hint: 'Kelola kelas, materi, tugas, kuis, dan penilaian peserta didik.' },
+  kepala_sekolah: { nama: 'Kepala Sekolah',     label: 'Username Kepala Sekolah', ph: 'Username dari administrator sekolah', hint: 'Pantau rekapitulasi seluruh kelas untuk supervisi pembelajaran. Hak mengubah nilai tidak diberikan secara otomatis.' },
+  kurikulum:      { nama: 'Kurikulum',          label: 'Username Kurikulum',     ph: 'Username dari administrator sekolah', hint: 'Pantau aktivitas dan rekapitulasi pembelajaran seluruh kelas. Guru dengan tugas tambahan dapat memiliki kedua peran.' },
+  admin:          { nama: 'Administrator',      label: 'Username administrator', ph: 'Username administrator', hint: 'Akses pengelolaan sistem dan seluruh kelas, khusus bagi administrator.' },
+  guru_bk:        { nama: 'Guru BK',            label: 'Username Guru BK',       ph: 'Username dari administrator sekolah', hint: 'Kelola data siswa dan kelas sesuai kewenangan bimbingan dan konseling.' },
+  staff:          { nama: 'Staf Administrasi', label: 'Username staf administrasi', ph: 'Username dari administrator sekolah', hint: 'Mengelola data siswa, guru, kelas, dan jadwal sekolah.' }
 };
 let loginRole = 'siswa';
 try { const r = localStorage.getItem('lms_r'); if (ROLES[r]) loginRole = r; } catch (e) {}
@@ -716,14 +726,14 @@ pilihRole(loginRole);
 $('#lform').addEventListener('submit', async e => {
   e.preventDefault();
   const u = $('#u').value.trim(), pw = $('#pw').value;
-  if (!u || !pw) { lerr('Isi username dan sandi terlebih dahulu.'); return; }
+  if (!u || !pw) { lerr('Mohon lengkapi username dan sandi Anda.'); return; }
   const b = $('#lbtn'); b.disabled = true; b.innerHTML = '<span class="spin"></span>Memeriksa...'; lerr('');
   try {
     S = await api('login', { username: u, password: pw });
     if (!roles().includes(loginRole)) {
       const nm = (ROLES[S.user.role] || {}).nama || S.user.role;
       await api('logout').catch(() => {}); S = null;
-      throw new Error(`Akun ini terdaftar sebagai ${nm}. Pilih "Masuk sebagai ${nm}" lalu coba lagi.`);
+      throw new Error(`Akun ini terdaftar sebagai ${nm}. Silakan pilih peran “${nm}” pada bagian “Masuk sebagai”, lalu coba kembali.`);
     }
     sessionStorage.setItem('lms', JSON.stringify(S));
     try { $('#rem').checked ? localStorage.setItem('lms_u', u) : localStorage.removeItem('lms_u'); } catch (x) {}
@@ -736,9 +746,9 @@ $('#pw').addEventListener('keydown', e => $('#caps').classList.toggle('hide', !e
 $('#pw').addEventListener('blur', () => $('#caps').classList.add('hide'));
 
 async function cekServer() {
-  const s = $('#srv'); s.dataset.s = ''; $('#srvt').textContent = 'Mengecek server...'; $('#srvr').classList.add('hide');
-  try { const r = await fetch(API); const j = await r.json(); if (j.status !== 'success') throw 0; s.dataset.s = 'ok'; $('#srvt').textContent = 'Server terhubung'; }
-  catch (e) { s.dataset.s = 'bad'; $('#srvt').textContent = 'Server tidak merespons'; $('#srvr').classList.remove('hide'); }
+  const s = $('#srv'); s.dataset.s = ''; $('#srvt').textContent = 'Memeriksa koneksi layanan…'; $('#srvr').classList.add('hide');
+  try { if (!API) throw 0; const r = await fetch(API); const j = await r.json(); if (j.status !== 'success') throw 0; s.dataset.s = 'ok'; $('#srvt').textContent = 'Layanan terhubung'; }
+  catch (e) { s.dataset.s = 'bad'; $('#srvt').textContent = 'Layanan belum merespons'; $('#srvr').classList.remove('hide'); }
 }
 $('#srvr').onclick = cekServer;
 
@@ -748,7 +758,6 @@ function logout(call) {
   $('#app').classList.add('hide'); $('#login').classList.remove('hide'); $('#pw').value = ''; cekServer();
 }
 
-/* ===== APLIKASI UTAMA ===== */
 function primaryBadge() {
   if (hasR('admin')) return 'admin';
   if (hasR('staff') || hasR('staf')) return 'staff';
@@ -767,14 +776,11 @@ function start() {
   $('#wr').className = 'bd ' + badge;
   $('#sbu').textContent = S.user.full_name || '';
   document.querySelector('aside').classList.remove('open');
-  buildMenu(); 
-  
-  // Tampilkan Pop-up Motivasi hanya sekali per sesi login
+  buildMenu();
   if (!sessionStorage.getItem('quoteShown')) {
     showQuote();
     sessionStorage.setItem('quoteShown', '1');
   }
-
   vDash();
 }
 function nav(k) {
@@ -790,13 +796,12 @@ function toggleSidebar() {
   sb.classList.toggle('collapsed');
   try { localStorage.setItem('lms_sb', sb.classList.contains('collapsed') ? '1' : '0'); } catch (e) {}
 }
-try { 
+try {
   if (localStorage.getItem('lms_sb') === '1') {
-    document.querySelector('aside').classList.add('collapsed'); 
+    document.querySelector('aside').classList.add('collapsed');
   }
 } catch (e) {}
 
-/* Akordeon: hanya satu grup terbuka dalam satu waktu */
 function setOpenGroup(id) {
   document.querySelectorAll('#menu .submenu').forEach(sm => {
     const open = sm.id === 'sub-' + id;
@@ -807,23 +812,22 @@ function setOpenGroup(id) {
 }
 function toggleMenuGroup(id, el) { setOpenGroup(el.getAttribute('aria-expanded') === 'true' ? '' : id); }
 
-/* ===== MODAL & MOTIVASI ===== */
 function modal(title, fields, fn, cta) {
   const m = document.createElement('div'); m.className = 'ov';
-  m.innerHTML = `<form class="md"><h3>${esc(title)}</h3><p class="md-sub">Lengkapi informasi dengan benar. Perubahan akan disimpan setelah Anda mengonfirmasi.</p>${fields.map(f => f.t === 'hidden' ? `<input name="${f.n}" type="hidden" value="${esc(f.v || '')}">` : `<label>${esc(f.l)}${f.t === 'textarea'
+  m.innerHTML = `<form class="md"><button type="button" class="mx" data-x aria-label="Tutup">×</button><h3>${esc(title)}</h3><p class="md-sub">Lengkapi informasi berikut dengan cermat. Perubahan tersimpan setelah Anda menekan tombol simpan.</p>${fields.map(f => f.t === 'hidden' ? `<input name="${f.n}" type="hidden" value="${esc(f.v || '')}">` : `<label>${esc(f.l)}${f.t === 'textarea'
     ? `<textarea name="${f.n}"${f.r === false ? '' : ' required'}>${esc(f.v || '')}</textarea>`
     : f.t === 'select' ? `<select name="${f.n}"${f.r === false ? '' : ' required'}>${(f.opts || []).map(o => `<option value="${esc(o.v)}"${String(o.v) === String(f.v ?? '') ? ' selected' : ''}>${esc(o.l)}</option>`).join('')}</select>`
     : `<input name="${f.n}" type="${f.t || 'text'}"${f.v !== undefined ? ` value="${esc(f.v)}"` : ''}${f.r === false ? '' : ' required'}${f.min ? ` minlength="${f.min}"` : ''}>`}</label>`).join('')}
     <div class="row"><button type="button" class="btn2" data-x>Batal</button><button class="btn">${esc(cta || 'Simpan')}</button></div></form>`;
   document.body.appendChild(m);
   const close = () => m.remove();
-  m.querySelector('[data-x]').onclick = close;
+  m.querySelectorAll('[data-x]').forEach(b => b.onclick = close);
   m.onmousedown = e => { if (e.target === m) close(); };
   const f = m.querySelector('form');
   const firstInput = f.querySelector('input:not([type=hidden]), textarea, select');
   if (firstInput) firstInput.focus();
   f.onsubmit = async e => {
-    e.preventDefault(); const b = f.querySelector('.btn'); b.disabled = true; b.textContent = 'Menyimpan...';
+    e.preventDefault(); const b = f.querySelector('.btn'); b.disabled = true; b.textContent = 'Menyimpan…';
     try {
       const d = Object.fromEntries([...new FormData(f)].filter(([, v]) => typeof v === 'string'));
       const file = f.querySelector('input[type=file]')?.files[0];
@@ -838,41 +842,38 @@ function modal(title, fields, fn, cta) {
 }
 
 function showQuote() {
-  const qSiswa = [
-    { t: "Pendidikan adalah senjata paling mematikan di dunia, karena dengan pendidikan Anda dapat mengubah dunia.", a: "Nelson Mandela" },
-    { t: "Jangan pernah menyerah pada mimpi, karena mimpi adalah awal dari kesuksesan.", a: "Anonim" },
-    { t: "Belajarlah seolah engkau hidup selamanya, dan hiduplah seolah engkau mati besok.", a: "Mahatma Gandhi" }
-  ];
-  const qGuru = [
-    { t: "Tugas guru bukan hanya mengajar, tetapi menginspirasi dan membangkitkan rasa ingin tahu.", a: "Anonim" },
-    { t: "Mendidik adalah pekerjaan hati. Sentuhlah hati muridmu, maka engkau akan mengubah hidupnya.", a: "Anonim" },
-    { t: "Setiap anak adalah bintang yang bersinar dengan caranya sendiri. Tugas kita adalah membantu mereka menemukan cahayanya.", a: "Anonim" }
-  ];
-  const qStaff = [
-    { t: "Kerja keras tidak akan mengkhianati hasil. Terima kasih telah menjadi tulang punggung sistem ini.", a: "Tim Manajemen" },
-    { t: "Organisasi yang hebat dibangun oleh orang-orang hebat di balik layar. Terima kasih atas dedikasi Anda.", a: "Tim Manajemen" },
-    { t: "Detail terkecil seringkali memberikan dampak terbesar. Teruslah bekerja dengan teliti dan ikhlas.", a: "Anonim" }
-  ];
-  
-  let qList = qSiswa;
-  if (hasR('guru')) qList = qGuru;
-  else if (hasR('admin') || hasR('staff') || hasR('guru_bk') || hasR('kurikulum') || hasR('kepala_sekolah')) qList = qStaff;
-  
-  const q = qList[Math.floor(Math.random() * qList.length)];
-  
+  const tips = {
+    siswa: [
+      { t: "Pemahaman yang kuat tumbuh dari kebiasaan belajar yang konsisten. Manfaatkan setiap materi dan latihan yang tersedia untuk memperdalam penguasaan Anda." },
+      { t: "Setiap soal yang dikerjakan dengan teliti adalah langkah menuju penguasaan materi. Tinjau kembali pembahasan yang tersedia untuk memperkuat pemahaman." },
+      { t: "Bertanya merupakan bagian dari proses belajar. Manfaatkan forum kelas untuk berdiskusi dengan guru dan teman sekelas secara santun dan produktif." }
+    ],
+    guru: [
+      { t: "Pembelajaran yang bermakna dimulai dari perhatian terhadap kebutuhan setiap peserta didik. Sesuaikan pendekatan Anda dengan karakteristik kelas." },
+      { t: "Umpan balik yang jelas dan tepat waktu membantu peserta didik berkembang lebih percaya diri. Sampaikan catatan yang membangun pada setiap penilaian." },
+      { t: "Analisis hasil kuis dapat membantu menentukan materi yang perlu diperdalam bersama. Gunakan data untuk merancang pembelajaran berikutnya." }
+    ],
+    staff: [
+      { t: "Data yang tertata dan akurat menjadi fondasi layanan pembelajaran yang andal. Periksa kembali setiap perubahan sebelum disimpan." },
+      { t: "Ketelitian dalam pengelolaan data membantu seluruh pengguna bekerja dengan lancar. Terima kasih atas dedikasi Anda menjaga kualitas layanan." },
+      { t: "Terima kasih atas dedikasi Anda dalam menjaga kelancaran layanan sekolah. Kontribusi Anda mendukung tercapainya tujuan pembelajaran." }
+    ]
+  };
+  let list = tips.siswa;
+  if (hasR('guru')) list = tips.guru;
+  else if (hasR('admin') || hasR('staff') || hasR('guru_bk') || hasR('kurikulum') || hasR('kepala_sekolah')) list = tips.staff;
+  const q = list[Math.floor(Math.random() * list.length)];
   const m = document.createElement('div'); m.className = 'ov';
   m.innerHTML = `<div class="md quote-modal">
-    <div class="quote-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg></div>
-    <h3>Pesan Inspirasi</h3>
-    <p class="quote-text">“${q.t}”</p>
-    <p class="quote-author">— ${q.a}</p>
-    <button class="quote-btn" onclick="this.closest('.ov').remove()">Semangat! Mulai Bekerja</button>
+    <div class="quote-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.4 1.8 3-.2 1 2.8 2.5 1.7-.9 2.9.9 2.9-2.5 1.7-1 2.8-3-.2L12 21l-2.4-1.8-3 .2-1-2.8-2.5-1.7.9-2.9-.9-2.9 2.5-1.7 1-2.8 3 .2z"/><path d="m9 12 2 2 4-4"/></svg></div>
+    <h3>Catatan Pembelajaran</h3>
+    <p class="quote-text">“${esc(q.t)}”</p>
+    <button type="button" class="quote-btn" onclick="this.closest('.ov').remove()">Lanjutkan ke Portal</button>
   </div>`;
   m.onmousedown = e => { if (e.target === m) m.remove(); };
   document.body.appendChild(m);
 }
 
-/* ===== DASHBOARD ===== */
 function startClock() {
   clearInterval(CLOCK_INT);
   const updateClock = () => {
@@ -882,7 +883,7 @@ function startClock() {
     const s = String(now.getSeconds()).padStart(2, '0');
     const ct = $('#dash-clock'); if (ct) ct.textContent = `${h}:${m}:${s}`;
   };
-  updateClock(); 
+  updateClock();
   CLOCK_INT = setInterval(updateClock, 1000);
 }
 
@@ -896,9 +897,8 @@ function getGreeting() {
 
 const heroHTML = msg => `<div class="hero-dash"><div class="hero-text"><h2>${getGreeting()}, ${esc(String(S.user.full_name || '').split(' ')[0])}</h2><p>${msg}</p></div><div class="hero-clock"><div class="clock-time" id="dash-clock">--:--:--</div><div class="clock-date">${new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</div></div></div>`;
 
-/* Beranda khusus Staff TU & Guru BK (ringkasan data sekolah, memakai cache 5 menit) */
 async function vDashData() {
-  nav('dash'); view('<p class="empty">Memuat...</p>');
+  nav('dash'); view('<p class="empty">Memuat…</p>');
   const write = canManageStaffData();
   try {
     const [us, cl, sc] = await Promise.all([api('adminUsers'), api('adminClasses'), write ? api('adminSchedules') : Promise.resolve(null)]);
@@ -914,22 +914,22 @@ async function vDashData() {
     links.push(qa('adminClasses', 'adminClasses', 'Data kelas', write ? 'Kelola kelas & guru pengampu' : 'Lihat daftar kelas'));
     if (write) links.push(qa('adminSchedules', 'adminSchedules', 'Data jadwal', 'Atur jadwal pelajaran'));
     view(`<div class="top"><div><h2>Beranda</h2><p>Ringkasan data sekolah.</p></div></div>
-      ${heroHTML(write ? 'Kelola data siswa, guru, kelas, dan jadwal dengan rapi.' : 'Anda dapat melihat data siswa dan kelas untuk keperluan bimbingan.')}
+      ${heroHTML(write ? 'Kelola data siswa, guru, kelas, dan jadwal sekolah secara terpusat.' : 'Anda dapat melihat data siswa dan kelas untuk keperluan bimbingan.')}
       ${write ? '' : '<div class="walert info" style="margin-bottom:1.2rem">Akun Guru BK memiliki akses <b>lihat saja</b>. Perubahan data dilakukan oleh administrator atau staf TU.</div>'}
       <div class="stats">${stats.map(([l, n]) => `<div class="card st"><small>${l}</small><b>${n}</b></div>`).join('')}</div>
       <div class="sec"><h3>Akses cepat</h3></div>
       <div class="grid">${links.join('')}</div>`);
     startClock();
-  } catch (e) { view(`<div class="card empty"><b>Data gagal dimuat</b>${esc(e.message)}<br><br><button class="btn" onclick="go('dash')">Coba lagi</button></div>`); }
+  } catch (e) { view(`<div class="card empty"><b>Data belum dapat dimuat</b>${esc(e.message)}<br><br><button class="btn" onclick="go('dash')">Coba lagi</button></div>`); }
 }
 
 function vDash() {
   const tanggal = new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
   const monitor = isMonitor(), teacher = isT();
   if (!monitor && !teacher && !hasR('siswa') && (hasR('staff') || hasR('staf') || hasR('guru_bk'))) return vDashData();
-  
+
   if (monitor && !teacher) {
-    return page('dash', 'Dashboard pengawasan', 'Selamat datang di pusat kendali LMS.', () => {
+    return page('dash', 'Dashboard pengawasan', 'Ringkasan pengelolaan dan pengawasan pembelajaran.', () => {
       return `
       <div class="hero-dash">
         <div class="hero-text">
@@ -947,17 +947,15 @@ function vDash() {
     });
   }
 
-  // Dasbor Siswa & Guru
   return page('dash', 'Beranda', 'Ringkasan aktivitas belajar mengajar Anda hari ini.', () => {
     const t = isT();
     const todo = O.assignments.filter(a => !subOf(a)).sort((a, b) => (a.due || '9').toString().localeCompare((b.due || '9').toString()));
-    
-    // Pengingat Tugas (Maksimal 3 hari lagi)
+
     const now = new Date().getTime();
     const reminders = t ? [] : todo.filter(a => {
       if (!a.due) return false;
       const diff = new Date(a.due).getTime() - now;
-      return diff > -86400000 && diff < (3 * 86400000); // H-3 hingga kemarin
+      return diff > -86400000 && diff < (3 * 86400000);
     });
 
     const gp = O.submissions.filter(s => s.score !== '' && s.score !== null).map(s => Number(s.score) / (Number(asgOf(s.assignment_id).max_score) || 100) * 100)
@@ -965,21 +963,21 @@ function vDash() {
     const avgTxt = gp.length ? (Math.round(gp.reduce((x, y) => x + y, 0) / gp.length * 10) / 10).toLocaleString('id-ID') + '%' : '-';
     const ung = O.submissions.filter(s => s.score === '');
     const qTodo = O.quizzes.filter(q => !O.attempts.some(a => a.quiz_id === q.id && a.submitted)).length;
-    
+
     const stats = t
       ? [['Kelas diampu', O.classes.length], ['Perlu dinilai', ung.length], ['Tugas', O.assignments.length], ['Kuis', O.quizzes.length]]
       : [['Kelas diikuti', O.classes.length], ['Tugas belum dikumpulkan', todo.length], ['Kuis belum dikerjakan', qTodo], ['Rata-rata nilai', avgTxt]];
-      
+
     const left = t
-      ? (ung.slice(0, 5).map(s => row(s.full_name, esc(asgOf(s.assignment_id).title) + ' • ' + esc(cname(asgOf(s.assignment_id).class_id)), '<span class="badge warn">Nilai</span>', `openClass('${asgOf(s.assignment_id).class_id}','asg')`)).join('') || '<p class="empty">Semua pengumpulan sudah dinilai.</p>')
-      : (todo.slice(0, 5).map(a => row(a.title, esc(cname(a.class_id)) + ' • ' + dueTxt(a), tagDue(a), `openClass('${a.class_id}','asg')`)).join('') || '<p class="empty">Tidak ada tugas yang menunggu. Kerja bagus.</p>');
+      ? (ung.slice(0, 5).map(s => row(s.full_name, esc(asgOf(s.assignment_id).title) + ' • ' + esc(cname(asgOf(s.assignment_id).class_id)), '<span class="badge warn">Nilai</span>', `openClass('${asgOf(s.assignment_id).class_id}','asg')`)).join('') || '<p class="empty">Seluruh pengumpulan tugas telah dinilai.</p>')
+      : (todo.slice(0, 5).map(a => row(a.title, esc(cname(a.class_id)) + ' • ' + dueTxt(a), tagDue(a), `openClass('${a.class_id}','asg')`)).join('') || '<p class="empty">Seluruh tugas telah diselesaikan.</p>');
     const news = O.announcements.slice(0, 4).map(a => row(a.title, esc(cname(a.class_id)) + ' • ' + tgl(a.created), '', `openClass('${a.class_id}','ann')`)).join('') || '<p class="empty">Belum ada pengumuman.</p>';
-    
+
     return `
       <div class="hero-dash">
         <div class="hero-text">
           <h2>${getGreeting()}, ${esc(S.user.full_name.split(' ')[0])}</h2>
-          <p>${t ? 'Kelola kelas dan pantau perkembangan siswa Anda.' : 'Jangan lupa cek tugas dan materi terbaru hari ini.'}</p>
+          <p>${t ? 'Kelola kelas dan pantau perkembangan siswa Anda.' : 'Periksa tugas dan materi terbaru yang tersedia hari ini.'}</p>
         </div>
         <div class="hero-clock">
           <div class="clock-time" id="dash-clock">--:--:--</div>
@@ -995,7 +993,7 @@ function vDash() {
       </div>` : ''}
 
       <div class="stats">${stats.map(([l, n]) => `<div class="card st"><small>${l}</small><b>${n}</b></div>`).join('')}</div>
-      
+
       <div class="two">
         <div class="card">
           <div class="sec"><h3>${t ? 'Menunggu penilaian' : 'Tugas yang perlu dikerjakan'}</h3><button class="link" onclick="go('${t ? 'review' : 'tasks'}')">Lihat semua</button></div>
@@ -1009,8 +1007,6 @@ function vDash() {
   });
 }
 
-/* ===== KELAS & PEMBELAJARAN ===== */
-/* ===== JURUSAN → IKON & WARNA ===== */
 const JUR = {
   net:    { n: 'Jaringan',       c: ['#0b5bd3', '#38bdf8'], i: '<rect x="9" y="3" width="6" height="5" rx="1"/><rect x="2" y="16" width="6" height="5" rx="1"/><rect x="16" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M5 16v-4h14v4"/>' },
   code:   { n: 'Software',       c: ['#5b3fd1', '#a78bfa'], i: '<path d="m8 8-5 4 5 4M16 8l5 4-5 4M14 5l-4 14"/>' },
@@ -1062,7 +1058,6 @@ const JUR_RULES = [
   ['civic',  /\b(pkn|ppkn|pancasila|kewarganegaraan|sejarah|sosiologi|ekonomi|geografi|ips)\b/],
   ['art',    /\b(seni|musik|budaya|prakarya)\b/]
 ];
-/* Jurusan dibaca dari NAMA kelas dulu (mis. "XI TKJ 1"); jika tidak dikenali, dari mata pelajaran. */
 function jurOf(c) {
   for (const src of [String(c.name || ''), String(c.subject || '')]) {
     const t = src.toLowerCase();
@@ -1088,7 +1083,7 @@ function kelasJur(k) {
 }
 
 async function home() {
-  nav('home'); _kj = 'all'; view('<p class="empty">Memuat daftar kelas...</p>');
+  nav('home'); _kj = 'all'; view('<p class="empty">Memuat daftar kelas…</p>');
   try {
     const { classes } = await api('classes');
     const t = isT(), student = !t && !isMonitor();
@@ -1105,27 +1100,27 @@ async function home() {
     const pillsHtml = used.length > 1 ? `<div class="pills"><button class="pill on" type="button" data-j="all" onclick="kelasJur('all')">Semua<i>${items.length}</i></button>${used.map(k => `<button class="pill" type="button" data-j="${k}" onclick="kelasJur('${k}')">${esc(JUR[k].n)}<i>${items.filter(x => x.k === k).length}</i></button>`).join('')}</div>` : '';
     view(`<div class="top"><div><h2>${title}</h2><p>${classes.length ? 'Pilih kelas untuk melihat materi, tugas, dan kuis.' : 'Belum ada kelas yang tersedia.'}</p></div><div class="acts">${cta}</div></div>
       ${classes.length
-        ? `<div class="toolbar"><div class="searchbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="kq" type="search" placeholder="Cari kelas, mapel, atau guru..." oninput="kelasFilter()" aria-label="Cari kelas"></div><span class="meta" id="kcount">${items.length} kelas</span></div>
+        ? `<div class="toolbar"><div class="searchbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="kq" type="search" placeholder="Cari kelas, mata pelajaran, atau guru" oninput="kelasFilter()" aria-label="Cari kelas"></div><span class="meta" id="kcount">${items.length} kelas</span></div>
            ${pillsHtml}
            <div class="kgrid">${items.map(card).join('')}</div>
            <div id="kempty" class="card empty hide"><b>Kelas tidak ditemukan</b>Coba kata kunci atau jurusan lain.</div>`
-        : `<div class="card empty"><b>Belum ada kelas</b>${t ? 'Buat kelas pertama Anda, lalu bagikan kodenya ke siswa.' : student ? 'Minta kode kelas dari guru, lalu pilih Gabung kelas.' : 'Belum ada data kelas untuk ditampilkan.'}</div>`}`);
+        : `<div class="card empty"><b>Belum ada kelas</b>${t ? 'Buat kelas pertama Anda, lalu bagikan kode kelas kepada siswa.' : student ? 'Mintalah kode kelas kepada guru, lalu pilih “Gabung kelas”.' : 'Belum ada data kelas untuk ditampilkan.'}</div>`}`);
   } catch (e) {
-    view(`<div class="card empty"><b>Kelas gagal dimuat</b>${esc(e.message)}<br><br><button class="btn" onclick="home()">Coba lagi</button></div>`);
+    view(`<div class="card empty"><b>Kelas belum dapat dimuat</b>${esc(e.message)}<br><br><button class="btn" onclick="home()">Coba lagi</button></div>`);
   }
 }
 const newClass = () => modal('Buat kelas', [
   {n:'name', l:'Nama kelas (mis. XI TKJ 1)'},
   {n:'subject', l:'Mata pelajaran'},
   {n:'description', l:'Deskripsi (opsional)', t:'textarea', r:false}
-], async d => { await api('createClass', d); toast('Kelas dibuat'); home(); }, 'Buat kelas');
+], async d => { await api('createClass', d); toast('Kelas berhasil dibuat'); home(); }, 'Buat kelas');
 
-const joinClass = () => modal('Gabung kelas', [{n:'code', l:'Kode kelas dari guru'}],
-  async d => { const r = await api('joinClass', d); toast('Berhasil bergabung'); openClass(r.class_id); }, 'Gabung');
+const joinClass = () => modal('Gabung kelas', [{n:'code', l:'Kode kelas yang diberikan oleh guru'}],
+  async d => { const r = await api('joinClass', d); toast('Anda berhasil bergabung ke kelas'); openClass(r.class_id); }, 'Gabung');
 
 async function openClass(id, tab) {
   const seq = ++_openSeq;
-  nav('home'); view('<p class="empty">Memuat kelas...</p>');
+  nav('home'); view('<p class="empty">Memuat kelas…</p>');
   try {
     const data = await api('classDetail', { class_id: id });
     if (seq !== _openSeq) return;
@@ -1143,10 +1138,10 @@ function drawClass(tab) {
   CT = tab; const { cls } = C, t = canManageCurrentClass(), readOnly = isReadOnlyMonitor();
   const add = (label, fn) => t ? `<div class="row" style="margin-bottom:14px"><button class="btn" onclick="${fn}">${label}</button></div>` : '';
   let body = '';
-  if (tab === 'ann') body = add('Buat pengumuman', 'addAnn()') + (C.announcements.map(a => `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${esc(a.author)} • ${tgl(a.created)}</div><p>${esc(a.body)}</p></div>`).join('') || empty('Belum ada pengumuman', 'Pengumuman dari guru akan tampil di sini.'));
-  if (tab === 'mat') body = add('Tambah materi', 'addMat()') + (C.materials.map(m => `<div class="card item"><h4>${esc(m.title)}</h4><div class="meta">${tgl(m.created)}</div>${m.description ? `<p>${esc(m.description)}</p>` : ''}${m.file_url ? `<p><a href="${esc(m.file_url)}" target="_blank" rel="noopener">Buka berkas</a></p>` : ''}</div>`).join('') || empty('Belum ada materi', 'Materi yang diunggah guru akan tampil di sini.'));
-  if (tab === 'asg') body = add('Buat tugas', 'addAsg()') + (C.assignments.map(a => asgCard(a, t)).join('') || empty('Belum ada tugas', 'Tugas dari guru akan tampil di sini.'));
-  if (tab === 'qz')  body = add('Buat kuis', 'addQuiz()') + (C.quizzes.map(quizCard).join('') || empty('Belum ada kuis', 'Kuis dari guru akan tampil di sini.'));
+  if (tab === 'ann') body = add('Buat pengumuman', 'addAnn()') + (C.announcements.map(a => `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${esc(a.author)} • ${tgl(a.created)}</div><p>${esc(a.body)}</p></div>`).join('') || empty('Belum ada pengumuman', 'Pengumuman dari guru akan ditampilkan di sini.'));
+  if (tab === 'mat') body = add('Tambah materi', 'addMat()') + (C.materials.map(m => `<div class="card item"><h4>${esc(m.title)}</h4><div class="meta">${tgl(m.created)}</div>${m.description ? `<p>${esc(m.description)}</p>` : ''}${m.file_url ? `<p><a href="${esc(m.file_url)}" target="_blank" rel="noopener">Buka berkas</a></p>` : ''}</div>`).join('') || empty('Belum ada materi', 'Materi yang diunggah guru akan ditampilkan di sini.'));
+  if (tab === 'asg') body = add('Buat tugas', 'addAsg()') + (C.assignments.map(a => asgCard(a, t)).join('') || empty('Belum ada tugas', 'Tugas dari guru akan ditampilkan di sini.'));
+  if (tab === 'qz')  body = add('Buat kuis', 'addQuiz()') + (C.quizzes.map(quizCard).join('') || empty('Belum ada kuis', 'Kuis yang diterbitkan guru akan ditampilkan di sini.'));
   if (tab === 'fr')  body = forumView();
   view(`<button class="back" onclick="home()">← Kembali ke daftar kelas</button>
     <div class="cover"><h1>${esc(cls.name)}</h1><p>${esc(cls.subject || '—')} • ${esc(cls.teacher_name || '—')}${t ? ` • ${C.memberCount} siswa` : readOnly ? ' • Mode pemantauan' : ''}</p>${t ? `<span class="chip">Kode kelas: ${esc(cls.code)}</span>` : ''}</div>
@@ -1171,16 +1166,102 @@ function asgCard(a, t) {
 }
 
 const cid = () => ({ class_id: C.cls.id });
-const addAnn = () => modal('Buat pengumuman', [{n:'title',l:'Judul'},{n:'body',l:'Isi pengumuman',t:'textarea'}], async d => { await api('addAnnouncement', {...d, ...cid()}); toast('Pengumuman diterbitkan'); reload('ann'); }, 'Terbitkan');
-const addMat = () => modal('Tambah materi', [{n:'title',l:'Judul materi'},{n:'description',l:'Keterangan (opsional)',t:'textarea',r:false},{n:'file',l:'Berkas (maks. 10 MB)',t:'file',r:false},{n:'link',l:'Atau tautan (opsional)',t:'url',r:false}], async d => { await api('addMaterial', {...d, ...cid()}); toast('Materi ditambahkan'); reload('mat'); }, 'Tambah materi');
-const addAsg = () => modal('Buat tugas', [{n:'title',l:'Judul tugas'},{n:'description',l:'Petunjuk (opsional)',t:'textarea',r:false},{n:'due',l:'Batas pengumpulan',t:'date',r:false},{n:'max_score',l:'Nilai maksimal',t:'number',v:100}], async d => { await api('addAssignment', {...d, ...cid()}); toast('Tugas dibuat'); reload('asg'); }, 'Buat tugas');
-const submitIt = id => modal('Kumpulkan tugas', [{n:'file',l:'Berkas (maks. 10 MB)',t:'file',r:false},{n:'note',l:'Catatan (opsional)',t:'textarea',r:false}], async d => { await api('submit', {...d, assignment_id: id}); toast('Tugas terkumpul'); reload('asg'); }, 'Kumpulkan');
+const addAnn = () => modal('Buat pengumuman', [{n:'title',l:'Judul'},{n:'body',l:'Isi pengumuman',t:'textarea'}], async d => { await api('addAnnouncement', {...d, ...cid()}); toast('Pengumuman berhasil diterbitkan'); reload('ann'); }, 'Terbitkan');
+const addMat = () => modal('Tambah materi', [{n:'title',l:'Judul materi'},{n:'description',l:'Keterangan (opsional)',t:'textarea',r:false},{n:'file',l:'Berkas (maks. 10 MB)',t:'file',r:false},{n:'link',l:'Atau tautan (opsional)',t:'url',r:false}], async d => { await api('addMaterial', {...d, ...cid()}); toast('Materi berhasil ditambahkan'); reload('mat'); }, 'Tambah materi');
+const addAsg = () => modal('Buat tugas', [{n:'title',l:'Judul tugas'},{n:'description',l:'Petunjuk (opsional)',t:'textarea',r:false},{n:'due',l:'Batas pengumpulan',t:'date',r:false},{n:'max_score',l:'Nilai maksimal',t:'number',v:100}], async d => { await api('addAssignment', {...d, ...cid()}); toast('Tugas berhasil dibuat'); reload('asg'); }, 'Buat tugas');
+const submitIt = id => modal('Kumpulkan tugas', [{n:'file',l:'Berkas (maks. 10 MB)',t:'file',r:false},{n:'note',l:'Catatan (opsional)',t:'textarea',r:false}], async d => { await api('submit', {...d, assignment_id: id}); toast('Tugas berhasil dikumpulkan'); reload('asg'); }, 'Kumpulkan');
 async function gradeIt(id) {
-  try { await api('grade', { submission_id: id, score: $('#sc-' + id).value, feedback: $('#fb-' + id).value }); toast('Nilai tersimpan'); }
+  try { await api('grade', { submission_id: id, score: $('#sc-' + id).value, feedback: $('#fb-' + id).value }); toast('Nilai berhasil disimpan'); }
   catch (e) { toast(e.message, true); }
 }
 
-/* ===== KUIS ===== */
+const FAQ = [
+  ['Umum', 'Apa fungsi Portal LMS SMK CALM?', 'Portal LMS SMK CALM adalah platform pembelajaran terpadu yang menghimpun pengelolaan kelas, materi, penugasan, kuis, forum diskusi, dan penilaian dalam satu sistem. Hak akses setiap fitur disesuaikan dengan peran pengguna sehingga keamanan dan kerahasiaan data tetap terjaga.'],
+  ['Umum', 'Perangkat dan peramban apa yang disarankan?', 'Portal dapat diakses melalui komputer, tablet, maupun ponsel dengan peramban versi terbaru seperti Google Chrome, Microsoft Edge, Safari, atau Firefox. Pastikan koneksi internet stabil, khususnya saat mengerjakan kuis yang memiliki batas waktu.'],
+  ['Umum', 'Mengapa data yang tampil belum diperbarui?', 'Untuk menjaga performa, sebagian data ditampilkan dari penyimpanan sementara selama beberapa menit. Gunakan tombol segarkan di sudut kanan bawah halaman untuk memuat data terbaru secara langsung.'],
+  ['Akun', 'Bagaimana prosedur masuk ke portal?', 'Pilih peran yang sesuai pada bagian “Masuk sebagai”, kemudian masukkan username dan sandi yang diberikan oleh sekolah. Siswa umumnya menggunakan username atau NISN, sedangkan guru menggunakan username atau NIP sesuai informasi dari administrator.'],
+  ['Akun', 'Saya lupa sandi. Apa langkah yang harus dilakukan?', 'Silakan hubungi administrator atau staf administrasi sekolah untuk mengajukan pengaturan ulang sandi. Sandi sementara hanya ditampilkan satu kali kepada petugas, sehingga sangat disarankan segera menggantinya setelah berhasil masuk.'],
+  ['Akun', 'Bagaimana cara mengganti sandi?', 'Setelah masuk, buka menu Akun dan pilih “Profil & keamanan”. Isikan sandi lama, lalu sandi baru dengan panjang minimal 8 karakter. Gunakan kombinasi huruf dan angka, serta jangan pernah membagikan sandi kepada siapa pun.'],
+  ['Akun', 'Mengapa muncul pesan “Sesi berakhir”?', 'Demi keamanan, sesi akan berakhir otomatis setelah beberapa jam atau ketika Anda keluar dari portal. Silakan masuk kembali untuk melanjutkan aktivitas. Sesi yang berakhir tidak memengaruhi data yang telah tersimpan.'],
+  ['Siswa', 'Bagaimana cara bergabung ke sebuah kelas?', 'Buka menu “Kelas saya”, pilih “Gabung kelas”, lalu masukkan kode kelas yang diberikan oleh guru. Setelah berhasil, kelas tersebut akan tampil pada daftar kelas Anda dan seluruh materi, tugas, serta kuis di dalamnya dapat diakses.'],
+  ['Siswa', 'Bagaimana prosedur pengumpulan tugas?', 'Masuk ke kelas terkait, buka tab Tugas, lalu pilih “Kumpulkan tugas”. Lampirkan berkas maksimal 10 MB dan/atau tuliskan catatan. Pengumpulan setelah tenggat waktu dapat ditolak atau diberikan penilaian khusus sesuai ketentuan guru.'],
+  ['Siswa', 'Di mana saya dapat melihat nilai dan umpan balik?', 'Nilai dan umpan balik dari guru tersedia pada menu “Nilai saya”. Nilai kuis tampil otomatis setelah jawaban dikumpulkan, sedangkan nilai tugas muncul setelah guru menyelesaikan penilaian.'],
+  ['Kuis', 'Bagaimana ketentuan pengerjaan kuis?', 'Waktu pengerjaan berjalan sejak tombol “Mulai kuis” ditekan dan tidak dapat dihentikan. Jawaban tersimpan otomatis, dan Anda dapat menandai soal tertentu sebagai “Ragu-ragu” untuk ditinjau kembali sebelum jawaban dikumpulkan.'],
+  ['Kuis', 'Bagaimana jika koneksi terputus saat kuis berlangsung?', 'Buka kembali portal dan pilih tombol “Lanjutkan” pada kuis tersebut. Selama waktu belum habis, Anda dapat melanjutkan pengerjaan dari soal terakhir yang tersimpan. Jawaban yang belum dikumpulkan saat waktu berakhir akan dikumpulkan secara otomatis.'],
+  ['Kuis', 'Apa yang dimaksud dengan pembahasan kuis?', 'Pembahasan menampilkan kunci jawaban beserta penjelasan singkat setelah kuis selesai dikerjakan. Fitur ini dapat diaktifkan atau dinonaktifkan oleh guru pada setiap kuis sesuai kebutuhan pembelajaran.'],
+  ['Guru', 'Bagaimana cara membuat kuis?', 'Buka kelas yang Anda ampu, pilih tab Kuis, kemudian “Buat kuis”. Tentukan durasi, pengaturan acak soal dan pilihan jawaban, batas waktu per soal, serta nilai ketuntasan minimal. Soal dapat ditulis satu per satu atau ditempel sekaligus melalui fitur impor cepat.'],
+  ['Guru', 'Bagaimana cara menilai tugas dan memberi umpan balik?', 'Buka menu “Perlu dinilai” atau tab Tugas pada kelas, pilih pengumpulan siswa, isikan nilai sesuai skor maksimal, kemudian tambahkan umpan balik yang membangun dan simpan.'],
+  ['Guru', 'Bagaimana membaca analisis soal?', 'Pada kartu kuis, pilih “Analisis soal” untuk melihat persentase siswa yang menjawab benar pada tiap soal. Soal dengan persentase rendah dapat dibahas ulang di kelas untuk memperkuat pemahaman bersama.'],
+  ['Bantuan', 'Siapa yang dapat dihubungi jika mengalami kendala?', 'Silakan hubungi administrator atau staf administrasi SMK CALM. Sertakan nama, peran, serta penjelasan singkat mengenai kendala yang dialami agar dapat ditindaklanjuti secara cepat dan tepat.']
+];
+
+function openFaq() {
+  if (document.querySelector('.ov.faq')) return;
+  const cats = ['Semua', ...new Set(FAQ.map(x => x[0]))];
+  const m = document.createElement('div'); m.className = 'ov faq';
+  m.innerHTML = `<div class="md hlp" role="dialog" aria-modal="true" aria-labelledby="fqh">
+    <button class="mx" data-x aria-label="Tutup pusat bantuan">×</button>
+    <header class="hlp-head">
+      <span class="hlp-k">Pusat Bantuan</span>
+      <h3 id="fqh">Bagaimana kami dapat membantu Anda?</h3>
+      <p class="md-sub">Temukan panduan dan jawaban atas pertanyaan yang sering diajukan seputar penggunaan Portal LMS SMK CALM.</p>
+    </header>
+    <div class="hlp-body">
+      <div class="hlp-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="search" id="fq" placeholder="Cari pertanyaan atau kata kunci..." aria-label="Cari pertanyaan">
+      </div>
+      <div class="hlp-cats" id="fqc">${cats.map((c, i) => `<button type="button" class="hlp-cat${i ? '' : ' on'}" data-c="${c}">${c}</button>`).join('')}</div>
+      <div class="hlp-list" id="fql"></div>
+    </div>
+    <footer class="hlp-foot">Tidak menemukan jawaban? Hubungi <b>administrator sekolah</b> melalui saluran resmi.</footer>
+  </div>`;
+  document.body.appendChild(m);
+  let cat = 'Semua', q = '';
+  const draw = () => {
+    const l = FAQ.filter(x => (cat === 'Semua' || x[0] === cat) && (!q || (x[1] + ' ' + x[2]).toLowerCase().includes(q)));
+    m.querySelector('#fql').innerHTML = l.length
+      ? l.map(x => `<details class="hlp-i"><summary>${esc(x[1])}</summary><p>${esc(x[2])}</p></details>`).join('')
+      : `<div class="hlp-empty"><b>Pertanyaan belum tersedia</b>Silakan coba kata kunci lain, atau hubungi administrator sekolah secara langsung.</div>`;
+  };
+  m.querySelector('[data-x]').onclick = () => m.remove();
+  m.onmousedown = e => { if (e.target === m) m.remove(); };
+  m.querySelector('#fq').oninput = e => { q = e.target.value.trim().toLowerCase(); draw(); };
+  m.querySelector('#fqc').onclick = e => {
+    const b = e.target.closest('[data-c]'); if (!b) return;
+    cat = b.dataset.c;
+    m.querySelectorAll('#fqc .hlp-cat').forEach(p => p.classList.toggle('on', p === b));
+    draw();
+  };
+  draw();
+}
+
+const DGI = {
+  danger: '<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14M10 11v6M14 11v6"/>',
+  warn: '<path d="M12 3l10 18H2L12 3zM12 10v5M12 18h.01"/>',
+  info: '<circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5h.01"/>',
+  key: '<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3M14 9l2 2"/>',
+  ok: '<circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/>'
+};
+function dlg(o) {
+  return new Promise(res => {
+    const tone = o.tone || 'info', prev = document.activeElement, m = document.createElement('div'); m.className = 'ov dg';
+    const body = (Array.isArray(o.msg) ? o.msg : [o.msg || '']).map(x => `<p>${esc(x)}</p>`).join('') + (o.items ? `<ul>${o.items.map(i => `<li>${esc(i)}</li>`).join('')}</ul>` : '');
+    m.innerHTML = `<div class="md dlg ${tone}" role="alertdialog" aria-modal="true" aria-labelledby="dgt"><span class="dgi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${DGI[tone] || DGI.info}</svg></span><h3 id="dgt">${esc(o.title)}</h3><div class="dgm">${body}</div><div class="dga">${o.cancel === false ? '' : `<button type="button" class="btn2" data-n>${esc(o.cancel || 'Batal')}</button>`}<button type="button" class="btn${tone === 'danger' ? ' dgd' : ''}" data-y>${esc(o.ok || 'Lanjutkan')}</button></div></div>`;
+    document.body.appendChild(m);
+    const y = m.querySelector('[data-y]'), n = m.querySelector('[data-n]');
+    const done = v => { document.removeEventListener('keydown', kd, true); m.remove(); try { prev && prev.focus(); } catch (e) {} res(v); };
+    const kd = e => {
+      if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); done(false); }
+      else if (e.key === 'Tab') { const f = [n, y].filter(Boolean); const i = f.indexOf(document.activeElement); e.preventDefault(); f[(i + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus(); }
+    };
+    document.addEventListener('keydown', kd, true);
+    y.onclick = () => done(true); if (n) n.onclick = () => done(false);
+    m.onmousedown = e => { if (e.target === m) done(false); };
+    (tone === 'danger' && n ? n : y).focus();
+  });
+}
+
 const QCFG = /\n?\[\[cfg:(\{.*?\})\]\]\s*$/;
 const qcfg = d => { const m = String(d || '').match(QCFG); let c = {}; try { c = m ? JSON.parse(m[1]) : {}; } catch (e) {} return { c, text: String(d || '').replace(QCFG, '').trim() }; };
 const mmss = s => String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
@@ -1194,7 +1275,7 @@ function quizCard(q) {
   const chips = [q.qcount + ' soal', q.duration + ' menit', c.qt ? c.qt + ' dtk/soal' : '', c.shuf ? 'Soal diacak' : '', c.pass ? 'Lulus ≥ ' + c.pass : ''].filter(Boolean).map(x => `<span>${x}</span>`).join('');
   const rows = at.map(a => `<div class="qr"><span>${esc(a.full_name)}</span><b>${a.submitted ? a.score + '/' + a.max : 'Mengerjakan'}</b></div>`).join('') || '<p class="meta">Belum ada.</p>';
   let foot, done = false;
-  if (t || ro) foot = `<div class="qft"><div class="qst"><div><b>${fin.length}</b><small>selesai</small></div><div><b>${fin.length ? avg : '–'}</b><small>rata-rata</small></div><div class="qbm"><i style="width:${avg}%"></i></div></div></div><details><summary>Lihat hasil siswa${ro ? ' • pemantauan' : ''}</summary>${rows}</details>${fin.length ? `<div style="margin-top:.8rem"><button class="btn2" onclick="quizStats('${q.id}')">📊 Analisis soal</button></div>` : ''}`;
+  if (t || ro) foot = `<div class="qft"><div class="qst"><div><b>${fin.length}</b><small>selesai</small></div><div><b>${fin.length ? avg : '–'}</b><small>rata-rata</small></div><div class="qbm"><i style="width:${avg}%"></i></div></div></div><details><summary>Lihat hasil siswa${ro ? ' • pemantauan' : ''}</summary>${rows}</details>${fin.length ? `<div style="margin-top:.8rem"><button class="btn2" onclick="quizStats('${q.id}')">Analisis soal</button></div>` : ''}`;
   else { const a = at[0]; done = !!(a && a.submitted);
     const pass = done && c.pass ? (pc(a) >= c.pass ? '<span class="badge ok">Tuntas</span>' : '<span class="badge warn">Belum tuntas</span>') : '';
     foot = `<div class="qft">${done ? `<div class="qsc">${a.score}<small> / ${a.max}</small></div>${pass}${c.rev === 0 ? '' : `<button class="btn2" onclick="reviewQuiz('${q.id}')">Lihat pembahasan</button>`}` : `<span class="badge${a ? ' warn' : ''}">${a ? 'Sedang dikerjakan' : 'Belum dikerjakan'}</span><button class="btn" onclick="startQuiz('${q.id}')">${a ? 'Lanjutkan' : 'Mulai kuis'}</button>`}</div>`; }
@@ -1204,11 +1285,11 @@ function quizCard(q) {
 function startQuiz(id) {
   const q = C.quizzes.find(x => x.id === id), resume = C.attempts.some(a => a.quiz_id === id), { c, text } = qcfg(q.description);
   const m = document.createElement('div'); m.className = 'ov';
-  m.innerHTML = `<div class="md qi"><div class="qi-ic">${QICO}</div><h3>${esc(q.title)}</h3><p class="sub">${resume ? 'Lanjutkan kuis dari tempat kamu berhenti.' : 'Santai saja, ini kesempatan mengingat kembali materi. Kerjakan semampumu!'}</p><div class="qi-g"><div><b>${q.qcount}</b><small>Soal</small></div><div><b>${q.duration}</b><small>Menit</small></div><div><b>${c.qt || '∞'}</b><small>Dtk/soal</small></div></div><ul class="qi-l">${text ? `<li>${esc(text)}</li>` : ''}<li>Waktu berjalan setelah tombol Mulai ditekan dan tidak dapat dijeda.</li><li>Jawaban tersimpan otomatis. Tandai soal sulit dengan “Ragu-ragu”.</li>${c.qt ? '<li>Setiap soal punya batas waktu dan lanjut otomatis.</li>' : ''}</ul><div class="row"><button class="btn2" data-x>Nanti saja</button><button class="btn" data-go>${resume ? 'Lanjutkan' : 'Mulai sekarang'}</button></div></div>`;
+  m.innerHTML = `<div class="md qi"><div class="qi-ic">${QICO}</div><h3>${esc(q.title)}</h3><p class="sub">${resume ? 'Lanjutkan kuis dari soal terakhir yang Anda kerjakan.' : 'Kuis ini dirancang untuk memperkuat pemahaman Anda. Kerjakan dengan tenang, teliti, dan jujur.'}</p><div class="qi-g"><div><b>${q.qcount}</b><small>Soal</small></div><div><b>${q.duration}</b><small>Menit</small></div><div><b>${c.qt || '∞'}</b><small>Dtk/soal</small></div></div><ul class="qi-l">${text ? `<li>${esc(text)}</li>` : ''}<li>Waktu berjalan setelah tombol “Mulai kuis” ditekan dan tidak dapat dihentikan.</li><li>Jawaban tersimpan otomatis. Gunakan “Ragu-ragu” untuk menandai soal yang ingin Anda tinjau kembali.</li>${c.qt ? '<li>Setiap soal memiliki batas waktu dan akan berpindah secara otomatis.</li>' : ''}</ul><div class="row"><button class="btn2" data-x>Kembali</button><button class="btn" data-go>${resume ? 'Lanjutkan' : 'Mulai kuis'}</button></div></div>`;
   document.body.appendChild(m);
   m.querySelector('[data-x]').onclick = () => m.remove();
   m.querySelector('[data-go]').onclick = async e => {
-    e.target.disabled = true; e.target.textContent = 'Menyiapkan...';
+    e.target.disabled = true; e.target.textContent = 'Menyiapkan…';
     try { const d = await api('startQuiz', { quiz_id: id }); m.remove(); takeQuiz(d); }
     catch (er) { m.remove(); toast(er.message, true); reload('qz'); }
   };
@@ -1226,7 +1307,7 @@ function takeQuiz(d) {
     <div class="qw"><div id="qa"></div><aside class="qside"><h5>Navigasi soal</h5><div class="qnav" id="qn"></div><div class="qleg"><span><i></i>Terjawab</span><span><i class="f"></i>Ragu-ragu</span></div><button class="btn" style="width:100%" data-fin>Kumpulkan jawaban</button></aside></div>`);
   const draw = () => {
     const q = qs[cur], os = optsOf(q), answered = Object.keys(ans).length;
-    $('#qa').innerHTML = `<div class="qq"><div class="qqh"><span class="qno">Soal ${cur + 1} <small>dari ${n}</small></span><button class="qflag${flg[q.id] ? ' on' : ''}" data-flag>⚑ Ragu-ragu</button></div>${qsec ? '<div class="qtm"><i id="qti"></i></div>' : ''}<h3>${esc(q.text)}</h3><div class="qos">${os.map(([o, j], i) => `<button type="button" class="qo${ans[q.id] === j ? ' on' : ''}" data-opt="${j}"><b>${'ABCDEF'[i]}</b><span>${esc(o)}</span></button>`).join('')}</div></div><div class="qfoot">${qsec ? '<span></span>' : `<button class="btn2" data-prev${cur ? '' : ' disabled'}>← Sebelumnya</button>`}${cur < n - 1 ? '<button class="btn" data-next>Selanjutnya →</button>' : '<button class="btn" data-fin>Selesai & kumpulkan</button>'}</div>`;
+    $('#qa').innerHTML = `<div class="qq"><div class="qqh"><span class="qno">Soal ${cur + 1} <small>dari ${n}</small></span><button class="qflag${flg[q.id] ? ' on' : ''}" data-flag>Ragu-ragu</button></div>${qsec ? '<div class="qtm"><i id="qti"></i></div>' : ''}<h3>${esc(q.text)}</h3><div class="qos">${os.map(([o, j], i) => `<button type="button" class="qo${ans[q.id] === j ? ' on' : ''}" data-opt="${j}"><b>${'ABCDEF'[i]}</b><span>${esc(o)}</span></button>`).join('')}</div></div><div class="qfoot">${qsec ? '<span></span>' : `<button class="btn2" data-prev${cur ? '' : ' disabled'}>← Sebelumnya</button>`}${cur < n - 1 ? '<button class="btn" data-next>Selanjutnya →</button>' : '<button class="btn" data-fin>Selesai dan kumpulkan</button>'}</div>`;
     $('#qn').innerHTML = qs.map((x, i) => `<button data-go="${i}" class="${i === cur ? 'cur' : ans[x.id] !== undefined ? 'ok' : ''}${flg[x.id] && i !== cur ? ' fl' : ''}"${qsec ? ' disabled' : ''}>${i + 1}</button>`).join('');
     $('#qp').textContent = `${answered} dari ${n} soal terjawab`; $('#qpi').style.width = (answered / n * 100) + '%';
   };
@@ -1241,14 +1322,14 @@ function takeQuiz(d) {
   const fin = async auto => {
     if (done) return;
     const left = n - Object.keys(ans).length;
-    if (!auto && !confirm(left ? `Masih ada ${left} soal belum dijawab. Tetap kumpulkan?` : 'Kumpulkan jawaban sekarang?')) return;
+    if (!auto && !(await dlg({ title: left ? 'Masih ada soal yang belum dijawab' : 'Kumpulkan jawaban?', msg: left ? `Terdapat ${left} soal yang belum Anda jawab. Jawaban yang telah dikumpulkan tidak dapat diubah kembali.` : 'Jawaban yang telah dikumpulkan tidak dapat diubah kembali.', ok: 'Kumpulkan sekarang', cancel: 'Periksa kembali', tone: left ? 'warn' : 'info' }))) return;
     done = true; clearInterval(QT);
     try {
       const r = await api('submitQuiz', { attempt_id: d.attempt_id, answers: JSON.stringify(ans) });
       sessionStorage.removeItem(key); sessionStorage.removeItem(key + 'f'); cleanup();
       const p = r.max ? Math.round(r.score / r.max * 100) : 0, ok = !c.pass || p >= c.pass;
-      const msg = p >= 85 ? 'Luar biasa! Pemahamanmu sangat kuat.' : p >= 70 ? 'Bagus! Sedikit lagi sempurna.' : p >= 50 ? 'Lumayan. Ulangi bagian materi yang masih ragu.' : 'Jangan berkecil hati. Buka lagi materinya, kamu pasti bisa.';
-      view(`<div class="qres"><div class="qring"><svg viewBox="0 0 120 120" width="160" height="160"><circle class="bg" cx="60" cy="60" r="50"/><circle class="fg" id="qrf" cx="60" cy="60" r="50" style="stroke-dashoffset:314"/></svg><b>${p}</b></div><h3>${auto ? 'Waktu habis, jawaban terkumpul' : 'Kuis selesai'}</h3><p>Benar ${r.score} dari ${r.max} soal. ${msg}</p><div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.2rem">${c.pass ? `<span class="badge ${ok ? 'ok' : 'warn'}">${ok ? 'Tuntas' : 'Belum tuntas (min. ' + c.pass + ')'}</span>` : ''}${r.late ? '<span class="badge warn">Terlambat dikumpulkan</span>' : ''}</div><div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">${c.rev === 0 ? '' : `<button class="btn2" onclick="reviewQuiz('${d.quiz.id}')">Lihat pembahasan</button>`}<button class="btn" onclick="reload('qz')">Kembali ke kelas</button></div></div>`);
+      const msg = p >= 85 ? 'Hasil yang sangat baik. Pemahaman Anda terhadap materi sudah kuat.' : p >= 70 ? 'Hasil yang baik. Tinjau beberapa bagian untuk mencapai hasil maksimal.' : p >= 50 ? 'Hasil cukup baik. Disarankan mengulas kembali bagian materi yang belum dikuasai.' : 'Pemahaman Anda masih dapat ditingkatkan. Silakan pelajari kembali materi, lalu diskusikan dengan guru.';
+      view(`<div class="qres"><div class="qring"><svg viewBox="0 0 120 120" width="160" height="160"><circle class="bg" cx="60" cy="60" r="50"/><circle class="fg" id="qrf" cx="60" cy="60" r="50" style="stroke-dashoffset:314"/></svg><b>${p}</b></div><h3>${auto ? 'Waktu telah habis, jawaban Anda telah dikumpulkan' : 'Kuis telah selesai'}</h3><p>Benar ${r.score} dari ${r.max} soal. ${msg}</p><div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.2rem">${c.pass ? `<span class="badge ${ok ? 'ok' : 'warn'}">${ok ? 'Tuntas' : 'Belum tuntas (min. ' + c.pass + ')'}</span>` : ''}${r.late ? '<span class="badge warn">Terlambat dikumpulkan</span>' : ''}</div><div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">${c.rev === 0 ? '' : `<button class="btn2" onclick="reviewQuiz('${d.quiz.id}')">Lihat pembahasan</button>`}<button class="btn" onclick="reload('qz')">Kembali ke kelas</button></div></div>`);
       requestAnimationFrame(() => setTimeout(() => { const f = $('#qrf'); if (f) f.style.strokeDashoffset = 314 - 314 * p / 100; }, 80));
     } catch (e) { done = false; toast(e.message, true); QT = setInterval(tick, 500); }
   };
@@ -1274,15 +1355,15 @@ function takeQuiz(d) {
 
 function addQuiz() {
   const m = document.createElement('div'); m.className = 'ov'; let k = 0;
-  const blk = (d = {}) => { k++; const o = d.options || []; return `<div class="qb"><div class="qh"><b class="qn"></b><span><button type="button" class="link" data-dup>Duplikat</button><button type="button" class="link" data-rm>Hapus</button></span></div><label>Pertanyaan<textarea data-t>${esc(d.text || '')}</textarea></label><p class="hint">Tandai lingkaran di samping jawaban yang benar.</p>${[0, 1, 2, 3].map(j => `<span class="oi"><em>${'ABCD'[j]}</em><input type="radio" name="c${k}" value="${j}"${j === (d.answer || 0) ? ' checked' : ''} aria-label="Jawaban benar"><input data-o placeholder="Pilihan ${'ABCD'[j]}" value="${esc(o[j] || '')}"></span>`).join('')}<label style="margin-top:.6rem">Pembahasan (opsional)<textarea data-e rows="2" placeholder="Penjelasan singkat yang tampil setelah kuis selesai">${esc(d.explain || '')}</textarea></label></div>`; };
+  const blk = (d = {}) => { k++; const o = d.options || []; return `<div class="qb"><div class="qh"><b class="qn"></b><span><button type="button" class="link" data-dup>Duplikat</button><button type="button" class="link" data-rm>Hapus</button></span></div><label>Pertanyaan<textarea data-t>${esc(d.text || '')}</textarea></label><p class="hint">Pilih tombol bulat di samping jawaban yang benar.</p>${[0, 1, 2, 3].map(j => `<span class="oi"><em>${'ABCD'[j]}</em><input type="radio" name="c${k}" value="${j}"${j === (d.answer || 0) ? ' checked' : ''} aria-label="Jawaban benar"><input data-o placeholder="Pilihan ${'ABCD'[j]}" value="${esc(o[j] || '')}"></span>`).join('')}<label style="margin-top:.6rem">Pembahasan (opsional)<textarea data-e rows="2" placeholder="Penjelasan singkat yang ditampilkan setelah kuis selesai">${esc(d.explain || '')}</textarea></label></div>`; };
   const raw = el => ({ text: el.querySelector('[data-t]').value.trim(), options: [...el.querySelectorAll('[data-o]')].map(o => o.value.trim()), answer: Math.max(0, [...el.querySelectorAll('input[type=radio]')].findIndex(r => r.checked)), explain: el.querySelector('[data-e]').value.trim() });
   const sw = (n, t, on) => `<label class="sw"><input type="checkbox" name="${n}"${on ? ' checked' : ''}>${t}</label>`;
   m.innerHTML = `<form class="md wide"><h3>Buat kuis</h3><div class="qsum" id="qsum"></div><label>Judul kuis<input name="title" required placeholder="Contoh: Kuis Bab 3 – Sistem Pencernaan"></label>
     <div class="qset"><div class="full"><label>Durasi total (menit)<input name="duration" type="number" min="1" max="300" value="30" required></label><div class="qpre" id="pre">${[10, 20, 30, 45, 60, 90].map(v => `<button type="button" data-d="${v}">${v} mnt</button>`).join('')}</div></div>
-    <label>Waktu per soal (detik, 0 = mati)<input name="qt" type="number" min="0" max="600" value="0"></label><label>Nilai minimal tuntas (0–100)<input name="pass" type="number" min="0" max="100" value="70"></label>
+    <label>Waktu per soal (detik; isi 0 untuk menonaktifkan)<input name="qt" type="number" min="0" max="600" value="0"></label><label>Nilai ketuntasan minimal (0–100)<input name="pass" type="number" min="0" max="100" value="70"></label>
     ${sw('shuf', 'Acak urutan soal')}${sw('shufo', 'Acak pilihan jawaban')}${sw('rev', 'Tampilkan pembahasan setelah selesai', 1)}</div>
-    <label>Petunjuk untuk siswa (opsional)<textarea name="description" placeholder="Contoh: Bacalah tiap soal dengan teliti."></textarea></label>
-    <details class="qbulk"><summary>⚡ Impor cepat banyak soal (tempel teks)</summary><textarea id="bk" placeholder="1. Ibukota Indonesia?\nA. Bandung\nB. Jakarta\nC. Medan\nD. Surabaya\nJawaban: B\n\n2. Soal berikutnya..."></textarea><button type="button" class="btn2" id="bkgo">Tambahkan ke daftar soal</button></details>
+    <label>Petunjuk untuk siswa (opsional)<textarea name="description" placeholder="Contoh: Bacalah setiap soal dengan cermat sebelum menjawab."></textarea></label>
+    <details class="qbulk"><summary>Impor cepat: tempel banyak soal sekaligus</summary><textarea id="bk" placeholder="1. Ibukota Indonesia?\nA. Bandung\nB. Jakarta\nC. Medan\nD. Surabaya\nJawaban: B\n\n2. Soal berikutnya..."></textarea><button type="button" class="btn2" id="bkgo">Tambahkan ke daftar soal</button></details>
     <div id="qb">${blk()}</div><button type="button" class="btn2" id="qadd" style="margin-bottom:1rem">+ Tambah soal</button><div class="row"><button type="button" class="btn2" data-x>Batal</button><button class="btn">Terbitkan kuis</button></div></form>`;
   document.body.appendChild(m);
   const f = m.querySelector('form'), box = m.querySelector('#qb'), close = () => m.remove();
@@ -1290,22 +1371,22 @@ function addQuiz() {
   const sum = () => { const q = f.qt.value > 0 ? ` • ${f.qt.value} dtk/soal` : ''; m.querySelector('#qsum').textContent = `${box.children.length} soal • ${f.duration.value || 0} menit${q}`; m.querySelectorAll('#pre button').forEach(b => b.classList.toggle('on', b.dataset.d === f.duration.value)); };
   num();
   m.oninput = sum;
-  m.querySelector('[data-x]').onclick = close;
+  m.querySelectorAll('[data-x]').forEach(b => b.onclick = close);
   m.querySelector('#pre').onclick = e => { if (e.target.dataset.d) { f.duration.value = e.target.dataset.d; sum(); } };
   m.querySelector('#qadd').onclick = () => { box.insertAdjacentHTML('beforeend', blk()); num(); box.lastElementChild.querySelector('[data-t]').focus(); };
   m.querySelector('#bkgo').onclick = () => {
     const out = m.querySelector('#bk').value.split(/\n\s*\n/).map(ch => { const L = ch.split('\n').map(s => s.trim()).filter(Boolean), o = [], r = { text: '', options: o, answer: 0, explain: '' }; L.forEach(l => { let x; if ((x = l.match(/^(?:jawaban|kunci)\s*[:=]\s*([A-Da-d])/i))) r.answer = 'abcd'.indexOf(x[1].toLowerCase()); else if ((x = l.match(/^(?:pembahasan|penjelasan)\s*[:=]\s*(.+)/i))) r.explain = x[1]; else if ((x = l.match(/^[A-Da-d][.)]\s*(.+)/))) o.push(x[1]); else if (!o.length) r.text += (r.text ? '\n' : '') + l.replace(/^\d+[.)]\s*/, ''); }); return r; }).filter(r => r.text && r.options.length > 1);
-    if (!out.length) return toast('Format tidak terbaca. Periksa contoh di kolom.', true);
+    if (!out.length) return toast('Format teks tidak dikenali. Silakan sesuaikan dengan contoh yang tersedia.', true);
     [...box.children].filter(el => !raw(el).text).forEach(el => el.remove());
     out.forEach(r => box.insertAdjacentHTML('beforeend', blk(r))); m.querySelector('#bk').value = ''; num(); toast(out.length + ' soal ditambahkan');
   };
   box.onclick = e => {
     const el = e.target.closest('.qb');
     if (e.target.matches('[data-dup]')) { el.insertAdjacentHTML('afterend', blk(raw(el))); num(); }
-    else if (e.target.matches('[data-rm]')) { if (box.children.length > 1) { el.remove(); num(); } else toast('Kuis memerlukan minimal satu soal.', true); }
+    else if (e.target.matches('[data-rm]')) { if (box.children.length > 1) { el.remove(); num(); } else toast('Kuis memerlukan sedikitnya satu soal.', true); }
   };
   f.onsubmit = async e => {
-    e.preventDefault(); const b = f.querySelector('.row .btn:last-child'); b.disabled = true; b.textContent = 'Menyimpan...';
+    e.preventDefault(); const b = f.querySelector('.row .btn:last-child'); b.disabled = true; b.textContent = 'Menyimpan…';
     try {
       const qs = [...box.children].map((el, i) => {
         const r = raw(el), options = []; let answer = -1;
@@ -1318,20 +1399,18 @@ function addQuiz() {
       const cfg = {}; if (+f.qt.value > 0) cfg.qt = +f.qt.value; if (f.shuf.checked) cfg.shuf = 1; if (f.shufo.checked) cfg.shufo = 1; if (!f.rev.checked) cfg.rev = 0; if (+f.pass.value > 0) cfg.pass = +f.pass.value;
       const desc = f.description.value.trim() + (Object.keys(cfg).length ? '\n[[cfg:' + JSON.stringify(cfg) + ']]' : '');
       await api('addQuiz', { ...cid(), title: f.title.value, duration: f.duration.value, description: desc, questions: JSON.stringify(qs) });
-      close(); toast('Kuis diterbitkan'); reload('qz');
+      close(); toast('Kuis berhasil diterbitkan'); reload('qz');
     } catch (er) { toast(er.message, true); b.disabled = false; b.textContent = 'Terbitkan kuis'; }
   };
   f.title.focus();
 }
 
-
-/* ===== PEMBAHASAN & ANALISIS ===== */
 async function reviewQuiz(id) {
   try {
     const r = await api('reviewQuiz', { quiz_id: id }), ok = r.items.filter(x => x.chosen === x.answer).length;
     nav('home');
     view(`<div class="qbar"><div><b>Pembahasan: ${esc(r.title)}</b><span>Benar ${ok} dari ${r.items.length} soal • Nilai ${r.score}/${r.max}</span></div><button class="btn" onclick="reload('qz')">Selesai</button></div>
-    ${r.items.map((x, i) => { const good = x.chosen === x.answer; return `<div class="card rv ${good ? 'g' : 'b'}"><div class="rvh"><b>Soal ${i + 1}</b><span class="badge ${good ? 'ok' : 'warn'}">${x.chosen === null ? 'Tidak dijawab' : good ? 'Benar' : 'Kurang tepat'}</span></div><h4>${esc(x.text)}</h4><div class="qos">${x.options.map((o, j) => `<div class="qo ${j === x.answer ? 'rc' : j === x.chosen ? 'rw' : ''}"><b>${'ABCDEF'[j]}</b><span>${esc(o)}</span>${j === x.answer ? '<em>Jawaban benar</em>' : j === x.chosen ? '<em>Jawabanmu</em>' : ''}</div>`).join('')}</div>${x.explain ? `<div class="rve"><b>💡 Pembahasan</b>${esc(x.explain)}</div>` : ''}</div>`; }).join('')}`);
+    ${r.items.map((x, i) => { const good = x.chosen === x.answer; return `<div class="card rv ${good ? 'g' : 'b'}"><div class="rvh"><b>Soal ${i + 1}</b><span class="badge ${good ? 'ok' : 'warn'}">${x.chosen === null ? 'Tidak dijawab' : good ? 'Benar' : 'Kurang tepat'}</span></div><h4>${esc(x.text)}</h4><div class="qos">${x.options.map((o, j) => `<div class="qo ${j === x.answer ? 'rc' : j === x.chosen ? 'rw' : ''}"><b>${'ABCDEF'[j]}</b><span>${esc(o)}</span>${j === x.answer ? '<em>Jawaban benar</em>' : j === x.chosen ? '<em>Jawabanmu</em>' : ''}</div>`).join('')}</div>${x.explain ? `<div class="rve"><b>Pembahasan</b>${esc(x.explain)}</div>` : ''}</div>`; }).join('')}`);
   } catch (e) { toast(e.message, true); }
 }
 async function quizStats(id) {
@@ -1342,28 +1421,26 @@ async function quizStats(id) {
   } catch (e) { toast(e.message, true); }
 }
 
-/* ===== FORUM ===== */
 function forumView() {
   const me = S.user.user_id, ts = x => String(x.created), readOnly = isReadOnlyMonitor(), t = canManageCurrentClass();
   const tops = C.posts.filter(p => !p.parent_id).sort((a, b) => ts(b).localeCompare(ts(a)));
   const reps = id => C.posts.filter(p => p.parent_id === id).sort((a, b) => ts(a).localeCompare(ts(b)));
   const head = p => `<div class="fh"><span class="fav${p.role !== 'siswa' ? ' g' : ''}" aria-hidden="true">${esc(String(p.full_name).charAt(0).toUpperCase())}</span><div><b>${esc(p.full_name)}</b>${p.role !== 'siswa' ? '<span class="badge ok">Guru</span>' : ''}<div class="meta">${tglw(p.created)}</div></div>${!readOnly && (t || p.user_id == me) ? `<button class="link" onclick="delPost('${p.id}')">Hapus</button>` : ''}</div>`;
-  const composer = readOnly ? '<p class="meta">Forum ditampilkan dalam mode pemantauan.</p>' : `<div class="card item" style="margin-bottom:1.5rem;background:var(--bg)"><textarea class="fnew" id="fnew" maxlength="2000" placeholder="Tulis pertanyaan atau topik diskusi untuk kelas ini..."></textarea><div class="row"><button class="btn" onclick="sendPost('')">Kirim topik</button></div></div>`;
-  return composer + (tops.map(p => `<div class="card item">${head(p)}<p class="fb">${esc(p.body)}</p>${reps(p.id).length ? `<div class="fr">${reps(p.id).map(r => `<div class="item">${head(r)}<p class="fb">${esc(r.body)}</p></div>`).join('')}</div>` : ''}${readOnly ? '' : `<div class="fq"><input id="rp-${p.id}" maxlength="2000" placeholder="Tulis balasan..." aria-label="Balasan" onkeydown="if(event.key==='Enter')sendPost('${p.id}')"><button class="btn2" onclick="sendPost('${p.id}')">Balas</button></div>`}</div>`).join('') || empty('Belum ada diskusi', 'Mulai dengan menulis pertanyaan atau topik pertama.'));
+  const composer = readOnly ? '<p class="meta">Forum ditampilkan dalam mode pemantauan.</p>' : `<div class="card item" style="margin-bottom:1.5rem;background:var(--bg)"><textarea class="fnew" id="fnew" maxlength="2000" placeholder="Tuliskan pertanyaan atau topik diskusi untuk kelas ini"></textarea><div class="row"><button class="btn" onclick="sendPost('')">Kirim topik</button></div></div>`;
+  return composer + (tops.map(p => `<div class="card item">${head(p)}<p class="fb">${esc(p.body)}</p>${reps(p.id).length ? `<div class="fr">${reps(p.id).map(r => `<div class="item">${head(r)}<p class="fb">${esc(r.body)}</p></div>`).join('')}</div>` : ''}${readOnly ? '' : `<div class="fq"><input id="rp-${p.id}" maxlength="2000" placeholder="Tulis balasan" aria-label="Balasan" onkeydown="if(event.key==='Enter')sendPost('${p.id}')"><button class="btn2" onclick="sendPost('${p.id}')">Balas</button></div>`}</div>`).join('') || empty('Belum ada diskusi', 'Mulailah diskusi dengan menuliskan pertanyaan atau topik pertama.'));
 }
 async function sendPost(parent) {
   const el = $(parent ? '#rp-' + parent : '#fnew'), body = el.value.trim();
-  if (!body) { toast('Tulisan tidak boleh kosong.', true); el.focus(); return; }
+  if (!body) { toast('Mohon isi pesan terlebih dahulu.', true); el.focus(); return; }
   try { await api('addPost', { ...cid(), body, parent_id: parent }); reload('fr'); }
   catch (e) { toast(e.message, true); }
 }
 async function delPost(id) {
-  if (!confirm('Hapus pesan ini? Balasan di dalamnya ikut terhapus.')) return;
-  try { await api('deletePost', { post_id: id }); toast('Pesan dihapus'); reload('fr'); }
+  if (!(await dlg({ title: 'Hapus pesan?', msg: 'Pesan beserta seluruh balasannya akan dihapus secara permanen.', ok: 'Hapus pesan', tone: 'danger' }))) return;
+  try { await api('deletePost', { post_id: id }); toast('Pesan berhasil dihapus'); reload('fr'); }
   catch (e) { toast(e.message, true); }
 }
 
-/* ===== ADMIN DATA ===== */
 function canManageStudents()   { return hasR('admin') || hasR('staff') || hasR('staf') || hasR('guru_bk'); }
 function canManageStaffData()  { return hasR('admin') || hasR('staff') || hasR('staf'); }
 function writeOnly() { if (!canManageStaffData()) { toast('Akses hanya-lihat. Perubahan data dilakukan oleh administrator atau staf TU.', true); return false; } return true; }
@@ -1374,27 +1451,27 @@ function tblFilter(inp) {
   t.querySelectorAll('tbody tr').forEach(tr => { tr.style.display = !q || tr.textContent.toLowerCase().includes(q) ? '' : 'none'; });
 }
 function adminOnly() { if (!canManageStudents()) { toast('Menu ini memerlukan akses administrasi sekolah.', true); vDash(); return false; } return true; }
-const roleLabel = r => ({siswa:'Siswa',guru:'Guru',admin:'Administrator',staff:'Staff Administrasi',staf:'Staff Administrasi',guru_bk:'Guru BK',kurikulum:'Kurikulum',kepala_sekolah:'Kepala Sekolah'}[String(r||'').toLowerCase()] || r || '—');
+const roleLabel = r => ({siswa:'Siswa',guru:'Guru',admin:'Administrator',staff:'Staf Administrasi',staf:'Staf Administrasi',guru_bk:'Guru BK',kurikulum:'Kurikulum',kepala_sekolah:'Kepala Sekolah'}[String(r||'').toLowerCase()] || r || '—');
 
 async function adminUsersPage(role) {
   if (!adminOnly()) return;
   if (role === 'guru' && !canManageStaffData()) { toast('Data guru hanya dapat dikelola administrator atau staf administrasi.', true); vDash(); return; }
-  nav(role === 'siswa' ? 'adminStudents' : 'adminTeachers'); view('<p class="empty">Memuat data akun...</p>');
+  nav(role === 'siswa' ? 'adminStudents' : 'adminTeachers'); view('<p class="empty">Memuat data akun…</p>');
   try {
     const {users} = await api('adminUsers');
     const w = canManageStaffData(), nm = role === 'siswa' ? 'siswa' : 'guru';
     const list = users.filter(x => String(x.role).toLowerCase() === role || String(x.extra_roles||'').toLowerCase().split(/[,;|]/).includes(role));
     const acts = w
-      ? `<button class="btn2" onclick="downloadUserTemplate('${role}')">Template CSV</button><button class="btn2" onclick="exportAdminUsers('${role}')">Ekspor CSV</button><button class="btn2" onclick="importAdminUsers('${role}')">Impor CSV</button><button class="btn" onclick="editAdminUser('${role}')">+ Tambah ${nm}</button>`
+      ? `<button class="btn2" onclick="downloadUserTemplate('${role}')">Templat CSV</button><button class="btn2" onclick="exportAdminUsers('${role}')">Ekspor CSV</button><button class="btn2" onclick="importAdminUsers('${role}')">Impor CSV</button><button class="btn" onclick="editAdminUser('${role}')">+ Tambah ${nm}</button>`
       : `<button class="btn2" onclick="exportAdminUsers('${role}')">Ekspor CSV</button>`;
     view(`<div class="top"><div><h2>Data ${role === 'siswa' ? 'Siswa' : 'Guru'}</h2><p>${w ? 'Kelola akun, status akses, reset sandi, serta impor dan ekspor data.' : 'Daftar akun untuk dilihat. <span class="ro-chip">Hanya lihat</span>'}</p></div><div class="acts">${acts}</div></div>
-    <div class="toolbar">${searchBox('Cari nama, username, atau status...')}<span class="meta">${list.length} data</span></div>
+    <div class="toolbar">${searchBox('Cari nama, username, atau status')}<span class="meta">${list.length} data</span></div>
     <div class="card" style="overflow-x:auto;padding:0"><table style="margin:0"><thead><tr><th>Nama</th><th>Username</th><th>Peran</th><th>Status</th>${w ? '<th>Aksi</th>' : ''}</tr></thead><tbody>${list.map(x=>`<tr><td><b>${esc(x.full_name)}</b><div class="meta">${esc(x.email||'')}</div></td><td>${esc(x.username)}</td><td>${esc(roleLabel(x.role))}${x.extra_roles ? `<div class="meta">Tambahan: ${esc(x.extra_roles)}</div>`:''}</td><td><span class="badge ${String(x.status).toLowerCase()==='aktif'?'ok':'warn'}">${esc(x.status||'—')}</span></td>${w ? `<td><div class="acts" style="justify-content:flex-start"><button class="btn2" style="padding:.4rem .8rem" onclick="editAdminUser('${role}','${esc(x.user_id)}')">Ubah</button><button class="btn2" style="padding:.4rem .8rem" onclick="resetAdminAccount('${esc(x.user_id)}','${esc(x.username)}')">Reset</button><button class="link" onclick="deleteAdminUser('${esc(x.user_id)}','${esc(x.full_name)}','${role}')">Hapus</button></div></td>` : ''}</tr>`).join('') || `<tr><td colspan="${w ? 5 : 4}" style="text-align:center;padding:2rem">Belum ada data ${nm}.</td></tr>`}</tbody></table></div>`);
   } catch(e) { view(`<div class="card empty"><b>Data belum dapat dimuat</b>${esc(e.message)}<p><button class="btn2" onclick="adminUsersPage('${role}')">Coba lagi</button></p></div>`); }
 }
-function csvCell(v) { 
-  const s = String(v ?? ''); 
-  return '"' + s.replace(/"/g, '""') + '"'; 
+function csvCell(v) {
+  const s = String(v ?? '');
+  return '"' + s.replace(/"/g, '""') + '"';
 }
 function downloadCsv(filename, rows) {
   const csv='\ufeff'+rows.map(row=>row.map(csvCell).join(',')).join('\r\n');
@@ -1413,7 +1490,7 @@ function parseCsv(text) {
   }
   row.push(cell.replace(/\r$/,'')); if(row.some(x=>x.trim())) rows.push(row);
   if(quoted) throw new Error('Format CSV tidak valid: tanda kutip belum ditutup.');
-  if(rows.length<2) throw new Error('CSV belum berisi data. Gunakan template yang disediakan.');
+  if(rows.length<2) throw new Error('CSV belum berisi data. Gunakan templat yang tersedia.');
   const headers=rows.shift().map(x=>x.trim().toLowerCase());
   return rows.map((r,i)=>{const o={};headers.forEach((h,j)=>o[h]=(r[j]||'').trim());o._row=i+2;return o;});
 }
@@ -1431,30 +1508,30 @@ function downloadUserTemplate(role) {
   if(!writeOnly() || (role==='guru'&&!canManageStaffData())) return;
   const headers=['full_name','username','role','extra_roles','email','status','password'];
   downloadCsv(`template-impor-${role}-lms-calm.csv`,[headers,[role==='siswa'?'Nama Siswa':'Nama Guru','username_baru',role,'','', 'aktif','SandiAwalMinimal8']]);
-  toast('Template CSV diunduh. Ganti contoh dengan data sebenarnya.');
+  toast('Templat CSV berhasil diunduh. Gantilah contoh dengan data yang sebenarnya.');
 }
 function importAdminUsers(role) {
   if(!writeOnly() || (role==='guru'&&!canManageStaffData())) return;
   modal(`Impor data ${role==='siswa'?'siswa':'guru'}`,[{n:'csv_file',l:'Pilih file CSV (maks. 5 MB)',t:'file'},{n:'policy',l:'Cara impor',t:'select',v:'upsert',opts:[{v:'upsert',l:'Perbarui username yang sudah ada, tambah yang baru'}]}],async d=>{
-    const encoded=d.file_data; if(!encoded) throw new Error('Pilih file CSV terlebih dahulu.');
-    if(encoded.length>7*1024*1024) throw new Error('File CSV maksimal 5 MB.');
+    const encoded=d.file_data; if(!encoded) throw new Error('Pilih berkas CSV terlebih dahulu.');
+    if(encoded.length>7*1024*1024) throw new Error('Ukuran berkas CSV maksimal 5 MB.');
     const bytes=Uint8Array.from(atob(encoded),c=>c.charCodeAt(0));
     const csvText=new TextDecoder('utf-8').decode(bytes); const rows=parseCsv(csvText);
     const {users=[]}=await api('adminUsers'); let ok=0, failed=[];
     for(const r of rows) {
       try {
         const rowRole=String(r.role||role).toLowerCase();
-        if(rowRole!==role) throw new Error(`Kolom role harus bernilai ${role}.`);
+        if(rowRole!==role) throw new Error(`Kolom role harus berisi “${role}”.`);
         if(!r.full_name||!r.username) throw new Error('Nama lengkap dan username wajib diisi.');
         const existing=users.find(x=>String(x.username).toLowerCase()===r.username.toLowerCase());
         const payload={full_name:r.full_name,username:r.username,role:role,extra_roles:r.extra_roles||'',email:r.email||'',status:r.status||'aktif'};
         if(existing) payload.user_id=existing.user_id;
-        else { if(!r.password || r.password.length<8) throw new Error('Akun baru wajib memiliki password minimal 8 karakter.'); payload.password=r.password; }
+        else { if(!r.password || r.password.length<8) throw new Error('Akun baru wajib memiliki sandi minimal 8 karakter.'); payload.password=r.password; }
         await api('adminSaveUser',payload); ok++;
       } catch(err) { failed.push(`Baris ${r._row}: ${err.message}`); }
     }
     adminUsersPage(role);
-    if(failed.length) modal('Hasil impor', [{n:'report',l:`Berhasil ${ok} • Gagal ${failed.length}`,t:'textarea',v:failed.join('\n'),r:false}],async()=>{},'Tutup');
+    if(failed.length) modal('Hasil impor', [{n:'report',l:`Berhasil ${ok} • Perlu diperiksa ${failed.length}`,t:'textarea',v:failed.join('\n'),r:false}],async()=>{},'Tutup');
     else toast(`Impor selesai. ${ok} data berhasil diproses.`);
   },'Mulai impor');
 }
@@ -1462,39 +1539,52 @@ async function editAdminUser(role, id) {
   if (!writeOnly()) return;
   let user = null;
   if (id) { try { user = (await api('adminUsers')).users.find(x=>x.user_id===id); } catch(e) { toast(e.message,true); return; } if (!user) return toast('Akun tidak ditemukan.',true); }
-  const roleOpts = hasR('admin') ? [{v:role,l:roleLabel(role)},{v:'guru',l:'Guru'},{v:'siswa',l:'Siswa'},{v:'guru_bk',l:'Guru BK'},{v:'staff',l:'Staff Administrasi'},{v:'kurikulum',l:'Kurikulum'},{v:'kepala_sekolah',l:'Kepala Sekolah'},{v:'admin',l:'Administrator'}]
+  const roleOpts = hasR('admin') ? [{v:role,l:roleLabel(role)},{v:'guru',l:'Guru'},{v:'siswa',l:'Siswa'},{v:'guru_bk',l:'Guru BK'},{v:'staff',l:'Staf Administrasi'},{v:'kurikulum',l:'Kurikulum'},{v:'kepala_sekolah',l:'Kepala Sekolah'},{v:'admin',l:'Administrator'}]
     : canManageStaffData() ? [{v:role,l:roleLabel(role)},{v:'guru',l:'Guru'},{v:'siswa',l:'Siswa'}]
     : [{v:'siswa',l:'Siswa'}];
   const fields = [
     {n:'full_name',l:'Nama lengkap',v:user?.full_name||''}, {n:'username',l:'Username',v:user?.username||''},
     {n:'role',l:'Peran utama',t:'select',v:user?.role||role,opts:roleOpts},
-    {n:'extra_roles',l:'Peran tambahan (opsional, pisahkan koma)',v:user?.extra_roles||'',r:false},
+    {n:'extra_roles',l:'Peran tambahan (opsional, pisahkan dengan koma)',v:user?.extra_roles||'',r:false},
     {n:'email',l:'Email (opsional)',t:'email',v:user?.email||'',r:false},
     {n:'status',l:'Status akun',t:'select',v:user?.status||'aktif',opts:[{v:'aktif',l:'Aktif'},{v:'nonaktif',l:'Nonaktif'}]}
   ];
   if (!user) fields.push({n:'password',l:'Sandi awal (minimal 8 karakter)',t:'password',min:8});
   if (user) fields.push({n:'user_id',l:'',v:user.user_id,t:'hidden'});
-  modal(user?'Ubah akun':'Tambah akun '+roleLabel(role),fields,async d=>{ await api('adminSaveUser',d); toast(user?'Data akun diperbarui':'Akun berhasil dibuat'); adminUsersPage(role); },user?'Simpan perubahan':'Buat akun');
+  modal(user?'Ubah akun':'Tambah akun '+roleLabel(role),fields,async d=>{ await api('adminSaveUser',d); toast(user?'Data akun berhasil diperbarui':'Akun berhasil dibuat'); adminUsersPage(role); },user?'Simpan perubahan':'Buat akun');
 }
 async function resetAdminAccount(id, username) {
-  if (!writeOnly() || !confirm(`Reset sandi akun ${username}? Sandi sementara baru akan ditampilkan satu kali.`)) return;
-  try { const r=await api('adminResetAccount',{user_id:id}); modal('Sandi sementara akun',[{n:'username',l:'Username',v:r.username,r:false},{n:'temporary_password',l:'Sandi sementara — salin dan berikan melalui jalur aman',v:r.temporary_password,r:false}],async()=>{},'Tutup'); }
-  catch(e) { toast(e.message,true); }
+  if (!writeOnly()) return;
+  const ok = await dlg({
+    title: 'Atur ulang sandi akun?',
+    msg: `Sandi akun ${username} akan diganti dengan sandi sementara. Sandi sementara hanya ditampilkan satu kali, sehingga mohon segera salin dan serahkan melalui saluran yang aman.`,
+    ok: 'Atur ulang sandi',
+    cancel: 'Batalkan',
+    tone: 'key'
+  });
+  if (!ok) return;
+  try {
+    const r = await api('adminResetAccount', { user_id: id });
+    modal('Sandi sementara akun', [
+      { n: 'username', l: 'Username', v: r.username, r: false },
+      { n: 'temporary_password', l: 'Sandi sementara — salin dan serahkan melalui jalur aman', v: r.temporary_password, r: false }
+    ], async () => {}, 'Tutup');
+  } catch (e) { toast(e.message, true); }
 }
 async function deleteAdminUser(id, name, role) {
-  if (!writeOnly() || !confirm(`Hapus akun ${name}? Riwayat penilaian akan dipertahankan, tetapi akun tidak bisa digunakan lagi.`)) return;
-  try { await api('adminDeleteUser',{user_id:id}); toast('Akun dihapus'); adminUsersPage(role || 'siswa'); }
+  if (!writeOnly() || !(await dlg({ title: 'Hapus akun?', msg: `Akun ${name} tidak akan dapat digunakan kembali. Riwayat penilaian tetap tersimpan.`, ok: 'Hapus akun', tone: 'danger' }))) return;
+  try { await api('adminDeleteUser',{user_id:id}); toast('Akun berhasil dihapus'); adminUsersPage(role || 'siswa'); }
   catch(e) { toast(e.message,true); }
 }
 
 async function adminClassesPage() {
-  if (!adminOnly()) return; nav('adminClasses'); view('<p class="empty">Memuat data kelas...</p>');
+  if (!adminOnly()) return; nav('adminClasses'); view('<p class="empty">Memuat data kelas…</p>');
   try {
     const r = await api('adminClasses'), w = canManageStaffData();
     _adminTeachersCache = [{v:'',l:'— Belum ditentukan —'},...r.teachers.map(t=>({v:t.user_id,l:t.full_name}))];
     _adminClassesCache = r.classes;
     view(`<div class="top"><div><h2>Data Kelas</h2><p>${w ? 'Perbarui nama, mata pelajaran, dan guru pengampu.' : 'Daftar kelas untuk dilihat. <span class="ro-chip">Hanya lihat</span>'}</p></div>${w ? '<button class="btn" onclick="editAdminClass()">+ Tambah kelas</button>' : ''}</div>
-    <div class="toolbar">${searchBox('Cari kelas, mapel, atau guru...')}<span class="meta">${r.classes.length} kelas</span></div>
+    <div class="toolbar">${searchBox('Cari kelas, mata pelajaran, atau guru')}<span class="meta">${r.classes.length} kelas</span></div>
     <div class="card" style="overflow-x:auto;padding:0"><table style="margin:0"><thead><tr><th>Kelas</th><th>Mata pelajaran</th><th>Guru pengampu</th>${w ? '<th>Kode gabung</th><th>Aksi</th>' : ''}</tr></thead><tbody>${r.classes.map(c=>`<tr><td><b>${esc(c.name)}</b><div class="meta">${esc(c.description||'')}</div></td><td>${esc(c.subject||'—')}</td><td>${esc(c.teacher_name||'—')}</td>${w ? `<td><code>${esc(c.code||'—')}</code></td><td><div class="acts" style="justify-content:flex-start"><button class="btn2" style="padding:.4rem .8rem" onclick="editAdminClass('${esc(c.id)}')">Ubah</button><button class="link" onclick="deleteAdminClass('${esc(c.id)}','${esc(c.name)}')">Hapus</button></div></td>` : ''}</tr>`).join('')||`<tr><td colspan="${w ? 5 : 3}" style="text-align:center;padding:2rem">Belum ada kelas.</td></tr>`}</tbody></table></div>`);
   } catch(e) { view(`<div class="card empty">${esc(e.message)}<p><button class="btn2" onclick="adminClassesPage()">Coba lagi</button></p></div>`); }
 }
@@ -1507,16 +1597,16 @@ function editAdminClass(id) {
     {n:'teacher_id',l:'Guru pengampu',t:'select',v:c.teacher_id||'',opts:_adminTeachersCache||[{v:'',l:'— Belum ditentukan —'}],r:false},
     {n:'description',l:'Deskripsi',t:'textarea',v:c.description||'',r:false},
     ...(id?[{n:'class_id',l:'',t:'hidden',v:id}]:[])
-  ],async d=>{await api('adminSaveClass',d);toast('Data kelas disimpan');adminClassesPage();});
+  ],async d=>{await api('adminSaveClass',d);toast('Data kelas berhasil disimpan');adminClassesPage();});
 }
 async function deleteAdminClass(id,name) {
-  if(!writeOnly()||!confirm(`Hapus kelas ${name}? Kelas yang masih memiliki anggota/aktivitas tidak dapat dihapus.`))return;
-  try{await api('adminDeleteClass',{class_id:id});toast('Kelas dihapus');adminClassesPage();}catch(e){toast(e.message,true);}
+  if(!writeOnly()||!(await dlg({ title: 'Hapus kelas?', msg: `Kelas ${name} akan dihapus. Kelas yang masih memiliki anggota atau aktivitas tidak dapat dihapus.`, ok: 'Hapus kelas', tone: 'danger' })))return;
+  try{await api('adminDeleteClass',{class_id:id});toast('Kelas berhasil dihapus');adminClassesPage();}catch(e){toast(e.message,true);}
 }
 
 async function adminSchedulesPage() {
   if(!canManageStaffData()){toast('Data jadwal hanya dapat dikelola administrator atau staf administrasi.',true);vDash();return;}
-  nav('adminSchedules'); view('<p class="empty">Memuat jadwal...</p>');
+  nav('adminSchedules'); view('<p class="empty">Memuat jadwal…</p>');
   try {
     const r=await api('adminSchedules'); _adminSchedulesCache=r;
     const days=['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'];
@@ -1538,11 +1628,10 @@ function editAdminSchedule(id) {
     {n:'room',l:'Ruang',v:x.room||'',r:false},
     {n:'notes',l:'Catatan',t:'textarea',v:x.notes||'',r:false},
     ...(id?[{n:'schedule_id',l:'',t:'hidden',v:id}]:[])
-  ],async d=>{await api('adminSaveSchedule',d);toast('Jadwal disimpan');adminSchedulesPage();});
+  ],async d=>{await api('adminSaveSchedule',d);toast('Jadwal berhasil disimpan');adminSchedulesPage();});
 }
-async function deleteAdminSchedule(id){if(!canManageStaffData()||!confirm('Hapus jadwal ini?'))return;try{await api('adminDeleteSchedule',{schedule_id:id});toast('Jadwal dihapus');adminSchedulesPage();}catch(e){toast(e.message,true);}}
+async function deleteAdminSchedule(id){if(!canManageStaffData()||!(await dlg({ title: 'Hapus jadwal?', msg: 'Jadwal yang dihapus tidak dapat dikembalikan.', ok: 'Hapus jadwal', tone: 'danger' })))return;try{await api('adminDeleteSchedule',{schedule_id:id});toast('Jadwal berhasil dihapus');adminSchedulesPage();}catch(e){toast(e.message,true);}}
 
-/* ===== SINKRON PORTAL (WIZARD) ===== */
 function syncStepsHTML(step) {
   const steps = [{k:1, l:'Pratinjau'},{k:2, l:'Tinjau hasil'},{k:3, l:'Terapkan'},{k:4, l:'Selesai'}];
   return `<div class="wiz">${steps.map(s => `<div class="wstep${s.k===step?' on':s.k<step?' done':''}"><i>${s.k<step?'✓':s.k}</i>${s.l}</div>`).join('')}</div>`;
@@ -1550,7 +1639,7 @@ function syncStepsHTML(step) {
 async function adminSyncPage() {
   if (!sinkronOnly()) return;
   nav('adminSync');
-  view(`<div class="top"><div><h2>Sinkron Portal Akademik</h2><p>Ambil data siswa, guru, kelas, dan jadwal dari Portal Akademik. Data di Portal tidak diubah.</p></div></div>
+  view(`<div class="top"><div><h2>Sinkron Portal Akademik</h2><p>Tarik data siswa, guru, kelas, dan jadwal dari Portal Akademik. Data pada Portal Akademik tidak akan diubah oleh proses ini.</p></div></div>
     ${syncStepsHTML(1)}
     <div class="wcard">
       <h4>Langkah 1 — Pratinjau data</h4>
@@ -1561,7 +1650,7 @@ async function adminSyncPage() {
 }
 async function syncPreview() {
   const main = $('#main');
-  main.innerHTML = syncStepsHTML(2) + `<div class="wcard"><h4>Langkah 2 — Tinjau hasil pratinjau</h4><p class="sub">Sedang membaca Portal Akademik dan membandingkan dengan LMS... (bisa memakan waktu hingga satu menit)</p><p class="empty">Memuat...</p></div>`;
+  main.innerHTML = syncStepsHTML(2) + `<div class="wcard"><h4>Langkah 2 — Tinjau hasil pratinjau</h4><p class="sub">Sedang membaca Portal Akademik dan membandingkan dengan LMS... (bisa memakan waktu hingga satu menit)</p><p class="empty">Memuat…</p></div>`;
   try { const r = await api('syncPortalPreview', {}, 120000); syncRender(r); }
   catch (e) {
     main.innerHTML = syncStepsHTML(1) + `<div class="wcard"><h4>Pratinjau gagal</h4><div class="walert danger">${esc(e.message)}</div><div class="wactions"><button class="btn2" onclick="adminSyncPage()">Kembali</button><button class="btn" onclick="syncPreview()">Coba lagi</button></div></div>`;
@@ -1576,7 +1665,7 @@ function syncRender(r) {
     +(s.jadwalBaru||0)+(s.jadwalDiubah||0)+(s.jadwalDihapus||0);
   const listBlock = (judul, arr, f) => arr && arr.length
     ? `<details style="margin-top:.5rem"><summary>${esc(judul)} (${arr.length})</summary><ul class="wlist">${arr.map(f).join('')}</ul></details>` : '';
-  const alerts = (r.peringatan || []).map(w => `<div class="walert">⚠ ${esc(w)}</div>`).join('');
+  const alerts = (r.peringatan || []).map(w => `<div class="walert">${esc(w)}</div>`).join('');
   const konflikBlock = r.konflik && r.konflik.length
     ? `<details style="margin-top:.6rem"><summary>Perlu dicek manual (${r.konflik.length})</summary>
         <div style="overflow-x:auto;margin-top:.5rem"><table><thead><tr><th>Jenis</th><th>Data</th><th>Keterangan</th></tr></thead><tbody>${r.konflik.map(k => `<tr><td>${esc(k.jenis)}</td><td>${esc(k.ref)}</td><td>${esc(k.pesan)}</td></tr>`).join('')}</tbody></table></div>
@@ -1607,19 +1696,19 @@ function syncRender(r) {
         <button class="btn2" onclick="adminSyncPage()">Batal</button>
         ${total
           ? `<button class="btn" onclick="syncApply('${esc(r.signature)}', ${total})">Terapkan ${total} perubahan</button>`
-          : `<span class="badge ok">LMS sudah sama dengan Portal — tidak ada yang perlu diterapkan.</span>`}
+          : `<span class="badge ok">Data LMS sudah sesuai dengan Portal Akademik. Tidak ada perubahan yang perlu diterapkan.</span>`}
       </div>
     </div>`;
 }
 async function syncApply(sig, total) {
   if (!hasR('admin')) return;
-  if (!confirm(`Terapkan ${total} perubahan ke LMS?\n\n• Data Portal Akademik TIDAK akan diubah.\n• Cadangan spreadsheet LMS dibuat otomatis di Google Drive sebelum data ditulis.\n\nLanjutkan?`)) return;
-  $('#main').innerHTML = syncStepsHTML(3) + `<div class="wcard"><h4>Langkah 3 — Menerapkan perubahan</h4><p class="sub">Sedang menulis ke spreadsheet LMS. Jangan tutup halaman ini.</p><p class="empty">Memproses...</p></div>`;
+  if (!(await dlg({ title: `Terapkan ${total} perubahan?`, msg: 'Periksa kembali ringkasan pratinjau sebelum melanjutkan.', items: ['Data Portal Akademik tidak akan diubah.', 'Cadangan spreadsheet LMS dibuat otomatis di Google Drive sebelum data ditulis.'], ok: 'Terapkan perubahan', tone: 'warn' }))) return;
+  $('#main').innerHTML = syncStepsHTML(3) + `<div class="wcard"><h4>Langkah 3 — Menerapkan perubahan</h4><p class="sub">Sedang menyimpan data ke LMS. Mohon jangan menutup halaman ini.</p><p class="empty">Memproses…</p></div>`;
   try {
     const r = await api('syncPortalApply', { signature: sig }, 180000);
     syncDone(r);
   } catch (e) {
-    $('#main').innerHTML = syncStepsHTML(2) + `<div class="wcard"><h4>Sinkronisasi tidak diterapkan</h4><div class="walert danger">${esc(e.message)}</div><div class="wactions"><button class="btn2" onclick="adminSyncPage()">Kembali</button><button class="btn" onclick="syncPreview()">Cek pratinjau ulang</button></div></div>`;
+    $('#main').innerHTML = syncStepsHTML(2) + `<div class="wcard"><h4>Sinkronisasi belum dapat diterapkan</h4><div class="walert danger">${esc(e.message)}</div><div class="wactions"><button class="btn2" onclick="adminSyncPage()">Kembali</button><button class="btn" onclick="syncPreview()">Periksa pratinjau ulang</button></div></div>`;
   }
 }
 function syncDone(r) {
@@ -1639,19 +1728,18 @@ function syncDone(r) {
         <div class="wstat"><small>Jadwal diubah</small><b>${esc(r.jadwalDiubah)}</b></div>
         <div class="wstat warn"><small>Jadwal dihapus</small><b>${esc(r.jadwalDihapus)}</b></div>
       </div>
-      ${r.backup ? `<div class="walert info">💾 Cadangan: ${r.backup.url ? `<a href="${esc(r.backup.url)}" target="_blank" rel="noopener">${esc(r.backup.nama)}</a>` : esc(r.backup.nama)}</div>` : ''}
-      ${nCred ? `<div class="walert">🔑 <b>${nCred} akun baru</b> memiliki sandi awal. Sandi hanya ditampilkan sekali — unduh sekarang dan bagikan melalui jalur aman.<p style="margin-top:.5rem"><button class="btn" onclick="syncCreds()">Unduh sandi awal (CSV)</button></p></div>` : ''}
+      ${r.backup ? `<div class="walert info">Cadangan: ${r.backup.url ? `<a href="${esc(r.backup.url)}" target="_blank" rel="noopener">${esc(r.backup.nama)}</a>` : esc(r.backup.nama)}</div>` : ''}
+      ${nCred ? `<div class="walert"><b>${nCred} akun baru</b> memiliki sandi awal. Sandi hanya ditampilkan sekali — unduh sekarang dan bagikan melalui jalur aman.<p style="margin-top:.5rem"><button class="btn" onclick="syncCreds()">Unduh sandi awal (CSV)</button></p></div>` : ''}
       <div class="wactions"><button class="btn2" onclick="adminSyncPage()">Selesai</button></div>
     </div>`;
 }
 function syncCreds() {
-  if (!_syncCred.length) { toast('Tidak ada kredensial untuk diunduh.', true); return; }
+  if (!_syncCred.length) { toast('Tidak ada kredensial yang dapat diunduh.', true); return; }
   downloadCsv('sandi-awal-sinkron-portal.csv',
     [['username','nama','peran','kelas','sandi_awal']].concat(_syncCred.map(x => [x.username, x.nama, x.peran, x.kelas || '', x.sandi])));
   toast('Sandi awal berhasil diunduh.');
 }
 
-/* ===== MENU ===== */
 const ICON = {
   dash:    '<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',
   home:    '<path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/>',
@@ -1675,18 +1763,16 @@ function buildMenu() {
   const monitor = rs.includes('kepala_sekolah') || rs.includes('kurikulum') || rs.includes('admin');
   const canStudents = rs.includes('admin') || rs.includes('staff') || rs.includes('staf') || rs.includes('guru_bk');
   const canStaffData = rs.includes('admin') || rs.includes('staff') || rs.includes('staf');
-  
+
   const groups = [];
-  
-  // 1. Beranda / Dashboard
-  groups.push({ 
-    id: 'g-dash', 
-    icon: ICON.dash, 
-    label: monitor && !teacher ? 'Dashboard' : 'Beranda', 
-    items: [{ key: 'dash', label: monitor && !teacher ? 'Dashboard pengawasan' : 'Beranda' }] 
+
+  groups.push({
+    id: 'g-dash',
+    icon: ICON.dash,
+    label: monitor && !teacher ? 'Dashboard' : 'Beranda',
+    items: [{ key: 'dash', label: monitor && !teacher ? 'Dashboard pengawasan' : 'Beranda' }]
   });
 
-  // 2. Pembelajaran
   if (teacher) {
     groups.push({ id: 'g-learn', icon: ICON.home, label: 'Pembelajaran', items: [
       { key: 'home',    label: 'Kelas yang dikelola' },
@@ -1707,7 +1793,6 @@ function buildMenu() {
     ]});
   }
 
-  // 3. Penilaian
   if (teacher) {
     groups.push({ id: 'g-grades', icon: ICON.grades, label: 'Penilaian', items: [
       { key: 'review', label: 'Perlu dinilai' },
@@ -1723,7 +1808,6 @@ function buildMenu() {
     ]});
   }
 
-  // 4. Manajemen Data
   if (canStudents) {
     const items = [{ key: 'adminStudents', label: 'Data siswa' }, { key: 'adminClasses', label: 'Data kelas' }];
     if (canStaffData) {
@@ -1734,12 +1818,10 @@ function buildMenu() {
     groups.push({ id: 'g-data', icon: ICON.adminStudents, label: 'Manajemen Data', items });
   }
 
-  // 5. Akun
   groups.push({ id: 'g-akun', icon: ICON.profile, label: 'Akun', items: [
     { key: 'profile', label: 'Profil & keamanan' }
   ]});
 
-  // Render (akordeon: satu grup terbuka; grup berisi 1 menu tampil sebagai menu langsung)
   let saved = ''; try { saved = localStorage.getItem('lms_menu_open') || ''; } catch (e) {}
   const seen = new Set();
   const prepared = groups.map(g => Object.assign({}, g, { items: g.items.filter(i => { if (seen.has(i.key)) return false; seen.add(i.key); return true; }) })).filter(g => g.items.length);
@@ -1778,13 +1860,13 @@ async function loadO(force) {
   return O;
 }
 async function page(k, title, sub, render, force) {
-  nav(k); view('<p class="empty">Memuat...</p>');
-  try { 
-    await loadO(force); 
-    view(`<div class="top"><div><h2>${title}</h2><p>${sub}</p></div></div>` + render()); 
+  nav(k); view('<p class="empty">Memuat…</p>');
+  try {
+    await loadO(force);
+    view(`<div class="top"><div><h2>${title}</h2><p>${sub}</p></div></div>` + render());
     if (k === 'dash') startClock();
   }
-  catch (e) { view(`<div class="card empty"><b>Data gagal dimuat</b>${esc(e.message)}<br><br><button class="btn" onclick="go('${k}')">Coba lagi</button></div>`); }
+  catch (e) { view(`<div class="card empty"><b>Data belum dapat dimuat</b>${esc(e.message)}<br><br><button class="btn" onclick="go('${k}')">Coba lagi</button></div>`); }
 }
 const cname = id => (O.classes.find(c => c.id === id) || {}).name || '';
 const subOf = a => O.submissions.find(s => s.assignment_id === a.id);
@@ -1796,7 +1878,6 @@ const row = (title, meta, right, click) => `<button class="li" onclick="${click}
 const tagDue = a => isLate(a) ? '<span class="badge warn">Terlambat</span>' : a.due ? `<span class="badge">${tgl(a.due)}</span>` : '';
 const asgTag = a => { const s = subOf(a); return s ? (s.score !== '' ? `<span class="badge ok">Nilai ${s.score}/${a.max_score}</span>` : '<span class="badge warn">Menunggu nilai</span>') : tagDue(a); };
 
-/* ===== TUGAS / KUIS / PENGUMUMAN / REVIEW / REKAP ===== */
 function vTasks(f) {
   f = f || 'all'; const t = isT();
   return page('tasks', 'Tugas', t ? 'Semua tugas dari kelas Anda.' : 'Semua tugas dari kelas yang Anda ikuti.', () => {
@@ -1833,7 +1914,7 @@ const vNews = () => page('news', 'Pengumuman', 'Pengumuman terbaru dari kelas ya
 });
 const vReview = () => page('review', 'Perlu dinilai', 'Pengumpulan tugas yang belum diberi nilai.', () => {
   const l = O.submissions.filter(s => s.score === '').sort((a, b) => String(a.created).localeCompare(String(b.created)));
-  return `<div class="card">${l.map(s => row(s.full_name, esc(asgOf(s.assignment_id).title) + ' • ' + esc(cname(asgOf(s.assignment_id).class_id)) + ' • ' + tglw(s.created), '<span class="badge warn">Nilai sekarang</span>', `openClass('${asgOf(s.assignment_id).class_id}','asg')`)).join('') || '<p class="empty">Semua pengumpulan sudah dinilai.</p>'}</div>`;
+  return `<div class="card">${l.map(s => row(s.full_name, esc(asgOf(s.assignment_id).title) + ' • ' + esc(cname(asgOf(s.assignment_id).class_id)) + ' • ' + tglw(s.created), '<span class="badge warn">Nilai sekarang</span>', `openClass('${asgOf(s.assignment_id).class_id}','asg')`)).join('') || '<p class="empty">Seluruh pengumpulan tugas telah dinilai.</p>'}</div>`;
 });
 function vRecap(cid) {
   return page('recap', isMonitor() ? 'Rekap seluruh kelas' : 'Rekap nilai', isMonitor() ? 'Ringkasan aktivitas dan capaian nilai lintas kelas untuk pengawasan.' : 'Rata-rata nilai siswa per kelas, dalam persen.', () => {
@@ -1874,10 +1955,10 @@ function vRecap(cid) {
 }
 function exportMonitorRecap() {
   const recap = _recapData || [];
-  if (!recap.length) { toast('Belum ada rekap untuk diunduh.', true); return; }
+  if (!recap.length) { toast('Belum tersedia data rekapitulasi untuk diunduh.', true); return; }
   const q = v => '"' + (/^[=+\-@]/.test(String(v ?? '')) ? "'" + String(v ?? '') : String(v ?? '')).replace(/"/g, '""') + '"';
   const f = v => v === null || v === undefined ? '' : Math.round(Number(v) * 10) / 10;
-  const rows = [['Kelas','Guru','Jumlah tugas','Pengumpulan tugas','Belum dinilai','Jumlah kuis','Kuis selesai','Rata-rata nilai (%)']]
+  const rows = [['Kelas','Guru','Jumlah tugas','Pengumpulan tugas','Belum dinilai','Jumlah kuis','Kuis telah selesai','Rata-rata nilai (%)']]
     .concat(recap.map(r => [r.name, r.teacher, r.tasks, r.submissions, r.pending, r.quizzes, r.completed, f(r.average)]));
   const csv = rows.map(r => r.map(q).join(',')).join('\n');
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' })); a.download = 'rekap-pengawasan-seluruh-kelas.csv'; a.click();
@@ -1885,19 +1966,18 @@ function exportMonitorRecap() {
 }
 function exportRecap() {
   const recap = _recapData || [];
-  if (!recap.length) { toast('Belum ada nilai untuk diunduh.', true); return; }
+  if (!recap.length) { toast('Belum tersedia data nilai untuk diunduh.', true); return; }
   const q = v => '"' + (/^[=+\-@]/.test(v) ? "'" + v : v).replace(/"/g, '""') + '"', f = v => v === null ? '' : Math.round(v * 10) / 10;
   const csv = ['Nama,Rata-rata tugas,Rata-rata kuis,Rata-rata akhir'].concat(recap.map(r => [q(r.n), f(r.t), f(r.q), f(r.all)].join(','))).join('\n');
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' })); a.download = 'rekap-nilai.csv'; a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 2000);
 }
 
-/* ===== PROFIL & NILAI ===== */
 function vProfile() {
   nav('profile'); const u = S.user;
   const nm = primaryBadge() === 'kepala_sekolah' ? 'Kepala Sekolah'
     : primaryBadge() === 'kurikulum' ? (hasR('guru') ? 'Guru • Kurikulum' : 'Kurikulum')
-    : ({ siswa: 'Siswa', guru: 'Guru', admin: 'Administrator', staff: 'Staff Administrasi', guru_bk: 'Guru BK' }[primaryBadge()] || primaryBadge());
+    : ({ siswa: 'Siswa', guru: 'Guru', admin: 'Administrator', staff: 'Staf Administrasi', guru_bk: 'Guru BK' }[primaryBadge()] || primaryBadge());
   view(`<div class="top"><div><h2>Profil dan keamanan</h2><p>Kelola informasi akun dan sandi Anda.</p></div></div>
     <div class="card" style="margin-bottom:1rem"><div class="pf"><span class="fav g" aria-hidden="true">${esc(u.full_name.charAt(0).toUpperCase())}</span><div><b>${esc(u.full_name)}</b><small>${nm}${u.email ? ' • ' + esc(u.email) : ''}</small></div></div></div>
     <div class="card"><div class="sec"><h3>Ganti sandi</h3></div><form class="pwf" onsubmit="chgPw(event)">
@@ -1908,25 +1988,27 @@ function vProfile() {
 }
 async function chgPw(e) {
   e.preventDefault(); const o = $('#pw0').value, n = $('#pw1').value;
-  if (n !== $('#pw2').value) { toast('Konfirmasi sandi baru tidak sama.', true); return; }
-  const b = $('#pwb'); b.disabled = true; b.textContent = 'Menyimpan...';
-  try { await api('changePassword', { old_password: o, new_password: n }); toast('Sandi berhasil diganti'); e.target.reset(); }
+  if (n !== $('#pw2').value) { toast('Konfirmasi sandi baru tidak sesuai.', true); return; }
+  const b = $('#pwb'); b.disabled = true; b.textContent = 'Menyimpan…';
+  try { await api('changePassword', { old_password: o, new_password: n }); toast('Sandi berhasil diperbarui'); e.target.reset(); }
   catch (er) { toast(er.message, true); }
   b.disabled = false; b.textContent = 'Simpan sandi';
 }
 async function grades() {
-  nav('grades'); view('<p class="empty">Memuat nilai...</p>');
+  nav('grades'); view('<p class="empty">Memuat nilai…</p>');
   try {
     const { grades } = await api('myGrades');
     view(`<div class="top"><div><h2>Nilai saya</h2><p>Semua tugas dan kuis yang sudah Anda kerjakan.</p></div></div>${grades.length
       ? `<div class="card" style="overflow-x:auto;padding:0"><table style="margin:0"><thead><tr><th>Kelas</th><th>Judul</th><th>Nilai</th><th>Umpan balik</th></tr></thead><tbody>${grades.map(g => `<tr><td>${esc(g.class_name)}</td><td>${esc(g.title)}</td><td>${g.score !== '' ? `<b>${g.score}</b>/${g.max_score}` : '<span class="badge warn">Menunggu</span>'}</td><td>${esc(g.feedback || '')}</td></tr>`).join('')}</tbody></table></div>`
-      : empty('Belum ada nilai', 'Kumpulkan tugas di kelas Anda, nilainya akan muncul di sini.')}`);
+      : empty('Belum ada nilai', 'Nilai akan ditampilkan di sini setelah tugas atau kuis Anda dinilai.')}`);
   } catch (e) { toast(e.message, true); }
 }
 
-/* ===== INIT ===== */
 try { const ru = localStorage.getItem('lms_u'); if (ru) { $('#u').value = ru; $('#rem').checked = true; } } catch (x) {}
 if (S) start(); else cekServer();
+
+document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; const o = [...document.querySelectorAll('.ov')].pop(); if (o && !o.classList.contains('dg')) o.remove(); });
+new MutationObserver(ms => ms.forEach(r => r.addedNodes.forEach(n => { if (n.classList && n.classList.contains('ov') && !n.classList.contains('dg') && n.firstElementChild) { n.firstElementChild.setAttribute('role', 'dialog'); n.firstElementChild.setAttribute('aria-modal', 'true'); } }))).observe(document.body, { childList: true });
 </script>
 </body>
 </html>
