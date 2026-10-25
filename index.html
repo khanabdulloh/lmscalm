@@ -214,6 +214,37 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
 .fq{display:flex;gap:.5rem;margin-top:.8rem}.fq input{flex:1;padding:.6rem .85rem;border:1px solid var(--line2);border-radius:.7rem;background:#fff;font-size:.88rem}
 .fq input:focus,.fnew:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(11,61,145,.14)}
 .fnew{display:block;width:100%;min-height:4.5rem;padding:.7rem .9rem;border:1px solid var(--line2);border-radius:.8rem;resize:vertical;font-size:.9rem;margin-bottom:.7rem}
+
+.mg{margin:1.1rem .75rem .35rem;font-size:.72rem;font-weight:600;color:#7f95bb}
+#menu{display:flex;flex-direction:column;gap:.22rem;min-width:0}
+#menu .mg{letter-spacing:.055em;text-transform:uppercase}
+#menu .mi{min-height:2.65rem}
+#menu .mi:focus-visible{outline-color:#fbbf24;outline-offset:1px}
+@media(max-width:767px){#menu .mg{margin-top:.75rem}#menu .mi{min-height:2.8rem}}
+
+.mi span{flex:1;min-width:0}
+.nb{margin-left:auto;font-style:normal;font-size:.68rem;font-weight:700;line-height:1;padding:.22rem .45rem;border-radius:99px;background:#f43f5e;color:#fff}.nb:empty{display:none}
+aside{overflow-y:auto}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(10.5rem,1fr));gap:.9rem;margin-bottom:1.2rem}
+.st{padding:1rem 1.15rem}.st small{display:block;font-size:.78rem;color:var(--mut);margin-bottom:.2rem}
+.st b{font-family:var(--serif);font-size:2.1rem;font-weight:600;line-height:1.1;color:var(--navyd)}
+.two{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:1rem;align-items:start}
+.sec{display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem}.sec h3{font-size:1rem;color:var(--navyd)}
+.li{display:flex;align-items:center;justify-content:space-between;gap:1rem;width:100%;padding:.8rem 0;border:0;border-bottom:1px solid var(--line);background:none;text-align:left;cursor:pointer}
+.li:last-child{border-bottom:0}.li:hover .lt b{color:var(--navy)}
+.lt{min-width:0}.lt b{display:block;font-size:.9rem;color:var(--ink);transition:color .15s}.lt small{display:block;font-size:.78rem;color:var(--mut);margin-top:.1rem;overflow:hidden;text-overflow:ellipsis}
+.li .badge{flex:none;white-space:nowrap}
+.pills{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1rem}
+.pill{display:inline-flex;align-items:center;gap:.45rem;padding:.4rem .9rem;border:1px solid var(--line2);border-radius:99px;background:#fff;font-size:.82rem;font-weight:600;color:var(--mut)}
+.pill i{font-style:normal;font-size:.72rem;padding:.05rem .45rem;border-radius:99px;background:var(--bg)}
+.pill.on{border-color:var(--navy);background:var(--soft);color:var(--navy)}.pill.on i{background:#fff}
+.sel{padding:.55rem .9rem;border:1px solid var(--line2);border-radius:.7rem;background:#fff;font-size:.88rem;min-width:12rem}
+.pf{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}.pf .fav{width:3.2rem;height:3.2rem;font-size:1.3rem}
+.pf b{display:block;font-size:1.05rem;color:var(--navyd)}.pf small{color:var(--mut)}
+.pwf{max-width:26rem}.pwf label{display:block;font-size:.8rem;font-weight:600;margin-bottom:.9rem}
+.pwf input{display:block;width:100%;margin-top:.35rem;padding:.65rem .85rem;border:1px solid var(--line2);border-radius:.7rem;font-size:.9rem;font-weight:400}
+.pwf input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 4px rgba(11,61,145,.14)}
+@media(max-width:860px){.two{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -236,6 +267,8 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
       <div class="rg" role="radiogroup" aria-labelledby="rl">
         <button type="button" class="rt" data-r="siswa" role="radio" aria-checked="true" aria-label="Masuk sebagai Siswa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg><span class="rx"><b>Siswa</b><small>Belajar &amp; kumpulkan tugas</small></span></button>
         <button type="button" class="rt" data-r="guru" role="radio" aria-checked="false" aria-label="Masuk sebagai Guru"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2ZM22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7Z"/></svg><span class="rx"><b>Guru</b><small>Kelola kelas &amp; penilaian</small></span></button>
+        <button type="button" class="rt" data-r="kepala_sekolah" role="radio" aria-checked="false" aria-label="Masuk sebagai Kepala Sekolah"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-6h6v6M9 10h.01M15 10h.01"/></svg><span class="rx"><b>Kepala Sekolah</b><small>Pengawasan pembelajaran</small></span></button>
+        <button type="button" class="rt" data-r="kurikulum" role="radio" aria-checked="false" aria-label="Masuk sebagai Kurikulum"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4zM8 8h8M8 12h8M8 16h5"/><path d="m16 16 1.5 1.5L21 14"/></svg><span class="rx"><b>Kurikulum</b><small>Monitoring seluruh kelas</small></span></button>
       </div>
       <p class="rhint" id="rhint" aria-live="polite"></p>
       <label class="fl" for="u" id="ulab">Username</label>
@@ -256,10 +289,7 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
   <header class="mbar"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt=""><b>SMK CALM</b><button onclick="document.querySelector('aside').classList.toggle('open')" aria-label="Buka menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></header>
   <aside aria-label="Menu utama">
     <img class="logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt=""><p class="nm">SMK CALM</p><span class="bd" id="wr"></span>
-    <nav>
-      <button class="mi" id="n-home" onclick="home()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg><span>Kelas</span></button>
-      <button class="mi" id="n-grades" onclick="grades()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Nilai saya</span></button>
-    </nav>
+    <nav id="menu" aria-label="Navigasi LMS"></nav>
     <button class="mi out" onclick="logout(true)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg><span>Keluar</span></button>
   </aside>
   <main id="main"></main>
@@ -274,6 +304,10 @@ let S = null, C = null, QT; // sesi, kelas aktif, timer kuis
 try { S = JSON.parse(sessionStorage.getItem('lms')); } catch (e) {}
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const hasR = r => !!(S && S.user && (Array.isArray(S.user.roles) ? S.user.roles : [S.user.role]).includes(r));
+const teacherOwnScope = () => hasR('guru') && (hasR('kurikulum') || hasR('kepala_sekolah')) && !hasR('admin');
+const ownClassIds = () => teacherOwnScope() ? O.classes.filter(c => c.teacher_id == S.user.user_id).map(c => c.id) : null;
+const isMonitor = () => hasR('kepala_sekolah') || hasR('kurikulum') || hasR('admin');
 const isT = () => S && S.user.role !== 'siswa';
 const tgl = d => d ? new Date(d).toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'}) : '';
 const view = h => $('#main').innerHTML = h;
@@ -300,6 +334,8 @@ const lerr = m => { const a = $('#lmsg'); a.querySelector('span').textContent = 
 const ROLES = {
   siswa: { nama: 'Siswa', label: 'Username siswa / NISN', ph: 'Masukkan username siswa', hint: 'Siswa masuk dengan username dan sandi awal dari sekolah, lalu bergabung ke kelas menggunakan kode dari guru.' },
   guru: { nama: 'Guru', label: 'Username guru / NIP', ph: 'Username dari administrator', hint: 'Guru dapat mengelola kelas, materi, tugas, kuis, dan penilaian.' },
+  kepala_sekolah: { nama: 'Kepala Sekolah', label: 'Username Kepala Sekolah', ph: 'Username dari administrator', hint: 'Melihat rekap seluruh kelas untuk pengawasan pembelajaran. Hak ubah nilai tidak diberikan otomatis.' },
+  kurikulum: { nama: 'Kurikulum', label: 'Username Kurikulum', ph: 'Username dari administrator', hint: 'Memantau aktivitas seluruh kelas dan rekap pembelajaran. Guru dengan tugas tambahan dapat memiliki kedua peran.' },
   admin: { nama: 'Administrator', label: 'Username administrator', ph: 'Username administrator', hint: 'Akses khusus pengelolaan sistem dan seluruh kelas.' }
 };
 let loginRole = 'siswa'; try { const r = localStorage.getItem('lms_r'); if (ROLES[r]) loginRole = r; } catch (e) {}
@@ -318,7 +354,7 @@ $('#lform').addEventListener('submit', async e => {
   if (!u || !pw) { lerr('Isi username dan sandi terlebih dahulu.'); return; }
   const b = $('#lbtn'); b.disabled = true; b.innerHTML = '<span class="spin"></span>Memeriksa...'; lerr('');
   try { S = await api('login', { username: u, password: pw });
-    if (S.user.role !== loginRole) { const nm = (ROLES[S.user.role] || {}).nama || S.user.role; await api('logout').catch(() => {}); S = null; throw new Error(`Akun ini terdaftar sebagai ${nm}. Pilih "Masuk sebagai ${nm}" lalu coba lagi.`); }
+    if (!(Array.isArray(S.user.roles) ? S.user.roles : [S.user.role]).includes(loginRole)) { const nm = (ROLES[S.user.role] || {}).nama || S.user.role; await api('logout').catch(() => {}); S = null; throw new Error(`Akun ini terdaftar sebagai ${nm}. Pilih "Masuk sebagai ${nm}" lalu coba lagi.`); }
     sessionStorage.setItem('lms', JSON.stringify(S)); try { $('#rem').checked ? localStorage.setItem('lms_u', u) : localStorage.removeItem('lms_u'); } catch (x) {} start(); }
   catch (er) { lerr(er.message); }
   b.disabled = false; b.textContent = 'Masuk';
@@ -340,8 +376,8 @@ function logout(call) {
 }
 function start() {
   $('#login').classList.add('hide'); $('#app').classList.remove('hide');
-  $('#wr').textContent = S.user.role === 'siswa' ? 'SISWA' : S.user.role === 'admin' ? 'ADMIN' : 'GURU / PENGAJAR'; $('#wr').className = 'bd ' + S.user.role; document.querySelector('aside').classList.remove('open');
-  $('#n-grades').classList.toggle('hide', isT()); home();
+  $('#wr').textContent = hasR('kepala_sekolah') ? 'KEPALA SEKOLAH' : hasR('kurikulum') ? (hasR('guru') ? 'GURU • KURIKULUM' : 'KURIKULUM') : S.user.role === 'siswa' ? 'SISWA' : S.user.role === 'admin' ? 'ADMIN' : 'GURU / PENGAJAR'; $('#wr').className = 'bd ' + S.user.role; document.querySelector('aside').classList.remove('open');
+  buildMenu(); vDash();
 }
 function nav(k) { clearInterval(QT); window.onbeforeunload = null; document.querySelectorAll('.mi').forEach(b => b.classList.toggle('on', b.id === 'n-' + k)); }
 
@@ -531,6 +567,195 @@ async function delPost(id) {
   if (!confirm('Hapus pesan ini? Balasan di dalamnya ikut terhapus.')) return;
   try { await api('deletePost', { post_id: id }); toast('Pesan dihapus'); reload('fr'); }
   catch (e) { toast(e.message, true); }
+}
+
+/* ---------- menu & halaman ringkasan ---------- */
+let O = null, RC = [];
+const ICON = {
+  dash: '<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',
+  home: '<path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/>',
+  tasks: '<rect x="4" y="4" width="16" height="17" rx="2.5"/><path d="M9 4V3h6v1M8.5 12.5l2 2 4.5-4.5"/>',
+  quizzes: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/>',
+  news: '<path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1ZM15 9a4 4 0 0 1 0 6M18 6a8 8 0 0 1 0 12"/>',
+  grades: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  review: '<path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 14 2 2 4-4"/>',
+  recap: '<path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/>',
+  profile: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>'
+};
+function buildMenu() {
+  // Menu dibangun dari kemampuan yang benar-benar tersedia; monitoring terpisah dari hak menulis.
+  const role = S && S.user ? S.user.role : 'siswa';
+  const roles = S && S.user && Array.isArray(S.user.roles) ? S.user.roles : [role];
+  const teacher = roles.includes('guru') || roles.includes('admin');
+  const monitor = roles.includes('kepala_sekolah') || roles.includes('kurikulum') || roles.includes('admin');
+  const G = [['', [['dash', monitor && !teacher ? 'Dashboard pengawasan' : 'Beranda']]]];
+  if (monitor) G.push(['Pengawasan', [['recap', 'Rekap seluruh kelas']]]);
+  if (teacher) {
+    G.push(['Pembelajaran', [['home', 'Kelas yang dikelola'], ['tasks', 'Tugas kelas'], ['quizzes', 'Kuis kelas'], ['news', 'Pengumuman']]]);
+    G.push(['Penilaian', [['review', 'Perlu dinilai'], ['recap', monitor ? 'Rekap seluruh kelas' : 'Rekap nilai']]]);
+  } else if (role === 'siswa') {
+    G.push(['Aktivitas belajar', [['home', 'Kelas saya'], ['tasks', 'Tugas saya'], ['quizzes', 'Kuis saya'], ['news', 'Pengumuman']]]);
+    G.push(['Penilaian', [['grades', 'Nilai saya']]]);
+  } else if (!monitor) {
+    G.push(['Aktivitas belajar', [['home', 'Kelas saya']]]);
+  }
+  G.push(['Akun', [['profile', 'Profil & keamanan']]]);
+  const menu = $('#menu');
+  if (!menu) throw new Error('Navigasi LMS tidak ditemukan (#menu).');
+  const seen = new Set();
+  menu.innerHTML = G.map(([group, items]) => {
+    const unique = items.filter(([key]) => !seen.has(key) && seen.add(key));
+    return unique.length ? (group ? `<p class="mg">${group}</p>` : '') + unique.map(([key, label]) => `<button class="mi" id="n-${key}" onclick="go('${key}')" type="button">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON[key]}</svg>
+      <span>${label}</span><i class="nb" id="b-${key}" aria-label="Pemberitahuan"></i>
+    </button>`).join('') : '';
+  }).join('');
+}
+const GO = { dash: () => vDash(), home: () => home(), tasks: () => vTasks(), quizzes: () => vQuiz(), news: () => vNews(), grades: () => grades(), review: () => vReview(), recap: () => vRecap(), profile: () => vProfile() };
+function go(k) { document.querySelector('aside').classList.remove('open'); GO[k](); }
+function setBadge(k, n) { const b = $('#b-' + k); if (b) b.textContent = n > 0 ? (n > 99 ? '99+' : n) : ''; }
+async function loadO() {
+  O = await api('overview');
+  const scope = ownClassIds();
+  const visibleAssignments = scope ? O.assignments.filter(a => scope.includes(a.class_id)) : O.assignments;
+  const visibleAssignmentIds = visibleAssignments.map(a => a.id);
+  setBadge('tasks', isT() ? 0 : visibleAssignments.filter(a => !subOf(a)).length);
+  setBadge('review', isT() ? O.submissions.filter(s => (!scope || visibleAssignmentIds.includes(s.assignment_id)) && s.score === '').length : 0);
+}
+async function page(k, title, sub, render) {
+  nav(k); view('<p class="empty">Memuat...</p>');
+  try { await loadO(); view(`<div class="top"><div><h2>${title}</h2><p>${sub}</p></div></div>` + render()); window.scrollTo(0, 0); }
+  catch (e) { view(`<div class="card empty"><b>Data gagal dimuat</b>${esc(e.message)}<br><br><button class="btn" onclick="go('${k}')">Coba lagi</button></div>`); }
+}
+const cname = id => (O.classes.find(c => c.id === id) || {}).name || '';
+const subOf = a => O.submissions.find(s => s.assignment_id === a.id);
+const asgOf = id => O.assignments.find(a => a.id === id) || {};
+const isLate = a => a.due && Date.now() > new Date(a.due).getTime() + 86400000;
+const dueTxt = a => a.due ? 'Batas ' + tgl(a.due) : 'Tanpa batas waktu';
+const pills = (cur, list, fn) => `<div class="pills">${list.map(([k, l, n]) => `<button class="pill${k === cur ? ' on' : ''}" onclick="${fn}('${k}')">${l}<i>${n}</i></button>`).join('')}</div>`;
+const row = (title, meta, right, click) => `<button class="li" onclick="${click}"><span class="lt"><b>${esc(title)}</b><small>${meta}</small></span>${right}</button>`;
+const tagDue = a => isLate(a) ? '<span class="badge warn">Terlambat</span>' : a.due ? `<span class="badge">${tgl(a.due)}</span>` : '';
+const asgTag = a => { const s = subOf(a); return s ? (s.score !== '' ? `<span class="badge ok">Nilai ${s.score}/${a.max_score}</span>` : '<span class="badge warn">Menunggu nilai</span>') : tagDue(a); };
+
+function vDash() {
+  const hari = new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  if (hasR('kepala_sekolah') || hasR('kurikulum')) {
+    return page('dash', 'Dashboard pengawasan', hari, () => {
+      const ungraded = O.submissions.filter(s => s.score === '').length;
+      const submitted = O.attempts.filter(a => a.submitted).length;
+      const byClass = O.classes.map(c => {
+        const ids = O.assignments.filter(a => a.class_id === c.id).map(a => a.id);
+        const qids = O.quizzes.filter(q => q.class_id === c.id).map(q => q.id);
+        return { name: c.name, teacher: c.teacher_name || '—', tasks: ids.length,
+          submissions: O.submissions.filter(s => ids.includes(s.assignment_id)).length,
+          quizzes: qids.length, completed: O.attempts.filter(a => qids.includes(a.quiz_id) && a.submitted).length };
+      });
+      return `<div class="stats">${[['Seluruh kelas', O.classes.length], ['Tugas aktif', O.assignments.length], ['Pengumpulan tugas', O.submissions.length], ['Belum dinilai', ungraded], ['Kuis', O.quizzes.length], ['Kuis selesai', submitted]].map(([l,n]) => `<div class="card st"><small>${l}</small><b>${n}</b></div>`).join('')}</div>
+        <div class="card" style="overflow-x:auto"><div class="sec"><h3>Monitoring per kelas</h3><button class="link" onclick="go('recap')">Buka rekap nilai</button></div>
+        ${byClass.length ? `<table><thead><tr><th>Kelas</th><th>Guru</th><th>Tugas</th><th>Pengumpulan</th><th>Kuis</th><th>Kuis selesai</th></tr></thead><tbody>${byClass.map(c => `<tr><td><b>${esc(c.name)}</b></td><td>${esc(c.teacher)}</td><td>${c.tasks}</td><td>${c.submissions}</td><td>${c.quizzes}</td><td>${c.completed}</td></tr>`).join('')}</tbody></table>` : '<p class="empty">Belum ada kelas yang terdaftar.</p>'}</div>
+        <p class="meta" style="margin-top:.8rem">Dashboard ini bersifat pemantauan. Pengubahan nilai dan pengelolaan kelas tidak diberikan otomatis kepada peran pengawasan.</p>`;
+    });
+  }
+  return page('dash', 'Halo, ' + esc(S.user.full_name.split(' ')[0]), hari, () => {
+    const t = isT(), todo = O.assignments.filter(a => !subOf(a)).sort((a, b) => (a.due || '9').toString().localeCompare((b.due || '9').toString()));
+    const ung = O.submissions.filter(s => s.score === '');
+    const qTodo = O.quizzes.filter(q => !O.attempts.some(a => a.quiz_id === q.id && a.submitted)).length;
+    const pc = O.submissions.filter(s => s.score !== '' && asgOf(s.assignment_id).id).map(s => s.score / (Number(asgOf(s.assignment_id).max_score) || 100) * 100).concat(O.attempts.filter(a => a.submitted && Number(a.max) > 0).map(a => a.score / a.max * 100));
+    const avg = pc.length ? Math.round(pc.reduce((x, y) => x + y, 0) / pc.length) : '-';
+    const stats = t ? [['Kelas diampu', O.classes.length], ['Perlu dinilai', ung.length], ['Tugas', O.assignments.length], ['Kuis', O.quizzes.length]]
+      : [['Kelas diikuti', O.classes.length], ['Tugas belum dikumpulkan', todo.length], ['Kuis belum dikerjakan', qTodo], ['Rata-rata nilai', avg]];
+    const left = t
+      ? (ung.slice(0, 5).map(s => row(s.full_name, esc(asgOf(s.assignment_id).title) + ' • ' + esc(cname(asgOf(s.assignment_id).class_id)), '<span class="badge warn">Perlu dinilai</span>', `openClass('${asgOf(s.assignment_id).class_id}','asg')`)).join('') || '<p class="empty">Semua pengumpulan sudah dinilai.</p>')
+      : (todo.slice(0, 5).map(a => row(a.title, esc(cname(a.class_id)) + ' • ' + dueTxt(a), tagDue(a), `openClass('${a.class_id}','asg')`)).join('') || '<p class="empty">Tidak ada tugas yang menunggu. Kerja bagus.</p>');
+    const news = O.announcements.slice(0, 4).map(a => row(a.title, esc(cname(a.class_id)) + ' • ' + tgl(a.created), '', `openClass('${a.class_id}','ann')`)).join('') || '<p class="empty">Belum ada pengumuman.</p>';
+    return `<div class="stats">${stats.map(([l, n]) => `<div class="card st"><small>${l}</small><b>${n}</b></div>`).join('')}</div>
+      <div class="two"><div class="card"><div class="sec"><h3>${t ? 'Menunggu penilaian' : 'Tugas yang perlu dikerjakan'}</h3><button class="link" onclick="go('${t ? 'review' : 'tasks'}')">Lihat semua</button></div>${left}</div>
+      <div class="card"><div class="sec"><h3>Pengumuman terbaru</h3><button class="link" onclick="go('news')">Lihat semua</button></div>${news}</div></div>`;
+  });
+}
+
+function vTasks(f) {
+  f = f || 'all'; const t = isT();
+  return page('tasks', 'Tugas', t ? 'Semua tugas dari kelas Anda.' : 'Semua tugas dari kelas yang Anda ikuti.', () => {
+    const st = a => { const s = subOf(a); return s ? (s.score !== '' ? 'done' : 'wait') : 'todo'; };
+    const ungr = a => O.submissions.some(s => s.assignment_id === a.id && s.score === '');
+    const scope = ownClassIds();
+    const all = O.assignments.filter(a => !scope || scope.includes(a.class_id)).slice().sort((a, b) => String(b.created).localeCompare(String(a.created)));
+    const flt = { all: () => true, todo: a => st(a) === 'todo', wait: a => st(a) === 'wait', done: a => st(a) === 'done', ungr: ungr };
+    const tabs = t ? [['all', 'Semua', all.length], ['ungr', 'Perlu dinilai', all.filter(ungr).length]]
+      : [['all', 'Semua', all.length], ['todo', 'Belum dikumpulkan', all.filter(flt.todo).length], ['wait', 'Menunggu nilai', all.filter(flt.wait).length], ['done', 'Selesai', all.filter(flt.done).length]];
+    const list = all.filter(flt[f] || flt.all);
+    return pills(f, tabs, 'vTasks') + `<div class="card">${list.map(a => row(a.title, esc(cname(a.class_id)) + ' • ' + dueTxt(a), t ? `<span class="badge${ungr(a) ? ' warn' : ''}">${O.submissions.filter(s => s.assignment_id === a.id).length} terkumpul</span>` : asgTag(a), `openClass('${a.class_id}','asg')`)).join('') || '<p class="empty">Tidak ada tugas pada kategori ini.</p>'}</div>`;
+  });
+}
+
+function vQuiz(f) {
+  f = f || 'all'; const t = isT();
+  return page('quizzes', 'Kuis', t ? 'Semua kuis dari kelas Anda.' : 'Semua kuis dari kelas yang Anda ikuti.', () => {
+    const scope = ownClassIds();
+    const quizzes = O.quizzes.filter(q => !scope || scope.includes(q.class_id));
+    const at = q => O.attempts.find(a => a.quiz_id === q.id && (t || a.user_id == S.user.user_id));
+    const done = q => O.attempts.some(a => a.quiz_id === q.id && a.submitted && (t || a.user_id == S.user.user_id));
+    const tabs = [['all', 'Semua', quizzes.length]].concat(t ? [] : [['todo', 'Belum dikerjakan', quizzes.filter(q => !done(q)).length], ['done', 'Selesai', quizzes.filter(done).length]]);
+    const list = quizzes.slice().reverse().filter(q => f === 'todo' ? !done(q) : f === 'done' ? done(q) : true);
+    const tag = q => { if (t) return `<span class="badge">${O.attempts.filter(a => a.quiz_id === q.id && a.submitted).length} selesai</span>`; const a = at(q); return a && a.submitted ? `<span class="badge ok">Nilai ${a.score}/${a.max}</span>` : `<span class="badge${a ? ' warn' : ''}">${a ? 'Sedang dikerjakan' : 'Belum dikerjakan'}</span>`; };
+    return (t ? '' : pills(f, tabs, 'vQuiz')) + `<div class="card">${list.map(q => row(q.title, esc(cname(q.class_id)) + ' • ' + q.qcount + ' soal • ' + q.duration + ' menit', tag(q), `openClass('${q.class_id}','qz')`)).join('') || '<p class="empty">Tidak ada kuis pada kategori ini.</p>'}</div>`;
+  });
+}
+
+const vNews = () => page('news', 'Pengumuman', 'Pengumuman terbaru dari kelas yang dapat Anda akses.', () => {
+  const scope = ownClassIds();
+  const list = O.announcements.filter(a => !scope || scope.includes(a.class_id));
+  return `<div class="card">${list.map(a => row(a.title, esc(cname(a.class_id)) + ' • ' + esc(a.author) + ' • ' + tgl(a.created) + (a.body ? '<br>' + esc(String(a.body).slice(0, 140)) + (String(a.body).length > 140 ? '...' : '') : ''), '', `openClass('${a.class_id}','ann')`)).join('') || '<p class="empty">Belum ada pengumuman.</p>'}</div>`;
+});
+
+const vReview = () => page('review', 'Perlu dinilai', 'Pengumpulan tugas yang belum diberi nilai.', () => {
+  const scope = ownClassIds();
+  const scopeAssignmentIds = scope ? O.assignments.filter(a => scope.includes(a.class_id)).map(a => a.id) : null;
+  const l = O.submissions.filter(s => (!scopeAssignmentIds || scopeAssignmentIds.includes(s.assignment_id)) && s.score === '').sort((a, b) => String(a.created).localeCompare(String(b.created)));
+  return `<div class="card">${l.map(s => row(s.full_name, esc(asgOf(s.assignment_id).title) + ' • ' + esc(cname(asgOf(s.assignment_id).class_id)) + ' • ' + tglw(s.created), '<span class="badge warn">Nilai sekarang</span>', `openClass('${asgOf(s.assignment_id).class_id}','asg')`)).join('') || '<p class="empty">Semua pengumpulan sudah dinilai.</p>'}</div>`;
+});
+
+function vRecap(cid) {
+  return page('recap', 'Rekap nilai', 'Rata-rata nilai siswa per kelas, dalam persen.', () => {
+    if (!O.classes.length) return '<div class="card empty"><b>Belum ada kelas</b>Buat kelas terlebih dahulu.</div>';
+    cid = cid || O.classes[0].id;
+    const am = {}; O.assignments.filter(a => a.class_id === cid).forEach(a => am[a.id] = a);
+    const qz = O.quizzes.filter(q => q.class_id === cid).map(q => q.id), R = {};
+    const get = (id, n) => R[id] = R[id] || { n: n, t: [], q: [] };
+    O.submissions.filter(s => am[s.assignment_id] && s.score !== '').forEach(s => get(s.user_id, s.full_name).t.push(s.score / (Number(am[s.assignment_id].max_score) || 100) * 100));
+    O.attempts.filter(a => qz.indexOf(a.quiz_id) > -1 && a.submitted && Number(a.max) > 0).forEach(a => get(a.user_id, a.full_name).q.push(a.score / a.max * 100));
+    const av = l => l.length ? l.reduce((x, y) => x + y, 0) / l.length : null, f = v => v === null ? '-' : Math.round(v * 10) / 10;
+    RC = Object.values(R).map(r => { const t = av(r.t), q = av(r.q); return { n: r.n, t, q, all: av([t, q].filter(v => v !== null)) }; }).sort((a, b) => a.n.localeCompare(b.n));
+    return `<div class="row" style="justify-content:space-between;align-items:center;margin-bottom:1rem"><select class="sel" aria-label="Pilih kelas" onchange="vRecap(this.value)">${O.classes.map(c => `<option value="${c.id}"${c.id === cid ? ' selected' : ''}>${esc(c.name)}</option>`).join('')}</select><button class="btn2" onclick="exportRecap()">Unduh CSV</button></div>
+      <div class="card" style="overflow-x:auto">${RC.length ? `<table><tr><th>Nama</th><th>Tugas</th><th>Kuis</th><th>Rata-rata</th></tr>${RC.map(r => `<tr><td>${esc(r.n)}</td><td>${f(r.t)}</td><td>${f(r.q)}</td><td><b>${f(r.all)}</b></td></tr>`).join('')}</table>` : '<p class="empty">Belum ada nilai pada kelas ini.</p>'}</div>`;
+  });
+}
+function exportRecap() {
+  if (!RC.length) { toast('Belum ada nilai untuk diunduh.', true); return; }
+  const q = v => '"' + (/^[=+\-@]/.test(v) ? "'" + v : v).replace(/"/g, '""') + '"', f = v => v === null ? '' : Math.round(v * 10) / 10;
+  const csv = ['Nama,Rata-rata tugas,Rata-rata kuis,Rata-rata akhir'].concat(RC.map(r => [q(r.n), f(r.t), f(r.q), f(r.all)].join(','))).join('\n');
+  const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' })); a.download = 'rekap-nilai.csv'; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+
+function vProfile() {
+  nav('profile'); const u = S.user, nm = hasR('kepala_sekolah') ? 'Kepala Sekolah' : hasR('kurikulum') ? (hasR('guru') ? 'Guru • Kurikulum' : 'Kurikulum') : ({ siswa: 'Siswa', guru: 'Guru', admin: 'Administrator' }[u.role] || u.role);
+  view(`<div class="top"><div><h2>Profil dan keamanan</h2><p>Kelola informasi akun dan sandi Anda.</p></div></div>
+    <div class="card" style="margin-bottom:1rem"><div class="pf"><span class="fav g" aria-hidden="true">${esc(u.full_name.charAt(0).toUpperCase())}</span><div><b>${esc(u.full_name)}</b><small>${nm}${u.email ? ' • ' + esc(u.email) : ''}</small></div></div></div>
+    <div class="card"><div class="sec"><h3>Ganti sandi</h3></div><form class="pwf" onsubmit="chgPw(event)">
+      <label>Sandi lama<input type="password" id="pw0" autocomplete="current-password" required></label>
+      <label>Sandi baru (minimal 8 karakter)<input type="password" id="pw1" autocomplete="new-password" minlength="8" required></label>
+      <label>Ulangi sandi baru<input type="password" id="pw2" autocomplete="new-password" required></label>
+      <button class="btn" id="pwb">Simpan sandi</button></form></div>`);
+}
+async function chgPw(e) {
+  e.preventDefault(); const o = $('#pw0').value, n = $('#pw1').value;
+  if (n !== $('#pw2').value) { toast('Konfirmasi sandi baru tidak sama.', true); return; }
+  const b = $('#pwb'); b.disabled = true; b.textContent = 'Menyimpan...';
+  try { await api('changePassword', { old_password: o, new_password: n }); toast('Sandi berhasil diganti'); e.target.reset(); }
+  catch (er) { toast(er.message, true); }
+  b.disabled = false; b.textContent = 'Simpan sandi';
 }
 
 /* ---------- nilai siswa ---------- */
