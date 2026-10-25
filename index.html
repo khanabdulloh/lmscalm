@@ -1066,6 +1066,20 @@ aside nav{margin-top:1.1rem}
  .mi{min-height:2.4rem}
 }
 @media(min-width:1024px){aside{width:17.5rem}}
+
+/* ===== Kelas seluler v7: tanpa geser samping (hanya layar HP) ===== */
+@media(max-width:767px){
+ /* akar masalah: margin auto membuat lebar main mengikuti isi terpanjang (tab/URL), bukan lebar layar */
+ main{width:100%;min-width:0;margin:0}
+}
+@media(max-width:560px){
+ .tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;overflow:visible}
+ .tabs button:first-child{grid-column:span 2}
+ .tabs button{padding:.75rem .15rem;font-size:.8rem;text-align:center}
+ .cover{padding:1.25rem 1.1rem}
+ .cover h1{font-size:1.55rem}
+}
+@media(max-width:340px){.tabs button{font-size:.72rem}}
 </style>
 </head>
 <body>
