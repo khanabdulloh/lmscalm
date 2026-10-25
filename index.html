@@ -778,7 +778,7 @@ tbody tr:last-child td{border-bottom:0}
  #prn td.l,#prn th:nth-child(2){text-align:left}
  #prn tbody tr:nth-child(even){background:#f8fafd!important}
  #prn tr{break-inside:avoid}#prn thead{display:table-header-group}
- #prn tr.lw td{color:#b4232f;font-weight:700}
+ #prn tr.lwr td{color:#b4232f;font-weight:700}
  #prn .pr-n{margin-top:.7rem;font-size:.72rem;color:#555}
  #prn .pr-sg{display:grid;grid-template-columns:1fr 1fr;margin-top:1.6rem;break-inside:avoid}
  #prn .pr-sg p{margin:0}#prn .pr-sg span{display:block;height:3.2rem}#prn .pr-sg b{border-bottom:1px solid #111;padding-bottom:.1rem}
@@ -998,6 +998,29 @@ body:has(.qbar) .rf{display:none}
  .kc:hover .kic,.kc:hover .kgo,.sb:hover:not(:disabled)::after{transform:none}
 }
 
+/* ===== Login seluler v5: logo & sambutan di tengah, aksen biru (hanya layar <=900px) ===== */
+@media(max-width:900px){
+ .lm{position:relative;isolation:isolate;padding:calc(1.75rem + env(safe-area-inset-top,0px)) max(1.25rem,env(safe-area-inset-right,0px)) calc(1.5rem + env(safe-area-inset-bottom,0px)) max(1.25rem,env(safe-area-inset-left,0px));background:radial-gradient(90% 36% at 50% 0,#d6e5fb,transparent 72%),radial-gradient(70% 30% at 100% 100%,#e4eefc,transparent 70%),#fff}
+ .lm::before{content:"";position:absolute;z-index:-1;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,#0b3d91,#2f7be0 55%,#38bdf8)}
+ .mbrand{flex-direction:column;justify-content:center;gap:.65rem;margin-bottom:1.25rem;text-align:center}
+ .mbrand img{width:3.75rem;height:3.75rem;padding:.5rem;border-radius:1.1rem;background:#fff;box-shadow:0 0 0 1px #cfe0f8,0 12px 24px -12px rgba(11,61,145,.5)}
+ .lc h2{text-align:center;font-size:clamp(1.7rem,7.5vw,2.1rem)}
+ .lc h2::after{content:"";display:block;width:2.5rem;height:3px;margin:.7rem auto 0;border-radius:3px;background:linear-gradient(90deg,#0b3d91,#38bdf8)}
+ .lc .sub{max-width:20rem;margin:.7rem auto 1.4rem;text-align:center}
+ .rt:not([aria-checked=true]){border-color:#d3e0f3}
+ .rt>svg{color:#6f93d6}
+ .rhint{border:1px solid #d6e4f8;background:#eef4fd}
+ .rhint::before{background:#2f7be0}
+ .help{border-top-color:#dbe7f7}
+}
+@media(min-width:381px) and (max-width:480px){
+ .rt{flex-direction:column;align-items:flex-start;gap:.4rem;padding:.7rem .7rem .75rem}
+ .rt::after{top:.65rem;margin-top:0;right:.6rem}
+}
+@media(max-width:900px) and (max-height:520px){
+ .mbrand{flex-direction:row;gap:.7rem;margin-bottom:.9rem;text-align:left}
+ .mbrand img{width:2.8rem;height:2.8rem;padding:.35rem}
+}
 </style>
 </head>
 <body>
@@ -3070,7 +3093,7 @@ function attPrint(kind) {
     body = head('Rekap Presensi Kehadiran Siswa', '<b>Kelas:</b> ' + esc(d.class_name) + ' &nbsp;•&nbsp; <b>Periode:</b> ' + attRangeTxt() + ' &nbsp;•&nbsp; <b>Pertemuan tercatat:</b> ' + d.sessions)
       + '<div class="pr-k"><div><small>Jumlah siswa</small><b>' + d.rows.length + '</b></div><div><small>Rata-rata kehadiran</small><b>' + (agg.total ? agg.pct + '%' : '-') + '</b></div><div><small>Hadir / Sakit / Izin / Alpa</small><b>' + agg.H + ' / ' + agg.S + ' / ' + agg.I + ' / ' + agg.A + '</b></div><div><small>Kehadiran &lt; 75%</small><b>' + low + ' siswa</b></div></div>'
       + '<table><thead><tr><th style="width:2rem">No</th><th>Nama siswa</th><th>H</th><th>S</th><th>I</th><th>A</th><th>Pert.</th><th>Kehadiran</th></tr></thead><tbody>'
-      + d.rows.map(function (r, i) { return '<tr class="' + (r.total && r.pct < 75 ? 'lw' : '') + '"><td>' + (i + 1) + '</td><td class="l">' + esc(r.full_name) + '</td><td>' + r.H + '</td><td>' + r.S + '</td><td>' + r.I + '</td><td>' + r.A + '</td><td>' + r.total + '</td><td><b>' + (r.total ? r.pct + '%' : '-') + '</b></td></tr>'; }).join('')
+      + d.rows.map(function (r, i) { return '<tr class="' + (r.total && r.pct < 75 ? 'lwr' : '') + '"><td>' + (i + 1) + '</td><td class="l">' + esc(r.full_name) + '</td><td>' + r.H + '</td><td>' + r.S + '</td><td>' + r.I + '</td><td>' + r.A + '</td><td>' + r.total + '</td><td><b>' + (r.total ? r.pct + '%' : '-') + '</b></td></tr>'; }).join('')
       + '</tbody></table><p class="pr-n">Keterangan: H = Hadir, S = Sakit, I = Izin, A = Alpa. Kehadiran = H ÷ seluruh pertemuan tercatat. Baris tebal merah menandakan kehadiran di bawah 75%.</p>'
       + '<div class="pr-sg"><div></div><div><p>Garut, ' + now + '</p><p>Guru Pengampu,</p><span></span><b>' + esc(d.teacher_name || S.user.full_name) + '</b></div></div>';
   } else {
@@ -3080,7 +3103,7 @@ function attPrint(kind) {
     body = head('Rekap Presensi Kehadiran', '<b>Nama:</b> ' + esc(S.user.full_name) + ' &nbsp;•&nbsp; <b>Dicetak:</b> ' + now)
       + '<div class="pr-k"><div><small>Jumlah kelas</small><b>' + s2.classes.length + '</b></div><div><small>Rata-rata kehadiran</small><b>' + (g.total ? g.pct + '%' : '-') + '</b></div><div><small>Hadir / Sakit</small><b>' + g.H + ' / ' + g.S + '</b></div><div><small>Izin / Alpa</small><b>' + g.I + ' / ' + g.A + '</b></div></div>'
       + '<table><thead><tr><th style="width:2rem">No</th><th>Kelas</th><th>H</th><th>S</th><th>I</th><th>A</th><th>Pert.</th><th>Kehadiran</th></tr></thead><tbody>'
-      + s2.classes.map(function (c, i) { return '<tr class="' + (c.total && c.pct < 75 ? 'lw' : '') + '"><td>' + (i + 1) + '</td><td class="l">' + esc(c.class_name) + '</td><td>' + c.H + '</td><td>' + c.S + '</td><td>' + c.I + '</td><td>' + c.A + '</td><td>' + c.total + '</td><td><b>' + (c.total ? c.pct + '%' : '-') + '</b></td></tr>'; }).join('')
+      + s2.classes.map(function (c, i) { return '<tr class="' + (c.total && c.pct < 75 ? 'lwr' : '') + '"><td>' + (i + 1) + '</td><td class="l">' + esc(c.class_name) + '</td><td>' + c.H + '</td><td>' + c.S + '</td><td>' + c.I + '</td><td>' + c.A + '</td><td>' + c.total + '</td><td><b>' + (c.total ? c.pct + '%' : '-') + '</b></td></tr>'; }).join('')
       + '</tbody></table><p class="pr-n">Keterangan: H = Hadir, S = Sakit, I = Izin, A = Alpa. Dokumen ini dicetak dari Portal LMS SMK CALM.</p>';
   }
   var old = document.getElementById('prn'); if (old) old.remove();
