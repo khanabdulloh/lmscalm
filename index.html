@@ -893,6 +893,44 @@ button.kp{cursor:pointer;transition:transform .18s,box-shadow .18s}button.kp:hov
 .emc{margin-bottom:1.2rem}.emc .emh{margin-bottom:.9rem}.emc h3{font-size:1.02rem;color:var(--navyd);margin:.35rem 0 .2rem}.emc p{font-size:.86rem;color:var(--mut)}.emc .row{display:flex;flex-wrap:wrap;gap:.6rem}
 .offbar{position:fixed;left:50%;bottom:calc(1rem + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:70;max-width:calc(100vw - 2rem);padding:.6rem 1.1rem;border-radius:99px;background:#1f2937;color:#fff;font-size:.82rem;font-weight:600;box-shadow:var(--shadow-lg)}
 @media(max-width:640px){.fbd{margin-left:0}.eb{flex-wrap:wrap}.fbar .fsr{max-width:none;flex-basis:100%}}
+
+/* ===== Penyempurnaan v3: minimalis, tenang, profesional ===== */
+:root{--r:.9rem;--rad:.9rem}
+:root:not([data-theme=dark]){--bg:#f6f8fb;--line:#e8edf4;--line2:#d9e1ed;--shadow-sm:0 1px 2px rgba(16,32,64,.05);--shadow-md:0 10px 26px -14px rgba(16,32,64,.18)}
+:root:not([data-theme=dark]) body{background:var(--bg)}
+/* tipografi: sans bersih untuk antarmuka, serif hanya untuk identitas (login & sampul) */
+.top h2,.md h3,.qc h4,.qq h3,.rv h4,.qres h3,.qi h3,.hero-text h2{font-family:inherit;font-weight:700;letter-spacing:-.02em}
+.top h2{font-size:clamp(1.4rem,2.2vw,1.7rem)}
+.st b,.wstat b{font-family:inherit;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+/* sidebar datar */
+aside{background:#0b2559;box-shadow:none;border-right:1px solid rgba(255,255,255,.06)}
+.submenu{border-left-color:rgba(255,255,255,.08)}
+.mi:hover{background:rgba(255,255,255,.06)}
+.mi.on{background:rgba(255,255,255,.1);box-shadow:none}
+.mi.on::before{width:2px;background:#fff}
+/* kartu, tombol, lencana */
+.card{box-shadow:var(--shadow-sm)}
+.card.cls:hover,button.card:hover,.kc:hover,.qa:hover,.st:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.kc .kwm{display:none}.kc::before,.cls::before{height:2px}
+.btn{background:var(--navy);box-shadow:none;border-radius:.7rem;font-weight:600}
+.btn:hover{background:var(--navyd);box-shadow:none;transform:none}
+.btn2{border-radius:.7rem;font-weight:600}
+.badge{font-weight:600}
+.pill.on{background:var(--navy)}
+/* sampul & hero lebih tenang */
+.hero-dash,.cover{background:linear-gradient(135deg,#0b3d91,#0a2a63);box-shadow:none}
+.hero-dash{border-radius:1.1rem;padding:1.5rem 1.75rem}.hero-dash::before,.ls::before{display:none}
+.hero-clock{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.12);backdrop-filter:none}
+/* statistik netral, tanpa warna-warni */
+.st::before{display:none}.st{padding:1.1rem 1.25rem}.st b{font-size:2rem}
+.ph{background:var(--soft);border:0;box-shadow:none;border-radius:.8rem}
+/* tabel */
+th{background:transparent;font-size:.72rem;border-bottom:1px solid var(--line2)}
+tbody tr:hover{background:var(--soft)}
+/* fokus & gerak */
+.fld:focus,.md input:focus,.md textarea:focus,.md select:focus,.searchbox input:focus,.fq input:focus,.fnew:focus{box-shadow:var(--ring)}
+#main>*{animation-duration:.22s}
+@media(max-width:767px){.btn,.btn2,.pill,.mi{min-height:2.75rem}}
 </style>
 </head>
 <body>
