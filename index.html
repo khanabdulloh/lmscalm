@@ -116,13 +116,14 @@ try {
         pesanDiv.style.display = "block";
       }
 
-    } catch (error) {
-      // Jika ada error jaringan
+        } catch (error) {
+      // Tampilkan error asli di Console (F12) untuk kita bedah
+      console.error("DETAIL ERROR:", error);
+      
       pesanDiv.className = "alert alert-error";
-      pesanDiv.textContent = "Terjadi kesalahan jaringan. Silakan coba lagi.";
+      pesanDiv.textContent = "Terjadi kesalahan jaringan: " + error.message;
       pesanDiv.style.display = "block";
     } finally {
-      // Kembalikan tombol ke keadaan semula
       btnSubmit.textContent = "Masuk Sistem";
       btnSubmit.disabled = false;
     }
