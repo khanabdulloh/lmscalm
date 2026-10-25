@@ -16,7 +16,7 @@ button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}
 .lm{display:flex;flex-direction:column;padding:3rem;background:#fff}
 .lc{width:100%;max-width:25rem;margin:auto}
 .sb{width:100%;min-height:3.2rem;border:0;border-radius:.9rem;background:var(--navy);color:#fff;font-weight:700}
-.fld{width:100%;min-height:3.2rem;padding:.7rem 1rem;border:1px solid var(--line2);border-radius:.9rem}
+.fld{width:100%;min-height:3.2rem;padding:.7rem 1rem;border:1px solid var(--line2);border-radius:.9rem;margin-bottom:1rem}
 #app{display:flex;min-height:100vh}
 aside{width:17rem;background:var(--side);color:#e2e8f0;padding:1rem;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;overflow-y:auto}
 main{flex:1;padding:2rem 2.5rem 3rem;max-width:80rem;margin:0 auto}
@@ -38,11 +38,10 @@ table{width:100%;border-collapse:collapse}th,td{padding:.8rem;border-bottom:1px 
 .badge{padding:.2rem .6rem;border-radius:99px;font-size:.75rem;font-weight:700}
 .badge.ok{background:#d1fae5;color:#065f46}
 .badge.warn{background:#fef3c7;color:#92400e}
-/* Hotspot & Matching Styles */
-.hotspot-img{max-width:100%;border-radius:.5rem;cursor:crosshair;position:relative}
+.hotspot-img{max-width:100%;border-radius:.5rem;cursor:crosshair;position:relative;display:block}
 .hs-marker{position:absolute;width:20px;height:20px;background:rgba(11,61,145,.4);border:2px solid var(--navy);border-radius:50%;transform:translate(-50%,-50%);pointer-events:none}
 .match-row{display:grid;grid-template-columns:1fr 2rem 1fr;gap:.5rem;align-items:center;margin-bottom:.5rem}
-.ord-item{display:flex;justify-content:space-between;padding:.5rem;border:1px solid var(--line2);margin-bottom:.5rem;border-radius:.5rem;background:#fff}
+.ord-item{display:flex;justify-content:space-between;padding:.5rem;border:1px solid var(--line2);margin-bottom:.5rem;border-radius:.5rem;background:#fff;align-items:center}
 .ord-btn{background:var(--soft);border:0;padding:.2rem .5rem;border-radius:.3rem;cursor:pointer}
 @media(max-width:900px){.lw{grid-template-columns:1fr}.ls{display:none}}
 </style>
@@ -55,7 +54,7 @@ table{width:100%;border-collapse:collapse}th,td{padding:.8rem;border-bottom:1px 
     <h2>Selamat datang</h2>
     <form id="lform" onsubmit="event.preventDefault();doLogin()">
       <label class="fl">Username</label><input id="u" class="fld">
-      <label class="fl" style="margin-top:1rem">Sandi</label><input id="pw" type="password" class="fld">
+      <label class="fl">Sandi</label><input id="pw" type="password" class="fld">
       <p id="lmsg" style="color:red;font-size:.8rem;margin:1rem 0"></p>
       <button class="sb" id="lbtn">Masuk</button>
     </form>
@@ -76,7 +75,9 @@ table{width:100%;border-collapse:collapse}th,td{padding:.8rem;border-bottom:1px 
 </div>
 
 <script>
-const API = 'https://script.google.com/macros/s/AKfycbwwxNMD1c_2GugaKiXlqicOW-NeUsYSL-WvJzAt4xXvH8dQjAfMD-epQubbhkXHhbwW_w/exec'; // Ganti jika perlu
+// URL Web App Anda
+const API = (window.LMS_CONFIG && window.LMS_CONFIG.apiUrl) || 'https://script.google.com/macros/s/AKfycbwwxNMD1c_2GugaKiXlqicOW-NeUsYSL-WvJzAt4xXvH8dQjAfMD-epQubbhkXHhbwW_w/exec';
+
 let S = null, C = null, O = null, QT;
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -98,7 +99,14 @@ function doLogin() {
 }
 
 function logout() { S = null; location.reload(); }
-function go(k) { document.querySelectorAll('.mi').forEach(b => b.classList.remove('on')); const b = $('#n-'+k); if(b) b.classList.add('on'); if(k==='dash') vDash(); if(k==='home') home(); if(k.startsWith('admin')) adminUsers(k.replace('admin','').toLowerCase()); }
+
+function go(k) { 
+  document.querySelectorAll('.mi').forEach(b => b.classList.remove('on')); 
+  const b = $('#n-'+k); if(b) b.classList.add('on'); 
+  if(k==='dash') vDash(); 
+  if(k==='home') home(); 
+  if(k.startsWith('admin')) adminUsers(k.replace('admin','').toLowerCase()); 
+}
 function view(h) { $('#main').innerHTML = h; }
 
 function vDash() { view(`<div class="top"><h2>Beranda</h2></div><div class="card"><p>Selamat datang, ${esc(S.user.full_name)}</p></div>`); }
@@ -248,9 +256,8 @@ function takeQuiz(d) {
     } else if (q.type === 'ordering') {
       let items = [...q.data.items];
       body = `<div id="ord-box">${items.map((it, i) => `<div class="ord-item"><span>${it}</span></div>`).join('')}</div>`;
-      // Implementasi simpel: klik untuk urutkan
       body += `<p style="font-size:.8rem">Sementara ini urutan dianggap benar jika sesuai urutan aslinya.</p>`;
-      setAns(q.id, items); // auto fill
+      setAns(q.id, items);
     } else if (q.type === 'hotspot') {
       body = `<div style="position:relative; display:inline-block" onclick="clickSpot(event, '${q.id}')">
         <img src="${q.data.img}" class="hotspot-img">
@@ -277,7 +284,7 @@ function takeQuiz(d) {
 
   const submitQuiz = () => {
     clearInterval(QT);
-    api('submitQuiz', { attempt_id: d.attempt_id, answers: JSON.stringify(ans) }).then(() => {
+    api('submitQuiz', { attempt_id: d.attempt_id, answers: JSON.stringify(ans) }).then((res) => {
       view(`<div class="card"><h3>Selesai!</h3><p>Nilai: ${res.score} / ${res.max}</p><button class="btn" onclick="openClass('${C.cls.id}')">Kembali</button></div>`);
     });
   };
@@ -286,14 +293,16 @@ function takeQuiz(d) {
 
 function adminUsers(role) {
   api('adminUsers').then(r => {
-    const list = r.users.filter(u => u.role === role);
-    view(`<div class="top"><h2>Data ${role.toUpperCase()}</h2></div>
+    const list = r.users.filter(u => u.role === role || (role === 'staff' && u.role === 'staf'));
+    const title = role === 'staff' ? 'Staf' : role === 'guru' ? 'Guru' : 'Siswa';
+    view(`<div class="top"><h2>Data ${title}</h2></div>
     <div class="card"><table><thead><tr><th>Nama</th><th>Username</th><th>Status</th></tr></thead><tbody>
     ${list.map(u => `<tr><td>${esc(u.full_name)}</td><td>${esc(u.username)}</td><td>${esc(u.status)}</td></tr>`).join('')}
     </tbody></table></div>`);
   });
 }
 
+// Cek sesi login
 if(sessionStorage.getItem('lms')) {
   try { S = JSON.parse(sessionStorage.getItem('lms')); $('#login').classList.add('hide'); $('#app').classList.remove('hide'); vDash(); } catch(e) {}
 }
