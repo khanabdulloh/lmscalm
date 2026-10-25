@@ -203,6 +203,17 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
 .oi input[data-o]{margin:0}
 .hint{font-size:.76rem;color:var(--mut);margin:.2rem 0 .5rem}
 @media(max-width:767px){.qbar{top:3.5rem}}
+
+.fh{display:flex;align-items:flex-start;gap:.7rem;margin-bottom:.6rem}.fh>div{flex:1;min-width:0}
+.fh b{font-size:.9rem;color:var(--navyd);margin-right:.4rem}.fh .meta{margin:0}
+.fav{display:grid;place-items:center;flex:none;width:2.2rem;height:2.2rem;border-radius:50%;background:var(--soft);color:var(--navy);font-weight:700;font-size:.9rem}
+.fav.g{background:var(--navy);color:#fff}
+.fb{font-size:.9rem;white-space:pre-wrap;word-break:break-word;color:#2b3a55}
+.fr{margin:.9rem 0 0 1.1rem;padding-left:1rem;border-left:2px solid var(--line)}
+.fr .fh{margin-bottom:.25rem}.fr .item{margin:0 0 .8rem}
+.fq{display:flex;gap:.5rem;margin-top:.8rem}.fq input{flex:1;padding:.6rem .85rem;border:1px solid var(--line2);border-radius:.7rem;background:#fff;font-size:.88rem}
+.fq input:focus,.fnew:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(11,61,145,.14)}
+.fnew{display:block;width:100%;min-height:4.5rem;padding:.7rem .9rem;border:1px solid var(--line2);border-radius:.8rem;resize:vertical;font-size:.9rem;margin-bottom:.7rem}
 </style>
 </head>
 <body>
@@ -394,9 +405,10 @@ function drawClass(tab) {
   if (tab === 'mat') body = add('Tambah materi', 'addMat()') + (C.materials.map(m => `<div class="card item"><h4>${esc(m.title)}</h4><div class="meta">${tgl(m.created)}</div>${m.description ? `<p>${esc(m.description)}</p>` : ''}${m.file_url ? `<p><a href="${esc(m.file_url)}" target="_blank" rel="noopener">Buka berkas</a></p>` : ''}</div>`).join('') || empty('Belum ada materi', 'Materi yang diunggah guru akan tampil di sini.'));
   if (tab === 'asg') body = add('Buat tugas', 'addAsg()') + (C.assignments.map(a => asgCard(a, t)).join('') || empty('Belum ada tugas', 'Tugas dari guru akan tampil di sini.'));
   if (tab === 'qz') body = add('Buat kuis', 'addQuiz()') + (C.quizzes.map(quizCard).join('') || empty('Belum ada kuis', 'Kuis dari guru akan tampil di sini.'));
+  if (tab === 'fr') body = forumView();
   view(`<button class="back" onclick="home()">Kembali ke daftar kelas</button>
     <div class="cover"><h1>${esc(cls.name)}</h1><p>${esc(cls.subject)} • ${esc(cls.teacher_name)}${t ? ` • ${C.memberCount} siswa` : ''}</p>${t ? `<span class="chip">Kode kelas: ${esc(cls.code)}</span>` : ''}</div>
-    <div class="tabs">${[['ann','Pengumuman'],['mat','Materi'],['asg','Tugas'],['qz','Kuis']].map(([k, l]) => `<button class="${k === tab ? 'on' : ''}" onclick="drawClass('${k}')">${l}</button>`).join('')}</div>${body}`);
+    <div class="tabs">${[['ann','Pengumuman'],['mat','Materi'],['asg','Tugas'],['qz','Kuis'],['fr','Forum']].map(([k, l]) => `<button class="${k === tab ? 'on' : ''}" onclick="drawClass('${k}')">${l}</button>`).join('')}</div>${body}`);
 }
 
 function asgCard(a, t) {
@@ -496,6 +508,29 @@ function addQuiz() {
     } catch (er) { toast(er.message, true); b.disabled = false; b.textContent = 'Simpan kuis'; }
   };
   f.title.focus();
+}
+
+/* ---------- forum ---------- */
+const tglw = d => d ? new Date(d).toLocaleString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
+function forumView() {
+  const me = S.user.user_id, ts = x => String(x.created);
+  const tops = C.posts.filter(p => !p.parent_id).sort((a, b) => ts(b).localeCompare(ts(a)));
+  const reps = id => C.posts.filter(p => p.parent_id === id).sort((a, b) => ts(a).localeCompare(ts(b)));
+  const head = p => `<div class="fh"><span class="fav${p.role !== 'siswa' ? ' g' : ''}" aria-hidden="true">${esc(String(p.full_name).charAt(0).toUpperCase())}</span><div><b>${esc(p.full_name)}</b>${p.role !== 'siswa' ? '<span class="badge ok">Guru</span>' : ''}<div class="meta">${tglw(p.created)}</div></div>${isT() || p.user_id == me ? `<button class="link" onclick="delPost('${p.id}')">Hapus</button>` : ''}</div>`;
+  return `<div class="card item"><textarea class="fnew" id="fnew" maxlength="2000" placeholder="Tulis pertanyaan atau topik diskusi untuk kelas ini"></textarea><div class="row"><button class="btn" onclick="sendPost('')">Kirim topik</button></div></div>` +
+    (tops.map(p => `<div class="card item">${head(p)}<p class="fb">${esc(p.body)}</p>${reps(p.id).length ? `<div class="fr">${reps(p.id).map(r => `<div class="item">${head(r)}<p class="fb">${esc(r.body)}</p></div>`).join('')}</div>` : ''}<div class="fq"><input id="rp-${p.id}" maxlength="2000" placeholder="Tulis balasan" aria-label="Balasan" onkeydown="if(event.key==='Enter')sendPost('${p.id}')"><button class="btn2" onclick="sendPost('${p.id}')">Balas</button></div></div>`).join('')
+      || empty('Belum ada diskusi', 'Mulai dengan menulis pertanyaan atau topik pertama.'));
+}
+async function sendPost(parent) {
+  const el = $(parent ? '#rp-' + parent : '#fnew'), body = el.value.trim();
+  if (!body) { toast('Tulisan tidak boleh kosong.', true); el.focus(); return; }
+  try { await api('addPost', { ...cid(), body, parent_id: parent }); reload('fr'); }
+  catch (e) { toast(e.message, true); }
+}
+async function delPost(id) {
+  if (!confirm('Hapus pesan ini? Balasan di dalamnya ikut terhapus.')) return;
+  try { await api('deletePost', { post_id: id }); toast('Pesan dihapus'); reload('fr'); }
+  catch (e) { toast(e.message, true); }
 }
 
 /* ---------- nilai siswa ---------- */
