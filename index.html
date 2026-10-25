@@ -514,6 +514,26 @@ body{background:radial-gradient(64rem 28rem at 100% -8%,#e4edfb,transparent 62%)
 .rve{margin-top:1rem;padding:.9rem 1rem;border-radius:.9rem;background:var(--soft);font-size:.88rem;color:var(--ink)}.rve b{display:block;margin-bottom:.2rem;color:var(--navy)}
 .stb{padding:.8rem 0;border-bottom:1px solid var(--line);font-size:.88rem}.stb small{color:var(--mut);font-weight:600}
 .stbar{height:.5rem;margin:.5rem 0 .3rem;border-radius:99px;background:var(--line);overflow:hidden}.stbar i{display:block;height:100%;border-radius:inherit}.stbar .easy{background:#10b981}.stbar .mid{background:#f59e0b}.stbar .hard{background:#e11d48}
+
+/* ===== LOGIN: pas di layar pendek (tidak terpotong) ===== */
+@media(min-width:901px){
+ .lw{height:100vh;height:100dvh;min-height:0;overflow:hidden}
+ .ls{min-height:0;overflow:hidden}.lm{min-height:0;overflow-y:auto;scrollbar-width:none}.lm::-webkit-scrollbar{display:none}
+}
+@media(min-width:901px) and (max-height:900px){
+ .ls{gap:1.2rem;padding-top:1.6rem;padding-bottom:1.2rem}
+ .hero-l h1{font-size:clamp(2.2rem,3.4vw,2.8rem)}.hero-l h1::after{margin-top:.9rem}.hero-l>p{margin-top:.9rem;font-size:.88rem;line-height:1.6}
+ .fe{gap:.8rem;margin-top:1.4rem}.fe b{margin-bottom:.1rem}.fe div>span{font-size:.74rem}
+ .lm{padding-top:1.2rem;padding-bottom:1.2rem}
+ .lc h2{font-size:1.8rem}.lc .sub{margin:.3rem 0 1rem;font-size:.86rem}
+ .rt{padding:.5rem 2rem .5rem .7rem}.rx small{font-size:.64rem}.rhint{margin:.6rem 0 .9rem;padding:.5rem .75rem}
+ .fd{margin-bottom:.8rem}.fld{min-height:2.8rem}.fl{margin-bottom:.35rem}.rem{margin:0 0 1rem}.sb{min-height:2.9rem}.srv{margin-top:.9rem}.help{margin-top:.7rem;padding-top:.8rem}
+}
+@media(min-width:901px) and (max-height:720px){
+ .fe,.hero-l>p{display:none}.ls{justify-content:flex-start}.hero-l{margin-top:auto}.lf{margin-top:auto}
+ .rx small{display:none}.rt{padding:.55rem 2rem .55rem .7rem}.rg{gap:.45rem}.lc h2{font-size:1.55rem}.lc .sub{margin-bottom:.7rem}
+ .rhint{margin:.5rem 0 .7rem;font-size:.74rem;line-height:1.45}.help{display:none}
+}
 </style>
 </head>
 <body>
