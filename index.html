@@ -1,118 +1,379 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login Portal LMS - SMK CALM</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f7f6; }
-    .login-container { background: #ffffff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 100%; max-width: 400px; text-align: center; }
-    .login-logo { width: 80px; height: 80px; margin-bottom: 15px; object-fit: contain; }
-    .login-title { color: #0f172a; font-size: 24px; font-weight: 700; margin-bottom: 5px; }
-    .login-subtitle { color: #64748b; font-size: 14px; margin-bottom: 30px; }
-    .form-group { text-align: left; margin-bottom: 20px; }
-    .form-group label { display: block; color: #334155; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
-    .form-control { width: 100%; padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; outline: none; transition: 0.3s; }
-    .form-control:focus { border-color: #1e3a8a; box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1); }
-    .btn-login { width: 100%; padding: 14px; background-color: #1e3a8a; color: #ffffff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-    .btn-login:hover { background-color: #172554; }
-    .btn-login:disabled { background-color: #94a3b8; cursor: not-allowed; }
-    .alert { padding: 12px; border-radius: 8px; font-size: 14px; margin-bottom: 20px; display: none; text-align: left; }
-    .alert-error { background-color: #fee2e2; color: #b91c1c; border: 1px solid #f87171; }
-    .alert-success { background-color: #dcfce3; color: #15803d; border: 1px solid #4ade80; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LMS SMK CALM</title>
+<meta name="theme-color" content="#0b3d91">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#18263f;--mut:#5b6b82;--faint:#8794a8;--line:#e8edf4;--line2:#d3dcea;--bg:#f5f7fb;--navy:#0b3d91;--navyd:#0a2250;--navyx:#071a40;--side:#061f4d;--soft:#eef3fb;--gold:#d6b46a;--serif:'Newsreader',Georgia,serif;--r:1rem;--rs:.7rem;--err:#b4232f;--ok:#047857}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+button,input,textarea{font:inherit;color:inherit}button{cursor:pointer}
+:focus-visible{outline:2px solid #f59e0b;outline-offset:2px}
+.hide{display:none!important}
+/* ===== LOGIN ===== */
+.lw{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);min-height:100vh;min-height:100dvh;background:var(--bg)}
+.ls{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:2rem;padding:clamp(2rem,5vh,3.25rem) clamp(2rem,4.5vw,4.5rem);color:#fff;background:radial-gradient(60% 45% at 0 0,rgba(86,132,214,.38),transparent 70%),radial-gradient(50% 40% at 100% 100%,rgba(214,180,106,.14),transparent 70%),linear-gradient(160deg,#0c3f94,#0a2f72 48%,#06193d)}
+.ls::before{content:"";position:absolute;inset:0;z-index:-1;background-image:radial-gradient(rgba(255,255,255,.11) 1px,transparent 1px);background-size:22px 22px;-webkit-mask-image:linear-gradient(115deg,#000 0,transparent 62%);mask-image:linear-gradient(115deg,#000 0,transparent 62%)}
+.br{display:flex;align-items:center;gap:.8rem}
+.lg{display:grid;place-items:center;flex:none;width:2.9rem;height:2.9rem;border-radius:.85rem;background:#fff;box-shadow:0 10px 24px -10px rgba(0,0,0,.6)}
+.lg img{width:76%;height:76%;object-fit:contain}
+.br b{display:block;font-size:1rem;letter-spacing:.02em;line-height:1.2}.br small{font-size:.76rem;color:rgba(255,255,255,.66)}
+.hero-l{max-width:33rem}
+.hero-l h1{font-family:var(--serif);font-size:clamp(2.4rem,4.2vw,3.6rem);line-height:1.08;font-weight:500;letter-spacing:-.025em}
+.hero-l h1::after{content:"";display:block;width:2.5rem;height:2px;margin-top:1.4rem;background:var(--gold)}
+.hero-l p{margin-top:1.3rem;max-width:27rem;font-size:.97rem;line-height:1.75;color:rgba(255,255,255,.76)}
+.pv{position:relative;margin-top:2.2rem;max-width:25rem;padding:1.1rem 1.2rem;border-radius:1.1rem;background:rgba(255,255,255,.96);color:var(--ink);box-shadow:0 30px 60px -28px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.5);transform:rotate(-1.2deg)}
+.pv-h{display:flex;justify-content:space-between;align-items:center;gap:.75rem}
+.pv-h small{display:block;font-size:.7rem;font-weight:700;color:var(--navy)}.pv-h b{font-size:.98rem;color:var(--navyd);letter-spacing:-.01em}
+.pv-av{display:grid;place-items:center;width:2.2rem;height:2.2rem;border-radius:.7rem;background:var(--soft);color:var(--navy)}.pv-av svg{width:1.1rem;height:1.1rem}
+.pv-bar{margin:.85rem 0 .3rem;height:.4rem;border-radius:99px;background:#e8edf4;overflow:hidden}.pv-bar i{display:block;width:68%;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--navy),#4a76c9)}
+.pv-m{font-size:.72rem;color:var(--mut)}
+.pv-r{display:flex;justify-content:space-between;align-items:center;gap:.6rem;margin-top:.8rem;padding-top:.75rem;border-top:1px solid var(--line);font-size:.8rem;font-weight:600}
+.pv-r span:last-child{font-size:.7rem;font-weight:700;padding:.12rem .65rem;border-radius:99px;background:#d1fae5;color:#065f46}
+.pv-r.w span:last-child{background:#fef3c7;color:#92400e}
+.pv-note{position:absolute;right:-.7rem;bottom:-1rem;display:flex;align-items:center;gap:.45rem;padding:.45rem .8rem;border-radius:99px;background:var(--navyx);color:#fff;font-size:.72rem;font-weight:600;box-shadow:0 14px 28px -12px rgba(0,0,0,.7);transform:rotate(1.2deg)}
+.pv-note svg{width:.95rem;height:.95rem;color:var(--gold)}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:2.4rem}
+.chips span{padding:.3rem .85rem;border-radius:99px;font-size:.76rem;font-weight:600;color:rgba(255,255,255,.85);box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)}
+.lf{padding-top:1.1rem;border-top:1px solid rgba(255,255,255,.12);font-size:.72rem;color:rgba(255,255,255,.52)}
+.lm{display:flex;flex-direction:column;padding:clamp(1.25rem,4vh,3rem) clamp(1rem,4vw,3.5rem);background:radial-gradient(60% 40% at 100% 0,#e6edf9,transparent 70%),var(--bg)}
+.lc{width:100%;max-width:26rem;margin:auto;padding:2.4rem 2.2rem 1.6rem;background:#fff;border:1px solid var(--line);border-radius:1.4rem;box-shadow:0 1px 2px rgba(15,35,80,.04),0 28px 56px -30px rgba(11,61,145,.35);animation:lcIn .6s cubic-bezier(.2,.7,.2,1) both}
+@keyframes lcIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.mbrand{display:none;align-items:center;gap:.7rem;margin-bottom:1.6rem}.mbrand img{width:2.6rem;height:2.6rem;object-fit:contain}.mbrand b{display:block;color:var(--navyd);line-height:1.2}.mbrand small{font-size:.74rem;color:var(--mut)}
+.lc h2{font-family:var(--serif);font-size:2.15rem;line-height:1.12;font-weight:600;letter-spacing:-.022em;color:var(--navyd)}
+.lc .sub{margin:.5rem 0 1.8rem;font-size:.9rem;color:var(--mut)}
+.fl{display:block;margin:0 0 .45rem;font-size:.8rem;font-weight:600}
+.labrow{display:flex;justify-content:space-between;align-items:baseline}.caps{font-size:.73rem;font-weight:600;color:#b45309}
+.fd{position:relative;margin-bottom:1.1rem}
+.fd>svg{position:absolute;left:.95rem;top:50%;width:1.1rem;height:1.1rem;transform:translateY(-50%);color:#9aa8bf;pointer-events:none;transition:.18s}
+.fd:focus-within>svg{color:var(--navy)}
+.fld{display:block;width:100%;min-height:3.1rem;padding:.65rem .9rem .65rem 2.75rem;border:1px solid var(--line2);border-radius:.8rem;background:#f9fbfe;font-size:.95rem;transition:.18s}
+.fld::placeholder{color:#9aa7bc}.fld:hover{border-color:#b6c5dd}
+.fld:focus{outline:none;border-color:var(--navy);background:#fff;box-shadow:0 0 0 4px rgba(11,61,145,.14)}
+.fd.pw .fld{padding-right:3rem}
+.eye{position:absolute;right:.35rem;top:50%;display:grid;place-items:center;width:2.4rem;height:2.4rem;transform:translateY(-50%);border:0;border-radius:.6rem;background:none;color:#9aa8bf}
+.eye:hover{color:var(--navy);background:var(--soft)}.eye svg{width:1.15rem;height:1.15rem}
+.rem{display:flex;align-items:center;gap:.55rem;margin:.1rem 0 1.2rem;font-size:.82rem;color:var(--mut);cursor:pointer;user-select:none}
+.rem input{appearance:none;-webkit-appearance:none;width:1.1rem;height:1.1rem;margin:0;border:1.5px solid var(--line2);border-radius:.35rem;background:#fff;display:grid;place-items:center;cursor:pointer;transition:.15s}
+.rem input:checked{background:var(--navy);border-color:var(--navy)}
+.rem input:checked::after{content:"";width:.28rem;height:.55rem;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.alert{display:flex;gap:.55rem;margin-bottom:1rem;padding:.7rem .85rem;border:1px solid #f4c7cd;border-radius:.75rem;background:#fff5f6;color:var(--err);font-size:.82rem}
+.alert svg{flex:none;width:1.05rem;height:1.05rem;margin-top:.1rem}
+.sb{display:flex;align-items:center;justify-content:center;gap:.55rem;width:100%;min-height:3.1rem;border:0;border-radius:.8rem;background:linear-gradient(180deg,#134aa8,var(--navy));color:#fff;font-size:.93rem;font-weight:700;letter-spacing:.01em;box-shadow:0 1px 2px rgba(7,26,64,.25),0 16px 26px -16px rgba(11,61,145,.95);transition:.18s}
+.sb:not(:disabled)::after{content:"";width:1rem;height:1rem;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center/contain no-repeat;transition:transform .2s}
+.sb:hover:not(:disabled){background:var(--navyd)}.sb:hover:not(:disabled)::after{transform:translateX(3px)}
+.sb:active:not(:disabled){transform:translateY(1px)}.sb:disabled{opacity:.65;cursor:progress;box-shadow:none}
+.srv{display:flex;align-items:center;justify-content:center;gap:.5rem;margin-top:1.3rem;font-size:.75rem;color:var(--mut)}
+.dot{width:.45rem;height:.45rem;border-radius:50%;background:#cbd5e1;animation:pl 1.4s ease-in-out infinite}
+.srv[data-s=ok]{color:var(--ok)}.srv[data-s=ok] .dot{background:#10b981;box-shadow:0 0 0 3px rgba(16,185,129,.15);animation:none}
+.srv[data-s=bad]{color:#be123c}.srv[data-s=bad] .dot{background:#e11d48;animation:none}
+@keyframes pl{50%{opacity:.35}}
+.link{background:none;border:0;font-size:.75rem;font-weight:700;color:var(--navy);text-decoration:underline;text-underline-offset:2px}
+.help{margin-top:1.3rem;padding-top:1.1rem;border-top:1px solid var(--line);text-align:center;font-size:.78rem;color:var(--mut)}
+.spin{width:1rem;height:1rem;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+
+.fe{display:flex;flex-direction:column;gap:.35rem;margin:2.2rem 0 0;padding:0;list-style:none;max-width:28rem}
+.fe li{position:relative;display:flex;align-items:center;gap:1rem;padding:.8rem .9rem;border-radius:1rem;border:1px solid transparent;transition:background .2s,border-color .2s}
+.fe li:hover{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12)}
+.fe li:not(:last-child)::after{content:"";position:absolute;left:2.15rem;top:calc(100% - .3rem);height:.65rem;border-left:1px dashed rgba(255,255,255,.22)}
+.fi{position:relative;display:grid;place-items:center;flex:none;width:3rem;height:3rem;border-radius:.95rem;color:#fff;background:linear-gradient(145deg,rgba(255,255,255,.22),rgba(255,255,255,.05));box-shadow:inset 0 0 0 1px rgba(255,255,255,.26),0 10px 20px -10px rgba(0,0,0,.55)}
+.fi::after{content:"";position:absolute;right:-.2rem;top:-.2rem;width:.55rem;height:.55rem;border-radius:50%;background:var(--gold);box-shadow:0 0 0 3px rgba(214,180,106,.22)}
+.fi svg{width:1.45rem;height:1.45rem}
+.fe b{display:block;font-size:.95rem;font-weight:700;letter-spacing:.005em}
+.fe div>span{display:block;margin-top:.15rem;font-size:.8rem;line-height:1.45;color:rgba(255,255,255,.66)}
+.lf{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.6rem 1.5rem}
+.lf p{margin:0}
+.accr{display:inline-flex;align-items:center;gap:.6rem}
+.accr svg{width:1.6rem;height:1.6rem;color:var(--gold);flex:none}
+.accr span{display:flex;flex-direction:column;line-height:1.25}.accr b{font-size:.8rem;color:#fff}.accr small{font-size:.7rem;color:rgba(255,255,255,.6)}
+/* ===== APP ===== */
+#app{display:flex;min-height:100vh}
+aside{width:15rem;flex:none;background:var(--side);color:#e2e8f0;padding:1rem;position:sticky;top:0;height:100vh;display:flex;flex-direction:column}
+aside .logo{width:2.5rem;height:2.5rem;object-fit:contain;margin-bottom:.25rem}
+aside .nm{font-weight:800;color:#fff}
+.bd{display:inline-block;margin-top:.3rem;font-size:.7rem;font-weight:700;padding:.1rem .6rem;border-radius:99px;color:#fff}
+.bd.guru,.bd.admin{background:#10b981}.bd.siswa{background:#fbbf24;color:#0f172a}
+aside nav{margin-top:1.5rem;display:flex;flex-direction:column;gap:.25rem}
+.mi{display:flex;align-items:center;gap:.75rem;width:100%;padding:.6rem .75rem;border:0;border-radius:.75rem;background:none;color:#cbd5e1;font-size:.875rem;font-weight:500;text-align:left;transition:.15s;position:relative}
+.mi svg{width:1.1rem;height:1.1rem;flex:none;opacity:.75}
+.mi:hover{background:rgba(14,165,233,.1);color:#fff}
+.mi.on{background:rgba(14,165,233,.2);color:#e0f2fe;box-shadow:inset 0 0 0 1px rgba(56,189,248,.2)}
+.mi.on::before{content:"";position:absolute;left:-.55rem;top:.5rem;bottom:.5rem;width:3px;border-radius:3px;background:#7dd3fc}
+.mi.on svg,.mi:hover svg{opacity:1}
+.mi.out{margin-top:auto;color:#fbbf24}.mi.out:hover{background:rgba(255,255,255,.1);color:#fbbf24}
+.mb{display:none}
+.mbar{display:none}
+main{flex:1;min-width:0;max-width:75rem;padding:2rem 2rem 3rem}
+.who{display:flex;align-items:center;gap:.5rem;margin-bottom:1rem;font-size:.85rem;color:var(--mut)}
+.who .bd{margin:0}
+.top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:1.4rem}
+.top h2{font-size:clamp(1.3rem,2.2vw,1.7rem);line-height:1.25;font-weight:700;letter-spacing:-.025em;color:var(--navyd)}
+.top p{color:var(--mut);font-size:.875rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;background:var(--navy);color:#fff;border:0;border-radius:.75rem;padding:.6rem 1.1rem;font-size:.875rem;font-weight:700;transition:.15s}
+.btn:hover{background:var(--navyd)}.btn:disabled{opacity:.6;cursor:not-allowed}
+.btn2{background:#fff;border:1px solid var(--line2);color:var(--navy);border-radius:.75rem;padding:.55rem 1.1rem;font-size:.875rem;font-weight:700}
+.btn2:hover{background:var(--soft)}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:1.15rem 1.25rem;box-shadow:0 1px 2px rgba(15,35,80,.04)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(17rem,1fr));gap:1rem}
+.cls{display:flex;flex-direction:column;gap:.35rem;width:100%;text-align:left;border-left:4px solid var(--navy);transition:.18s}
+.cls:hover{border-color:var(--line2);border-left-color:var(--navy);box-shadow:0 8px 24px -14px rgba(11,61,145,.35);transform:translateY(-2px)}
+.cls .s{font-size:.78rem;font-weight:700;color:var(--navy)}.cls h3{font-size:1.1rem;color:var(--navyd);letter-spacing:-.01em}.cls small{color:var(--mut);font-size:.8rem}
+.back{background:none;border:0;color:var(--navy);font-weight:700;font-size:.85rem;margin-bottom:.9rem}
+.cover{position:relative;overflow:hidden;color:#fff;border-radius:var(--r);padding:1.8rem;margin-bottom:1.2rem;background:radial-gradient(70% 90% at 0 0,rgba(74,118,201,.3),transparent 65%),linear-gradient(165deg,#0c3f94,#0a2f72 55%,#071a40)}
+.cover h1{font-family:var(--serif);font-size:2rem;font-weight:500;letter-spacing:-.02em;line-height:1.15}
+.cover h1::after{content:"";display:block;width:2.2rem;height:2px;margin-top:.9rem;background:var(--gold)}
+.cover p{margin-top:.8rem;font-size:.875rem;color:rgba(255,255,255,.78)}
+.chip{display:inline-block;margin-top:.9rem;background:rgba(255,255,255,.14);border-radius:99px;padding:.2rem .85rem;font-size:.78rem;font-weight:700}
+.tabs{display:flex;gap:.25rem;border-bottom:1px solid var(--line);margin-bottom:1.1rem;overflow-x:auto}
+.tabs button{background:none;border:0;border-bottom:3px solid transparent;padding:.65rem 1rem;font-size:.875rem;font-weight:700;color:var(--mut);white-space:nowrap}
+.tabs button.on{color:var(--navy);border-color:var(--navy)}
+.item{margin-bottom:.8rem}.item h4{font-size:1rem;color:var(--navyd)}
+.meta{font-size:.78rem;color:var(--faint);margin:.1rem 0 .5rem}
+.item p{font-size:.875rem;white-space:pre-wrap;color:#3a4a66}
+.item a{color:var(--navy);font-weight:700;font-size:.85rem}
+.row{display:flex;gap:.5rem;justify-content:flex-end}
+.badge{display:inline-block;font-size:.72rem;font-weight:700;padding:.15rem .7rem;border-radius:99px;background:#e8edf4;color:#3a4a66}
+.badge.ok{background:#d1fae5;color:#065f46}.badge.warn{background:#fef3c7;color:#92400e}
+.empty{text-align:center;color:var(--mut);padding:2.5rem 1rem;font-size:.875rem}.empty b{display:block;color:var(--ink);margin-bottom:.2rem}
+details{margin-top:.8rem;border-top:1px solid var(--line);padding-top:.7rem}summary{cursor:pointer;font-weight:700;font-size:.85rem;color:var(--navy)}
+.sr{display:grid;grid-template-columns:1fr 6rem 1fr auto;gap:.5rem;align-items:end;padding:.7rem 0;border-bottom:1px solid var(--line);font-size:.85rem}
+.sr input{margin:0;padding:.5rem .7rem;border:1px solid var(--line2);border-radius:.6rem;width:100%;background:#fff}
+.sr input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(11,61,145,.16)}
+table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left;padding:.75rem .7rem;border-bottom:1px solid var(--line)}th{color:var(--mut);font-weight:700;background:var(--bg);font-size:.78rem}
+.ov{position:fixed;inset:0;background:rgba(7,26,64,.5);display:flex;justify-content:center;align-items:flex-start;overflow-y:auto;padding:1rem;z-index:50}
+.md{background:#fff;border-radius:1.1rem;padding:1.6rem;width:100%;max-width:28rem;margin:auto;box-shadow:0 24px 48px -16px rgba(7,26,64,.5)}
+.md h3{font-family:var(--serif);font-size:1.4rem;color:var(--navyd);margin-bottom:1.1rem}
+.md label{display:block;font-size:.8rem;font-weight:600;margin-bottom:.9rem}
+.md input,.md textarea{display:block;width:100%;margin-top:.35rem;padding:.65rem .85rem;border:1px solid var(--line2);border-radius:.7rem;font-size:.9rem;background:#fff;font-weight:400}
+.md textarea{min-height:5.5rem;resize:vertical}
+.md input:focus,.md textarea:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 4px rgba(11,61,145,.16)}
+#toast{position:fixed;bottom:1.4rem;left:50%;transform:translateX(-50%);background:var(--navyx);color:#fff;padding:.7rem 1.3rem;border-radius:.8rem;font-size:.85rem;z-index:60;box-shadow:0 10px 30px -10px rgba(0,0,0,.4)}
+#toast.e{background:#be123c}
+@media(max-width:900px){.lw{grid-template-columns:1fr}.ls{display:none}.mbrand{display:flex}.lc{padding:1.8rem 1.4rem 1.3rem;margin:auto}}
+@media(max-width:767px){
+ #app{flex-direction:column}
+ .mbar{display:flex;position:sticky;top:0;z-index:40;align-items:center;gap:.75rem;background:var(--side);color:#fff;padding:.65rem 1rem;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+ .mbar b{margin-right:auto}.mbar img{width:1.9rem;height:1.9rem;object-fit:contain}
+ .mbar button{background:none;border:0;color:#fff;padding:.3rem;border-radius:.5rem}.mbar svg{width:1.5rem;height:1.5rem;display:block}
+ aside{display:none;width:100%;height:auto;position:static;max-height:75vh;overflow-y:auto}aside.open{display:flex}
+ aside .logo,aside .nm,aside .bd{display:none}aside nav{margin-top:0}.mi.out{margin-top:.5rem}
+ main{padding:1.1rem 1rem 2.5rem}.who{display:none}.sr{grid-template-columns:1fr}.cover{padding:1.4rem}.cover h1{font-size:1.6rem}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
 </head>
 <body>
 
-<div class="login-container">
-  <!-- GANTI DENGAN URL LOGO ASLI SEKOLAH ANDA -->
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Logo_SMK_Ciledug_Al_Musaddadiyah.png/200px-Logo_SMK_Ciledug_Al_Musaddadiyah.png" alt="Logo SMK CALM" class="login-logo">
-  <h1 class="login-title">Portal LMS</h1>
-  <p class="login-subtitle">Masuk untuk melanjutkan belajar</p>
-  <div id="pesan" class="alert"></div>
-  <form id="formLogin">
-    <div class="form-group">
-      <label for="username">Username / NISN / NIP</label>
-      <input type="text" id="username" class="form-control" placeholder="Masukkan username" required>
+<div id="login" class="lw">
+  <div class="ls">
+    <div class="br"><span class="lg"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt="Logo SMK CALM"></span><div><b>SMK CALM</b><small>Yayasan Al-Musaddadiyah Garut</small></div></div>
+    <div class="hero-l">
+      <h1>Belajar lebih terarah, dalam satu portal.</h1>
+      <p>Kelas, materi, tugas, dan nilai tersusun rapi. Guru menyampaikan pembelajaran, siswa menyelesaikannya dari mana saja.</p>
+      <ul class="fe"><li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6M12 10h.01"/></svg></span><div><b>Kelas</b><span>Gabung dengan kode kelas, semua pelajaran ada di satu tempat</span></div></li><li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3Z"/><path d="M5 17a3 3 0 0 1 3-3h11M9 8h6M9 11h4"/></svg></span><div><b>Materi</b><span>Berkas dan tautan dari guru, siap dibuka kapan saja</span></div></li><li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="17" rx="2.5"/><path d="M9 4V3h6v1M8.5 12.5l2 2 4.5-4.5M8.5 18h7"/></svg></span><div><b>Tugas</b><span>Kumpulkan sebelum batas waktu dan pantau statusnya</span></div></li><li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V11M10 20V5M16 20v-7M22 20H2"/><path d="m3 7 5-3 5 4 7-5"/></svg></span><div><b>Nilai</b><span>Lihat nilai dan umpan balik langsung dari guru</span></div></li></ul>
     </div>
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" id="password" class="form-control" placeholder="Masukkan password" required>
-    </div>
-    <button type="submit" id="btnSubmit" class="btn-login">Masuk Sistem</button>
-  </form>
+    <div class="lf"><p class="accr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.4 1.8 3-.2 1 2.8 2.5 1.7-.9 2.9.9 2.9-2.5 1.7-1 2.8-3-.2L12 21l-2.4-1.8-3 .2-1-2.8-2.5-1.7.9-2.9-.9-2.9 2.5-1.7 1-2.8 3 .2z"/><path d="m9 12 2 2 4-4"/></svg><span><b>Terakreditasi A</b><small>BAN-PDM</small></span></p><p>&copy; 2026 SMKS Ciledug Al-Musaddadiyah Garut</p></div>
+  </div>
+  <div class="lm"><div class="lc">
+    <div class="mbrand"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt="Logo SMK CALM"><div><b>SMK CALM</b><small>Portal LMS</small></div></div>
+    <form id="lform" novalidate>
+      <h2>Selamat datang kembali</h2><p class="sub">Masuk dengan akun sekolah Anda untuk melanjutkan.</p>
+      <label class="fl" for="u">Username / NISN / NIP</label>
+      <div class="fd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><input id="u" class="fld" placeholder="Masukkan username" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false"></div>
+      <div class="labrow"><label class="fl" for="pw">Sandi</label><span id="caps" class="caps hide" role="status">Caps Lock aktif</span></div>
+      <div class="fd pw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><input id="pw" type="password" class="fld" placeholder="Masukkan sandi" autocomplete="current-password">
+        <button type="button" class="eye" id="eye" aria-label="Tampilkan sandi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
+      <label class="rem"><input type="checkbox" id="rem"><span>Ingat username saya</span></label>
+      <p id="lmsg" class="alert hide" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span></span></p>
+      <button class="sb" id="lbtn">Masuk</button>
+      <div class="srv" id="srv" data-s=""><i class="dot"></i><span id="srvt">Mengecek server...</span><button type="button" class="link hide" id="srvr">Coba lagi</button></div>
+    </form>
+    <p class="help">Lupa sandi? Hubungi pihak sekolah.</p>
+  </div></div>
 </div>
 
+<div id="app" class="hide">
+  <header class="mbar"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt=""><b>SMK CALM</b><button onclick="document.querySelector('aside').classList.toggle('open')" aria-label="Buka menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></header>
+  <aside aria-label="Menu utama">
+    <img class="logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt=""><p class="nm">SMK CALM</p><span class="bd" id="wr"></span>
+    <nav>
+      <button class="mi" id="n-home" onclick="home()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg><span>Kelas</span></button>
+      <button class="mi" id="n-grades" onclick="grades()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Nilai saya</span></button>
+    </nav>
+    <button class="mi out" onclick="logout(true)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg><span>Keluar</span></button>
+  </aside>
+  <main id="main"></main>
+</div>
+<div id="toast" class="hide" role="status"></div>
+
 <script>
-  // 1. PASTIKAN URL INI ADALAH URL DEPLOYMENT TERBARU ANDA (yang berakhiran /exec)
-  const API_URL = "https://script.google.com/macros/s/AKfycbw.../exec"; 
+// Ganti dengan URL deployment Apps Script Anda (berakhiran /exec)
+const API = "https://script.google.com/macros/s/AKfycbw.../exec";
 
-  const form = document.getElementById('formLogin');
-  const pesanDiv = document.getElementById('pesan');
-  const btnSubmit = document.getElementById('btnSubmit');
+let S = null, C = null; // sesi, kelas aktif
+try { S = JSON.parse(sessionStorage.getItem('lms')); } catch (e) {}
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const isT = () => S && S.user.role !== 'siswa';
+const tgl = d => d ? new Date(d).toLocaleDateString('id-ID', {day:'numeric', month:'long', year:'numeric'}) : '';
+const view = h => $('#main').innerHTML = h;
 
-  form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+function toast(m, err) {
+  const t = $('#toast'); t.textContent = m; t.className = err ? 'e' : ''; clearTimeout(t._t);
+  t._t = setTimeout(() => t.className = 'hide', 3500);
+}
 
-    btnSubmit.textContent = "Memproses...";
-    btnSubmit.disabled = true;
-    pesanDiv.style.display = "none";
+async function api(action, data = {}) {
+  const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 30000);
+  try {
+    const r = await fetch(API, { method: 'POST', body: new URLSearchParams({ action, token: S ? S.token : '', ...data }), signal: ctl.signal });
+    const j = await r.json();
+    if (j.status !== 'success') { if (j.code === 'auth') logout(); throw new Error(j.message); }
+    return j;
+  } catch (e) {
+    throw new Error(e.name === 'AbortError' ? 'Server terlalu lama merespons. Coba lagi.' : e.message === 'Failed to fetch' ? 'Tidak dapat terhubung. Periksa internet Anda.' : e.message);
+  } finally { clearTimeout(to); }
+}
 
+/* ---------- masuk & keluar ---------- */
+const lerr = m => { const a = $('#lmsg'); a.querySelector('span').textContent = m || ''; a.classList.toggle('hide', !m); };
+$('#lform').addEventListener('submit', async e => {
+  e.preventDefault();
+  const u = $('#u').value.trim(), pw = $('#pw').value;
+  if (!u || !pw) { lerr('Isi username dan sandi terlebih dahulu.'); return; }
+  const b = $('#lbtn'); b.disabled = true; b.innerHTML = '<span class="spin"></span>Memeriksa...'; lerr('');
+  try { S = await api('login', { username: u, password: pw }); sessionStorage.setItem('lms', JSON.stringify(S)); try { $('#rem').checked ? localStorage.setItem('lms_u', u) : localStorage.removeItem('lms_u'); } catch (x) {} start(); }
+  catch (er) { lerr(er.message); }
+  b.disabled = false; b.textContent = 'Masuk';
+});
+$('#eye').onclick = () => { const p = $('#pw'); const show = p.type === 'password'; p.type = show ? 'text' : 'password'; $('#eye').setAttribute('aria-label', show ? 'Sembunyikan sandi' : 'Tampilkan sandi'); };
+$('#pw').addEventListener('keydown', e => $('#caps').classList.toggle('hide', !e.getModifierState('CapsLock')));
+$('#pw').addEventListener('blur', () => $('#caps').classList.add('hide'));
+async function cekServer() {
+  const s = $('#srv'); s.dataset.s = ''; $('#srvt').textContent = 'Mengecek server...'; $('#srvr').classList.add('hide');
+  try { const r = await fetch(API); const j = await r.json(); if (j.status !== 'success') throw 0; s.dataset.s = 'ok'; $('#srvt').textContent = 'Server terhubung'; }
+  catch (e) { s.dataset.s = 'bad'; $('#srvt').textContent = 'Server tidak merespons'; $('#srvr').classList.remove('hide'); }
+}
+$('#srvr').onclick = cekServer;
+
+function logout(call) {
+  if (call && S) api('logout').catch(() => {});
+  S = null; sessionStorage.removeItem('lms');
+  $('#app').classList.add('hide'); $('#login').classList.remove('hide'); $('#pw').value = ''; cekServer();
+}
+function start() {
+  $('#login').classList.add('hide'); $('#app').classList.remove('hide');
+  $('#wr').textContent = S.user.role === 'siswa' ? 'SISWA' : S.user.role === 'admin' ? 'ADMIN' : 'GURU / PENGAJAR'; $('#wr').className = 'bd ' + S.user.role; document.querySelector('aside').classList.remove('open');
+  $('#n-grades').classList.toggle('hide', isT()); home();
+}
+function nav(k) { document.querySelectorAll('.mi').forEach(b => b.classList.toggle('on', b.id === 'n-' + k)); }
+
+/* ---------- formulir modal ---------- */
+function modal(title, fields, fn, cta) {
+  const m = document.createElement('div'); m.className = 'ov';
+  m.innerHTML = `<form class="md"><h3>${title}</h3>${fields.map(f => `<label>${f.l}${f.t === 'textarea'
+    ? `<textarea name="${f.n}"${f.r === false ? '' : ' required'}></textarea>`
+    : `<input name="${f.n}" type="${f.t || 'text'}"${f.v ? ` value="${f.v}"` : ''}${f.r === false ? '' : ' required'}>`}</label>`).join('')}
+    <div class="row"><button type="button" class="btn2" data-x>Batal</button><button class="btn">${cta || 'Simpan'}</button></div></form>`;
+  document.body.appendChild(m);
+  const close = () => m.remove();
+  m.querySelector('[data-x]').onclick = close;
+  m.onmousedown = e => { if (e.target === m) close(); };
+  const f = m.querySelector('form'); f.querySelector('input,textarea').focus();
+  f.onsubmit = async e => {
+    e.preventDefault(); const b = f.querySelector('.btn'); b.disabled = true; b.textContent = 'Menyimpan...';
     try {
-      // MENGGUNAKAN FORMDATA UNTUK MENGHINDARI CORS PREFLIGHT
-      const formData = new URLSearchParams();
-      formData.append('action', 'login');
-      formData.append('username', username);
-      formData.append('password', password);
-
-      // Timeout 10 detik agar tidak loading terus
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000);
-
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        body: formData,
-        signal: controller.signal
-      });
-      clearTimeout(timeoutId);
-
-      const rawText = await response.text(); 
-      console.log("Respon Mentah dari Google:", rawText); // Cek di F12 Console
-
-      const result = JSON.parse(rawText);
-
-      if (result.status === "success") {
-        pesanDiv.className = "alert alert-success";
-        pesanDiv.innerHTML = `<b>Berhasil!</b> Selamat datang, ${result.user.full_name} (${result.user.role}).`;
-        pesanDiv.style.display = "block";
-        localStorage.setItem('userLMS', JSON.stringify(result.user));
-        
-        // Nanti redirect ke dashboard di sini
-      } else {
-        pesanDiv.className = "alert alert-error";
-        pesanDiv.textContent = result.message;
-        pesanDiv.style.display = "block";
+      const d = Object.fromEntries([...new FormData(f)].filter(([, v]) => typeof v === 'string'));
+      const file = f.querySelector('input[type=file]')?.files[0];
+      if (file) {
+        if (file.size > 10 * 1048576) throw new Error('Ukuran berkas maksimal 10 MB.');
+        d.file_data = await new Promise((ok, no) => { const r = new FileReader(); r.onload = () => ok(r.result.split(',')[1]); r.onerror = no; r.readAsDataURL(file); });
+        d.file_name = file.name; d.file_type = file.type;
       }
+      await fn(d); close();
+    } catch (er) { toast(er.message, true); b.disabled = false; b.textContent = cta || 'Simpan'; }
+  };
+}
 
-    } catch (error) {
-      console.error("Error Detail:", error);
-      pesanDiv.className = "alert alert-error";
-      if (error.name === 'AbortError') {
-        pesanDiv.textContent = "Koneksi ke server Timeout (Terlalu lama). Periksa internet atau URL API.";
-      } else {
-        pesanDiv.textContent = "Gagal terhubung ke server. (CORS/Network Error). Cek Console F12.";
-      }
-      pesanDiv.style.display = "block";
-    } finally {
-      btnSubmit.textContent = "Masuk Sistem";
-      btnSubmit.disabled = false;
-    }
-  });
+/* ---------- beranda ---------- */
+async function home() {
+  nav('home'); view('<p class="empty">Memuat kelas...</p>');
+  try {
+    const { classes } = await api('classes');
+    view(`<div class="who"><span>${esc(S.user.full_name)}</span></div><div class="top"><div><h2>Halo, ${esc(S.user.full_name.split(' ')[0])}</h2><p>${classes.length ? 'Pilih kelas untuk melihat materi dan tugas.' : ''}</p></div>
+      <div class="acts"><button class="btn" onclick="${isT() ? 'newClass()' : 'joinClass()'}">${isT() ? 'Buat kelas' : 'Gabung kelas'}</button></div></div>
+      ${classes.length ? `<div class="grid">${classes.map(c => `<button class="card cls" onclick="openClass('${c.id}')"><span class="s">${esc(c.subject)}</span><h3>${esc(c.name)}</h3><small>${esc(c.teacher_name)}</small></button>`).join('')}</div>`
+      : `<div class="card empty"><b>Belum ada kelas</b>${isT() ? 'Buat kelas pertama Anda, lalu bagikan kodenya ke siswa.' : 'Minta kode kelas dari guru, lalu pilih Gabung kelas.'}</div>`}`);
+  } catch (e) { view(`<div class="card empty"><b>Kelas gagal dimuat</b>${esc(e.message)}<br><br><button class="btn" onclick="home()">Coba lagi</button></div>`); }
+}
+const newClass = () => modal('Buat kelas', [{n:'name',l:'Nama kelas (mis. XI TKJ 1)'},{n:'subject',l:'Mata pelajaran'},{n:'description',l:'Deskripsi (opsional)',t:'textarea',r:false}],
+  async d => { await api('createClass', d); toast('Kelas dibuat'); home(); }, 'Buat kelas');
+const joinClass = () => modal('Gabung kelas', [{n:'code',l:'Kode kelas dari guru'}],
+  async d => { const r = await api('joinClass', d); toast('Berhasil bergabung'); openClass(r.class_id); }, 'Gabung');
+
+/* ---------- kelas ---------- */
+async function openClass(id, tab) {
+  nav('home'); view('<p class="empty">Memuat kelas...</p>');
+  try { C = await api('classDetail', { class_id: id }); drawClass(tab || 'ann'); }
+  catch (e) { toast(e.message, true); home(); }
+}
+const reload = tab => openClass(C.cls.id, tab);
+const empty = (t, s) => `<div class="card empty"><b>${t}</b>${s}</div>`;
+
+function drawClass(tab) {
+  const { cls } = C, t = isT();
+  const add = (label, fn) => t ? `<div class="row" style="margin-bottom:14px"><button class="btn" onclick="${fn}">${label}</button></div>` : '';
+  let body = '';
+  if (tab === 'ann') body = add('Buat pengumuman', 'addAnn()') + (C.announcements.map(a => `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${esc(a.author)} • ${tgl(a.created)}</div><p>${esc(a.body)}</p></div>`).join('') || empty('Belum ada pengumuman', 'Pengumuman dari guru akan tampil di sini.'));
+  if (tab === 'mat') body = add('Tambah materi', 'addMat()') + (C.materials.map(m => `<div class="card item"><h4>${esc(m.title)}</h4><div class="meta">${tgl(m.created)}</div>${m.description ? `<p>${esc(m.description)}</p>` : ''}${m.file_url ? `<p><a href="${esc(m.file_url)}" target="_blank" rel="noopener">Buka berkas</a></p>` : ''}</div>`).join('') || empty('Belum ada materi', 'Materi yang diunggah guru akan tampil di sini.'));
+  if (tab === 'asg') body = add('Buat tugas', 'addAsg()') + (C.assignments.map(a => asgCard(a, t)).join('') || empty('Belum ada tugas', 'Tugas dari guru akan tampil di sini.'));
+  view(`<button class="back" onclick="home()">Kembali ke daftar kelas</button>
+    <div class="cover"><h1>${esc(cls.name)}</h1><p>${esc(cls.subject)} • ${esc(cls.teacher_name)}${t ? ` • ${C.memberCount} siswa` : ''}</p>${t ? `<span class="chip">Kode kelas: ${esc(cls.code)}</span>` : ''}</div>
+    <div class="tabs">${[['ann','Pengumuman'],['mat','Materi'],['asg','Tugas']].map(([k, l]) => `<button class="${k === tab ? 'on' : ''}" onclick="drawClass('${k}')">${l}</button>`).join('')}</div>${body}`);
+}
+
+function asgCard(a, t) {
+  const subs = C.submissions.filter(s => s.assignment_id === a.id);
+  let foot = '';
+  if (t) {
+    foot = `<details><summary>${subs.length} pengumpulan</summary>${subs.map(s => `<div class="sr"><div><b>${esc(s.full_name)}</b><br>${s.file_url ? `<a href="${esc(s.file_url)}" target="_blank" rel="noopener">Buka berkas</a> ` : ''}<span class="meta">${esc(s.note)}</span></div>
+      <input id="sc-${s.id}" type="number" min="0" max="${a.max_score}" value="${esc(s.score)}" placeholder="/${a.max_score}" aria-label="Nilai"><input id="fb-${s.id}" value="${esc(s.feedback)}" placeholder="Umpan balik" aria-label="Umpan balik">
+      <button class="btn" onclick="gradeIt('${s.id}')">Simpan</button></div>`).join('') || '<p class="meta" style="margin-top:8px">Belum ada yang mengumpulkan.</p>'}</details>`;
+  } else {
+    const s = subs[0];
+    foot = `<div class="row" style="justify-content:space-between;align-items:center;margin-top:10px"><span class="badge ${s ? (s.score !== '' ? 'ok' : 'warn') : ''}">${s ? (s.score !== '' ? `Nilai ${s.score}/${a.max_score}` : 'Menunggu dinilai') : 'Belum dikumpulkan'}</span>
+      <button class="btn${s ? '2' : ''}" onclick="submitIt('${a.id}')">${s ? 'Kumpulkan ulang' : 'Kumpulkan tugas'}</button></div>${s && s.feedback ? `<p class="meta">Umpan balik: ${esc(s.feedback)}</p>` : ''}`;
+  }
+  return `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${a.due ? 'Batas: ' + tgl(a.due) + ' • ' : ''}Nilai maksimal ${a.max_score}</div>${a.description ? `<p>${esc(a.description)}</p>` : ''}${foot}</div>`;
+}
+
+const cid = () => ({ class_id: C.cls.id });
+const addAnn = () => modal('Buat pengumuman', [{n:'title',l:'Judul'},{n:'body',l:'Isi pengumuman',t:'textarea'}], async d => { await api('addAnnouncement', {...d, ...cid()}); toast('Pengumuman diterbitkan'); reload('ann'); }, 'Terbitkan');
+const addMat = () => modal('Tambah materi', [{n:'title',l:'Judul materi'},{n:'description',l:'Keterangan (opsional)',t:'textarea',r:false},{n:'file',l:'Berkas (maks. 10 MB)',t:'file',r:false},{n:'link',l:'Atau tautan (opsional)',t:'url',r:false}], async d => { await api('addMaterial', {...d, ...cid()}); toast('Materi ditambahkan'); reload('mat'); }, 'Tambah materi');
+const addAsg = () => modal('Buat tugas', [{n:'title',l:'Judul tugas'},{n:'description',l:'Petunjuk (opsional)',t:'textarea',r:false},{n:'due',l:'Batas pengumpulan',t:'date',r:false},{n:'max_score',l:'Nilai maksimal',t:'number',v:100}], async d => { await api('addAssignment', {...d, ...cid()}); toast('Tugas dibuat'); reload('asg'); }, 'Buat tugas');
+const submitIt = id => modal('Kumpulkan tugas', [{n:'file',l:'Berkas (maks. 10 MB)',t:'file',r:false},{n:'note',l:'Catatan (opsional)',t:'textarea',r:false}], async d => { await api('submit', {...d, assignment_id: id}); toast('Tugas terkumpul'); reload('asg'); }, 'Kumpulkan');
+async function gradeIt(id) {
+  try { await api('grade', { submission_id: id, score: $('#sc-' + id).value, feedback: $('#fb-' + id).value }); toast('Nilai tersimpan'); }
+  catch (e) { toast(e.message, true); }
+}
+
+/* ---------- nilai siswa ---------- */
+async function grades() {
+  nav('grades'); view('<p class="empty">Memuat nilai...</p>');
+  try {
+    const { grades } = await api('myGrades');
+    view(`<div class="top"><div><h2>Nilai saya</h2><p>Semua tugas yang sudah Anda kumpulkan.</p></div></div>${grades.length
+      ? `<div class="card" style="overflow-x:auto"><table><tr><th>Kelas</th><th>Tugas</th><th>Nilai</th><th>Umpan balik</th></tr>${grades.map(g => `<tr><td>${esc(g.class_name)}</td><td>${esc(g.title)}</td><td>${g.score !== '' ? `<b>${g.score}</b>/${g.max_score}` : '<span class="badge warn">Menunggu</span>'}</td><td>${esc(g.feedback)}</td></tr>`).join('')}</table></div>`
+      : empty('Belum ada nilai', 'Kumpulkan tugas di kelas Anda, nilainya akan muncul di sini.')}`);
+  } catch (e) { toast(e.message, true); }
+}
+
+try { const ru = localStorage.getItem('lms_u'); if (ru) { $('#u').value = ru; $('#rem').checked = true; } } catch (x) {}
+if (S) start(); else cekServer();
 </script>
-
 </body>
 </html>
