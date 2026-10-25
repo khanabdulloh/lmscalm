@@ -446,6 +446,64 @@ tbody tr{transition:background .15s}tbody tr:hover{background:#f6f9fe}
 .ldc i:nth-child(2){animation-delay:.15s}.ldc i:nth-child(3){animation-delay:.3s}
 @keyframes ldb{0%,80%,100%{transform:scale(.6);opacity:.5}40%{transform:scale(1);opacity:1}}
 @media(max-width:767px){.ldc{top:4.4rem}}
+
+/* ===== PREMIUM LAYER v2 ===== */
+:root{--ink:#14213d;--bg:#f3f6fb;--shadow-sm:0 1px 2px rgba(10,34,80,.05),0 6px 16px -8px rgba(10,34,80,.1);--shadow-md:0 14px 34px -16px rgba(10,34,80,.26);--r:1.2rem}
+body{background:radial-gradient(64rem 28rem at 100% -8%,#e4edfb,transparent 62%),radial-gradient(40rem 22rem at -5% 105%,#f7f0de,transparent 60%),var(--bg);background-attachment:fixed}
+::selection{background:#cfe0ff}html{scroll-behavior:smooth}*{scrollbar-width:thin;scrollbar-color:#c3cfe3 transparent}
+.card{box-shadow:var(--shadow-sm);border-color:#e3e9f3}
+.btn{transition:transform .15s,box-shadow .2s}.btn:hover{transform:translateY(-1px)}.btn:active{transform:none}.btn:disabled,.btn2:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.pill.on{background:linear-gradient(180deg,#1556c0,var(--navy))}
+/* --- Kuis: kartu --- */
+.qc{position:relative;overflow:hidden;margin-bottom:1rem;padding:1.4rem 1.5rem}
+.qc::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(var(--navy),#4a76c9)}.qc.done::before{background:linear-gradient(#059669,#34d399)}
+.qch{display:flex;gap:1rem;align-items:flex-start}
+.qic{flex:none;display:grid;place-items:center;width:2.8rem;height:2.8rem;border-radius:.9rem;background:var(--soft);color:var(--navy)}.qic svg{width:1.35rem;height:1.35rem}
+.qc h4{font-family:var(--serif);font-size:1.25rem;font-weight:600;color:var(--navyd);margin:0}
+.qc p{font-size:.88rem;color:var(--mut);margin-top:.5rem}
+.qchips{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.55rem}.qchips span{font-size:.72rem;font-weight:600;padding:.2rem .65rem;border-radius:99px;background:var(--bg);color:var(--mut);border:1px solid var(--line)}
+.qft{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;margin-top:1.1rem;padding-top:1rem;border-top:1px dashed var(--line2)}
+.qsc{font-size:1.5rem;font-weight:800;color:var(--navy);line-height:1}.qsc small{font-size:.75rem;color:var(--mut);font-weight:600}
+.qst{display:flex;align-items:center;gap:1.4rem;flex:1;min-width:14rem}.qst div:not(.qbm){line-height:1.1}.qst b{display:block;font-size:1.3rem;color:var(--navyd)}.qst small{font-size:.7rem;color:var(--mut)}
+.qbm{flex:1;height:.45rem;border-radius:99px;background:var(--line);overflow:hidden}.qbm i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--navy),#4a76c9)}
+.qc details{margin-top:.9rem}.qc summary{cursor:pointer;font-size:.85rem;font-weight:700;color:var(--navy)}
+/* --- Kuis: modal pembuka --- */
+.qi{max-width:27rem;text-align:center}.qi h3{font-family:var(--serif);font-size:1.6rem;color:var(--navyd)}
+.qi-ic{display:grid;place-items:center;width:3.6rem;height:3.6rem;margin:0 auto 1rem;border-radius:1.1rem;color:#fff;background:linear-gradient(140deg,#1556c0,#0a2250);box-shadow:0 14px 24px -12px rgba(11,61,145,.8)}.qi-ic svg{width:1.7rem;height:1.7rem}
+.qi .sub{margin:.4rem 0 1.2rem;color:var(--mut);font-size:.92rem}
+.qi-g{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem;margin-bottom:1.1rem}.qi-g div{padding:.8rem .4rem;border-radius:.9rem;background:var(--soft)}.qi-g b{display:block;font-size:1.4rem;color:var(--navy)}.qi-g small{font-size:.72rem;color:var(--mut);font-weight:600}
+.qi-l{list-style:none;text-align:left;font-size:.84rem;color:var(--mut);display:grid;gap:.5rem;margin-bottom:.6rem}.qi-l li{padding-left:1.4rem;position:relative}.qi-l li::before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:800}
+/* --- Kuis: pengerjaan siswa --- */
+.qbar{border-radius:1.1rem}.qpg{height:.35rem;margin:-.55rem .4rem 1.2rem;border-radius:99px;background:var(--line);overflow:hidden}.qpg i{display:block;height:100%;width:0;background:linear-gradient(90deg,#1556c0,var(--gold));transition:width .35s}
+.qw{display:grid;grid-template-columns:minmax(0,1fr) 16rem;gap:1.2rem;align-items:start}
+.qq{background:#fff;border:1px solid var(--line);border-radius:1.3rem;padding:clamp(1.2rem,3vw,2rem);box-shadow:var(--shadow-md);animation:fadeUp .3s both}
+.qqh{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
+.qno{font-weight:800;color:var(--navy);font-size:.85rem;letter-spacing:.06em;text-transform:uppercase}.qno small{color:var(--faint);font-weight:600}
+.qflag{border:1px solid var(--line2);background:#fff;border-radius:99px;padding:.35rem .9rem;font-size:.78rem;font-weight:700;color:var(--mut);transition:.15s}.qflag.on{background:#fff1cf;border-color:#f5c451;color:#92400e}
+.qtm{height:.3rem;margin-bottom:1.1rem;border-radius:99px;background:var(--line);overflow:hidden}.qtm i{display:block;height:100%;width:100%;background:linear-gradient(90deg,#f59e0b,#e11d48);transition:width 1s linear}
+.qq h3{font-family:var(--serif);font-size:clamp(1.25rem,2.4vw,1.6rem);line-height:1.4;font-weight:600;color:var(--navyd);margin-bottom:1.4rem;white-space:pre-wrap}
+.qos{display:grid;gap:.7rem}
+.qo{display:flex;align-items:center;gap:.9rem;width:100%;text-align:left;padding:.9rem 1rem;border:1.5px solid var(--line2);border-radius:1rem;background:#fff;font-size:.97rem;transition:.18s}
+.qo b{flex:none;display:grid;place-items:center;width:2rem;height:2rem;border-radius:.65rem;background:var(--soft);color:var(--navy);font-size:.82rem;transition:.18s}
+.qo:hover{border-color:#8fa9d8;transform:translateX(3px)}.qo.on{border-color:var(--navy);background:var(--soft);box-shadow:0 0 0 3px rgba(11,61,145,.12)}.qo.on b{background:var(--navy);color:#fff}
+.qfoot{display:flex;justify-content:space-between;gap:.8rem;margin-top:1.2rem}
+.qside{position:sticky;top:6.5rem;padding:1.1rem;background:#fff;border:1px solid var(--line);border-radius:1.2rem;box-shadow:var(--shadow-sm)}.qside h5{font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin-bottom:.8rem}
+.qnav{display:grid;grid-template-columns:repeat(5,1fr);gap:.4rem}.qnav button{aspect-ratio:1;border:1px solid var(--line2);border-radius:.6rem;background:#fff;font-size:.8rem;font-weight:700;color:var(--mut)}
+.qnav button.ok{background:#d9f7e8;border-color:#86e0b4;color:#065f46}.qnav button.fl{background:#fff1cf;border-color:#f5c451;color:#92400e}.qnav button.cur{background:var(--navy);border-color:var(--navy);color:#fff}.qnav button:disabled{cursor:default}
+.qleg{display:flex;gap:.8rem;flex-wrap:wrap;margin:.9rem 0;font-size:.7rem;color:var(--mut)}.qleg i{display:inline-block;width:.6rem;height:.6rem;border-radius:3px;margin-right:.3rem;background:#86e0b4}.qleg i.f{background:#f5c451}
+.qres{text-align:center;max-width:30rem;margin:2rem auto;padding:2.5rem 1.5rem;background:#fff;border:1px solid var(--line);border-radius:1.6rem;box-shadow:var(--shadow-md);animation:fadeUp .4s both}
+.qring{position:relative;width:10rem;height:10rem;margin:0 auto 1.2rem}.qring svg{transform:rotate(-90deg)}.qring circle{fill:none;stroke-width:10;stroke-linecap:round}.qring .bg{stroke:var(--line)}.qring .fg{stroke:var(--navy);stroke-dasharray:314;transition:stroke-dashoffset 1.2s cubic-bezier(.2,.7,.2,1)}
+.qring b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--serif);font-size:2.4rem;color:var(--navyd)}
+.qres h3{font-family:var(--serif);font-size:1.7rem;color:var(--navyd)}.qres p{color:var(--mut);margin:.5rem 0 1.4rem;font-size:.92rem}
+/* --- Kuis: pembuat (guru) --- */
+.qset{display:grid;grid-template-columns:1fr 1fr;gap:.2rem 1rem;padding:1rem;margin-bottom:1rem;border:1px solid var(--line);border-radius:1rem;background:var(--soft)}.qset .full{grid-column:1/-1}
+.qpre{display:flex;gap:.4rem;flex-wrap:wrap;margin:-.2rem 0 .8rem}.qpre button{border:1px solid var(--line2);background:#fff;border-radius:99px;padding:.25rem .8rem;font-size:.78rem;font-weight:700;color:var(--navy)}.qpre button:hover,.qpre button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.sw{display:flex!important;align-items:center;gap:.6rem;padding:.55rem .8rem;margin:.2rem 0;border-radius:.8rem;background:#fff;border:1px solid var(--line);font-size:.85rem;font-weight:600}.sw input{width:1.05rem;height:1.05rem;accent-color:var(--navy);margin:0}
+.oi em{flex:none;width:1.6rem;font-style:normal;font-weight:800;font-size:.8rem;color:var(--faint)}
+.qb{box-shadow:var(--shadow-sm);background:#fff}.qh .link{margin-left:.6rem}
+.qbulk{margin-bottom:1rem;padding:.9rem 1rem;border:1px dashed var(--line2);border-radius:1rem}.qbulk summary{cursor:pointer;font-weight:700;font-size:.88rem;color:var(--navy)}.qbulk textarea{min-height:9rem;margin:.7rem 0;font-family:ui-monospace,monospace;font-size:.8rem}
+.qsum{position:sticky;top:0;z-index:2;margin:-.2rem 0 1rem;padding:.5rem .9rem;border-radius:.8rem;background:var(--navyd);color:#fff;font-size:.8rem;font-weight:600}
+@media(max-width:900px){.qw{grid-template-columns:1fr}.qside{position:static;order:-1}.qnav{grid-template-columns:repeat(8,1fr)}.qset{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -1093,76 +1151,145 @@ async function gradeIt(id) {
 }
 
 /* ===== KUIS ===== */
+const QCFG = /\n?\[\[cfg:(\{.*?\})\]\]\s*$/;
+const qcfg = d => { const m = String(d || '').match(QCFG); let c = {}; try { c = m ? JSON.parse(m[1]) : {}; } catch (e) {} return { c, text: String(d || '').replace(QCFG, '').trim() }; };
+const mmss = s => String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
+const seeded = (seed, arr) => { let h = 0; for (const ch of String(seed)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; const r = () => (h = (h * 1664525 + 1013904223) >>> 0) / 4294967296, a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const QICO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></svg>';
+
 function quizCard(q) {
-  const t = canManageCurrentClass(), readOnly = isReadOnlyMonitor(), at = C.attempts.filter(a => a.quiz_id === q.id);
-  let foot;
-  if (t) foot = `<details><summary>${at.filter(a => a.submitted).length} siswa selesai</summary>${at.map(a => `<div class="qr"><span>${esc(a.full_name)}</span><b>${a.submitted ? a.score + '/' + a.max : 'Mengerjakan'}</b></div>`).join('') || '<p class="meta" style="margin-top:8px">Belum ada.</p>'}</details>`;
-  else if (readOnly) foot = `<details><summary>${at.filter(a => a.submitted).length} siswa selesai • pemantauan</summary>${at.map(a => `<div class="qr"><span>${esc(a.full_name)}</span><b>${a.submitted ? a.score + '/' + a.max : 'Mengerjakan'}</b></div>`).join('') || '<p class="meta" style="margin-top:8px">Belum ada.</p>'}</details>`;
-  else { const a = at[0];
-    foot = `<div class="row" style="justify-content:space-between;align-items:center;margin-top:10px">${a && a.submitted ? `<span class="badge ok">Nilai ${a.score}/${a.max}</span>` : `<span class="badge">${a ? 'Sedang dikerjakan' : 'Belum dikerjakan'}</span><button class="btn" onclick="startQuiz('${q.id}')">${a ? 'Lanjutkan' : 'Mulai kuis'}</button>`}</div>`; }
-  return `<div class="card item"><h4>${esc(q.title)}</h4><div class="meta">${q.qcount} soal • ${q.duration} menit</div>${q.description ? `<p>${esc(q.description)}</p>` : ''}${foot}</div>`;
+  const t = canManageCurrentClass(), ro = isReadOnlyMonitor(), at = C.attempts.filter(a => a.quiz_id === q.id), { c, text } = qcfg(q.description);
+  const fin = at.filter(a => a.submitted), pc = a => a.max ? Math.round(a.score / a.max * 100) : 0;
+  const avg = fin.length ? Math.round(fin.reduce((s, a) => s + pc(a), 0) / fin.length) : 0;
+  const chips = [q.qcount + ' soal', q.duration + ' menit', c.qt ? c.qt + ' dtk/soal' : '', c.shuf ? 'Soal diacak' : '', c.pass ? 'Lulus ≥ ' + c.pass : ''].filter(Boolean).map(x => `<span>${x}</span>`).join('');
+  const rows = at.map(a => `<div class="qr"><span>${esc(a.full_name)}</span><b>${a.submitted ? a.score + '/' + a.max : 'Mengerjakan'}</b></div>`).join('') || '<p class="meta">Belum ada.</p>';
+  let foot, done = false;
+  if (t || ro) foot = `<div class="qft"><div class="qst"><div><b>${fin.length}</b><small>selesai</small></div><div><b>${fin.length ? avg : '–'}</b><small>rata-rata</small></div><div class="qbm"><i style="width:${avg}%"></i></div></div></div><details><summary>Lihat hasil siswa${ro ? ' • pemantauan' : ''}</summary>${rows}</details>`;
+  else { const a = at[0]; done = !!(a && a.submitted);
+    const pass = done && c.pass ? (pc(a) >= c.pass ? '<span class="badge ok">Tuntas</span>' : '<span class="badge warn">Belum tuntas</span>') : '';
+    foot = `<div class="qft">${done ? `<div class="qsc">${a.score}<small> / ${a.max}</small></div>${pass}` : `<span class="badge${a ? ' warn' : ''}">${a ? 'Sedang dikerjakan' : 'Belum dikerjakan'}</span><button class="btn" onclick="startQuiz('${q.id}')">${a ? 'Lanjutkan' : 'Mulai kuis'}</button>`}</div>`; }
+  return `<div class="card qc${done ? ' done' : ''}"><div class="qch"><span class="qic">${QICO}</span><div><h4>${esc(q.title)}</h4><div class="qchips">${chips}</div></div></div>${text ? `<p>${esc(text)}</p>` : ''}${foot}</div>`;
 }
-async function startQuiz(id) {
-  const resume = C.attempts.some(a => a.quiz_id === id);
-  if (!resume && !confirm('Waktu berjalan setelah Anda menekan OK dan tidak dapat dijeda. Mulai sekarang?')) return;
-  try { takeQuiz(await api('startQuiz', { quiz_id: id })); }
-  catch (e) { toast(e.message, true); reload('qz'); }
+
+function startQuiz(id) {
+  const q = C.quizzes.find(x => x.id === id), resume = C.attempts.some(a => a.quiz_id === id), { c, text } = qcfg(q.description);
+  const m = document.createElement('div'); m.className = 'ov';
+  m.innerHTML = `<div class="md qi"><div class="qi-ic">${QICO}</div><h3>${esc(q.title)}</h3><p class="sub">${resume ? 'Lanjutkan kuis dari tempat kamu berhenti.' : 'Santai saja, ini kesempatan mengingat kembali materi. Kerjakan semampumu!'}</p><div class="qi-g"><div><b>${q.qcount}</b><small>Soal</small></div><div><b>${q.duration}</b><small>Menit</small></div><div><b>${c.qt || '∞'}</b><small>Dtk/soal</small></div></div><ul class="qi-l">${text ? `<li>${esc(text)}</li>` : ''}<li>Waktu berjalan setelah tombol Mulai ditekan dan tidak dapat dijeda.</li><li>Jawaban tersimpan otomatis. Tandai soal sulit dengan “Ragu-ragu”.</li>${c.qt ? '<li>Setiap soal punya batas waktu dan lanjut otomatis.</li>' : ''}</ul><div class="row"><button class="btn2" data-x>Nanti saja</button><button class="btn" data-go>${resume ? 'Lanjutkan' : 'Mulai sekarang'}</button></div></div>`;
+  document.body.appendChild(m);
+  m.querySelector('[data-x]').onclick = () => m.remove();
+  m.querySelector('[data-go]').onclick = async e => {
+    e.target.disabled = true; e.target.textContent = 'Menyiapkan...';
+    try { const d = await api('startQuiz', { quiz_id: id }); m.remove(); takeQuiz(d); }
+    catch (er) { m.remove(); toast(er.message, true); reload('qz'); }
+  };
 }
+
 function takeQuiz(d) {
   nav('home');
-  const key = 'qa_' + d.attempt_id, n = d.questions.length, end = Date.now() + d.left * 1000;
-  let ans = {}, done = false;
-  try { ans = JSON.parse(sessionStorage.getItem(key)) || {}; } catch (e) {}
-  view(`<div class="qbar"><div><b>${esc(d.quiz.title)}</b><span id="qp"></span></div><div class="qt" id="qt">--:--</div></div>
-    ${d.questions.map((q, i) => `<div class="card item"><h4>${i + 1}. ${esc(q.text)}</h4><div class="opts">${q.options.map((o, j) => `<label class="opt"><input type="radio" name="q${q.id}" value="${j}"${ans[q.id] === j ? ' checked' : ''}><span>${esc(o)}</span></label>`).join('')}</div></div>`).join('')}
-    <div class="row" style="margin-top:1.5rem"><button class="btn" id="qs" style="width:100%;padding:1rem;font-size:1rem">Kumpulkan Jawaban</button></div>`);
-  const prog = () => { $('#qp').textContent = `${Object.keys(ans).length} dari ${n} soal terjawab`; };
+  const { c } = qcfg(d.quiz.description), key = 'qa_' + d.attempt_id, qs = c.shuf ? seeded(d.attempt_id, d.questions) : d.questions;
+  const n = qs.length, end = Date.now() + d.left * 1000, qsec = +c.qt || 0;
+  let ans = {}, flg = {}, cur = 0, done = false, qEnd = 0;
+  try { ans = JSON.parse(sessionStorage.getItem(key)) || {}; flg = JSON.parse(sessionStorage.getItem(key + 'f')) || {}; } catch (e) {}
+  const save = () => { try { sessionStorage.setItem(key, JSON.stringify(ans)); sessionStorage.setItem(key + 'f', JSON.stringify(flg)); } catch (x) {} };
+  const optsOf = q => c.shufo ? seeded(d.attempt_id + q.id, q.options.map((o, j) => [o, j])) : q.options.map((o, j) => [o, j]);
+  view(`<div class="qbar"><div><b>${esc(d.quiz.title)}</b><span id="qp"></span></div><div class="qt" id="qt">--:--</div></div><div class="qpg"><i id="qpi"></i></div>
+    <div class="qw"><div id="qa"></div><aside class="qside"><h5>Navigasi soal</h5><div class="qnav" id="qn"></div><div class="qleg"><span><i></i>Terjawab</span><span><i class="f"></i>Ragu-ragu</span></div><button class="btn" style="width:100%" data-fin>Kumpulkan jawaban</button></aside></div>`);
+  const draw = () => {
+    const q = qs[cur], os = optsOf(q), answered = Object.keys(ans).length;
+    $('#qa').innerHTML = `<div class="qq"><div class="qqh"><span class="qno">Soal ${cur + 1} <small>dari ${n}</small></span><button class="qflag${flg[q.id] ? ' on' : ''}" data-flag>⚑ Ragu-ragu</button></div>${qsec ? '<div class="qtm"><i id="qti"></i></div>' : ''}<h3>${esc(q.text)}</h3><div class="qos">${os.map(([o, j], i) => `<button type="button" class="qo${ans[q.id] === j ? ' on' : ''}" data-opt="${j}"><b>${'ABCDEF'[i]}</b><span>${esc(o)}</span></button>`).join('')}</div></div><div class="qfoot">${qsec ? '<span></span>' : `<button class="btn2" data-prev${cur ? '' : ' disabled'}>← Sebelumnya</button>`}${cur < n - 1 ? '<button class="btn" data-next>Selanjutnya →</button>' : '<button class="btn" data-fin>Selesai & kumpulkan</button>'}</div>`;
+    $('#qn').innerHTML = qs.map((x, i) => `<button data-go="${i}" class="${i === cur ? 'cur' : ans[x.id] !== undefined ? 'ok' : ''}${flg[x.id] && i !== cur ? ' fl' : ''}"${qsec ? ' disabled' : ''}>${i + 1}</button>`).join('');
+    $('#qp').textContent = `${answered} dari ${n} soal terjawab`; $('#qpi').style.width = (answered / n * 100) + '%';
+  };
+  const go = i => { cur = Math.max(0, Math.min(n - 1, i)); qEnd = Date.now() + qsec * 1000; draw(); window.scrollTo({ top: 0, behavior: 'smooth' }); };
   const tick = () => {
     const s = Math.max(0, Math.round((end - Date.now()) / 1000)), t = $('#qt');
-    if (t) { t.textContent = String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); t.classList.toggle('low', s < 60); }
+    if (t) { t.textContent = mmss(s); t.classList.toggle('low', s < 60); }
+    if (qsec && $('#qti')) { const l = Math.max(0, (qEnd - Date.now()) / 1000); $('#qti').style.width = (l / qsec * 100) + '%'; if (l <= 0 && s > 0) { cur < n - 1 ? go(cur + 1) : fin(true); } }
     if (s <= 0) fin(true);
   };
+  const cleanup = () => { clearInterval(QT); window.onbeforeunload = null; document.onkeydown = null; $('#main').onclick = null; };
   const fin = async auto => {
     if (done) return;
     const left = n - Object.keys(ans).length;
-    if (!auto && left && !confirm(`Masih ada ${left} soal belum dijawab. Tetap kumpulkan?`)) return;
-    done = true; clearInterval(QT); $('#qs').disabled = true;
+    if (!auto && !confirm(left ? `Masih ada ${left} soal belum dijawab. Tetap kumpulkan?` : 'Kumpulkan jawaban sekarang?')) return;
+    done = true; clearInterval(QT);
     try {
       const r = await api('submitQuiz', { attempt_id: d.attempt_id, answers: JSON.stringify(ans) });
-      sessionStorage.removeItem(key); window.onbeforeunload = null; $('#main').onchange = null;
-      view(`<div class="card empty" style="padding:4rem 1rem"><b>${auto ? 'Waktu habis, jawaban dikumpulkan' : 'Kuis selesai'}</b>Nilai Anda <span style="font-size:2rem;font-weight:800;color:var(--navy);display:block;margin:1rem 0">${r.score} / ${r.max}</span>${r.late ? '<span class="badge warn" style="margin-bottom:1rem">Terlambat dikumpulkan</span>' : ''}<br><br><button class="btn" onclick="reload('qz')">Kembali ke kelas</button></div>`);
-    } catch (e) { done = false; $('#qs').disabled = false; toast(e.message, true); QT = setInterval(tick, 1000); }
+      sessionStorage.removeItem(key); sessionStorage.removeItem(key + 'f'); cleanup();
+      const p = r.max ? Math.round(r.score / r.max * 100) : 0, ok = !c.pass || p >= c.pass;
+      const msg = p >= 85 ? 'Luar biasa! Pemahamanmu sangat kuat.' : p >= 70 ? 'Bagus! Sedikit lagi sempurna.' : p >= 50 ? 'Lumayan. Ulangi bagian materi yang masih ragu.' : 'Jangan berkecil hati. Buka lagi materinya, kamu pasti bisa.';
+      view(`<div class="qres"><div class="qring"><svg viewBox="0 0 120 120" width="160" height="160"><circle class="bg" cx="60" cy="60" r="50"/><circle class="fg" id="qrf" cx="60" cy="60" r="50" style="stroke-dashoffset:314"/></svg><b>${p}</b></div><h3>${auto ? 'Waktu habis, jawaban terkumpul' : 'Kuis selesai'}</h3><p>Benar ${r.score} dari ${r.max} soal. ${msg}</p><div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.2rem">${c.pass ? `<span class="badge ${ok ? 'ok' : 'warn'}">${ok ? 'Tuntas' : 'Belum tuntas (min. ' + c.pass + ')'}</span>` : ''}${r.late ? '<span class="badge warn">Terlambat dikumpulkan</span>' : ''}</div><button class="btn" onclick="reload('qz')">Kembali ke kelas</button></div>`);
+      requestAnimationFrame(() => setTimeout(() => { const f = $('#qrf'); if (f) f.style.strokeDashoffset = 314 - 314 * p / 100; }, 80));
+    } catch (e) { done = false; toast(e.message, true); QT = setInterval(tick, 500); }
   };
-  $('#main').onchange = e => { const r = e.target; if (r.type !== 'radio') return; ans[r.name.slice(1)] = +r.value; try { sessionStorage.setItem(key, JSON.stringify(ans)); } catch (x) {} prog(); };
-  $('#qs').onclick = () => fin(false);
+  $('#main').onclick = e => {
+    if (!$('.qbar')) { $('#main').onclick = null; return; }
+    const b = e.target.closest('button'); if (!b || done) return; const q = qs[cur];
+    if (b.dataset.opt !== undefined) { ans[q.id] = +b.dataset.opt; save(); draw(); }
+    else if (b.hasAttribute('data-flag')) { flg[q.id] = !flg[q.id]; if (!flg[q.id]) delete flg[q.id]; save(); draw(); }
+    else if (b.hasAttribute('data-next')) go(cur + 1);
+    else if (b.hasAttribute('data-prev')) go(cur - 1);
+    else if (b.dataset.go !== undefined) go(+b.dataset.go);
+    else if (b.hasAttribute('data-fin')) fin(false);
+  };
+  document.onkeydown = e => {
+    if (!$('.qbar') || done || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+    const q = qs[cur], i = 'abcdef'.indexOf(e.key.toLowerCase()), k = +e.key;
+    if (e.key === 'ArrowRight') go(cur + 1); else if (e.key === 'ArrowLeft' && !qsec) go(cur - 1);
+    else { const o = optsOf(q)[k ? k - 1 : i]; if (o) { ans[q.id] = o[1]; save(); draw(); } }
+  };
   window.onbeforeunload = e => { e.preventDefault(); return ''; };
-  prog(); tick(); QT = setInterval(tick, 1000);
+  go(0); tick(); QT = setInterval(tick, 500);
 }
+
 function addQuiz() {
   const m = document.createElement('div'); m.className = 'ov'; let k = 0;
-  const blk = () => { k++; return `<div class="qb"><div class="qh"><b class="qn"></b><button type="button" class="link" data-rm style="font-size:.8rem">Hapus soal</button></div><label>Pertanyaan<textarea data-t></textarea></label><p class="hint">Isi minimal dua pilihan, lalu tandai jawaban yang benar.</p>${[0, 1, 2, 3].map(j => `<span class="oi"><input type="radio" name="c${k}" value="${j}"${j ? '' : ' checked'} aria-label="Jawaban benar"><input data-o placeholder="Pilihan ${'ABCD'[j]}"></span>`).join('')}</div>`; };
-  m.innerHTML = `<form class="md wide"><h3>Buat kuis</h3><label>Judul kuis<input name="title" required></label><label>Durasi (menit)<input name="duration" type="number" min="1" max="300" value="30" required></label><label>Petunjuk (opsional)<textarea name="description"></textarea></label><div id="qb">${blk()}</div><button type="button" class="btn2" id="qadd" style="margin-bottom:1rem">+ Tambah soal</button><div class="row" style="margin-top:1rem"><button type="button" class="btn2" data-x>Batal</button><button class="btn">Simpan kuis</button></div></form>`;
+  const blk = (d = {}) => { k++; const o = d.options || []; return `<div class="qb"><div class="qh"><b class="qn"></b><span><button type="button" class="link" data-dup>Duplikat</button><button type="button" class="link" data-rm>Hapus</button></span></div><label>Pertanyaan<textarea data-t>${esc(d.text || '')}</textarea></label><p class="hint">Tandai lingkaran di samping jawaban yang benar.</p>${[0, 1, 2, 3].map(j => `<span class="oi"><em>${'ABCD'[j]}</em><input type="radio" name="c${k}" value="${j}"${j === (d.answer || 0) ? ' checked' : ''} aria-label="Jawaban benar"><input data-o placeholder="Pilihan ${'ABCD'[j]}" value="${esc(o[j] || '')}"></span>`).join('')}</div>`; };
+  const raw = el => ({ text: el.querySelector('[data-t]').value.trim(), options: [...el.querySelectorAll('[data-o]')].map(o => o.value.trim()), answer: Math.max(0, [...el.querySelectorAll('input[type=radio]')].findIndex(r => r.checked)) });
+  const sw = (n, t) => `<label class="sw"><input type="checkbox" name="${n}">${t}</label>`;
+  m.innerHTML = `<form class="md wide"><h3>Buat kuis</h3><div class="qsum" id="qsum"></div><label>Judul kuis<input name="title" required placeholder="Contoh: Kuis Bab 3 – Sistem Pencernaan"></label>
+    <div class="qset"><div class="full"><label>Durasi total (menit)<input name="duration" type="number" min="1" max="300" value="30" required></label><div class="qpre" id="pre">${[10, 20, 30, 45, 60, 90].map(v => `<button type="button" data-d="${v}">${v} mnt</button>`).join('')}</div></div>
+    <label>Waktu per soal (detik, 0 = mati)<input name="qt" type="number" min="0" max="600" value="0"></label><label>Nilai minimal tuntas (0–100)<input name="pass" type="number" min="0" max="100" value="70"></label>
+    ${sw('shuf', 'Acak urutan soal')}${sw('shufo', 'Acak pilihan jawaban')}</div>
+    <label>Petunjuk untuk siswa (opsional)<textarea name="description" placeholder="Contoh: Bacalah tiap soal dengan teliti."></textarea></label>
+    <details class="qbulk"><summary>⚡ Impor cepat banyak soal (tempel teks)</summary><textarea id="bk" placeholder="1. Ibukota Indonesia?\nA. Bandung\nB. Jakarta\nC. Medan\nD. Surabaya\nJawaban: B\n\n2. Soal berikutnya..."></textarea><button type="button" class="btn2" id="bkgo">Tambahkan ke daftar soal</button></details>
+    <div id="qb">${blk()}</div><button type="button" class="btn2" id="qadd" style="margin-bottom:1rem">+ Tambah soal</button><div class="row"><button type="button" class="btn2" data-x>Batal</button><button class="btn">Terbitkan kuis</button></div></form>`;
   document.body.appendChild(m);
   const f = m.querySelector('form'), box = m.querySelector('#qb'), close = () => m.remove();
-  const num = () => box.querySelectorAll('.qn').forEach((e, i) => e.textContent = 'Soal ' + (i + 1));
+  const num = () => { box.querySelectorAll('.qn').forEach((e, i) => e.textContent = 'Soal ' + (i + 1)); sum(); };
+  const sum = () => { const q = f.qt.value > 0 ? ` • ${f.qt.value} dtk/soal` : ''; m.querySelector('#qsum').textContent = `${box.children.length} soal • ${f.duration.value || 0} menit${q}`; m.querySelectorAll('#pre button').forEach(b => b.classList.toggle('on', b.dataset.d === f.duration.value)); };
   num();
+  m.oninput = sum;
   m.querySelector('[data-x]').onclick = close;
+  m.querySelector('#pre').onclick = e => { if (e.target.dataset.d) { f.duration.value = e.target.dataset.d; sum(); } };
   m.querySelector('#qadd').onclick = () => { box.insertAdjacentHTML('beforeend', blk()); num(); box.lastElementChild.querySelector('[data-t]').focus(); };
-  box.onclick = e => { if (e.target.matches('[data-rm]')) { if (box.children.length > 1) { e.target.closest('.qb').remove(); num(); } else toast('Kuis memerlukan minimal satu soal.', true); } };
+  m.querySelector('#bkgo').onclick = () => {
+    const out = m.querySelector('#bk').value.split(/\n\s*\n/).map(ch => { const L = ch.split('\n').map(s => s.trim()).filter(Boolean), o = [], r = { text: '', options: o, answer: 0 }; L.forEach(l => { let x; if ((x = l.match(/^(?:jawaban|kunci)\s*[:=]\s*([A-Da-d])/i))) r.answer = 'abcd'.indexOf(x[1].toLowerCase()); else if ((x = l.match(/^[A-Da-d][.)]\s*(.+)/))) o.push(x[1]); else if (!o.length) r.text += (r.text ? '\n' : '') + l.replace(/^\d+[.)]\s*/, ''); }); return r; }).filter(r => r.text && r.options.length > 1);
+    if (!out.length) return toast('Format tidak terbaca. Periksa contoh di kolom.', true);
+    [...box.children].filter(el => !raw(el).text).forEach(el => el.remove());
+    out.forEach(r => box.insertAdjacentHTML('beforeend', blk(r))); m.querySelector('#bk').value = ''; num(); toast(out.length + ' soal ditambahkan');
+  };
+  box.onclick = e => {
+    const el = e.target.closest('.qb');
+    if (e.target.matches('[data-dup]')) { el.insertAdjacentHTML('afterend', blk(raw(el))); num(); }
+    else if (e.target.matches('[data-rm]')) { if (box.children.length > 1) { el.remove(); num(); } else toast('Kuis memerlukan minimal satu soal.', true); }
+  };
   f.onsubmit = async e => {
-    e.preventDefault(); const b = f.querySelector('.btn:last-child'); b.disabled = true; b.textContent = 'Menyimpan...';
+    e.preventDefault(); const b = f.querySelector('.row .btn:last-child'); b.disabled = true; b.textContent = 'Menyimpan...';
     try {
       const qs = [...box.children].map((el, i) => {
-        const text = el.querySelector('[data-t]').value.trim(), ci = [...el.querySelectorAll('input[type=radio]')].findIndex(r => r.checked), options = []; let answer = -1;
-        el.querySelectorAll('[data-o]').forEach((o, j) => { const v = o.value.trim(); if (v) { if (j === ci) answer = options.length; options.push(v); } });
-        if (!text) throw new Error(`Soal ${i + 1}: pertanyaan belum diisi.`);
+        const r = raw(el), options = []; let answer = -1;
+        r.options.forEach((v, j) => { if (v) { if (j === r.answer) answer = options.length; options.push(v); } });
+        if (!r.text) throw new Error(`Soal ${i + 1}: pertanyaan belum diisi.`);
         if (options.length < 2) throw new Error(`Soal ${i + 1}: isi minimal dua pilihan.`);
         if (answer < 0) throw new Error(`Soal ${i + 1}: pilihan yang ditandai benar masih kosong.`);
-        return { text, options, answer };
+        return { text: r.text, options, answer };
       });
-      await api('addQuiz', { ...cid(), title: f.title.value, duration: f.duration.value, description: f.description.value, questions: JSON.stringify(qs) });
+      const cfg = {}; if (+f.qt.value > 0) cfg.qt = +f.qt.value; if (f.shuf.checked) cfg.shuf = 1; if (f.shufo.checked) cfg.shufo = 1; if (+f.pass.value > 0) cfg.pass = +f.pass.value;
+      const desc = f.description.value.trim() + (Object.keys(cfg).length ? '\n[[cfg:' + JSON.stringify(cfg) + ']]' : '');
+      await api('addQuiz', { ...cid(), title: f.title.value, duration: f.duration.value, description: desc, questions: JSON.stringify(qs) });
       close(); toast('Kuis diterbitkan'); reload('qz');
-    } catch (er) { toast(er.message, true); b.disabled = false; b.textContent = 'Simpan kuis'; }
+    } catch (er) { toast(er.message, true); b.disabled = false; b.textContent = 'Terbitkan kuis'; }
   };
   f.title.focus();
 }
