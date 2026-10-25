@@ -1109,13 +1109,14 @@ async function vDashData() {
     const [us, cl, sc] = await Promise.all([api('adminUsers'), api('adminClasses'), write ? api('adminSchedules') : Promise.resolve(null)]);
     const act = x => String(x.status || '').toLowerCase() === 'aktif';
     const has = (x, r) => String(x.role).toLowerCase() === r || String(x.extra_roles || '').toLowerCase().split(/[,;|]/).includes(r);
-    const siswa = us.users.filter(x => has(x, 'siswa')), guru = us.users.filter(x => has(x, 'guru'));
+    const siswa = us.users.filter(x => has(x, 'siswa')), guru = us.users.filter(x => has(x, 'guru')), staf = us.users.filter(x => inGroup(x, 'staf'));
     const stats = write
-      ? [['Total siswa', siswa.length], ['Siswa aktif', siswa.filter(act).length], ['Total guru', guru.length], ['Total kelas', cl.classes.length], ['Jadwal', sc.schedules.length]]
+      ? [['Total siswa', siswa.length], ['Siswa aktif', siswa.filter(act).length], ['Total guru', guru.length]].concat(hasR('admin') ? [['Total staf', staf.length]] : [], [['Total kelas', cl.classes.length], ['Jadwal', sc.schedules.length]])
       : [['Total siswa', siswa.length], ['Siswa aktif', siswa.filter(act).length], ['Total kelas', cl.classes.length]];
     const qa = (k, ic, t, d) => `<button class="qa" onclick="go('${k}')" type="button"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICON[ic]}</svg></i><span><b>${t}</b><small>${d}</small></span></button>`;
     const links = [qa('adminStudents', 'adminStudents', 'Data siswa', write ? 'Kelola akun dan status siswa' : 'Lihat data siswa')];
     if (write) links.push(qa('adminTeachers', 'adminTeachers', 'Data guru', 'Kelola akun guru'));
+    if (write && hasR('admin')) links.push(qa('adminStaff', 'adminStaff', 'Data staf', 'Kelola akun staf & pimpinan'));
     links.push(qa('adminClasses', 'adminClasses', 'Data kelas', write ? 'Kelola kelas & guru pengampu' : 'Lihat daftar kelas'));
     if (write) links.push(qa('adminSchedules', 'adminSchedules', 'Data jadwal', 'Kelola jadwal pelajaran'));
     view(`<div class="top"><div><h2>Beranda</h2><p>Ringkasan data akademik sekolah.</p></div></div>
@@ -1657,6 +1658,11 @@ async function delPost(id) {
   catch (e) { toast(e.message, true); }
 }
 
+const STAFF_ROLES = ['staff', 'staf', 'guru_bk', 'kurikulum', 'kepala_sekolah', 'admin'];
+const staffRoleSet = () => hasR('admin') ? STAFF_ROLES : STAFF_ROLES.filter(r => r !== 'admin');
+const userRoles = x => [String(x.role || '').toLowerCase()].concat(String(x.extra_roles || '').toLowerCase().split(/[,;|]/).map(r => r.trim())).filter(Boolean);
+const inGroup = (x, role) => role === 'staf' ? userRoles(x).some(r => staffRoleSet().includes(r)) : userRoles(x).includes(role);
+const grpNm = role => role === 'siswa' ? 'siswa' : role === 'staf' ? 'staf' : 'guru';
 function canManageStudents()   { return hasR('admin') || hasR('staff') || hasR('staf') || hasR('guru_bk'); }
 function canManageStaffData()  { return hasR('admin') || hasR('staff') || hasR('staf'); }
 function writeOnly() { if (!canManageStaffData()) { toast('Akses hanya-lihat. Perubahan data dilakukan oleh administrator atau staf administrasi.', true); return false; } return true; }
@@ -1671,18 +1677,19 @@ const roleLabel = r => ({siswa:'Siswa',guru:'Guru',admin:'Administrator',staff:'
 
 async function adminUsersPage(role) {
   if (!adminOnly()) return;
-  if (role === 'guru' && !canManageStaffData()) { toast('Data guru hanya dapat dikelola administrator atau staf administrasi.', true); vDash(); return; }
-  nav(role === 'siswa' ? 'adminStudents' : 'adminTeachers'); view('<p class="empty">Memuat data akun…</p>');
+  if (role === 'staf' && !hasR('admin')) { toast('Data staf dan pimpinan hanya dapat dikelola administrator.', true); vDash(); return; }
+  if (role !== 'siswa' && !canManageStaffData()) { toast('Data ' + grpNm(role) + ' hanya dapat dikelola administrator atau staf administrasi.', true); vDash(); return; }
+  nav(role === 'siswa' ? 'adminStudents' : role === 'staf' ? 'adminStaff' : 'adminTeachers'); view('<p class="empty">Memuat data akun…</p>');
   try {
     const {users} = await api('adminUsers');
-    const w = canManageStaffData(), nm = role === 'siswa' ? 'siswa' : 'guru';
-    const list = users.filter(x => String(x.role).toLowerCase() === role || String(x.extra_roles||'').toLowerCase().split(/[,;|]/).includes(role));
+    const w = canManageStaffData(), nm = grpNm(role);
+    const list = users.filter(x => inGroup(x, role));
     const acts = w
       ? `<button class="btn2" onclick="downloadUserTemplate('${role}')">Templat CSV</button><button class="btn2" onclick="exportAdminUsers('${role}')">Ekspor CSV</button><button class="btn2" onclick="importAdminUsers('${role}')">Impor CSV</button><button class="btn" onclick="editAdminUser('${role}')">+ Tambah ${nm}</button>`
       : `<button class="btn2" onclick="exportAdminUsers('${role}')">Ekspor CSV</button>`;
-    view(`<div class="top"><div><h2>Data ${role === 'siswa' ? 'Siswa' : 'Guru'}</h2><p>${w ? 'Kelola akun, status akses, pengaturan ulang sandi, serta impor dan ekspor data.' : 'Daftar akun pengguna. <span class="ro-chip">Hanya lihat</span>'}</p></div><div class="acts">${acts}</div></div>
+    view(`<div class="top"><div><h2>Data ${role === 'siswa' ? 'Siswa' : role === 'staf' ? 'Staf' : 'Guru'}</h2><p>${w ? 'Kelola akun, status akses, pengaturan ulang sandi, serta impor dan ekspor data.' : 'Daftar akun pengguna. <span class="ro-chip">Hanya lihat</span>'}</p></div><div class="acts">${acts}</div></div>
     <div class="toolbar">${searchBox('Cari nama, username, atau status')}<span class="meta">${list.length} akun</span></div>
-    <div class="card" style="overflow-x:auto;padding:0"><table style="margin:0"><thead><tr><th>Nama</th><th>Username</th><th>Peran</th><th>Status</th>${w ? '<th>Aksi</th>' : ''}</tr></thead><tbody>${list.map(x=>`<tr><td><b>${esc(x.full_name)}</b><div class="meta">${esc(x.email||'')}</div></td><td>${esc(x.username)}</td><td>${esc(roleLabel(x.role))}${x.extra_roles ? `<div class="meta">Tambahan: ${esc(String(x.extra_roles).split(/[,;|]/).map(r => roleLabel(r.trim())).join(', '))}</div>`:''}</td><td><span class="badge ${String(x.status).toLowerCase()==='aktif'?'ok':'warn'}">${String(x.status).toLowerCase()==='aktif'?'Aktif':String(x.status).toLowerCase()==='nonaktif'?'Nonaktif':esc(x.status||'—')}</span></td>${w ? `<td><div class="acts" style="justify-content:flex-start"><button class="btn2" style="padding:.4rem .8rem" onclick="editAdminUser('${role}','${esc(x.user_id)}')">Ubah</button><button class="btn2" style="padding:.4rem .8rem" onclick="resetAdminAccount('${esc(x.user_id)}','${esc(x.username)}')">Reset sandi</button><button class="link" onclick="deleteAdminUser('${esc(x.user_id)}','${esc(x.full_name)}','${role}')">Hapus</button></div></td>` : ''}</tr>`).join('') || `<tr><td colspan="${w ? 5 : 4}" style="text-align:center;padding:2rem">Belum ada akun ${nm}.</td></tr>`}</tbody></table></div>`);
+    <div class="card" style="overflow-x:auto;padding:0"><table style="margin:0"><thead><tr><th>Nama</th><th>Username</th><th>Peran</th><th>Status</th>${w ? '<th>Aksi</th>' : ''}</tr></thead><tbody>${list.map(x=>`<tr><td><b>${esc(x.full_name)}</b><div class="meta">${esc(x.email||'')}</div></td><td>${esc(x.username)}</td><td><span class="badge">${esc(roleLabel(x.role))}</span>${x.extra_roles ? `<div class="meta">Tambahan: ${esc(String(x.extra_roles).split(/[,;|]/).map(r => roleLabel(r.trim())).join(', '))}</div>`:''}</td><td><span class="badge ${String(x.status).toLowerCase()==='aktif'?'ok':'warn'}">${String(x.status).toLowerCase()==='aktif'?'Aktif':String(x.status).toLowerCase()==='nonaktif'?'Nonaktif':esc(x.status||'—')}</span></td>${w ? `<td><div class="acts" style="justify-content:flex-start"><button class="btn2" style="padding:.4rem .8rem" onclick="editAdminUser('${role}','${esc(x.user_id)}')">Ubah</button><button class="btn2" style="padding:.4rem .8rem" onclick="resetAdminAccount('${esc(x.user_id)}','${esc(x.username)}')">Reset sandi</button><button class="link" onclick="deleteAdminUser('${esc(x.user_id)}','${esc(x.full_name)}','${role}')">Hapus</button></div></td>` : ''}</tr>`).join('') || `<tr><td colspan="${w ? 5 : 4}" style="text-align:center;padding:2rem">Belum ada akun ${nm}.</td></tr>`}</tbody></table></div>`);
   } catch(e) { view(`<div class="card empty"><b>Data belum dapat dimuat</b>${esc(e.message)}<p><button class="btn2" onclick="adminUsersPage('${role}')">Coba lagi</button></p></div>`); }
 }
 function csvCell(v) { 
@@ -1711,24 +1718,24 @@ function parseCsv(text) {
   return rows.map((r,i)=>{const o={};headers.forEach((h,j)=>o[h]=(r[j]||'').trim());o._row=i+2;return o;});
 }
 async function exportAdminUsers(role) {
-  if(!adminOnly() || (role==='guru'&&!canManageStaffData())) return;
+  if(!adminOnly() || (role!=='siswa'&&!canManageStaffData())) return;
   try {
     const {users=[]}=await api('adminUsers');
-    const list=users.filter(x=>String(x.role).toLowerCase()===role || String(x.extra_roles||'').toLowerCase().split(/[,;|]/).includes(role));
+    const list=users.filter(x=>inGroup(x,role));
     const headers=['user_id','full_name','username','role','extra_roles','email','status'];
     downloadCsv(`data-${role}-lms-calm.csv`,[headers,...list.map(x=>[x.user_id,x.full_name,x.username,x.role,x.extra_roles||'',x.email||'',x.status||'aktif'])]);
-    toast(`Berkas ekspor berisi ${list.length} data ${role==='siswa'?'siswa':'guru'} telah diunduh.`);
+    toast(`Berkas ekspor berisi ${list.length} data ${grpNm(role)} telah diunduh.`);
   } catch(e){toast(e.message,true);}
 }
 function downloadUserTemplate(role) {
-  if(!writeOnly() || (role==='guru'&&!canManageStaffData())) return;
+  if(!writeOnly() || (role!=='siswa'&&!canManageStaffData())) return;
   const headers=['full_name','username','role','extra_roles','email','status','password'];
-  downloadCsv(`template-impor-${role}-lms-calm.csv`,[headers,[role==='siswa'?'Nama Siswa':'Nama Guru','username_baru',role,'','', 'aktif','']]);
+  downloadCsv(`template-impor-${role}-lms-calm.csv`,[headers,[role==='siswa'?'Nama Siswa':role==='staf'?'Nama Staf':'Nama Guru','username_baru',role==='staf'?'staff':role,'','', 'aktif','']]);
   toast('Templat CSV telah diunduh. Gantilah baris contoh dengan data yang sebenarnya.');
 }
 function importAdminUsers(role) {
-  if(!writeOnly() || (role==='guru'&&!canManageStaffData())) return;
-  modal(`Impor data ${role==='siswa'?'siswa':'guru'}`,[{n:'csv_file',l:'Pilih file CSV (maks. 5 MB)',t:'file'},{n:'policy',l:'Cara impor',t:'select',v:'upsert',opts:[{v:'upsert',l:'Perbarui username yang sudah ada, tambah yang baru'}]}],async d=>{
+  if(!writeOnly() || (role!=='siswa'&&!canManageStaffData())) return;
+  modal(`Impor data ${grpNm(role)}`,[{n:'csv_file',l:'Pilih file CSV (maks. 5 MB)',t:'file'},{n:'policy',l:'Cara impor',t:'select',v:'upsert',opts:[{v:'upsert',l:'Perbarui username yang sudah ada, tambah yang baru'}]}],async d=>{
     const encoded=d.file_data; if(!encoded) throw new Error('Pilih berkas CSV terlebih dahulu.');
     if(encoded.length>7*1024*1024) throw new Error('Ukuran berkas CSV maksimal 5 MB.');
     const bytes=Uint8Array.from(atob(encoded),c=>c.charCodeAt(0));
@@ -1737,10 +1744,10 @@ function importAdminUsers(role) {
     for(const r of rows) {
       try {
         const rowRole=String(r.role||role).toLowerCase();
-        if(rowRole!==role) throw new Error(`Kolom “role” harus berisi “${role}”.`);
+        if(role==='staf' ? !staffRoleSet().includes(rowRole) : rowRole!==role) throw new Error(role==='staf' ? `Kolom “role” harus salah satu dari: ${staffRoleSet().join(', ')}.` : `Kolom “role” harus berisi “${role}”.`);
         if(!r.full_name||!r.username) throw new Error('Nama lengkap dan username wajib diisi.');
         const existing=users.find(x=>String(x.username).toLowerCase()===r.username.toLowerCase());
-        const payload={full_name:r.full_name,username:r.username,role:role,extra_roles:r.extra_roles||'',email:r.email||'',status:r.status||'aktif'};
+        const payload={full_name:r.full_name,username:r.username,role:role==='staf'?rowRole:role,extra_roles:r.extra_roles||'',email:r.email||'',status:r.status||'aktif'};
         if(existing) payload.user_id=existing.user_id;
         else { if(!r.password || r.password.length<8) throw new Error('Akun baru wajib memiliki sandi minimal 8 karakter.'); payload.password=r.password; }
         await api('adminSaveUser',payload); ok++;
@@ -1755,19 +1762,20 @@ async function editAdminUser(role, id) {
   if (!writeOnly()) return;
   let user = null;
   if (id) { try { user = (await api('adminUsers')).users.find(x=>x.user_id===id); } catch(e) { toast(e.message,true); return; } if (!user) return toast('Akun tidak ditemukan.',true); }
-  const roleOpts = hasR('admin') ? [{v:role,l:roleLabel(role)},{v:'guru',l:'Guru'},{v:'siswa',l:'Siswa'},{v:'guru_bk',l:'Guru BK'},{v:'staff',l:'Staf Administrasi'},{v:'kurikulum',l:'Kurikulum'},{v:'kepala_sekolah',l:'Kepala Sekolah'},{v:'admin',l:'Administrator'}]
-    : canManageStaffData() ? [{v:role,l:roleLabel(role)},{v:'guru',l:'Guru'},{v:'siswa',l:'Siswa'}]
+  const dflt = role === 'staf' ? 'staff' : role;
+  const roleOpts = hasR('admin') ? [{v:dflt,l:roleLabel(dflt)},{v:'guru',l:'Guru'},{v:'siswa',l:'Siswa'},{v:'guru_bk',l:'Guru BK'},{v:'staff',l:'Staf Administrasi'},{v:'kurikulum',l:'Kurikulum'},{v:'kepala_sekolah',l:'Kepala Sekolah'},{v:'admin',l:'Administrator'}]
+    : canManageStaffData() ? (role === 'staf' ? [{v:'staff',l:'Staf Administrasi'},{v:'guru_bk',l:'Guru BK'},{v:'kurikulum',l:'Kurikulum'},{v:'kepala_sekolah',l:'Kepala Sekolah'}] : [{v:dflt,l:roleLabel(dflt)},{v:'guru',l:'Guru'},{v:'siswa',l:'Siswa'}])
     : [{v:'siswa',l:'Siswa'}];
   const fields = [
     {n:'full_name',l:'Nama lengkap',v:user?.full_name||''}, {n:'username',l:'Username',v:user?.username||''},
-    {n:'role',l:'Peran utama',t:'select',v:user?.role||role,opts:roleOpts},
+    {n:'role',l:'Peran utama',t:'select',v:user?.role||dflt,opts:roleOpts},
     {n:'extra_roles',l:'Peran tambahan (opsional, pisahkan dengan koma)',v:user?.extra_roles||'',r:false},
     {n:'email',l:'Email (opsional)',t:'email',v:user?.email||'',r:false},
     {n:'status',l:'Status akun',t:'select',v:user?.status||'aktif',opts:[{v:'aktif',l:'Aktif'},{v:'nonaktif',l:'Nonaktif'}]}
   ];
   if (!user) fields.push({n:'password',l:'Sandi awal (minimal 8 karakter)',t:'password',min:8});
   if (user) fields.push({n:'user_id',l:'',v:user.user_id,t:'hidden'});
-  modal(user?'Ubah akun':'Tambah akun '+roleLabel(role),fields,async d=>{ await api('adminSaveUser',d); toast(user?'Data akun berhasil diperbarui.':'Akun berhasil dibuat.'); adminUsersPage(role); },user?'Simpan perubahan':'Buat akun');
+  modal(user?'Ubah akun':'Tambah akun '+(role==='staf'?'staf':roleLabel(role)),fields,async d=>{ await api('adminSaveUser',d); toast(user?'Data akun berhasil diperbarui.':'Akun berhasil dibuat.'); adminUsersPage(role); },user?'Simpan perubahan':'Buat akun');
 }
 async function resetAdminAccount(id, username) {
   if (!writeOnly() || !(await dlg({ title: 'Atur ulang sandi?', msg: `Sandi akun ${username} akan diganti dengan sandi sementara. Sandi tersebut hanya ditampilkan satu kali, dan pengguna disarankan segera menggantinya setelah masuk.`, ok: 'Atur ulang sandi', tone: 'key' }))) return;
@@ -1955,6 +1963,7 @@ const ICON = {
   profile: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
   adminStudents:  '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
   adminTeachers:  '<path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2ZM22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7Z"/>',
+  adminStaff:     '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/><path d="m9.5 8 1.7 1.7L14.6 6.5"/>',
   adminClasses:   '<path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6M12 10h.01"/>',
   adminSchedules: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
   adminSync:      '<path d="M21 12a9 9 0 0 1-15.5 6.2M3 12a9 9 0 0 1 15.5-6.2M18.5 2v4h-4M5.5 22v-4h4"/>',
@@ -2022,6 +2031,7 @@ function buildMenu() {
     const items = [{ key: 'adminStudents', label: 'Data siswa' }, { key: 'adminClasses', label: 'Data kelas' }];
     if (canStaffData) {
       items.splice(1, 0, { key: 'adminTeachers',  label: 'Data guru' });
+      if (rs.includes('admin')) items.splice(2, 0, { key: 'adminStaff', label: 'Data staf' });
       items.push({ key: 'adminSchedules', label: 'Data jadwal' });
       if (rs.includes('admin')) items.push({ key: 'adminSync', label: 'Sinkronisasi Portal' });
     }
@@ -2054,6 +2064,7 @@ const GO = {
   profile: () => vProfile(), agenda: () => vAgenda(), attendance: () => vAttendance(),
   adminStudents:  () => adminUsersPage('siswa'),
   adminTeachers:  () => adminUsersPage('guru'),
+  adminStaff:     () => adminUsersPage('staf'),
   adminClasses:   () => adminClassesPage(),
   adminSchedules: () => adminSchedulesPage(),
   adminSync:      () => adminSyncPage()
