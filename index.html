@@ -75,6 +75,38 @@ button,input,textarea{font:inherit;color:inherit}button{cursor:pointer}
 .link{background:none;border:0;font-size:.75rem;font-weight:700;color:var(--navy);text-decoration:underline;text-underline-offset:2px}
 .help{margin-top:1rem;padding-top:1.1rem;border-top:1px solid var(--line);text-align:center;font-size:.78rem;color:var(--mut)}
 .spin{width:1rem;height:1rem;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+/* panel kiri: versi minimalis */
+.ls::before{box-shadow:none;border-color:rgba(255,255,255,.07)}
+.ls::after{opacity:.6}
+.hero-l{max-width:28rem}
+.hero-l>p{font-size:.93rem;color:rgba(255,255,255,.72)}
+.fe{display:flex;flex-direction:column;gap:1.2rem;margin-top:2.4rem;max-width:25rem}
+.fe li{flex-direction:row;align-items:center;gap:1rem;padding:0;border:0;border-radius:0;background:none;backdrop-filter:none;-webkit-backdrop-filter:none}
+.fe li:hover{transform:none;background:none;border-color:transparent}
+.fi{width:2.5rem;height:2.5rem;border-radius:50%;background:transparent;box-shadow:inset 0 0 0 1px rgba(255,255,255,.24);color:#eaf1ff}
+.fi svg{width:1.1rem;height:1.1rem}
+.fe b{padding-bottom:.25rem;margin-bottom:.3rem;font-size:.9rem;font-weight:600;border-bottom:1px solid var(--gold)}
+.fe div>span{font-size:.78rem;line-height:1.45;color:rgba(255,255,255,.62)}
+/* pilihan peran */
+.lc .sub{margin:.55rem 0 1.5rem}
+.rh{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.65rem;min-height:1.8rem}
+.rlab{margin:0;font-size:.8rem;font-weight:600;color:var(--ink)}
+.adm{display:inline-flex;align-items:center;gap:.35rem;padding:.26rem .65rem;border:1px solid transparent;border-radius:99px;background:none;font-size:.74rem;font-weight:500;color:var(--mut);transition:.18s}
+.adm svg{width:.9rem;height:.9rem}
+.adm:hover{color:var(--navy);background:var(--soft)}
+.adm[aria-checked=true]{color:var(--navy);border-color:#b9cbe8;background:var(--soft);font-weight:700}
+.rg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+.rt{position:relative;display:flex;align-items:center;gap:.7rem;min-width:0;padding:.7rem 2rem .7rem .8rem;border:1px solid var(--line2);border-radius:.85rem;background:#fff;text-align:left;transition:.18s}
+.rt>svg{flex:none;width:1.35rem;height:1.35rem;color:#8a99b2;transition:color .18s}
+.rx{display:flex;flex-direction:column;gap:.1rem;min-width:0}
+.rx b{font-size:.86rem;font-weight:600;color:var(--ink)}.rx small{font-size:.68rem;line-height:1.3;color:#7a8aa3}
+.rt::after{content:"";position:absolute;right:.65rem;top:50%;width:1rem;height:1rem;margin-top:-.5rem;border-radius:50%;background:var(--navy) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4.5 8.4 2.3 2.3 4.7-5'/%3E%3C/svg%3E") center/70% no-repeat;opacity:0;transform:scale(.6);transition:.18s}
+.rt:hover{border-color:#9db6df;background:#f8faff}.rt:hover>svg{color:var(--navy)}
+.rt[aria-checked=true]{border-color:var(--navy);background:var(--soft);box-shadow:0 0 0 1px var(--navy)}
+.rt[aria-checked=true]>svg{color:var(--navy)}.rt[aria-checked=true] .rx b{color:var(--navyd)}
+.rt[aria-checked=true]::after{opacity:1;transform:none}
+.rhint{display:flex;gap:.55rem;align-items:flex-start;margin:.9rem 0 1.4rem;padding:.7rem .85rem;border-radius:.8rem;background:#f4f7fc;font-size:.78rem;line-height:1.6;color:#53647f}
+.rhint::before{content:"";flex:none;width:.4rem;height:.4rem;margin-top:.5rem;border-radius:50%;background:var(--gold)}
 /* kartu kelas modern */
 .cls{border-left:0;position:relative;overflow:hidden;padding-top:1.35rem}
 .cls::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--navy),#4a76c9)}
@@ -155,6 +187,22 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
  main{padding:1.1rem 1rem 2.5rem}.who{display:none}.sr{grid-template-columns:1fr}.cover{padding:1.4rem}.cover h1{font-size:1.6rem}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.qbar{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-bottom:1rem;padding:.8rem 1.1rem;background:#fff;border:1px solid var(--line);border-radius:var(--r);box-shadow:0 6px 18px -12px rgba(11,61,145,.4)}
+.qbar b{display:block;color:var(--navyd)}.qbar span{font-size:.78rem;color:var(--mut)}
+.qt{font-variant-numeric:tabular-nums;font-size:1.5rem;font-weight:800;color:var(--navy);letter-spacing:.02em}.qt.low{color:#be123c;animation:pl 1s ease-in-out infinite}
+.opts{display:flex;flex-direction:column;gap:.5rem;margin-top:.7rem}
+.opt{display:flex;align-items:center;gap:.7rem;padding:.7rem .9rem;border:1px solid var(--line2);border-radius:.8rem;cursor:pointer;font-size:.9rem;transition:.15s}
+.opt:hover{border-color:#9db6df;background:#f8faff}.opt:has(input:checked){border-color:var(--navy);background:var(--soft);box-shadow:0 0 0 1px var(--navy)}
+.opt input{accent-color:var(--navy);width:1.05rem;height:1.05rem;flex:none}
+.qr{display:flex;justify-content:space-between;padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.85rem}
+.md.wide{max-width:42rem}
+.qb{padding:1rem;margin-bottom:.9rem;border:1px solid var(--line2);border-radius:.9rem;background:#fafcff}
+.qh{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;color:var(--navyd)}
+.oi{display:flex;align-items:center;gap:.6rem;margin-bottom:.5rem}.oi input[type=radio]{accent-color:var(--navy);width:1.05rem;height:1.05rem;flex:none;margin:0}
+.oi input[data-o]{margin:0}
+.hint{font-size:.76rem;color:var(--mut);margin:.2rem 0 .5rem}
+@media(max-width:767px){.qbar{top:3.5rem}}
 </style>
 </head>
 <body>
@@ -173,7 +221,13 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
     <div class="mbrand"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt="Logo SMK CALM"><div><b>SMK CALM</b><small>Portal LMS</small></div></div>
     <form id="lform" novalidate>
       <h2>Selamat datang</h2><p class="sub">Masuk untuk melanjutkan belajar.</p>
-      <label class="fl" for="u">Username / NISN / NIP</label>
+      <div class="rh"><p class="rlab" id="rl">Masuk sebagai</p><button type="button" class="adm" data-r="admin" role="radio" aria-checked="false" aria-label="Masuk sebagai Administrator" title="Akses pengelolaan sistem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.7a8 8 0 0 1-1.6.9l-.3 1.8h-2.8l-.3-1.8a8 8 0 0 1-1.6-.9l-1.7.7-1.4-2.4 1.4-1.1a7 7 0 0 1 0-1.9l-1.4-1.1 1.4-2.4 1.7.7a8 8 0 0 1 1.6-.9l.3-1.8h2.8l.3 1.8a8 8 0 0 1 1.6.9l1.7-.7 1.4 2.4-1.4 1.1a7 7 0 0 1 0 1.9Z"/></svg><span>Administrator</span></button></div>
+      <div class="rg" role="radiogroup" aria-labelledby="rl">
+        <button type="button" class="rt" data-r="siswa" role="radio" aria-checked="true" aria-label="Masuk sebagai Siswa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg><span class="rx"><b>Siswa</b><small>Belajar &amp; kumpulkan tugas</small></span></button>
+        <button type="button" class="rt" data-r="guru" role="radio" aria-checked="false" aria-label="Masuk sebagai Guru"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2ZM22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7Z"/></svg><span class="rx"><b>Guru</b><small>Kelola kelas &amp; penilaian</small></span></button>
+      </div>
+      <p class="rhint" id="rhint" aria-live="polite"></p>
+      <label class="fl" for="u" id="ulab">Username</label>
       <div class="fd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg><input id="u" class="fld" placeholder="Masukkan username" autocomplete="username" autocapitalize="none" autocorrect="off" spellcheck="false"></div>
       <div class="labrow"><label class="fl" for="pw">Sandi</label><span id="caps" class="caps hide" role="status">Caps Lock aktif</span></div>
       <div class="fd pw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><input id="pw" type="password" class="fld" placeholder="Masukkan sandi" autocomplete="current-password">
@@ -205,7 +259,7 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
 // Ganti dengan URL deployment Apps Script Anda (berakhiran /exec)
 const API = "https://script.google.com/macros/s/AKfycbw.../exec";
 
-let S = null, C = null; // sesi, kelas aktif
+let S = null, C = null, QT; // sesi, kelas aktif, timer kuis
 try { S = JSON.parse(sessionStorage.getItem('lms')); } catch (e) {}
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -232,12 +286,29 @@ async function api(action, data = {}) {
 
 /* ---------- masuk & keluar ---------- */
 const lerr = m => { const a = $('#lmsg'); a.querySelector('span').textContent = m || ''; a.classList.toggle('hide', !m); };
+const ROLES = {
+  siswa: { nama: 'Siswa', label: 'Username siswa / NISN', ph: 'Masukkan username siswa', hint: 'Siswa masuk dengan username dan sandi awal dari sekolah, lalu bergabung ke kelas menggunakan kode dari guru.' },
+  guru: { nama: 'Guru', label: 'Username guru / NIP', ph: 'Username dari administrator', hint: 'Guru dapat mengelola kelas, materi, tugas, kuis, dan penilaian.' },
+  admin: { nama: 'Administrator', label: 'Username administrator', ph: 'Username administrator', hint: 'Akses khusus pengelolaan sistem dan seluruh kelas.' }
+};
+let loginRole = 'siswa'; try { const r = localStorage.getItem('lms_r'); if (ROLES[r]) loginRole = r; } catch (e) {}
+function pilihRole(k, fokus) {
+  loginRole = k; const R = ROLES[k];
+  document.querySelectorAll('[data-r]').forEach(b => b.setAttribute('aria-checked', b.dataset.r === k));
+  $('#ulab').textContent = R.label; $('#u').placeholder = R.ph; $('#rhint').textContent = R.hint; lerr('');
+  try { localStorage.setItem('lms_r', k); } catch (e) {}
+  if (fokus) $('#u').focus();
+}
+document.querySelectorAll('[data-r]').forEach(b => b.onclick = () => pilihRole(b.dataset.r, true));
+pilihRole(loginRole);
 $('#lform').addEventListener('submit', async e => {
   e.preventDefault();
   const u = $('#u').value.trim(), pw = $('#pw').value;
   if (!u || !pw) { lerr('Isi username dan sandi terlebih dahulu.'); return; }
   const b = $('#lbtn'); b.disabled = true; b.innerHTML = '<span class="spin"></span>Memeriksa...'; lerr('');
-  try { S = await api('login', { username: u, password: pw }); sessionStorage.setItem('lms', JSON.stringify(S)); try { $('#rem').checked ? localStorage.setItem('lms_u', u) : localStorage.removeItem('lms_u'); } catch (x) {} start(); }
+  try { S = await api('login', { username: u, password: pw });
+    if (S.user.role !== loginRole) { const nm = (ROLES[S.user.role] || {}).nama || S.user.role; await api('logout').catch(() => {}); S = null; throw new Error(`Akun ini terdaftar sebagai ${nm}. Pilih "Masuk sebagai ${nm}" lalu coba lagi.`); }
+    sessionStorage.setItem('lms', JSON.stringify(S)); try { $('#rem').checked ? localStorage.setItem('lms_u', u) : localStorage.removeItem('lms_u'); } catch (x) {} start(); }
   catch (er) { lerr(er.message); }
   b.disabled = false; b.textContent = 'Masuk';
 });
@@ -261,7 +332,7 @@ function start() {
   $('#wr').textContent = S.user.role === 'siswa' ? 'SISWA' : S.user.role === 'admin' ? 'ADMIN' : 'GURU / PENGAJAR'; $('#wr').className = 'bd ' + S.user.role; document.querySelector('aside').classList.remove('open');
   $('#n-grades').classList.toggle('hide', isT()); home();
 }
-function nav(k) { document.querySelectorAll('.mi').forEach(b => b.classList.toggle('on', b.id === 'n-' + k)); }
+function nav(k) { clearInterval(QT); window.onbeforeunload = null; document.querySelectorAll('.mi').forEach(b => b.classList.toggle('on', b.id === 'n-' + k)); }
 
 /* ---------- formulir modal ---------- */
 function modal(title, fields, fn, cta) {
@@ -322,9 +393,10 @@ function drawClass(tab) {
   if (tab === 'ann') body = add('Buat pengumuman', 'addAnn()') + (C.announcements.map(a => `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${esc(a.author)} • ${tgl(a.created)}</div><p>${esc(a.body)}</p></div>`).join('') || empty('Belum ada pengumuman', 'Pengumuman dari guru akan tampil di sini.'));
   if (tab === 'mat') body = add('Tambah materi', 'addMat()') + (C.materials.map(m => `<div class="card item"><h4>${esc(m.title)}</h4><div class="meta">${tgl(m.created)}</div>${m.description ? `<p>${esc(m.description)}</p>` : ''}${m.file_url ? `<p><a href="${esc(m.file_url)}" target="_blank" rel="noopener">Buka berkas</a></p>` : ''}</div>`).join('') || empty('Belum ada materi', 'Materi yang diunggah guru akan tampil di sini.'));
   if (tab === 'asg') body = add('Buat tugas', 'addAsg()') + (C.assignments.map(a => asgCard(a, t)).join('') || empty('Belum ada tugas', 'Tugas dari guru akan tampil di sini.'));
+  if (tab === 'qz') body = add('Buat kuis', 'addQuiz()') + (C.quizzes.map(quizCard).join('') || empty('Belum ada kuis', 'Kuis dari guru akan tampil di sini.'));
   view(`<button class="back" onclick="home()">Kembali ke daftar kelas</button>
     <div class="cover"><h1>${esc(cls.name)}</h1><p>${esc(cls.subject)} • ${esc(cls.teacher_name)}${t ? ` • ${C.memberCount} siswa` : ''}</p>${t ? `<span class="chip">Kode kelas: ${esc(cls.code)}</span>` : ''}</div>
-    <div class="tabs">${[['ann','Pengumuman'],['mat','Materi'],['asg','Tugas']].map(([k, l]) => `<button class="${k === tab ? 'on' : ''}" onclick="drawClass('${k}')">${l}</button>`).join('')}</div>${body}`);
+    <div class="tabs">${[['ann','Pengumuman'],['mat','Materi'],['asg','Tugas'],['qz','Kuis']].map(([k, l]) => `<button class="${k === tab ? 'on' : ''}" onclick="drawClass('${k}')">${l}</button>`).join('')}</div>${body}`);
 }
 
 function asgCard(a, t) {
@@ -350,6 +422,80 @@ const submitIt = id => modal('Kumpulkan tugas', [{n:'file',l:'Berkas (maks. 10 M
 async function gradeIt(id) {
   try { await api('grade', { submission_id: id, score: $('#sc-' + id).value, feedback: $('#fb-' + id).value }); toast('Nilai tersimpan'); }
   catch (e) { toast(e.message, true); }
+}
+
+/* ---------- kuis ---------- */
+function quizCard(q) {
+  const t = isT(), at = C.attempts.filter(a => a.quiz_id === q.id);
+  let foot;
+  if (t) foot = `<details><summary>${at.filter(a => a.submitted).length} siswa selesai</summary>${at.map(a => `<div class="qr"><span>${esc(a.full_name)}</span><b>${a.submitted ? a.score + '/' + a.max : 'Sedang mengerjakan'}</b></div>`).join('') || '<p class="meta" style="margin-top:8px">Belum ada yang mengerjakan.</p>'}</details>`;
+  else { const a = at[0];
+    foot = `<div class="row" style="justify-content:space-between;align-items:center;margin-top:10px">${a && a.submitted ? `<span class="badge ok">Nilai ${a.score}/${a.max}</span>` : `<span class="badge">${a ? 'Sedang dikerjakan' : 'Belum dikerjakan'}</span><button class="btn" onclick="startQuiz('${q.id}')">${a ? 'Lanjutkan' : 'Mulai kuis'}</button>`}</div>`; }
+  return `<div class="card item"><h4>${esc(q.title)}</h4><div class="meta">${q.qcount} soal • ${q.duration} menit</div>${q.description ? `<p>${esc(q.description)}</p>` : ''}${foot}</div>`;
+}
+
+async function startQuiz(id) {
+  const resume = C.attempts.some(a => a.quiz_id === id);
+  if (!resume && !confirm('Waktu berjalan setelah Anda menekan OK dan tidak dapat dijeda. Mulai sekarang?')) return;
+  try { takeQuiz(await api('startQuiz', { quiz_id: id })); }
+  catch (e) { toast(e.message, true); reload('qz'); }
+}
+
+function takeQuiz(d) {
+  nav('home');
+  const key = 'qa_' + d.attempt_id, n = d.questions.length, end = Date.now() + d.left * 1000;
+  let ans = {}, done = false; try { ans = JSON.parse(sessionStorage.getItem(key)) || {}; } catch (e) {}
+  view(`<div class="qbar"><div><b>${esc(d.quiz.title)}</b><span id="qp"></span></div><div class="qt" id="qt">--:--</div></div>${d.questions.map((q, i) => `<div class="card item"><h4>${i + 1}. ${esc(q.text)}</h4><div class="opts">${q.options.map((o, j) => `<label class="opt"><input type="radio" name="q${q.id}" value="${j}"${ans[q.id] === j ? ' checked' : ''}><span>${esc(o)}</span></label>`).join('')}</div></div>`).join('')}<div class="row"><button class="btn" id="qs">Kumpulkan jawaban</button></div>`);
+  const prog = () => { $('#qp').textContent = `${Object.keys(ans).length} dari ${n} soal terjawab`; };
+  const tick = () => {
+    const s = Math.max(0, Math.round((end - Date.now()) / 1000)), t = $('#qt');
+    if (t) { t.textContent = String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); t.classList.toggle('low', s < 60); }
+    if (s <= 0) fin(true);
+  };
+  const fin = async auto => {
+    if (done) return;
+    const left = n - Object.keys(ans).length;
+    if (!auto && left && !confirm(`Masih ada ${left} soal belum dijawab. Tetap kumpulkan?`)) return;
+    done = true; clearInterval(QT); $('#qs').disabled = true;
+    try {
+      const r = await api('submitQuiz', { attempt_id: d.attempt_id, answers: JSON.stringify(ans) });
+      sessionStorage.removeItem(key); window.onbeforeunload = null; $('#main').onchange = null; window.scrollTo(0, 0);
+      view(`<div class="card empty"><b>${auto ? 'Waktu habis, jawaban dikumpulkan' : 'Kuis selesai'}</b>Nilai Anda ${r.score} dari ${r.max} poin.${r.late ? '<br>Jawaban terlambat dikumpulkan sehingga tidak dihitung.' : ''}<br><br><button class="btn" onclick="reload('qz')">Kembali ke kelas</button></div>`);
+    } catch (e) { done = false; $('#qs').disabled = false; toast(e.message, true); QT = setInterval(tick, 1000); }
+  };
+  $('#main').onchange = e => { const r = e.target; if (r.type !== 'radio') return; ans[r.name.slice(1)] = +r.value; try { sessionStorage.setItem(key, JSON.stringify(ans)); } catch (x) {} prog(); };
+  $('#qs').onclick = () => fin(false);
+  window.onbeforeunload = e => { e.preventDefault(); return ''; };
+  prog(); tick(); QT = setInterval(tick, 1000);
+}
+
+function addQuiz() {
+  const m = document.createElement('div'); m.className = 'ov'; let k = 0;
+  const blk = () => { k++; return `<div class="qb"><div class="qh"><b class="qn"></b><button type="button" class="link" data-rm>Hapus soal</button></div><label>Pertanyaan<textarea data-t></textarea></label><p class="hint">Isi minimal dua pilihan, lalu tandai jawaban yang benar dengan bulatan.</p>${[0, 1, 2, 3].map(j => `<span class="oi"><input type="radio" name="c${k}" value="${j}"${j ? '' : ' checked'} aria-label="Jawaban benar"><input data-o placeholder="Pilihan ${'ABCD'[j]}"></span>`).join('')}</div>`; };
+  m.innerHTML = `<form class="md wide"><h3>Buat kuis</h3><label>Judul kuis<input name="title" required></label><label>Durasi (menit)<input name="duration" type="number" min="1" max="300" value="30" required></label><label>Petunjuk (opsional)<textarea name="description"></textarea></label><div id="qb">${blk()}</div><button type="button" class="btn2" id="qadd">Tambah soal</button><div class="row" style="margin-top:16px"><button type="button" class="btn2" data-x>Batal</button><button class="btn">Simpan kuis</button></div></form>`;
+  document.body.appendChild(m);
+  const f = m.querySelector('form'), box = m.querySelector('#qb'), close = () => m.remove();
+  const num = () => box.querySelectorAll('.qn').forEach((e, i) => e.textContent = 'Soal ' + (i + 1));
+  num();
+  m.querySelector('[data-x]').onclick = close;
+  m.querySelector('#qadd').onclick = () => { box.insertAdjacentHTML('beforeend', blk()); num(); box.lastElementChild.querySelector('[data-t]').focus(); };
+  box.onclick = e => { if (e.target.matches('[data-rm]')) { if (box.children.length > 1) { e.target.closest('.qb').remove(); num(); } else toast('Kuis memerlukan minimal satu soal.', true); } };
+  f.onsubmit = async e => {
+    e.preventDefault(); const b = f.querySelector('.btn:last-child'); b.disabled = true; b.textContent = 'Menyimpan...';
+    try {
+      const qs = [...box.children].map((el, i) => {
+        const text = el.querySelector('[data-t]').value.trim(), ci = [...el.querySelectorAll('input[type=radio]')].findIndex(r => r.checked), options = []; let answer = -1;
+        el.querySelectorAll('[data-o]').forEach((o, j) => { const v = o.value.trim(); if (v) { if (j === ci) answer = options.length; options.push(v); } });
+        if (!text) throw new Error(`Soal ${i + 1}: pertanyaan belum diisi.`);
+        if (options.length < 2) throw new Error(`Soal ${i + 1}: isi minimal dua pilihan.`);
+        if (answer < 0) throw new Error(`Soal ${i + 1}: pilihan yang ditandai benar masih kosong.`);
+        return { text, options, answer };
+      });
+      await api('addQuiz', { ...cid(), title: f.title.value, duration: f.duration.value, description: f.description.value, questions: JSON.stringify(qs) });
+      close(); toast('Kuis diterbitkan'); reload('qz');
+    } catch (er) { toast(er.message, true); b.disabled = false; b.textContent = 'Simpan kuis'; }
+  };
+  f.title.focus();
 }
 
 /* ---------- nilai siswa ---------- */
