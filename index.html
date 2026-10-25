@@ -783,6 +783,77 @@ tbody tr:last-child td{border-bottom:0}
 }
 [data-theme=dark] .at-k b,[data-theme=dark] .at-dv{color:var(--navyd)}
 [data-theme=dark] .at-k.ok b{color:#6ee7b7}[data-theme=dark] .at-k.bad b,[data-theme=dark] .at-wl b{color:#fda4af}
+/* ===== Beranda hangat: sapaan, jadwal, infografis kehadiran ===== */
+.hm-hero{--hf:#16284d;--hmu:#4d5e7b;position:relative;isolation:isolate;overflow:hidden;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.1rem 2rem;padding:1.7rem 2rem;margin-bottom:1.4rem;border-radius:1.4rem;color:var(--hf);background:var(--hb);border:1px solid rgba(11,61,145,.08)}
+.hm-hero[data-tod=pagi]{--hb:radial-gradient(26rem 14rem at 6% -35%,rgba(255,193,80,.55),transparent 65%),linear-gradient(120deg,#fff6e3,#eaf3ff)}
+.hm-hero[data-tod=siang]{--hb:radial-gradient(26rem 14rem at 6% -35%,rgba(120,190,255,.5),transparent 65%),linear-gradient(120deg,#eaf4ff,#f8fbff)}
+.hm-hero[data-tod=sore]{--hb:radial-gradient(28rem 15rem at 94% -35%,rgba(255,145,95,.42),transparent 65%),linear-gradient(120deg,#fff0e2,#ece6fa)}
+.hm-hero[data-tod=malam]{--hf:#eef3ff;--hmu:#b6c4e2;--hb:radial-gradient(24rem 14rem at 92% -35%,rgba(214,180,106,.3),transparent 65%),linear-gradient(120deg,#0e1f4a,#1a2c63);border-color:transparent}
+[data-theme=dark] .hm-hero[data-tod]{--hf:#e8eefc;--hmu:#aab9d6;--hb:radial-gradient(24rem 12rem at 6% -40%,rgba(214,180,106,.2),transparent 65%),linear-gradient(120deg,#13203d,#0f1a33);border-color:var(--line2)}
+.hm-hl{display:flex;align-items:center;gap:1.1rem;min-width:0;flex:1 1 22rem}
+.hm-ic{flex:none;display:grid;place-items:center;width:3.3rem;height:3.3rem;border-radius:50%;background:rgba(255,255,255,.65);color:#b7791f;box-shadow:0 8px 20px -10px rgba(183,121,31,.6)}
+.hm-hero[data-tod=malam] .hm-ic,[data-theme=dark] .hm-ic{background:rgba(255,255,255,.1);color:var(--gold);box-shadow:none}
+.hm-ic svg{width:1.6rem;height:1.6rem}
+.hm-hero h2{font-family:var(--serif);font-size:clamp(1.55rem,2.8vw,2.1rem);font-weight:500;letter-spacing:-.02em;line-height:1.15;color:inherit}
+.hm-hero p{margin-top:.4rem;font-size:.93rem;line-height:1.55;color:var(--hmu);max-width:38rem}
+.hm-clock{text-align:right}
+.hm-clock b{display:block;font-variant-numeric:tabular-nums;font-size:1.9rem;font-weight:700;line-height:1.1;letter-spacing:.01em}
+.hm-clock small{display:block;margin-top:.2rem;font-size:.82rem;color:var(--hmu)}
+.hm-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:1.2rem;align-items:start;margin-bottom:1.4rem}
+.hm-c{padding:1.3rem}
+.hm-h{display:flex;justify-content:space-between;align-items:flex-start;gap:.8rem;flex-wrap:wrap;margin-bottom:1rem}
+.hm-h h3{font-size:1.05rem;font-weight:700;color:var(--navyd)}
+.hm-h small{display:block;font-size:.78rem;color:var(--mut);font-weight:500;margin-top:.1rem}
+.hm-days{display:flex;gap:.3rem;margin-bottom:1rem;overflow-x:auto;padding-bottom:.2rem}
+.hm-d{flex:1 0 auto;min-width:2.9rem;display:flex;flex-direction:column;align-items:center;gap:.12rem;padding:.45rem .3rem;border:1px solid transparent;border-radius:.8rem;background:transparent;color:var(--mut);font-size:.74rem;font-weight:600;transition:background .15s}
+.hm-d b{font-size:.98rem;color:var(--ink);font-weight:700}
+.hm-d i{width:.32rem;height:.32rem;border-radius:50%;background:transparent}
+.hm-d.has i{background:var(--faint)}
+.hm-d:hover{background:var(--soft)}
+.hm-d.td:not(.on){border-color:var(--line2)}
+.hm-d.on{background:var(--navy);color:#e3ecff}.hm-d.on b{color:#fff}.hm-d.on i{background:var(--gold)}
+.hm-list{display:flex;flex-direction:column;gap:.6rem;max-height:27rem;overflow:auto;padding-right:.2rem}
+.hm-it{display:grid;grid-template-columns:3.6rem minmax(0,1fr);gap:.8rem;align-items:stretch}
+.hm-t{text-align:right;font-variant-numeric:tabular-nums;font-size:.8rem;color:var(--mut);padding-top:.7rem;line-height:1.3}
+.hm-t b{display:block;font-size:.95rem;color:var(--ink)}
+.hm-b{position:relative;padding:.75rem .9rem .75rem 1rem;border-radius:.85rem;background:var(--soft);border-left:3px solid var(--line2);min-width:0}
+.hm-bh{display:flex;justify-content:space-between;align-items:flex-start;gap:.6rem}
+.hm-b strong{display:block;font-size:.93rem;color:var(--navyd);line-height:1.35}
+.hm-b span.m{display:block;font-size:.78rem;color:var(--mut);margin-top:.12rem}
+.hm-it.live .hm-b{border-left-color:#10b981;background:#ecfdf5}
+.hm-it.next .hm-b{border-left-color:var(--gold);background:#fdf8ec}
+.hm-it.done{opacity:.58}
+[data-theme=dark] .hm-it.live .hm-b{background:#0c2a22}[data-theme=dark] .hm-it.next .hm-b{background:#2a2410}
+.hm-pg{height:3px;border-radius:2px;background:rgba(16,185,129,.2);margin-top:.6rem}.hm-pg i{display:block;height:100%;border-radius:2px;background:#10b981}
+.hm-act{margin-top:.6rem;padding:.3rem .85rem;border-radius:99px;border:1px solid var(--navy);background:transparent;color:var(--navy);font-size:.76rem;font-weight:700;transition:.15s}
+.hm-act:hover{background:var(--navy);color:#fff}
+.hm-top{display:flex;gap:.7rem;align-items:center;flex-wrap:wrap;margin-bottom:1.1rem}
+.hm-top .sel{min-width:11rem;flex:1 1 11rem;max-width:20rem;padding:.5rem .9rem}
+.hm-top .link{margin-left:auto;font-size:.8rem}
+.hm-body{display:grid;grid-template-columns:9.5rem minmax(0,1fr);gap:1.3rem;align-items:center}
+.hm-sum{display:flex;flex-direction:column;align-items:center;gap:.85rem}
+.hm-ring{width:8rem;height:8rem}
+.hm-rt{fill:none;stroke:var(--line);stroke-width:9}.hm-rp{fill:none;stroke-width:9;stroke-linecap:round}
+.hm-rn{font-family:var(--serif);font-size:23px;font-weight:600;fill:var(--navyd)}
+.hm-lg{display:grid;grid-template-columns:1fr 1fr;gap:.3rem .9rem;font-size:.76rem;color:var(--mut);width:100%}
+.hm-lg span{display:flex;align-items:center;gap:.35rem}.hm-lg i{flex:none;width:.55rem;height:.55rem;border-radius:3px}.hm-lg b{color:var(--ink);margin-left:auto}
+.hm-svg{width:100%;height:auto;display:block}
+.hm-gl{stroke:var(--line);stroke-width:1}.hm-gt{font-size:11px;fill:var(--faint)}.hm-xt{font-size:11px;fill:var(--mut)}.hm-pt{font-size:11px;font-weight:700;fill:var(--ink)}
+.hm-bar:hover rect,.hm-bar:focus rect{opacity:.82}.hm-bar:focus{outline:none}
+.hm-note{margin-top:.9rem;font-size:.82rem;color:var(--mut);line-height:1.6}.hm-note b{color:var(--ink)}
+.hm-sr{padding:.85rem 0;border-bottom:1px solid var(--line)}.hm-sr:last-child{border-bottom:0;padding-bottom:0}
+.hm-srh{display:flex;justify-content:space-between;align-items:baseline;gap:.8rem;margin-bottom:.5rem}
+.hm-srh b{font-size:.92rem;color:var(--navyd)}.hm-srh em{font-style:normal;font-weight:700;font-size:.9rem}
+.hm-strip{display:flex;flex-wrap:wrap;gap:.25rem}
+.hm-sq{width:1.15rem;height:1.15rem;border-radius:.3rem;background:var(--line)}
+.hm-sh{display:grid;grid-template-columns:6.8rem minmax(0,1fr);gap:1.2rem;align-items:center;padding-bottom:1rem;margin-bottom:.4rem;border-bottom:1px solid var(--line)}.hm-sh .hm-ring{width:6.5rem;height:6.5rem}.hm-sh .hm-sum{align-items:flex-start}
+.hm-empty{padding:1.6rem .5rem;text-align:center;color:var(--mut);font-size:.88rem;line-height:1.6}.hm-empty b{display:block;color:var(--ink);margin-bottom:.2rem}
+@media(max-width:1000px){.hm-grid{grid-template-columns:minmax(0,1fr)}}.hm-c{min-width:0}
+@media(max-width:560px){.hm-hero{padding:1.3rem 1.2rem}.hm-clock{text-align:left}.hm-sh{grid-template-columns:5.5rem minmax(0,1fr);gap:.9rem}.hm-sh .hm-ring{width:5.5rem;height:5.5rem}.hm-it{grid-template-columns:3rem minmax(0,1fr);gap:.6rem}}
+.hm-top .sel{flex:1 1 9rem;min-width:0;width:auto}.hm-top .link{flex:none}
+@media(max-width:1000px){.two{grid-template-columns:minmax(0,1fr)}}
+.sec{gap:.5rem;flex-wrap:wrap}.sec h3{min-width:0}
+.hm-days{position:relative}
 </style>
 </head>
 <body>
@@ -893,7 +964,7 @@ function loaderOff() {
 }
 
 const CACHE_TTL = 5 * 60 * 1000;
-const CACHE_READ = ['classes', 'classDetail', 'overview', 'myGrades', 'adminUsers', 'adminClasses', 'adminSchedules', 'attendanceGet', 'attendanceRecap'];
+const CACHE_READ = ['classes', 'classDetail', 'overview', 'myGrades', 'adminUsers', 'adminClasses', 'adminSchedules', 'attendanceGet', 'attendanceRecap', 'dashHome'];
 const _cache = new Map(), _inflight = new Map();
 let _gen = 0;
 const cacheClear = () => { _cache.clear(); _inflight.clear(); _gen++; };
@@ -1202,7 +1273,7 @@ function startClock() {
     const h = String(now.getHours()).padStart(2, '0');
     const m = String(now.getMinutes()).padStart(2, '0');
     const s = String(now.getSeconds()).padStart(2, '0');
-    const ct = $('#dash-clock'); if (ct) ct.textContent = `${h}:${m}:${s}`;
+    const ct = $('#dash-clock'); if (ct) ct.textContent = `${h}:${m}:${s}`; if (s === '00' && typeof hmTick === 'function') hmTick();
   };
   updateClock(); 
   CLOCK_INT = setInterval(updateClock, 1000);
@@ -1216,7 +1287,7 @@ function getGreeting() {
   return 'Selamat Malam';
 }
 
-const heroHTML = msg => `<div class="hero-dash"><div class="hero-text"><h2>${getGreeting()}, ${esc(String(S.user.full_name || '').split(' ')[0])}</h2><p>${msg}</p></div><div class="hero-clock"><div class="clock-time" id="dash-clock">--:--:--</div><div class="clock-date">${new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</div></div></div>`;
+const heroHTML = msg => hmHero(msg);
 
 async function vDashData() {
   nav('dash'); view('<p class="empty">Memuat…</p>');
@@ -1253,23 +1324,15 @@ function vDash() {
   if (monitor && !teacher) {
     return page('dash', 'Dashboard pengawasan', 'Ringkasan pengelolaan dan pengawasan pembelajaran.', () => {
       return `
-      <div class="hero-dash">
-        <div class="hero-text">
-          <h2>${getGreeting()}, ${esc(S.user.full_name.split(' ')[0])}</h2>
-          <p>Pantau aktivitas pembelajaran dan capaian nilai seluruh kelas.</p>
-        </div>
-        <div class="hero-clock">
-          <div class="clock-time" id="dash-clock">--:--:--</div>
-          <div class="clock-date">${tanggal}</div>
-        </div>
-      </div>
+      ${hmHero()}
       <div class="stats">
         ${[['Total kelas', O.classes.length], ['Total tugas', O.assignments.length], ['Pengumpulan tugas', O.submissions.length], ['Total kuis', O.quizzes.length]].map(([l,n]) => `<div class="card st"><small>${l}</small><b>${n}</b></div>`).join('')}
-      </div>`;
+      </div>
+      ${hmWidgets()}`;
     });
   }
 
-  return page('dash', 'Beranda', 'Ringkasan aktivitas belajar mengajar Anda hari ini.', () => {
+  return page('dash', 'Beranda', 'Jadwal, kehadiran, dan aktivitas belajar hari ini.', () => {
     const t = isT();
     const todo = O.assignments.filter(a => !subOf(a)).sort((a, b) => (a.due || '9').toString().localeCompare((b.due || '9').toString()));
     
@@ -1296,16 +1359,7 @@ function vDash() {
     const news = O.announcements.slice(0, 4).map(a => row(a.title, esc(cname(a.class_id)) + ' • ' + tgl(a.created), '', `openClass('${a.class_id}','ann')`)).join('') || '<p class="empty">Belum ada pengumuman.</p>';
     
     return `
-      <div class="hero-dash">
-        <div class="hero-text">
-          <h2>${getGreeting()}, ${esc(S.user.full_name.split(' ')[0])}</h2>
-          <p>${t ? 'Kelola kelas dan pantau perkembangan belajar siswa.' : 'Periksa tugas, kuis, dan materi terbaru yang tersedia untuk Anda.'}</p>
-        </div>
-        <div class="hero-clock">
-          <div class="clock-time" id="dash-clock">--:--:--</div>
-          <div class="clock-date">${tanggal}</div>
-        </div>
-      </div>
+      ${hmHero()}
 
       ${reminders.length ? `
       <div class="card" style="border-left:4px solid #f59e0b; margin-bottom:1.5rem; background:#fffbeb">
@@ -1316,6 +1370,8 @@ function vDash() {
 
       <div class="stats">${stats.map(([l, n]) => `<div class="card st"><small>${l}</small><b>${n}</b></div>`).join('')}</div>
       
+      ${hmWidgets()}
+
       <div class="two">
         <div class="card">
           <div class="sec"><h3>${t ? 'Menunggu penilaian' : 'Tugas yang perlu dikerjakan'}</h3><button class="link" onclick="go('${t ? 'review' : 'tasks'}')">Lihat semua</button></div>
@@ -1887,6 +1943,7 @@ async function editAdminUser(role, id) {
     {n:'role',l:'Peran utama',t:'select',v:user?.role||dflt,opts:roleOpts},
     {n:'extra_roles',l:'Peran tambahan (opsional, pisahkan dengan koma)',v:user?.extra_roles||'',r:false},
     {n:'email',l:'Email (opsional)',t:'email',v:user?.email||'',r:false},
+    {n:'gender',l:'Jenis kelamin (untuk sapaan Bapak/Ibu)',t:'select',v:user?.gender||'',opts:[{v:'',l:'Belum diisi'},{v:'L',l:'Laki-laki'},{v:'P',l:'Perempuan'}],r:false},
     {n:'status',l:'Status akun',t:'select',v:user?.status||'aktif',opts:[{v:'aktif',l:'Aktif'},{v:'nonaktif',l:'Nonaktif'}]}
   ];
   if (!user) fields.push({n:'password',l:'Sandi awal (minimal 8 karakter)',t:'password',min:8});
@@ -1966,7 +2023,7 @@ function syncStepsHTML(step) {
 async function adminSyncPage() {
   if (!sinkronOnly()) return;
   nav('adminSync');
-  view(`<div class="top"><div><h2>Sinkronisasi Portal Akademik</h2><p>Selaraskan data siswa, guru, kelas, dan jadwal dengan Portal Akademik. Data pada Portal tidak diubah.</p></div></div>
+  view(`<div class="top"><div><h2>Sinkronisasi Portal Akademik</h2><p>Selaraskan data siswa, guru, jenis kelamin, kelas, dan jadwal dengan Portal Akademik. Data pada Portal tidak diubah.</p></div></div>
     ${syncStepsHTML(1)}
     <div class="wcard">
       <h4>Langkah 1 — Pratinjau data</h4>
@@ -1987,7 +2044,7 @@ function syncRender(r) {
   const s = r.ringkas || {};
   const c = r.contoh || {};
   const st = (n, l, kls) => `<div class="wstat${kls?' '+kls:''}"><small>${esc(l)}</small><b>${esc(n)}</b></div>`;
-  const total = (s.akunBaru||0)+(s.akunDitautkan||0)+(s.akunDiubah||0)+(s.akunDinonaktifkan||0)
+  const total = (s.akunBaru||0)+(s.akunDitautkan||0)+(s.akunDiubah||0)+(s.jkDiperbarui||0)+(s.akunDinonaktifkan||0)
     +(s.kelasBaru||0)+(s.kelasDitautkan||0)+(s.anggotaBaru||0)
     +(s.jadwalBaru||0)+(s.jadwalDiubah||0)+(s.jadwalDihapus||0);
   const listBlock = (judul, arr, f) => arr && arr.length
@@ -2006,6 +2063,7 @@ function syncRender(r) {
         ${st(s.akunBaru, 'Akun baru', s.akunBaru?'ok':'')}
         ${st(s.akunDitautkan, 'Akun ditautkan', s.akunDitautkan?'ok':'')}
         ${st(s.akunDiubah, 'Nama diperbarui')}
+        ${st(s.jkDiperbarui||0, 'Jenis kelamin diperbarui', s.jkDiperbarui?'ok':'')}
         ${st(s.akunDinonaktifkan, 'Akun dinonaktifkan', s.akunDinonaktifkan?'warn':'')}
         ${st(s.kelasBaru, 'Kelas baru', s.kelasBaru?'ok':'')}
         ${st(s.kelasDitautkan, 'Kelas ditautkan')}
@@ -2202,7 +2260,7 @@ async function page(k, title, sub, render, force) {
   try { 
     await loadO(force); 
     view(`<div class="top"><div class="ph-w"><span class="ph" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICON[k] || ''}</svg></span><div><h2>${title}</h2><p>${sub}</p></div></div></div>` + render()); 
-    if (k === 'dash') startClock();
+    if (k === 'dash') { startClock(); if (window.hmLoad) hmLoad(); }
   }
   catch (e) { view(`<div class="card empty"><b>Data belum dapat dimuat</b>${esc(e.message)}<br><br><button class="btn" onclick="go('${k}')">Coba lagi</button></div>`); }
 }
@@ -2625,6 +2683,164 @@ if (S) start(); else cekServer();
 
 document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; const o = [...document.querySelectorAll('.ov')].pop(); if (o && !o.classList.contains('dg')) { o._close ? o._close() : o.remove(); } });
 new MutationObserver(ms => ms.forEach(r => r.addedNodes.forEach(n => { if (n.classList && n.classList.contains('ov') && !n.classList.contains('dg') && n.firstElementChild) { n.firstElementChild.setAttribute('role', 'dialog'); n.firstElementChild.setAttribute('aria-modal', 'true'); } }))).observe(document.body, { childList: true });
+
+/* ===== Beranda hangat: sapaan, jadwal, infografis kehadiran per pertemuan ===== */
+var HM = { data: null, day: '', cid: '', seq: 0 };
+var HM_DAYS = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+var HM_SHORT = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+function hmMode() { return isT() ? 'teacher' : isMonitor() ? 'monitor' : 'student'; }
+function hmDayIdx(d) { return (d.getDay() + 6) % 7; }
+function hmMin(t) { var m = String(t || '').match(/^(\d{1,2}):(\d{2})/); return m ? (+m[1]) * 60 + (+m[2]) : -1; }
+function hmNowMin() { var n = new Date(); return n.getHours() * 60 + n.getMinutes(); }
+function hmSapa() {
+  var n = hmFirst();
+  if (hmMode() === 'student') return 'Ananda ' + n;
+  var gd = String(S.user.gender || '').toUpperCase();
+  return (gd === 'L' ? 'Bapak ' : gd === 'P' ? 'Ibu ' : 'Bapak/Ibu ') + n;
+}
+function hmWho() { var gd = String(S.user.gender || '').toUpperCase(); return gd === 'L' ? 'Bapak' : gd === 'P' ? 'Ibu' : 'Bapak/Ibu'; }
+function hmFirst() {
+  var skip = /^(bapak|ibu|pak|bu|drs|dra|dr|ir|prof|h|hj|ust|ustadz|ustadzah)\.?$/i;
+  var parts = String(S.user.full_name || '').trim().split(/\s+/).filter(Boolean);
+  var pick = parts.find(function (w) { return !skip.test(w) && !/\.$/.test(w); });
+  return pick || parts[0] || '';
+}
+function hmTod() { var h = new Date().getHours(); return h < 11 ? 'pagi' : h < 15 ? 'siang' : h < 19 ? 'sore' : 'malam'; }
+function hmIcon(t) {
+  if (t === 'malam') return '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>';
+  if (t === 'sore') return '<path d="M17 18a5 5 0 0 0-10 0M12 9v3M4.2 10.2l1.4 1.4M1 18h2M21 18h2M18.4 11.6l1.4-1.4M23 22H1M16 5l-4-3-4 3"/>';
+  return '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/>';
+}
+function hmToday() {
+  if (!HM.data) return [];
+  var tn = HM_DAYS[hmDayIdx(new Date())];
+  return HM.data.schedules.filter(function (s) { return s.day === tn; }).sort(function (a, b) { return hmMin(a.start_time) - hmMin(b.start_time); });
+}
+function hmLine() {
+  var mode = hmMode(), d = HM.data;
+  if (!d) return mode === 'teacher' ? 'Semoga hari ini berjalan lancar bersama para siswa.' : mode === 'student' ? 'Semoga hari ini menyenangkan dan penuh semangat belajar, Ananda.' : 'Semoga pemantauan pembelajaran hari ini berjalan lancar, ' + hmWho() + '.';
+  var td = hmToday(), n = td.length, now = hmNowMin(), last = n ? hmMin(td[n - 1].end_time) : -1, wk = hmDayIdx(new Date()) >= 5;
+  if (mode === 'teacher') {
+    if (!n) return wk ? 'Tidak ada jadwal mengajar hari ini. Selamat menikmati akhir pekan, ' + hmWho() + '.' : 'Tidak ada jadwal mengajar hari ini. Waktu yang pas untuk menyiapkan materi.';
+    if (now >= last) return 'Seluruh sesi hari ini sudah selesai. Terima kasih atas dedikasi ' + hmWho() + '.';
+    return 'Hari ini ' + hmWho() + ' mengajar ' + n + ' sesi, dimulai pukul ' + td[0].start_time + '. Semoga lancar.';
+  }
+  if (mode === 'student') {
+    if (!n) return wk ? 'Tidak ada pelajaran hari ini. Selamat menikmati akhir pekan, Ananda.' : 'Tidak ada pelajaran terjadwal hari ini. Manfaatkan waktunya untuk mengerjakan tugas, Ananda.';
+    if (now >= last) return 'Pelajaran hari ini sudah selesai. Selamat beristirahat, Ananda.';
+    return 'Ada ' + n + ' pelajaran hari ini, dimulai pukul ' + td[0].start_time + '. Semangat, Ananda!';
+  }
+  if (!n) return 'Tidak ada sesi pembelajaran terjadwal hari ini.';
+  var kc = {}; td.forEach(function (s) { kc[s.class_id] = 1; });
+  return n + ' sesi pembelajaran dijadwalkan hari ini di ' + Object.keys(kc).length + ' kelas.';
+}
+function hmLineSet() { var e = $('#hm-line'); if (e) e.textContent = hmLine(); }
+function hmHero(msg) {
+  var tod = hmTod(), tanggal = new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  return '<section class="hm-hero" data-tod="' + tod + '"><div class="hm-hl"><span class="hm-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + hmIcon(tod) + '</svg></span>'
+    + '<div><h2>' + getGreeting() + ', ' + esc(hmSapa()) + '</h2><p id="hm-line">' + esc(msg || hmLine()) + '</p></div></div>'
+    + '<div class="hm-clock"><b id="dash-clock">--:--:--</b><small>' + tanggal + '</small></div></section>';
+}
+function hmWidgets() {
+  var sk = '<div class="skel" style="height:1.3rem;width:42%"></div><div class="skel" style="height:9.5rem;margin-top:1rem"></div>';
+  return '<div class="hm-grid"><section class="card hm-c" id="hm-sched" aria-label="Jadwal">' + sk + '</section><section class="card hm-c" id="hm-att" aria-label="Kehadiran siswa">' + sk + '</section></div>';
+}
+function hmLoad() {
+  var n = ++HM.seq;
+  api('dashHome', {}).then(function (d) {
+    if (n !== HM.seq || !$('#hm-sched')) return;
+    HM.data = d; HM.day = ''; hmSched(); hmAtt(); hmLineSet();
+  }).catch(function (e) {
+    if (n !== HM.seq) return;
+    var m = '<div class="hm-empty"><b>Data belum dapat dimuat</b>' + esc(e.message) + '<br><br><button class="btn2" type="button" onclick="hmLoad()">Coba lagi</button></div>';
+    ['#hm-sched', '#hm-att'].forEach(function (id) { if ($(id)) $(id).innerHTML = m; });
+  });
+}
+function hmTick() { if (!$('#hm-sched') || !HM.data) return; hmSched(); hmLineSet(); }
+function hmDay(i) { HM.day = HM_DAYS[i]; hmSched(); }
+function hmGoAtt(cid) { AT.cid = cid; AT.tab = 'in'; AT.date = todayStr(); go('attendance'); }
+
+function hmSched() {
+  var el = $('#hm-sched'); if (!el || !HM.data) return;
+  var mode = hmMode(), nowI = hmDayIdx(new Date()), nowM = hmNowMin(), by = {}, done = HM.data.done_today || [];
+  HM_DAYS.forEach(function (d) { by[d] = []; });
+  HM.data.schedules.forEach(function (s) { if (by[s.day]) by[s.day].push(s); });
+  HM_DAYS.forEach(function (d) { by[d].sort(function (a, b) { return hmMin(a.start_time) - hmMin(b.start_time); }); });
+  if (!HM.day) HM.day = HM_DAYS[nowI];
+  var shown = HM_DAYS.map(function (d, i) { return i; }).filter(function (i) { return i < 6 || by[HM_DAYS[i]].length || i === nowI; });
+  var base = new Date(); base.setDate(base.getDate() - nowI);
+  var tabs = shown.map(function (i) {
+    var dt = new Date(base); dt.setDate(base.getDate() + i);
+    return '<button type="button" class="hm-d' + (HM_DAYS[i] === HM.day ? ' on' : '') + (i === nowI ? ' td' : '') + (by[HM_DAYS[i]].length ? ' has' : '') + '" onclick="hmDay(' + i + ')" aria-pressed="' + (HM_DAYS[i] === HM.day) + '" aria-label="' + HM_DAYS[i] + ', ' + by[HM_DAYS[i]].length + ' sesi">' + HM_SHORT[i] + '<b>' + dt.getDate() + '</b><i></i></button>';
+  }).join('');
+  var isToday = HM.day === HM_DAYS[nowI], list = by[HM.day] || [], nextDone = false;
+  var items = list.map(function (s) {
+    var a = hmMin(s.start_time), b = hmMin(s.end_time), st = '';
+    if (isToday) { if (nowM >= b) st = 'done'; else if (nowM >= a) st = 'live'; else if (!nextDone) { st = 'next'; nextDone = true; } }
+    var title = s.subject || s.class_name || 'Pelajaran', meta = [(s.subject && s.class_name && s.subject !== s.class_name) ? s.class_name : '', s.room ? 'Ruang ' + s.room : '', mode !== 'teacher' ? s.teacher_name : ''].filter(Boolean).map(esc).join(' • ');
+    var tag = st === 'live' ? '<span class="badge ok">Berlangsung</span>' : st === 'next' ? '<span class="badge warn">Berikutnya</span>' : st === 'done' ? '<span class="badge">Selesai</span>' : '';
+    var pg = st === 'live' && b > a ? '<div class="hm-pg" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + Math.round((nowM - a) / (b - a) * 100) + '"><i style="width:' + Math.min(100, Math.max(0, (nowM - a) / (b - a) * 100)) + '%"></i></div>' : '';
+    var act = (mode === 'teacher' && isToday && nowM >= a && done.indexOf(s.class_id) === -1) ? '<button type="button" class="hm-act" onclick="hmGoAtt(\'' + esc(s.class_id) + '\')">Isi presensi</button>' : '';
+    return '<div class="hm-it ' + st + '"><div class="hm-t"><b>' + esc(s.start_time) + '</b>' + esc(s.end_time) + '</div><div class="hm-b"><div class="hm-bh"><strong>' + esc(title) + '</strong>' + tag + '</div>' + (meta ? '<span class="m">' + meta + '</span>' : '') + (s.notes ? '<span class="m">' + esc(s.notes) + '</span>' : '') + pg + act + '</div></div>';
+  }).join('');
+  var total = HM.data.schedules.length;
+  var empty = '<div class="hm-empty"><b>' + (isToday ? 'Tidak ada jadwal hari ini' : 'Tidak ada jadwal pada hari ' + HM.day) + '</b>' + (total ? 'Pilih hari lain untuk melihat jadwal lainnya.' : 'Jadwal akan tampil di sini setelah ditetapkan oleh sekolah.') + '</div>';
+  var ttl = mode === 'teacher' ? 'Jadwal mengajar' : mode === 'student' ? 'Jadwal pelajaran' : 'Jadwal pembelajaran';
+  el.innerHTML = '<div class="hm-h"><div><h3>' + ttl + '</h3><small>' + HM.day + ' • ' + list.length + ' sesi</small></div></div><div class="hm-days" role="group" aria-label="Pilih hari">' + tabs + '</div>' + (items ? '<div class="hm-list">' + items + '</div>' : empty);
+  var on = el.querySelector('.hm-d.on'), bar = el.querySelector('.hm-days');
+  if (on && bar) bar.scrollLeft = on.offsetLeft - (bar.clientWidth - on.clientWidth) / 2;
+}
+
+function hmCol(p) { return p >= 85 ? '#10b981' : p >= 70 ? '#f59e0b' : '#e11d48'; }
+function hmRing(p) {
+  var c = 2 * Math.PI * 42;
+  return '<svg viewBox="0 0 100 100" class="hm-ring" role="img" aria-label="Kehadiran ' + p + ' persen"><circle cx="50" cy="50" r="42" class="hm-rt"/><circle cx="50" cy="50" r="42" class="hm-rp" stroke-dasharray="' + (c * p / 100).toFixed(1) + ' ' + c.toFixed(1) + '" transform="rotate(-90 50 50)" style="stroke:' + hmCol(p) + '"/><text x="50" y="56" text-anchor="middle" class="hm-rn">' + p + '%</text></svg>';
+}
+function hmLegend(s) {
+  return '<div class="hm-lg">' + ['H', 'S', 'I', 'A'].map(function (k) { return '<span><i style="background:' + ATC[k] + '"></i>' + ATL[k] + '<b>' + s[k] + '</b></span>'; }).join('') + '</div>';
+}
+function hmChart(m) {
+  var W = 480, H = 200, pl = 36, pr = 6, pt = 18, pb = 28, iw = W - pl - pr, ih = H - pt - pb, n = m.length, step = iw / n, bw = Math.min(30, step * .64), g = '', bars = '';
+  [0, 50, 100].forEach(function (v) { var y = pt + ih - ih * v / 100; g += '<line x1="' + pl + '" x2="' + (W - pr) + '" y1="' + y + '" y2="' + y + '" class="hm-gl"/><text x="' + (pl - 6) + '" y="' + (y + 3) + '" text-anchor="end" class="hm-gt">' + v + '%</text>'; });
+  m.forEach(function (x, i) {
+    var cx = pl + step * i + step / 2, x0 = cx - bw / 2, y = pt + ih, tot = x.total || 1, seg = '';
+    ['H', 'S', 'I', 'A'].forEach(function (k) { var h = ih * x[k] / tot; if (h > 0) { y -= h; seg += '<rect x="' + x0.toFixed(1) + '" y="' + y.toFixed(1) + '" width="' + bw.toFixed(1) + '" height="' + h.toFixed(1) + '" fill="' + ATC[k] + '"/>'; } });
+    var tip = 'Pertemuan ' + x.no + ', ' + fmtD(x.date) + ': hadir ' + x.H + ', sakit ' + x.S + ', izin ' + x.I + ', alpa ' + x.A + ' (' + x.pct + '%)';
+    var lab = (n <= 9 || i % 2 === 0 || i === n - 1) ? '<text x="' + cx.toFixed(1) + '" y="' + (H - 9) + '" text-anchor="middle" class="hm-xt">P' + x.no + '</text>' : '';
+    var pc = n <= 9 ? '<text x="' + cx.toFixed(1) + '" y="' + (pt + ih - ih * (x.total ? 1 : 0) - 4) + '" text-anchor="middle" class="hm-pt">' + x.pct + '</text>' : '';
+    bars += '<g class="hm-bar" tabindex="0" role="img" aria-label="' + esc(tip) + '"><title>' + esc(tip) + '</title>' + seg + pc + lab + '</g>';
+  });
+  return '<svg viewBox="0 0 ' + W + ' ' + H + '" class="hm-svg" role="group" aria-label="Grafik kehadiran per pertemuan">' + g + bars + '</svg>';
+}
+function hmAtt() {
+  var el = $('#hm-att'); if (!el || !HM.data) return;
+  var cl = HM.data.attendance || [], stu = HM.data.mode === 'student';
+  if (!cl.length) { el.innerHTML = '<div class="hm-h"><div><h3>Kehadiran per pertemuan</h3></div></div><div class="hm-empty"><b>Belum ada kelas</b>' + (stu ? 'Bergabunglah ke kelas dengan kode dari guru untuk melihat kehadiran.' : 'Grafik kehadiran muncul setelah ada kelas dan presensi.') + '</div>'; return; }
+  return stu ? hmAttStu(el, cl) : hmAttStaff(el, cl);
+}
+function hmAttStaff(el, cl) {
+  if (!cl.some(function (c) { return c.class_id === HM.cid; })) HM.cid = (cl.find(function (c) { return c.meetings.length; }) || cl[0]).class_id;
+  var c = cl.find(function (x) { return x.class_id === HM.cid; }), m = c.meetings, s = c.sum;
+  var opts = cl.map(function (x) { return '<option value="' + esc(x.class_id) + '"' + (x.class_id === HM.cid ? ' selected' : '') + '>' + esc(x.class_name) + '</option>'; }).join('');
+  var head = '<div class="hm-h"><div><h3>Kehadiran per pertemuan</h3><small>' + (c.total_meetings ? c.total_meetings + ' pertemuan tercatat' + (c.total_meetings > m.length ? ', ' + m.length + ' terakhir ditampilkan' : '') : 'Belum ada presensi') + '</small></div></div>'
+    + '<div class="hm-top"><select class="sel" aria-label="Pilih kelas" onchange="HM.cid=this.value;hmAtt()">' + opts + '</select><button type="button" class="link" onclick="go(\'attendance\')">Buka presensi</button></div>';
+  if (!m.length) { el.innerHTML = head + '<div class="hm-empty"><b>Belum ada presensi di kelas ini</b>' + (isT() ? 'Catat presensi pertama untuk melihat grafiknya.' : 'Grafik muncul setelah guru mencatat presensi.') + '</div>'; return; }
+  var ok = m.filter(function (x) { return x.total; }), best = ok.slice().sort(function (a, b) { return b.pct - a.pct || b.no - a.no; })[0], low = ok.slice().sort(function (a, b) { return a.pct - b.pct || b.no - a.no; })[0];
+  var note = (ok.length > 1 && best.no !== low.no) ? 'Tertinggi pada <b>Pertemuan ' + best.no + '</b> (' + best.pct + '%), terendah pada <b>Pertemuan ' + low.no + '</b> (' + low.pct + '%).' : 'Rata-rata kehadiran kelas ini <b>' + s.pct + '%</b>.';
+  el.innerHTML = head + '<div class="hm-sh"><div class="hm-sum">' + hmRing(s.pct) + '</div>' + hmLegend(s) + '</div>' + hmChart(m) + '<p class="hm-note">' + note + ' P menunjukkan nomor pertemuan.</p>';
+}
+function hmAttStu(el, cl) {
+  var all = { H: 0, S: 0, I: 0, A: 0, total: 0 };
+  cl.forEach(function (c) { ['H', 'S', 'I', 'A'].forEach(function (k) { all[k] += c.sum[k]; }); all.total += c.sum.total; });
+  var pct = all.total ? Math.round(all.H / all.total * 100) : 0;
+  var rows = cl.map(function (c) {
+    var sq = c.meetings.map(function (x) { var t = 'Pertemuan ' + x.no + ', ' + fmtD(x.date) + ': ' + (x.status ? ATL[x.status] : 'tidak tercatat'); return '<span class="hm-sq" title="' + esc(t) + '" role="img" aria-label="' + esc(t) + '" style="' + (x.status ? 'background:' + ATC[x.status] : '') + '"></span>'; }).join('');
+    return '<div class="hm-sr"><div class="hm-srh"><b>' + esc(c.class_name) + '</b>' + (c.sum.total ? '<em style="color:' + hmCol(c.sum.pct) + '">' + c.sum.pct + '%</em>' : '<em style="color:var(--faint)">Belum ada</em>') + '</div>' + (sq ? '<div class="hm-strip">' + sq + '</div>' : '<span class="m" style="font-size:.78rem;color:var(--mut)">Presensi belum dicatat.</span>') + '</div>';
+  }).join('');
+  el.innerHTML = '<div class="hm-h"><div><h3>Kehadiran saya per pertemuan</h3><small>Setiap kotak adalah satu pertemuan, dari yang terlama ke terbaru</small></div><button type="button" class="link" onclick="go(\'attendance\')">Lihat detail</button></div>'
+    + (all.total ? '<div class="hm-sh"><div class="hm-sum">' + hmRing(pct) + '</div>' + hmLegend(all) + '</div>' : '')
+    + '<div>' + rows + '</div>';
+}
 </script>
 </body>
 </html>
