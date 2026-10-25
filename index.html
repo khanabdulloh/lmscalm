@@ -867,6 +867,9 @@ button.kp{cursor:pointer;transition:transform .18s,box-shadow .18s}button.kp:hov
 .kp-rm{margin-bottom:1.4rem;border-left:3px solid var(--gold);padding:1.1rem 1.3rem}
 .kp-rm h3{font-size:.98rem;font-weight:700;color:var(--navyd)}.kp-rm>p{font-size:.84rem;color:var(--mut);margin:.2rem 0 .5rem}
 .kp-ri{display:flex;justify-content:space-between;gap:.8rem;flex-wrap:wrap;padding:.55rem 0;border-top:1px solid var(--line);font-size:.88rem}.kp-ri b{color:var(--ink)}.kp-ri span{color:var(--mut)}
+.hm-row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.6rem}.hm-row .hm-act{margin-top:0}
+.hm-act.p{background:var(--navy);color:#fff}.hm-act.p:hover{filter:brightness(1.12)}
+.at-j{display:block;font-weight:500;font-size:.74rem;color:var(--mut);margin-top:.1rem}
 .kp-foot{margin-top:1.2rem;font-size:.78rem;line-height:1.6;color:var(--mut)}
 </style>
 </head>
@@ -2561,7 +2564,7 @@ function attLoad() {
   var b = $('#atb'); if (!b) return; var n = ++AT.seq; b.innerHTML = '<p class="empty">Memuat…</p>';
   var ok = function (fn) { return function (d) { if (n === AT.seq && $('#atb')) fn(d); }; }, bad = function (e) { if (n === AT.seq) attErr(e); };
   if (attIsStu()) api('attendanceRecap', {}).then(ok(attStudent)).catch(bad);
-  else if (AT.tab === 'in') api('attendanceGet', { class_id: AT.cid, date: AT.date }).then(ok(attInput)).catch(bad);
+  else if (AT.tab === 'in') api('attendanceGet', { class_id: AT.cid, date: AT.date }, 30000, { fresh: true }).then(ok(attInput)).catch(bad);
   else api('attendanceRecap', { class_id: AT.cid, from: AT.from, to: AT.to }).then(ok(attRecap)).catch(bad);
 }
 function attCount() {
@@ -2580,15 +2583,18 @@ function attAll() {
 }
 function attInput(d) {
   AT.st = d.students; AT.marks = {};
+  var se = d.session, jd = d.joined || {}, dar = !!(se && se.mode === 'daring');
+  var jt = function (x) { try { return new Date(x).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } };
+  var sj = se ? '<p class="meta" style="margin-bottom:.8rem">Pertemuan ' + (dar ? 'daring' + (se.platform ? ' • ' + esc(se.platform) : '') + ' • ' + Object.keys(jd).length + ' siswa telah bergabung' : se.mode === 'mandiri' ? 'belajar mandiri' : 'tatap muka') + (se.topic ? ' • Topik: ' + esc(se.topic) : '') + '</p>' : '';
   if (!AT.st.length) { $('#atb').innerHTML = '<div class="card empty"><b>Belum ada siswa di kelas ini</b>Siswa bergabung memakai kode kelas.</div>'; return; }
   AT.st.forEach(function (s) { var r = d.records[s.user_id]; AT.marks[s.user_id] = r ? r.status : 'H'; });
   var rows = AT.st.map(function (s) {
     var r = d.records[s.user_id] || {}, u = esc(s.user_id);
-    return '<div class="at-r" data-u="' + u + '"><b>' + esc(s.full_name) + '</b><div class="at-s">' + ['H', 'S', 'I', 'A'].map(function (k) {
+    return '<div class="at-r" data-u="' + u + '"><b>' + esc(s.full_name) + (dar ? '<small class="at-j">' + (jd[s.user_id] ? 'Bergabung ' + esc(jt(jd[s.user_id])) : 'Belum bergabung') + '</small>' : '') + '</b><div class="at-s">' + ['H', 'S', 'I', 'A'].map(function (k) {
       return '<button type="button" class="pill' + (AT.marks[s.user_id] === k ? ' on' : '') + '" data-u="' + u + '" data-s="' + k + '" onclick="attSet(this)" aria-label="' + ATL[k] + '">' + ATL[k] + '</button>';
     }).join('') + '</div><input class="at-n" data-n="' + u + '" maxlength="120" placeholder="Catatan (opsional)" value="' + esc(r.note || '') + '" aria-label="Catatan"></div>';
   }).join('');
-  $('#atb').innerHTML = '<div class="card"><div class="at-h"><span>' + AT.st.length + ' siswa • ' + tgl(AT.date) + ' • <span class="badge' + (d.saved ? ' ok' : ' warn') + '">' + (d.saved ? 'Sudah dicatat' : 'Belum dicatat') + '</span></span><button type="button" class="pill" onclick="attAll()">Semua hadir</button></div><p id="atc" style="padding:.6rem 0;font-size:.82rem;color:var(--mut)"></p>' + rows + '</div><div style="margin-top:1rem"><button type="button" class="btn" id="atsv" onclick="attSave()">Simpan presensi</button></div>';
+  $('#atb').innerHTML = '<div class="card">' + sj + '<div class="at-h"><span>' + AT.st.length + ' siswa • ' + tgl(AT.date) + ' • <span class="badge' + (d.saved ? ' ok' : ' warn') + '">' + (d.saved ? 'Sudah dicatat' : 'Belum dicatat') + '</span></span><button type="button" class="pill" onclick="attAll()">Semua hadir</button></div><p id="atc" style="padding:.6rem 0;font-size:.82rem;color:var(--mut)"></p>' + rows + '</div><div style="margin-top:1rem"><button type="button" class="btn" id="atsv" onclick="attSave()">Simpan presensi</button></div>';
   attCount();
 }
 function attSave() {
@@ -2772,6 +2778,60 @@ function hmLoad() {
     ['#hm-sched', '#hm-att'].forEach(function (id) { if ($(id)) $(id).innerHTML = m; });
   });
 }
+var SES_L = { tatap_muka: 'Tatap muka', daring: 'Daring', mandiri: 'Belajar mandiri' };
+/* Hanya https dari Google Meet, Zoom, dan WhatsApp. Mengembalikan nama platform atau ''. */
+function hmLinkOk(u) {
+  var s = String(u || '').trim(), m = s.match(/^https:\/\/([a-z0-9][a-z0-9.-]*)(?::\d+)?(\/[^\s"'<>]*)?$/i);
+  if (!m || s.length > 300) return '';
+  var h = m[1].toLowerCase(), on = function (d) { return h === d || h.slice(-d.length - 1) === '.' + d; };
+  return h === 'meet.google.com' ? 'Google Meet' : (on('zoom.us') || on('zoom.com')) ? 'Zoom' : (h === 'wa.me' || on('whatsapp.com')) ? 'WhatsApp' : '';
+}
+function hmDateOf(dayName) {
+  var b = new Date(); b.setDate(b.getDate() - hmDayIdx(b) + HM_DAYS.indexOf(dayName));
+  return b.getFullYear() + '-' + ('0' + (b.getMonth() + 1)).slice(-2) + '-' + ('0' + b.getDate()).slice(-2);
+}
+function hmSes(cid, date) { return ((HM.data && HM.data.sessions) || []).find(function (x) { return String(x.class_id) === String(cid) && x.date === date; }) || null; }
+function hmSesTxt(se) {
+  if (!se) return '';
+  var tag = se.mode === 'daring' ? '<span class="badge ok">Daring' + (se.platform ? ' • ' + esc(se.platform) : '') + '</span>' : se.mode === 'mandiri' ? '<span class="badge">Belajar mandiri</span>' : '';
+  return (tag ? '<span class="m">' + tag + '</span>' : '') + (se.topic ? '<span class="m">Topik: ' + esc(se.topic) + '</span>' : '') + (se.note ? '<span class="m">' + esc(se.note) + '</span>' : '');
+}
+function hmBtns(act, s, date, se, isToday, mode) {
+  var b = act || '', cid = esc(s.class_id);
+  if (se && se.mode === 'daring' && isToday && hmLinkOk(se.link)) b += '<button type="button" class="hm-act p" onclick="hmJoin(\'' + cid + '\',\'' + date + '\')">Gabung ' + esc(se.platform || 'kelas daring') + '</button>';
+  if (mode === 'teacher' && date >= todayStr()) b += '<button type="button" class="hm-act" onclick="hmSesEdit(\'' + cid + '\',\'' + date + '\')">' + (se ? 'Ubah pertemuan' : 'Atur pertemuan') + '</button>';
+  if (mode === 'teacher' && se && se.mode !== 'tatap_muka') b += '<button type="button" class="hm-act" onclick="hmShare(\'' + cid + '\',\'' + date + '\')">Bagikan ke WhatsApp</button>';
+  return b ? '<div class="hm-row">' + b + '</div>' : '';
+}
+function hmJoin(cid, date) {
+  var se = hmSes(cid, date);
+  if (!se || !hmLinkOk(se.link)) return toast('Tautan kelas daring belum tersedia.', true);
+  window.open(se.link, '_blank', 'noopener');
+  if (hmMode() === 'student') { try { fetch(API, { method: 'POST', keepalive: true, body: new URLSearchParams({ action: 'sessionJoin', token: S ? S.token : '', class_id: String(cid), date: date }) }).catch(function () {}); } catch (e) {} }
+}
+function hmSesEdit(cid, date) {
+  var se = hmSes(cid, date) || {}, sc = HM.data.schedules.find(function (x) { return String(x.class_id) === String(cid); }) || {};
+  modal('Atur pertemuan', [
+    { n: 'mode', l: 'Mode pertemuan', t: 'select', v: se.mode || 'tatap_muka', r: false, opts: [{ v: 'tatap_muka', l: 'Tatap muka' }, { v: 'daring', l: 'Daring (Google Meet, Zoom, atau WhatsApp)' }, { v: 'mandiri', l: 'Belajar mandiri' }] },
+    { n: 'link', l: 'Tautan kelas daring (wajib untuk mode daring)', t: 'url', v: se.link || '', r: false },
+    { n: 'topic', l: 'Topik pertemuan', v: se.topic || '', r: false },
+    { n: 'note', l: 'Catatan untuk siswa', t: 'textarea', v: se.note || '', r: false, rows: 3 }
+  ], async function (d) {
+    if (d.mode === 'daring' && !hmLinkOk(d.link)) throw new Error('Gunakan tautan https dari Google Meet, Zoom, atau WhatsApp.');
+    await api('sessionSave', { class_id: cid, date: date, mode: d.mode, link: d.mode === 'daring' ? d.link : '', topic: d.topic || '', note: d.note || '' });
+    toast('Pertemuan diperbarui.'); hmLoad();
+  }, 'Simpan', { sub: (sc.class_name || 'Kelas') + ' • ' + fmtD(date) + '. Siswa melihat informasi ini pada jadwal mereka.' });
+}
+function hmShare(cid, date) {
+  var se = hmSes(cid, date); if (!se) return;
+  var s = HM.data.schedules.find(function (x) { return String(x.class_id) === String(cid) && x.day === HM.day; }) || {};
+  var L = [(s.subject || s.class_name || 'Pelajaran') + (s.class_name && s.subject !== s.class_name ? ' – ' + s.class_name : ''), HM.day + ', ' + fmtD(date) + (s.start_time ? ' pukul ' + s.start_time + '–' + s.end_time : ''), 'Mode: ' + SES_L[se.mode]];
+  if (se.topic) L.push('Topik: ' + se.topic);
+  if (se.note) L.push(se.note);
+  if (se.mode === 'daring' && hmLinkOk(se.link)) L.push('Gabung: ' + se.link);
+  L.push('— ' + userFullName());
+  window.open('https://wa.me/?text=' + encodeURIComponent(L.join('\n')), '_blank', 'noopener');
+}
 function hmFill() {
   var d = HM.data; if (!d) return;
   var td = hmToday(), now = hmNowMin(), ids = {}, dn = (d.done_today || []).map(String);
@@ -2809,7 +2869,8 @@ function hmSched() {
     var tag = st === 'live' ? '<span class="badge ok">Berlangsung</span>' : st === 'next' ? '<span class="badge warn">Berikutnya</span>' : st === 'done' ? '<span class="badge">Selesai</span>' : '';
     var pg = st === 'live' && b > a ? '<div class="hm-pg" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + Math.round((nowM - a) / (b - a) * 100) + '"><i style="width:' + Math.min(100, Math.max(0, (nowM - a) / (b - a) * 100)) + '%"></i></div>' : '';
     var act = (mode === 'teacher' && isToday && nowM >= a && done.indexOf(s.class_id) === -1) ? '<button type="button" class="hm-act" onclick="hmGoAtt(\'' + esc(s.class_id) + '\')">Isi presensi</button>' : '';
-    return '<div class="hm-it ' + st + '"><div class="hm-t"><b>' + esc(s.start_time) + '</b>' + esc(s.end_time) + '</div><div class="hm-b"><div class="hm-bh"><strong>' + esc(title) + '</strong>' + tag + '</div>' + (meta ? '<span class="m">' + meta + '</span>' : '') + (s.notes ? '<span class="m">' + esc(s.notes) + '</span>' : '') + pg + act + '</div></div>';
+    var dt = hmDateOf(HM.day), se = hmSes(s.class_id, dt), sx = hmSesTxt(se);
+    return '<div class="hm-it ' + st + '"><div class="hm-t"><b>' + esc(s.start_time) + '</b>' + esc(s.end_time) + '</div><div class="hm-b"><div class="hm-bh"><strong>' + esc(title) + '</strong>' + tag + '</div>' + (meta ? '<span class="m">' + meta + '</span>' : '') + (s.notes ? '<span class="m">' + esc(s.notes) + '</span>' : '') + sx + pg + hmBtns(act, s, dt, se, isToday, mode) + '</div></div>';
   }).join('');
   var total = HM.data.schedules.length;
   var empty = '<div class="hm-empty"><b>' + (isToday ? 'Tidak ada jadwal hari ini' : 'Tidak ada jadwal pada hari ' + HM.day) + '</b>' + (total ? 'Pilih hari lain untuk melihat jadwal lainnya.' : 'Jadwal akan tampil di sini setelah ditetapkan oleh sekolah.') + '</div>';
