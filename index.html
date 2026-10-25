@@ -101,7 +101,7 @@ button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}
 .rhint::before{content:"";flex:none;width:.4rem;height:.4rem;margin-top:.5rem;border-radius:50%;background:var(--gold)}
 /* ========== APP ========== */
 #app{display:flex;min-height:100vh}
-aside{width:15rem;flex:none;background:var(--side);color:#e2e8f0;padding:1rem;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;overflow-y:auto}
+aside{width:15rem;flex:none;background:var(--side);color:#e2e8f0;padding:1rem;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;overflow-y:auto;transition:width .25s ease}
 aside .logo{width:2.5rem;height:2.5rem;object-fit:contain;margin-bottom:.25rem}
 aside .nm{font-weight:800;color:#fff}
 .bd{display:inline-block;margin-top:.3rem;font-size:.7rem;font-weight:700;padding:.1rem .6rem;border-radius:99px;color:#fff}
@@ -263,6 +263,21 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
 .walert.danger{background:#fef2f2;border-color:#fecaca;color:#991b1b}
 .wactions{display:flex;justify-content:space-between;gap:.75rem;flex-wrap:wrap;margin-top:1rem}
 @media(max-width:860px){.two{grid-template-columns:1fr}}
+/* ========== SIDEBAR TOGGLE ========== */
+.sidebar-toggle{display:none;width:100%;padding:.5rem .75rem;margin:.5rem 0;border:0;border-radius:.75rem;background:rgba(255,255,255,.05);color:#cbd5e1;font-size:.8rem;font-weight:600;cursor:pointer;transition:.15s;align-items:center;gap:.75rem}
+.sidebar-toggle:hover{background:rgba(255,255,255,.1);color:#fff}
+@media(min-width:768px){
+  .sidebar-toggle{display:flex}
+  aside.collapsed{width:4.5rem;padding:1rem .5rem}
+  aside.collapsed .nm,aside.collapsed .bd,aside.collapsed .mg,aside.collapsed .mi span,aside.collapsed .sidebar-toggle span{display:none}
+  aside.collapsed .logo{width:2rem;height:2rem;margin:0 auto 1rem}
+  aside.collapsed .mi{justify-content:center;padding:.75rem}
+  aside.collapsed .mi svg{margin:0}
+  aside.collapsed .mi.out{justify-content:center}
+  aside.collapsed .nb{position:absolute;top:2px;right:2px;margin:0}
+  aside.collapsed .sidebar-toggle{justify-content:center;padding:.5rem 0}
+  aside.collapsed .sidebar-toggle svg{transform:rotate(180deg)}
+}
 </style>
 </head>
 <body>
@@ -314,6 +329,10 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
   <header class="mbar"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt=""><b>SMK CALM</b><button onclick="document.querySelector('aside').classList.toggle('open')" aria-label="Buka menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></header>
   <aside aria-label="Menu utama">
     <img class="logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt=""><p class="nm">SMK CALM</p><span class="bd" id="wr"></span>
+    <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Perkecil menu">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      <span>Perkecil Menu</span>
+    </button>
     <nav id="menu" aria-label="Navigasi LMS"></nav>
     <button class="mi out" onclick="logout(true)" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg><span>Keluar</span></button>
   </aside>
@@ -659,13 +678,10 @@ async function adminUsersPage(role) {
     <div class="card" style="overflow-x:auto"><table><thead><tr><th>Nama</th><th>Username</th><th>Peran</th><th>Status</th><th>Aksi</th></tr></thead><tbody>${list.map(x=>`<tr><td><b>${esc(x.full_name)}</b><div class="meta">${esc(x.email||'')}</div></td><td>${esc(x.username)}</td><td>${esc(roleLabel(x.role))}${x.extra_roles ? `<div class="meta">Tambahan: ${esc(x.extra_roles)}</div>`:''}</td><td><span class="badge ${String(x.status).toLowerCase()==='aktif'?'ok':'warn'}">${esc(x.status||'—')}</span></td><td><div class="acts"><button class="btn2" onclick="editAdminUser('${role}','${esc(x.user_id)}')">Ubah</button><button class="btn2" onclick="resetAdminAccount('${esc(x.user_id)}','${esc(x.username)}')">Reset sandi</button><button class="link" onclick="deleteAdminUser('${esc(x.user_id)}','${esc(x.full_name)}','${role}')">Hapus</button></div></td></tr>`).join('') || `<tr><td colspan="5">Belum ada data ${role === 'siswa' ? 'siswa' : 'guru'}.</td></tr>`}</tbody></table></div>`);
   } catch(e) { view(`<div class="card empty"><b>Data belum dapat dimuat</b>${esc(e.message)}<p><button class="btn2" onclick="adminUsersPage('${role}')">Coba lagi</button></p></div>`); }
 }
-function csvCell(v) {
-  let s = String(v ?? '');
-  // Trik khusus Excel: jika berawalan angka 0, paksa format teks dengan ="..."
-  if (/^0\d+$/.test(s)) {
-    return '="' + s + '"';
-  }
-  return '"' + s.replace(/"/g, '""') + '"';
+function csvCell(v) { 
+  const s = String(v ?? ''); 
+  // Memaksa format teks dengan tanda kutip ganda agar Excel tidak membuang angka 0 di depan
+  return '"' + s.replace(/"/g, '""') + '"'; 
 }
 function downloadCsv(filename, rows) {
   const csv='\ufeff'+rows.map(row=>row.map(csvCell).join(',')).join('\r\n');
@@ -1197,6 +1213,18 @@ async function grades() {
       : empty('Belum ada nilai', 'Kumpulkan tugas di kelas Anda, nilainya akan muncul di sini.')}`);
   } catch (e) { toast(e.message, true); }
 }
+
+/* ===== SIDEBAR TOGGLE ===== */
+function toggleSidebar() {
+  const sb = document.querySelector('aside');
+  sb.classList.toggle('collapsed');
+  try { localStorage.setItem('lms_sb', sb.classList.contains('collapsed') ? '1' : '0'); } catch (e) {}
+}
+try { 
+  if (localStorage.getItem('lms_sb') === '1') {
+    document.querySelector('aside').classList.add('collapsed'); 
+  }
+} catch (e) {}
 
 /* ===== INIT ===== */
 try { const ru = localStorage.getItem('lms_u'); if (ru) { $('#u').value = ru; $('#rem').checked = true; } } catch (x) {}
