@@ -1,63 +1,51 @@
-<!-- ========================================== -->
-<!-- UI LOGIN LMS SMK CALM                      -->
-<!-- ========================================== -->
-
-<style>
-  /* Styling Dasar */
-  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-  body { display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f7f6; }
-  
-  /* Card Login */
-  .login-container { background: #ffffff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 100%; max-width: 400px; text-align: center; }
-  
-  /* Logo & Judul */
-  .login-logo { width: 80px; height: auto; margin-bottom: 15px; }
-  .login-title { color: #0f172a; font-size: 24px; font-weight: 700; margin-bottom: 5px; }
-  .login-subtitle { color: #64748b; font-size: 14px; margin-bottom: 30px; }
-
-  /* Input Form */
-  .form-group { text-align: left; margin-bottom: 20px; }
-  .form-group label { display: block; color: #334155; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
-  .form-control { width: 100%; padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; outline: none; transition: 0.3s; }
-  .form-control:focus { border-color: #1e3a8a; box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1); }
-
-  /* Tombol Login */
-  .btn-login { width: 100%; padding: 14px; background-color: #1e3a8a; color: #ffffff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 10px; }
-  .btn-login:hover { background-color: #172554; }
-  .btn-login:disabled { background-color: #94a3b8; cursor: not-allowed; }
-
-  /* Pesan Error/Success */
-  .alert { padding: 12px; border-radius: 8px; font-size: 14px; margin-bottom: 20px; display: none; }
-  .alert-error { background-color: #fee2e2; color: #b91c1c; border: 1px solid #f87171; }
-  .alert-success { background-color: #dcfce3; color: #15803d; border: 1px solid #4ade80; }
-</style>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Portal LMS - SMK CALM</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f7f6; }
+    .login-container { background: #ffffff; padding: 40px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); width: 100%; max-width: 400px; text-align: center; }
+    .login-logo { width: 80px; height: 80px; margin-bottom: 15px; object-fit: contain; }
+    .login-title { color: #0f172a; font-size: 24px; font-weight: 700; margin-bottom: 5px; }
+    .login-subtitle { color: #64748b; font-size: 14px; margin-bottom: 30px; }
+    .form-group { text-align: left; margin-bottom: 20px; }
+    .form-group label { display: block; color: #334155; font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+    .form-control { width: 100%; padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; outline: none; transition: 0.3s; }
+    .form-control:focus { border-color: #1e3a8a; box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1); }
+    .btn-login { width: 100%; padding: 14px; background-color: #1e3a8a; color: #ffffff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.3s; margin-top: 10px; }
+    .btn-login:hover { background-color: #172554; }
+    .btn-login:disabled { background-color: #94a3b8; cursor: not-allowed; }
+    .alert { padding: 12px; border-radius: 8px; font-size: 14px; margin-bottom: 20px; display: none; text-align: left; }
+    .alert-error { background-color: #fee2e2; color: #b91c1c; border: 1px solid #f87171; }
+    .alert-success { background-color: #dcfce3; color: #15803d; border: 1px solid #4ade80; }
+  </style>
+</head>
+<body>
 
 <div class="login-container">
-  <!-- Ganti URL gambar di bawah dengan logo SMK CALM Anda -->
+  <!-- GANTI DENGAN URL LOGO ASLI SEKOLAH ANDA -->
   <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Logo_SMK_Ciledug_Al_Musaddadiyah.png/200px-Logo_SMK_Ciledug_Al_Musaddadiyah.png" alt="Logo SMK CALM" class="login-logo">
-  
   <h1 class="login-title">Portal LMS</h1>
   <p class="login-subtitle">Masuk untuk melanjutkan belajar</p>
-
   <div id="pesan" class="alert"></div>
-
   <form id="formLogin">
     <div class="form-group">
       <label for="username">Username / NISN / NIP</label>
       <input type="text" id="username" class="form-control" placeholder="Masukkan username" required>
     </div>
-    
     <div class="form-group">
       <label for="password">Password</label>
       <input type="password" id="password" class="form-control" placeholder="Masukkan password" required>
     </div>
-
     <button type="submit" id="btnSubmit" class="btn-login">Masuk Sistem</button>
   </form>
 </div>
 
 <script>
-  // GANTI URL INI DENGAN URL WEB APP APPS SCRIPT ANDA YANG BERAKHIRAN /exec
+  // 1. PASTIKAN URL INI ADALAH URL DEPLOYMENT TERBARU ANDA (yang berakhiran /exec)
   const API_URL = "https://script.google.com/macros/s/AKfycbw.../exec"; 
 
   const form = document.getElementById('formLogin');
@@ -65,66 +53,59 @@
   const btnSubmit = document.getElementById('btnSubmit');
 
   form.addEventListener('submit', async function(e) {
-    e.preventDefault(); // Mencegah halaman refresh saat tombol ditekan
+    e.preventDefault();
     
-    // Ambil data dari input
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    // Ubah tampilan tombol menjadi loading
-    btnSubmit.textContent = "Memeriksa...";
+    btnSubmit.textContent = "Memproses...";
     btnSubmit.disabled = true;
     pesanDiv.style.display = "none";
 
-   // Ubah bagian ini di dalam event listener form
     try {
-      // MENGGUNAKAN FORMDATA (URLSearchParams) UNTUK MENEMBUS CORS
+      // MENGGUNAKAN FORMDATA UNTUK MENGHINDARI CORS PREFLIGHT
       const formData = new URLSearchParams();
       formData.append('action', 'login');
       formData.append('username', username);
       formData.append('password', password);
 
+      // Timeout 10 detik agar tidak loading terus
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000);
+
       const response = await fetch(API_URL, {
         method: 'POST',
-        redirect: 'follow',
-        body: formData // Kirim sebagai form data, bukan JSON
+        body: formData,
+        signal: controller.signal
       });
+      clearTimeout(timeoutId);
 
-      // Ambil respons mentah, lalu ubah ke JSON
       const rawText = await response.text(); 
+      console.log("Respon Mentah dari Google:", rawText); // Cek di F12 Console
+
       const result = JSON.parse(rawText);
 
-      // Jika berhasil
-      if (result.status === "success") {
-        // ... (kode sukses Anda biarkan sama)
-
-      // Jika berhasil
       if (result.status === "success") {
         pesanDiv.className = "alert alert-success";
-        pesanDiv.textContent = `Selamat datang, ${result.user.full_name}! Anda login sebagai ${result.user.role}.`;
+        pesanDiv.innerHTML = `<b>Berhasil!</b> Selamat datang, ${result.user.full_name} (${result.user.role}).`;
         pesanDiv.style.display = "block";
-        
-        // Simpan data user di localStorage (untuk session)
         localStorage.setItem('userLMS', JSON.stringify(result.user));
-
-        // Di sini nanti kita arahkan ke dashboard sesuai role
-        // setTimeout(() => {
-        //   window.location.href = "/p/dashboard.html"; 
-        // }, 1500);
-
+        
+        // Nanti redirect ke dashboard di sini
       } else {
-        // Jika gagal (username/password salah)
         pesanDiv.className = "alert alert-error";
         pesanDiv.textContent = result.message;
         pesanDiv.style.display = "block";
       }
 
-        } catch (error) {
-      // Tampilkan error asli di Console (F12) untuk kita bedah
-      console.error("DETAIL ERROR:", error);
-      
+    } catch (error) {
+      console.error("Error Detail:", error);
       pesanDiv.className = "alert alert-error";
-      pesanDiv.textContent = "Terjadi kesalahan jaringan: " + error.message;
+      if (error.name === 'AbortError') {
+        pesanDiv.textContent = "Koneksi ke server Timeout (Terlalu lama). Periksa internet atau URL API.";
+      } else {
+        pesanDiv.textContent = "Gagal terhubung ke server. (CORS/Network Error). Cek Console F12.";
+      }
       pesanDiv.style.display = "block";
     } finally {
       btnSubmit.textContent = "Masuk Sistem";
@@ -132,3 +113,6 @@
     }
   });
 </script>
+
+</body>
+</html>
