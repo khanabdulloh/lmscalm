@@ -12,10 +12,10 @@
 :root{--ink:#18263f;--mut:#5b6b82;--faint:#8794a8;--line:#e8edf4;--line2:#d3dcea;--bg:#f5f7fb;--navy:#0b3d91;--navyd:#0a2250;--navyx:#071a40;--side:#061f4d;--soft:#eef3fb;--gold:#d6b46a;--serif:'Newsreader',Georgia,serif;--r:1rem;--rs:.7rem;--err:#b4232f;--ok:#047857}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
-button,input,textarea{font:inherit;color:inherit}button{cursor:pointer}
+button,input,textarea,select{font:inherit;color:inherit}button{cursor:pointer}
 :focus-visible{outline:2px solid #f59e0b;outline-offset:2px}
 .hide{display:none!important}
-/* ==== LOGIN ==== */
+/* ========== LOGIN ========== */
 .lw{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);min-height:100vh;min-height:100dvh;background:#fff}
 .ls{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:2.5rem;padding:clamp(2rem,5vh,3.25rem) clamp(2rem,4vw,4rem);color:#fff;background:radial-gradient(70% 50% at 0 0,rgba(74,118,201,.3),transparent 65%),linear-gradient(165deg,#0c3f94 0%,#0a2f72 50%,#071a40 100%)}
 .ls::before{content:"";position:absolute;z-index:-1;top:-9rem;right:-9rem;width:26rem;height:26rem;border-radius:50%;border:1px solid rgba(255,255,255,.08)}
@@ -81,7 +81,6 @@ button,input,textarea{font:inherit;color:inherit}button{cursor:pointer}
 .link{background:none;border:0;font-size:.75rem;font-weight:700;color:var(--navy);text-decoration:underline;text-underline-offset:2px}
 .help{margin-top:1rem;padding-top:1.1rem;border-top:1px solid var(--line);text-align:center;font-size:.78rem;color:var(--mut)}
 .spin{width:1rem;height:1rem;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
-/* role picker */
 .rh{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.65rem;min-height:1.8rem}
 .rlab{margin:0;font-size:.8rem;font-weight:600;color:var(--ink)}
 .adm{display:inline-flex;align-items:center;gap:.35rem;padding:.26rem .65rem;border:1px solid transparent;border-radius:99px;background:none;font-size:.74rem;font-weight:500;color:var(--mut);transition:.18s}
@@ -100,16 +99,15 @@ button,input,textarea{font:inherit;color:inherit}button{cursor:pointer}
 .rt[aria-checked=true]::after{opacity:1;transform:none}
 .rhint{display:flex;gap:.55rem;align-items:flex-start;margin:.9rem 0 1.4rem;padding:.7rem .85rem;border-radius:.8rem;background:#f4f7fc;font-size:.78rem;line-height:1.6;color:#53647f}
 .rhint::before{content:"";flex:none;width:.4rem;height:.4rem;margin-top:.5rem;border-radius:50%;background:var(--gold)}
-/* ==== APP ==== */
+/* ========== APP ========== */
 #app{display:flex;min-height:100vh}
 aside{width:15rem;flex:none;background:var(--side);color:#e2e8f0;padding:1rem;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;overflow-y:auto}
 aside .logo{width:2.5rem;height:2.5rem;object-fit:contain;margin-bottom:.25rem}
 aside .nm{font-weight:800;color:#fff}
 .bd{display:inline-block;margin-top:.3rem;font-size:.7rem;font-weight:700;padding:.1rem .6rem;border-radius:99px;color:#fff}
-/* FIX: semua badge peran diberi warna */
 .bd.guru,.bd.admin{background:#10b981}
 .bd.siswa{background:#fbbf24;color:#0f172a}
-.bd.staff,.bd.staf{background:#6366f1}
+.bd.staff{background:#6366f1}
 .bd.guru_bk{background:#0ea5e9}
 .bd.kurikulum{background:#8b5cf6}
 .bd.kepala_sekolah{background:#f97316}
@@ -238,7 +236,7 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
 .pwf{max-width:26rem}.pwf label{display:block;font-size:.8rem;font-weight:600;margin-bottom:.9rem}
 .pwf input{display:block;width:100%;margin-top:.35rem;padding:.65rem .85rem;border:1px solid var(--line2);border-radius:.7rem;font-size:.9rem;font-weight:400}
 .pwf input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 4px rgba(11,61,145,.14)}
-/* ==== SYNC WIZARD ==== */
+/* ========== SYNC WIZARD ========== */
 .wiz{display:flex;gap:.4rem;margin-bottom:1.2rem;overflow-x:auto;padding-bottom:.2rem}
 .wstep{display:flex;align-items:center;gap:.55rem;padding:.5rem .9rem;border-radius:99px;background:#fff;border:1px solid var(--line2);font-size:.78rem;font-weight:600;color:var(--mut);white-space:nowrap}
 .wstep i{display:grid;place-items:center;width:1.4rem;height:1.4rem;border-radius:50%;background:var(--bg);color:var(--mut);font-style:normal;font-size:.72rem;font-weight:700}
@@ -269,7 +267,6 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
 </head>
 <body>
 
-<!-- ==== LOGIN ==== -->
 <div id="login" class="lw">
   <div class="ls">
     <div class="br"><span class="lg"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt="Logo SMK CALM"></span><div><b>SMK CALM</b><small>Yayasan Al-Musaddadiyah Garut</small></div></div>
@@ -313,7 +310,6 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
   </div></div>
 </div>
 
-<!-- ==== APP ==== -->
 <div id="app" class="hide">
   <header class="mbar"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt=""><b>SMK CALM</b><button onclick="document.querySelector('aside').classList.toggle('open')" aria-label="Buka menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></header>
   <aside aria-label="Menu utama">
@@ -326,24 +322,13 @@ table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{text-align:left
 <div id="toast" class="hide" role="status"></div>
 
 <script>
-/* ============================================================
-   KONFIGURASI
-   ============================================================ */
 const API = "https://script.google.com/macros/s/AKfycbwwxNMD1c_2GugaKiXlqicOW-NeUsYSL-WvJzAt4xXvH8dQjAfMD-epQubbhkXHhbwW_w/exec";
-
-/* State global (hanya yang memang perlu lintas-halaman) */
-let S = null;            // sesi
-let C = null;            // kelas aktif
-let O = null;            // overview cache
-let QT;                  // timer kuis
-let _syncCred = [];      // kredensial hasil sinkron (satu sesi)
-
+let S = null, C = null, O = null, QT;
+let _syncCred = [];
+let _adminClassesCache = null, _adminTeachersCache = null, _adminSchedulesCache = null, _recapData = null, _openSeq = 0;
 try { S = JSON.parse(sessionStorage.getItem('lms')); } catch (e) {}
 
-/* ============================================================
-   UTIL
-   ============================================================ */
-const $  = s => document.querySelector(s);
+const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const roles = () => (S && S.user && (Array.isArray(S.user.roles) ? S.user.roles : [S.user.role])) || [];
 const hasR = r => roles().includes(r);
@@ -357,7 +342,6 @@ function toast(m, err) {
   const t = $('#toast'); t.textContent = m; t.className = err ? 'e' : ''; clearTimeout(t._t);
   t._t = setTimeout(() => t.className = 'hide', 3500);
 }
-
 async function api(action, data = {}, ms = 30000) {
   const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), ms);
   try {
@@ -370,11 +354,8 @@ async function api(action, data = {}, ms = 30000) {
   } finally { clearTimeout(to); }
 }
 
-/* ============================================================
-   LOGIN
-   ============================================================ */
+/* ===== LOGIN ===== */
 const lerr = m => { const a = $('#lmsg'); a.querySelector('span').textContent = m || ''; a.classList.toggle('hide', !m); };
-
 const ROLES = {
   siswa:          { nama: 'Siswa',              label: 'Username siswa / NISN', ph: 'Masukkan username siswa', hint: 'Siswa masuk dengan username dan sandi awal dari sekolah, lalu bergabung ke kelas menggunakan kode dari guru.' },
   guru:           { nama: 'Guru',               label: 'Username guru / NIP',   ph: 'Username dari administrator', hint: 'Guru dapat mengelola kelas, materi, tugas, kuis, dan penilaian.' },
@@ -384,10 +365,8 @@ const ROLES = {
   guru_bk:        { nama: 'Guru BK',            label: 'Username Guru BK',       ph: 'Username dari administrator', hint: 'Mengelola data siswa dan kelas sesuai kewenangan BK.' },
   staff:          { nama: 'Staff Administrasi', label: 'Username staf administrasi', ph: 'Username dari administrator', hint: 'Mengelola data siswa, guru, kelas, dan jadwal sekolah.' }
 };
-
 let loginRole = 'siswa';
 try { const r = localStorage.getItem('lms_r'); if (ROLES[r]) loginRole = r; } catch (e) {}
-
 function pilihRole(k, fokus) {
   loginRole = k; const R = ROLES[k];
   document.querySelectorAll('[data-r]').forEach(b => b.setAttribute('aria-checked', b.dataset.r === k));
@@ -416,7 +395,6 @@ $('#lform').addEventListener('submit', async e => {
   } catch (er) { lerr(er.message); }
   b.disabled = false; b.textContent = 'Masuk';
 });
-
 $('#eye').onclick = () => { const p = $('#pw'); const show = p.type === 'password'; p.type = show ? 'text' : 'password'; $('#eye').setAttribute('aria-label', show ? 'Sembunyikan sandi' : 'Tampilkan sandi'); };
 $('#pw').addEventListener('keydown', e => $('#caps').classList.toggle('hide', !e.getModifierState('CapsLock')));
 $('#pw').addEventListener('blur', () => $('#caps').classList.add('hide'));
@@ -434,7 +412,6 @@ function logout(call) {
   $('#app').classList.add('hide'); $('#login').classList.remove('hide'); $('#pw').value = ''; cekServer();
 }
 
-/* FIX: badge peran ditentukan dari peran paling relevan, bukan S.user.role saja */
 function primaryBadge() {
   if (hasR('admin')) return 'admin';
   if (hasR('staff') || hasR('staf')) return 'staff';
@@ -445,30 +422,21 @@ function primaryBadge() {
   if (hasR('siswa')) return 'siswa';
   return 'siswa';
 }
-
 function start() {
   $('#login').classList.add('hide'); $('#app').classList.remove('hide');
   const badge = primaryBadge();
-  const label = ({
-    admin: 'ADMINISTRATOR', staff: 'STAFF ADMINISTRASI', guru_bk: 'GURU BK',
-    kepala_sekolah: 'KEPALA SEKOLAH', kurikulum: 'KURIKULUM',
-    guru: 'GURU / PENGAJAR', siswa: 'SISWA'
-  })[badge] || 'PENGGUNA';
+  const label = ({ admin:'ADMINISTRATOR', staff:'STAFF ADMINISTRASI', guru_bk:'GURU BK', kepala_sekolah:'KEPALA SEKOLAH', kurikulum:'KURIKULUM', guru:'GURU / PENGAJAR', siswa:'SISWA' })[badge] || 'PENGGUNA';
   $('#wr').textContent = label;
   $('#wr').className = 'bd ' + badge;
   document.querySelector('aside').classList.remove('open');
-  buildMenu();
-  vDash();
+  buildMenu(); vDash();
 }
-
 function nav(k) {
   clearInterval(QT); window.onbeforeunload = null;
   document.querySelectorAll('.mi').forEach(b => b.classList.toggle('on', b.id === 'n-' + k));
 }
 
-/* ============================================================
-   MODAL
-   ============================================================ */
+/* ===== MODAL ===== */
 function modal(title, fields, fn, cta) {
   const m = document.createElement('div'); m.className = 'ov';
   m.innerHTML = `<form class="md"><h3>${esc(title)}</h3><p class="md-sub">Lengkapi informasi dengan benar. Perubahan akan disimpan setelah Anda mengonfirmasi.</p>${fields.map(f => f.t === 'hidden' ? `<input name="${f.n}" type="hidden" value="${esc(f.v || '')}">` : `<label>${esc(f.l)}${f.t === 'textarea'
@@ -480,7 +448,9 @@ function modal(title, fields, fn, cta) {
   const close = () => m.remove();
   m.querySelector('[data-x]').onclick = close;
   m.onmousedown = e => { if (e.target === m) close(); };
-  const f = m.querySelector('form'); f.querySelector('input,textarea,select').focus();
+  const f = m.querySelector('form');
+  const firstInput = f.querySelector('input:not([type=hidden]), textarea, select');
+  if (firstInput) firstInput.focus();
   f.onsubmit = async e => {
     e.preventDefault(); const b = f.querySelector('.btn'); b.disabled = true; b.textContent = 'Menyimpan...';
     try {
@@ -496,9 +466,7 @@ function modal(title, fields, fn, cta) {
   };
 }
 
-/* ============================================================
-   HOME / KELAS
-   ============================================================ */
+/* ===== HOME / KELAS ===== */
 async function home() {
   nav('home'); view('<p class="empty">Memuat kelas...</p>');
   try {
@@ -521,16 +489,13 @@ const newClass = () => modal('Buat kelas', [
 const joinClass = () => modal('Gabung kelas', [{n:'code', l:'Kode kelas dari guru'}],
   async d => { const r = await api('joinClass', d); toast('Berhasil bergabung'); openClass(r.class_id); }, 'Gabung');
 
-/* FIX: cegah race condition saat klik cepat antar kelas */
-let _openSeq = 0;
 async function openClass(id, tab) {
   const seq = ++_openSeq;
   nav('home'); view('<p class="empty">Memuat kelas...</p>');
   try {
     const data = await api('classDetail', { class_id: id });
-    if (seq !== _openSeq) return; // ada klik lain yang lebih baru
-    C = data;
-    drawClass(tab || 'ann');
+    if (seq !== _openSeq) return;
+    C = data; drawClass(tab || 'ann');
   } catch (e) {
     if (seq === _openSeq) { toast(e.message, true); home(); }
   }
@@ -581,9 +546,7 @@ async function gradeIt(id) {
   catch (e) { toast(e.message, true); }
 }
 
-/* ============================================================
-   KUIS
-   ============================================================ */
+/* ===== KUIS ===== */
 function quizCard(q) {
   const t = canManageCurrentClass(), readOnly = isReadOnlyMonitor(), at = C.attempts.filter(a => a.quiz_id === q.id);
   let foot;
@@ -593,14 +556,12 @@ function quizCard(q) {
     foot = `<div class="row" style="justify-content:space-between;align-items:center;margin-top:10px">${a && a.submitted ? `<span class="badge ok">Nilai ${a.score}/${a.max}</span>` : `<span class="badge">${a ? 'Sedang dikerjakan' : 'Belum dikerjakan'}</span><button class="btn" onclick="startQuiz('${q.id}')">${a ? 'Lanjutkan' : 'Mulai kuis'}</button>`}</div>`; }
   return `<div class="card item"><h4>${esc(q.title)}</h4><div class="meta">${q.qcount} soal • ${q.duration} menit</div>${q.description ? `<p>${esc(q.description)}</p>` : ''}${foot}</div>`;
 }
-
 async function startQuiz(id) {
   const resume = C.attempts.some(a => a.quiz_id === id);
   if (!resume && !confirm('Waktu berjalan setelah Anda menekan OK dan tidak dapat dijeda. Mulai sekarang?')) return;
   try { takeQuiz(await api('startQuiz', { quiz_id: id })); }
   catch (e) { toast(e.message, true); reload('qz'); }
 }
-
 function takeQuiz(d) {
   nav('home');
   const key = 'qa_' + d.attempt_id, n = d.questions.length, end = Date.now() + d.left * 1000;
@@ -631,7 +592,6 @@ function takeQuiz(d) {
   window.onbeforeunload = e => { e.preventDefault(); return ''; };
   prog(); tick(); QT = setInterval(tick, 1000);
 }
-
 function addQuiz() {
   const m = document.createElement('div'); m.className = 'ov'; let k = 0;
   const blk = () => { k++; return `<div class="qb"><div class="qh"><b class="qn"></b><button type="button" class="link" data-rm>Hapus soal</button></div><label>Pertanyaan<textarea data-t></textarea></label><p class="hint">Isi minimal dua pilihan, lalu tandai jawaban yang benar dengan bulatan.</p>${[0, 1, 2, 3].map(j => `<span class="oi"><input type="radio" name="c${k}" value="${j}"${j ? '' : ' checked'} aria-label="Jawaban benar"><input data-o placeholder="Pilihan ${'ABCD'[j]}"></span>`).join('')}</div>`; };
@@ -661,9 +621,7 @@ function addQuiz() {
   f.title.focus();
 }
 
-/* ============================================================
-   FORUM
-   ============================================================ */
+/* ===== FORUM ===== */
 function forumView() {
   const me = S.user.user_id, ts = x => String(x.created), readOnly = isReadOnlyMonitor(), t = canManageCurrentClass();
   const tops = C.posts.filter(p => !p.parent_id).sort((a, b) => ts(b).localeCompare(ts(a)));
@@ -684,9 +642,7 @@ async function delPost(id) {
   catch (e) { toast(e.message, true); }
 }
 
-/* ============================================================
-   ADMIN DATA
-   ============================================================ */
+/* ===== ADMIN DATA ===== */
 function canManageStudents()   { return hasR('admin') || hasR('staff') || hasR('staf') || hasR('guru_bk'); }
 function canManageStaffData()  { return hasR('admin') || hasR('staff') || hasR('staf'); }
 function adminOnly() { if (!canManageStudents()) { toast('Menu ini memerlukan akses administrasi sekolah.', true); vDash(); return false; } return true; }
@@ -703,7 +659,6 @@ async function adminUsersPage(role) {
     <div class="card" style="overflow-x:auto"><table><thead><tr><th>Nama</th><th>Username</th><th>Peran</th><th>Status</th><th>Aksi</th></tr></thead><tbody>${list.map(x=>`<tr><td><b>${esc(x.full_name)}</b><div class="meta">${esc(x.email||'')}</div></td><td>${esc(x.username)}</td><td>${esc(roleLabel(x.role))}${x.extra_roles ? `<div class="meta">Tambahan: ${esc(x.extra_roles)}</div>`:''}</td><td><span class="badge ${String(x.status).toLowerCase()==='aktif'?'ok':'warn'}">${esc(x.status||'—')}</span></td><td><div class="acts"><button class="btn2" onclick="editAdminUser('${role}','${esc(x.user_id)}')">Ubah</button><button class="btn2" onclick="resetAdminAccount('${esc(x.user_id)}','${esc(x.username)}')">Reset sandi</button><button class="link" onclick="deleteAdminUser('${esc(x.user_id)}','${esc(x.full_name)}','${role}')">Hapus</button></div></td></tr>`).join('') || `<tr><td colspan="5">Belum ada data ${role === 'siswa' ? 'siswa' : 'guru'}.</td></tr>`}</tbody></table></div>`);
   } catch(e) { view(`<div class="card empty"><b>Data belum dapat dimuat</b>${esc(e.message)}<p><button class="btn2" onclick="adminUsersPage('${role}')">Coba lagi</button></p></div>`); }
 }
-
 function csvCell(v) { const s=String(v ?? ''); return /[",\r\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s; }
 function downloadCsv(filename, rows) {
   const csv='\ufeff'+rows.map(row=>row.map(csvCell).join(',')).join('\r\n');
@@ -767,7 +722,6 @@ function importAdminUsers(role) {
     else toast(`Impor selesai. ${ok} data berhasil diproses.`);
   },'Mulai impor');
 }
-
 async function editAdminUser(role, id) {
   if (!adminOnly()) return;
   let user = null;
@@ -796,9 +750,6 @@ async function deleteAdminUser(id, name, role) {
   try { await api('adminDeleteUser',{user_id:id}); toast('Akun dihapus'); adminUsersPage(role || 'siswa'); }
   catch(e) { toast(e.message,true); }
 }
-
-/* ----- Kelas & Jadwal (admin/staff) ----- */
-let _adminClassesCache = null, _adminTeachersCache = null, _adminSchedulesCache = null;
 
 async function adminClassesPage() {
   if (!adminOnly()) return; nav('adminClasses'); view('<p class="empty">Memuat data kelas...</p>');
@@ -854,19 +805,11 @@ function editAdminSchedule(id) {
 }
 async function deleteAdminSchedule(id){if(!canManageStaffData()||!confirm('Hapus jadwal ini?'))return;try{await api('adminDeleteSchedule',{schedule_id:id});toast('Jadwal dihapus');adminSchedulesPage();}catch(e){toast(e.message,true);}}
 
-/* ============================================================
-   SINKRON PORTAL — WIZARD
-   ============================================================ */
+/* ===== SINKRON PORTAL (WIZARD) ===== */
 function syncStepsHTML(step) {
-  const steps = [
-    {k:1, l:'Pratinjau'},
-    {k:2, l:'Tinjau hasil'},
-    {k:3, l:'Terapkan'},
-    {k:4, l:'Selesai'}
-  ];
+  const steps = [{k:1, l:'Pratinjau'},{k:2, l:'Tinjau hasil'},{k:3, l:'Terapkan'},{k:4, l:'Selesai'}];
   return `<div class="wiz">${steps.map(s => `<div class="wstep${s.k===step?' on':s.k<step?' done':''}"><i>${s.k<step?'✓':s.k}</i>${s.l}</div>`).join('')}</div>`;
 }
-
 async function adminSyncPage() {
   if (!canManageStaffData()) { toast('Sinkronisasi hanya dapat dijalankan administrator atau staf administrasi.', true); vDash(); return; }
   nav('adminSync');
@@ -879,18 +822,14 @@ async function adminSyncPage() {
       <div class="wactions"><button class="btn" onclick="syncPreview()">Mulai pratinjau</button></div>
     </div>`);
 }
-
 async function syncPreview() {
   const main = $('#main');
   main.innerHTML = syncStepsHTML(2) + `<div class="wcard"><h4>Langkah 2 — Tinjau hasil pratinjau</h4><p class="sub">Sedang membaca Portal Akademik dan membandingkan dengan LMS... (bisa memakan waktu hingga satu menit)</p><p class="empty">Memuat...</p></div>`;
-  try {
-    const r = await api('syncPortalPreview', {}, 120000);
-    syncRender(r);
-  } catch (e) {
+  try { const r = await api('syncPortalPreview', {}, 120000); syncRender(r); }
+  catch (e) {
     main.innerHTML = syncStepsHTML(1) + `<div class="wcard"><h4>Pratinjau gagal</h4><div class="walert danger">${esc(e.message)}</div><div class="wactions"><button class="btn2" onclick="adminSyncPage()">Kembali</button><button class="btn" onclick="syncPreview()">Coba lagi</button></div></div>`;
   }
 }
-
 function syncRender(r) {
   const s = r.ringkas || {};
   const c = r.contoh || {};
@@ -898,17 +837,13 @@ function syncRender(r) {
   const total = (s.akunBaru||0)+(s.akunDitautkan||0)+(s.akunDiubah||0)+(s.akunDinonaktifkan||0)
     +(s.kelasBaru||0)+(s.kelasDitautkan||0)+(s.anggotaBaru||0)
     +(s.jadwalBaru||0)+(s.jadwalDiubah||0)+(s.jadwalDihapus||0);
-
   const listBlock = (judul, arr, f) => arr && arr.length
     ? `<details style="margin-top:.5rem"><summary>${esc(judul)} (${arr.length})</summary><ul class="wlist">${arr.map(f).join('')}</ul></details>` : '';
-
   const alerts = (r.peringatan || []).map(w => `<div class="walert">⚠ ${esc(w)}</div>`).join('');
-
   const konflikBlock = r.konflik && r.konflik.length
     ? `<details style="margin-top:.6rem"><summary>Perlu dicek manual (${r.konflik.length})</summary>
         <div style="overflow-x:auto;margin-top:.5rem"><table><thead><tr><th>Jenis</th><th>Data</th><th>Keterangan</th></tr></thead><tbody>${r.konflik.map(k => `<tr><td>${esc(k.jenis)}</td><td>${esc(k.ref)}</td><td>${esc(k.pesan)}</td></tr>`).join('')}</tbody></table></div>
         <p class="meta" style="margin-top:.4rem">Data bermasalah dilewati; data lain tetap bisa disinkronkan.</p></details>` : '';
-
   $('#main').innerHTML = syncStepsHTML(2) + `
     <div class="wcard">
       <h4>Ringkasan perbandingan</h4>
@@ -939,7 +874,6 @@ function syncRender(r) {
       </div>
     </div>`;
 }
-
 async function syncApply(sig, total) {
   if (!canManageStaffData()) return;
   if (!confirm(`Terapkan ${total} perubahan ke LMS?\n\n• Data Portal Akademik TIDAK akan diubah.\n• Cadangan spreadsheet LMS dibuat otomatis di Google Drive sebelum data ditulis.\n\nLanjutkan?`)) return;
@@ -951,7 +885,6 @@ async function syncApply(sig, total) {
     $('#main').innerHTML = syncStepsHTML(2) + `<div class="wcard"><h4>Sinkronisasi tidak diterapkan</h4><div class="walert danger">${esc(e.message)}</div><div class="wactions"><button class="btn2" onclick="adminSyncPage()">Kembali</button><button class="btn" onclick="syncPreview()">Cek pratinjau ulang</button></div></div>`;
   }
 }
-
 function syncDone(r) {
   _syncCred = r.kredensial || [];
   const nCred = _syncCred.length;
@@ -974,7 +907,6 @@ function syncDone(r) {
       <div class="wactions"><button class="btn2" onclick="adminSyncPage()">Selesai</button></div>
     </div>`;
 }
-
 function syncCreds() {
   if (!_syncCred.length) { toast('Tidak ada kredensial untuk diunduh.', true); return; }
   downloadCsv('sandi-awal-sinkron-portal.csv',
@@ -982,9 +914,7 @@ function syncCreds() {
   toast('Sandi awal berhasil diunduh.');
 }
 
-/* ============================================================
-   MENU — dibangun bersih, tanpa duplikat
-   ============================================================ */
+/* ===== MENU ===== */
 const ICON = {
   dash:    '<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',
   home:    '<path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/>',
@@ -995,25 +925,21 @@ const ICON = {
   review:  '<path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 14 2 2 4-4"/>',
   recap:   '<path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/>',
   profile: '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',
-  sync:    '<path d="M21 12a9 9 0 0 1-15.5 6.2M3 12a9 9 0 0 1 15.5-6.2M18.5 2v4h-4M5.5 22v-4h4"/>',
   adminStudents:  '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
   adminTeachers:  '<path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2ZM22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7Z"/>',
   adminClasses:   '<path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6M12 10h.01"/>',
   adminSchedules: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
   adminSync:      '<path d="M21 12a9 9 0 0 1-15.5 6.2M3 12a9 9 0 0 1 15.5-6.2M18.5 2v4h-4M5.5 22v-4h4"/>'
 };
-
 function buildMenu() {
   const rs = roles();
   const teacher = rs.includes('guru') || rs.includes('admin');
   const monitor = rs.includes('kepala_sekolah') || rs.includes('kurikulum') || rs.includes('admin');
   const canStudents = rs.includes('admin') || rs.includes('staff') || rs.includes('staf') || rs.includes('guru_bk');
   const canStaffData = rs.includes('admin') || rs.includes('staff') || rs.includes('staf');
-
-  const groups = []; // {group, items:[{key,label}]}
+  const groups = [];
   const dashLabel = monitor && !teacher ? 'Dashboard pengawasan' : 'Beranda';
   groups.push({ group: '', items: [{ key: 'dash', label: dashLabel }] });
-
   if (teacher) {
     groups.push({ group: 'Pembelajaran', items: [
       { key: 'home',    label: 'Kelas yang dikelola' },
@@ -1036,7 +962,6 @@ function buildMenu() {
   } else if (monitor) {
     groups.push({ group: 'Pengawasan', items: [{ key: 'recap', label: 'Rekap seluruh kelas' }] });
   }
-
   if (canStudents) {
     const items = [{ key: 'adminStudents', label: 'Data siswa' }, { key: 'adminClasses', label: 'Data kelas' }];
     if (canStaffData) {
@@ -1045,12 +970,9 @@ function buildMenu() {
     }
     groups.push({ group: 'Manajemen Data', items });
   }
-
   groups.push({ group: 'Akun', items: [{ key: 'profile', label: 'Profil & keamanan' }] });
-
-  /* FIX: dedupe dengan Set per key — tidak ada item yang muncul dua kali */
   const seen = new Set();
-  const html = groups.map(g => {
+  $('#menu').innerHTML = groups.map(g => {
     const uniq = g.items.filter(i => { if (seen.has(i.key)) return false; seen.add(i.key); return true; });
     if (!uniq.length) return '';
     return (g.group ? `<p class="mg">${g.group}</p>` : '')
@@ -1060,9 +982,7 @@ function buildMenu() {
           <i class="nb" id="b-${i.key}" aria-label="Pemberitahuan"></i>
         </button>`).join('');
   }).join('');
-  $('#menu').innerHTML = html;
 }
-
 const GO = {
   dash: () => vDash(), home: () => home(), tasks: () => vTasks(), quizzes: () => vQuiz(),
   news: () => vNews(), grades: () => grades(), review: () => vReview(), recap: () => vRecap(),
@@ -1076,27 +996,20 @@ const GO = {
 function go(k) { document.querySelector('aside').classList.remove('open'); (GO[k] || vDash)(); }
 function setBadge(k, n) { const b = $('#b-' + k); if (b) b.textContent = n > 0 ? (n > 99 ? '99+' : n) : ''; }
 
-/* FIX: cache overview sekali per pemanggilan halaman; tidak ada request dobel */
 async function loadO(force) {
   if (!force && O) return O;
   O = await api('overview');
   const t = isT(), monitor = isMonitor();
-  const visibleAssignments = O.assignments;
-  const visibleAssignmentIds = visibleAssignments.map(a => a.id);
-  if (!t && !monitor) {
-    setBadge('tasks', visibleAssignments.filter(a => !subOf(a)).length);
-  } else if (t) {
-    setBadge('review', O.submissions.filter(s => visibleAssignmentIds.includes(s.assignment_id) && s.score === '').length);
-  }
+  const visibleAssignmentIds = O.assignments.map(a => a.id);
+  if (!t && !monitor) setBadge('tasks', O.assignments.filter(a => !subOf(a)).length);
+  else if (t) setBadge('review', O.submissions.filter(s => visibleAssignmentIds.includes(s.assignment_id) && s.score === '').length);
   return O;
 }
-
 async function page(k, title, sub, render, force) {
   nav(k); view('<p class="empty">Memuat...</p>');
   try { await loadO(force); view(`<div class="top"><div><h2>${title}</h2><p>${sub}</p></div></div>` + render()); }
   catch (e) { view(`<div class="card empty"><b>Data gagal dimuat</b>${esc(e.message)}<br><br><button class="btn" onclick="go('${k}')">Coba lagi</button></div>`); }
 }
-
 const cname = id => (O.classes.find(c => c.id === id) || {}).name || '';
 const subOf = a => O.submissions.find(s => s.assignment_id === a.id);
 const asgOf = id => O.assignments.find(a => a.id === id) || {};
@@ -1107,13 +1020,10 @@ const row = (title, meta, right, click) => `<button class="li" onclick="${click}
 const tagDue = a => isLate(a) ? '<span class="badge warn">Terlambat</span>' : a.due ? `<span class="badge">${tgl(a.due)}</span>` : '';
 const asgTag = a => { const s = subOf(a); return s ? (s.score !== '' ? `<span class="badge ok">Nilai ${s.score}/${a.max_score}</span>` : '<span class="badge warn">Menunggu nilai</span>') : tagDue(a); };
 
-/* ============================================================
-   DASHBOARD
-   ============================================================ */
+/* ===== DASHBOARD ===== */
 function vDash() {
   const hari = new Date().toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
   const monitor = isMonitor(), teacher = isT();
-
   if (monitor && !teacher) {
     return page('dash', 'Dashboard pengawasan', hari, () => {
       const ungraded = O.submissions.filter(s => s.score === '').length;
@@ -1121,13 +1031,9 @@ function vDash() {
       const byClass = O.classes.map(c => {
         const ids = O.assignments.filter(a => a.class_id === c.id).map(a => a.id);
         const qids = O.quizzes.filter(q => q.class_id === c.id).map(q => q.id);
-        return {
-          name: c.name, teacher: c.teacher_name || '—',
-          tasks: ids.length,
+        return { name: c.name, teacher: c.teacher_name || '—', tasks: ids.length,
           submissions: O.submissions.filter(s => ids.includes(s.assignment_id)).length,
-          quizzes: qids.length,
-          completed: O.attempts.filter(a => qids.includes(a.quiz_id) && a.submitted).length
-        };
+          quizzes: qids.length, completed: O.attempts.filter(a => qids.includes(a.quiz_id) && a.submitted).length };
       });
       return `<div class="stats">${[['Seluruh kelas', O.classes.length], ['Tugas aktif', O.assignments.length], ['Pengumpulan tugas', O.submissions.length], ['Belum dinilai', ungraded], ['Kuis', O.quizzes.length], ['Kuis selesai', submitted]].map(([l,n]) => `<div class="card st"><small>${l}</small><b>${n}</b></div>`).join('')}</div>
         <div class="card" style="overflow-x:auto"><div class="sec"><h3>Monitoring per kelas</h3><button class="link" onclick="go('recap')">Buka rekap nilai</button></div>
@@ -1135,7 +1041,6 @@ function vDash() {
         <p class="meta" style="margin-top:.8rem">Dashboard ini bersifat pemantauan. Pengubahan nilai dan pengelolaan kelas tidak diberikan otomatis kepada peran pengawasan.</p>`;
     });
   }
-
   return page('dash', 'Halo, ' + esc(S.user.full_name.split(' ')[0]), hari, () => {
     const t = isT();
     const todo = O.assignments.filter(a => !subOf(a)).sort((a, b) => (a.due || '9').toString().localeCompare((b.due || '9').toString()));
@@ -1158,9 +1063,7 @@ function vDash() {
   });
 }
 
-/* ============================================================
-   HALAMAN: Tugas, Kuis, Pengumuman, Review, Rekap
-   ============================================================ */
+/* ===== TUGAS / KUIS / PENGUMUMAN / REVIEW / REKAP ===== */
 function vTasks(f) {
   f = f || 'all'; const t = isT();
   return page('tasks', 'Tugas', t ? 'Semua tugas dari kelas Anda.' : 'Semua tugas dari kelas yang Anda ikuti.', () => {
@@ -1175,7 +1078,6 @@ function vTasks(f) {
     return pills(f, tabs, 'vTasks') + `<div class="card">${list.map(a => row(a.title, esc(cname(a.class_id)) + ' • ' + dueTxt(a), t ? `<span class="badge${ungr(a) ? ' warn' : ''}">${O.submissions.filter(s => s.assignment_id === a.id).length} terkumpul</span>` : asgTag(a), `openClass('${a.class_id}','asg')`)).join('') || '<p class="empty">Tidak ada tugas pada kategori ini.</p>'}</div>`;
   });
 }
-
 function vQuiz(f) {
   f = f || 'all'; const t = isT();
   return page('quizzes', 'Kuis', t ? 'Semua kuis dari kelas Anda.' : 'Semua kuis dari kelas yang Anda ikuti.', () => {
@@ -1192,21 +1094,17 @@ function vQuiz(f) {
     return (t ? '' : pills(f, tabs, 'vQuiz')) + `<div class="card">${list.map(q => row(q.title, esc(cname(q.class_id)) + ' • ' + q.qcount + ' soal • ' + q.duration + ' menit', tag(q), `openClass('${q.class_id}','qz')`)).join('') || '<p class="empty">Tidak ada kuis pada kategori ini.</p>'}</div>`;
   });
 }
-
 const vNews = () => page('news', 'Pengumuman', 'Pengumuman terbaru dari kelas yang dapat Anda akses.', () => {
   const list = O.announcements;
   return `<div class="card">${list.map(a => row(a.title, esc(cname(a.class_id)) + ' • ' + esc(a.author) + ' • ' + tgl(a.created) + (a.body ? '<br>' + esc(String(a.body).slice(0, 140)) + (String(a.body).length > 140 ? '...' : '') : ''), '', `openClass('${a.class_id}','ann')`)).join('') || '<p class="empty">Belum ada pengumuman.</p>'}</div>`;
 });
-
 const vReview = () => page('review', 'Perlu dinilai', 'Pengumpulan tugas yang belum diberi nilai.', () => {
   const l = O.submissions.filter(s => s.score === '').sort((a, b) => String(a.created).localeCompare(String(b.created)));
   return `<div class="card">${l.map(s => row(s.full_name, esc(asgOf(s.assignment_id).title) + ' • ' + esc(cname(asgOf(s.assignment_id).class_id)) + ' • ' + tglw(s.created), '<span class="badge warn">Nilai sekarang</span>', `openClass('${asgOf(s.assignment_id).class_id}','asg')`)).join('') || '<p class="empty">Semua pengumpulan sudah dinilai.</p>'}</div>`;
 });
-
 function vRecap(cid) {
   return page('recap', isMonitor() ? 'Rekap seluruh kelas' : 'Rekap nilai', isMonitor() ? 'Ringkasan aktivitas dan capaian nilai lintas kelas untuk pengawasan.' : 'Rata-rata nilai siswa per kelas, dalam persen.', () => {
     if (!O.classes.length) return '<div class="card empty"><b>Belum ada kelas</b>Belum ada data kelas untuk ditampilkan.</div>';
-
     if (isMonitor()) {
       const avg = xs => xs.length ? Math.round(xs.reduce((a, b) => a + b, 0) / xs.length * 10) / 10 : null;
       const recap = O.classes.map(c => {
@@ -1223,13 +1121,12 @@ function vRecap(cid) {
           tasks: aa.length, submissions: ss.length, pending,
           quizzes: qq.length, completed: at.length, average: avg(scores) };
       }).sort((a, b) => a.name.localeCompare(b.name, 'id'));
-      window._recapData = recap;
+      _recapData = recap;
       const fmt = n => n === null ? '—' : n.toLocaleString('id-ID', { maximumFractionDigits: 1 });
       return `<div class="row" style="justify-content:flex-end;margin-bottom:1rem"><button class="btn2" onclick="exportMonitorRecap()">Unduh rekap CSV</button></div>
         <div class="card" style="overflow-x:auto"><table><thead><tr><th>Kelas</th><th>Guru</th><th>Tugas</th><th>Pengumpulan</th><th>Belum dinilai</th><th>Kuis</th><th>Kuis selesai</th><th>Rata-rata (%)</th></tr></thead><tbody>${recap.map(c => `<tr><td><b>${esc(c.name)}</b></td><td>${esc(c.teacher)}</td><td>${c.tasks}</td><td>${c.submissions}</td><td>${c.pending}</td><td>${c.quizzes}</td><td>${c.completed}</td><td>${fmt(c.average)}</td></tr>`).join('')}</tbody></table></div>
         <p class="meta" style="margin-top:.8rem">Ringkasan ini bersifat pengawasan. Nilai rata-rata dihitung dari nilai tugas dan kuis yang sudah dinilai/selesai; kelas tanpa nilai ditampilkan dengan tanda —.</p>`;
     }
-
     const am = {}; O.assignments.filter(a => a.class_id === cid).forEach(a => am[a.id] = a);
     const qz = O.quizzes.filter(q => q.class_id === cid).map(q => q.id), R = {};
     const get = (id, n) => R[id] = R[id] || { n: n, t: [], q: [] };
@@ -1237,14 +1134,13 @@ function vRecap(cid) {
     O.attempts.filter(a => qz.indexOf(a.quiz_id) > -1 && a.submitted && Number(a.max) > 0).forEach(a => get(a.user_id, a.full_name).q.push(a.score / a.max * 100));
     const av = l => l.length ? l.reduce((x, y) => x + y, 0) / l.length : null, f = v => v === null ? '-' : Math.round(v * 10) / 10;
     const recap = Object.values(R).map(r => { const t = av(r.t), q = av(r.q); return { n: r.n, t, q, all: av([t, q].filter(v => v !== null)) }; }).sort((a, b) => a.n.localeCompare(b.n));
-    window._recapData = recap;
+    _recapData = recap;
     return `<div class="row" style="justify-content:space-between;align-items:center;margin-bottom:1rem"><select class="sel" aria-label="Pilih kelas" onchange="vRecap(this.value)">${O.classes.map(c => `<option value="${c.id}"${c.id === cid ? ' selected' : ''}>${esc(c.name)}</option>`).join('')}</select><button class="btn2" onclick="exportRecap()">Unduh CSV</button></div>
       <div class="card" style="overflow-x:auto">${recap.length ? `<table><tr><th>Nama</th><th>Tugas</th><th>Kuis</th><th>Rata-rata</th></tr>${recap.map(r => `<tr><td>${esc(r.n)}</td><td>${f(r.t)}</td><td>${f(r.q)}</td><td><b>${f(r.all)}</b></td></tr>`).join('')}</table>` : '<p class="empty">Belum ada nilai pada kelas ini.</p>'}</div>`;
   });
 }
-
 function exportMonitorRecap() {
-  const recap = window._recapData || [];
+  const recap = _recapData || [];
   if (!recap.length) { toast('Belum ada rekap untuk diunduh.', true); return; }
   const q = v => '"' + (/^[=+\-@]/.test(String(v ?? '')) ? "'" + String(v ?? '') : String(v ?? '')).replace(/"/g, '""') + '"';
   const f = v => v === null || v === undefined ? '' : Math.round(Number(v) * 10) / 10;
@@ -1254,9 +1150,8 @@ function exportMonitorRecap() {
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' })); a.download = 'rekap-pengawasan-seluruh-kelas.csv'; a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 2000);
 }
-
 function exportRecap() {
-  const recap = window._recapData || [];
+  const recap = _recapData || [];
   if (!recap.length) { toast('Belum ada nilai untuk diunduh.', true); return; }
   const q = v => '"' + (/^[=+\-@]/.test(v) ? "'" + v : v).replace(/"/g, '""') + '"', f = v => v === null ? '' : Math.round(v * 10) / 10;
   const csv = ['Nama,Rata-rata tugas,Rata-rata kuis,Rata-rata akhir'].concat(recap.map(r => [q(r.n), f(r.t), f(r.q), f(r.all)].join(','))).join('\n');
@@ -1264,9 +1159,7 @@ function exportRecap() {
   setTimeout(() => URL.revokeObjectURL(a.href), 2000);
 }
 
-/* ============================================================
-   PROFIL & NILAI
-   ============================================================ */
+/* ===== PROFIL & NILAI ===== */
 function vProfile() {
   nav('profile'); const u = S.user;
   const nm = primaryBadge() === 'kepala_sekolah' ? 'Kepala Sekolah'
@@ -1288,7 +1181,6 @@ async function chgPw(e) {
   catch (er) { toast(er.message, true); }
   b.disabled = false; b.textContent = 'Simpan sandi';
 }
-
 async function grades() {
   nav('grades'); view('<p class="empty">Memuat nilai...</p>');
   try {
@@ -1299,9 +1191,7 @@ async function grades() {
   } catch (e) { toast(e.message, true); }
 }
 
-/* ============================================================
-   INIT
-   ============================================================ */
+/* ===== INIT ===== */
 try { const ru = localStorage.getItem('lms_u'); if (ru) { $('#u').value = ru; $('#rem').checked = true; } } catch (x) {}
 if (S) start(); else cekServer();
 </script>
