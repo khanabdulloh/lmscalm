@@ -269,6 +269,8 @@ aside{overflow-y:auto}
         <button type="button" class="rt" data-r="guru" role="radio" aria-checked="false" aria-label="Masuk sebagai Guru"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2ZM22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7Z"/></svg><span class="rx"><b>Guru</b><small>Kelola kelas &amp; penilaian</small></span></button>
         <button type="button" class="rt" data-r="kepala_sekolah" role="radio" aria-checked="false" aria-label="Masuk sebagai Kepala Sekolah"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-6h6v6M9 10h.01M15 10h.01"/></svg><span class="rx"><b>Kepala Sekolah</b><small>Pengawasan pembelajaran</small></span></button>
         <button type="button" class="rt" data-r="kurikulum" role="radio" aria-checked="false" aria-label="Masuk sebagai Kurikulum"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4zM8 8h8M8 12h8M8 16h5"/><path d="m16 16 1.5 1.5L21 14"/></svg><span class="rx"><b>Kurikulum</b><small>Monitoring seluruh kelas</small></span></button>
+        <button type="button" class="rt" data-r="guru_bk" role="radio" aria-checked="false" aria-label="Masuk sebagai Guru BK"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3-6 8-6s8 2 8 6M12 11v5M9.5 13.5h5"/></svg><span class="rx"><b>Guru BK</b><small>Data siswa &amp; kelas</small></span></button>
+        <button type="button" class="rt" data-r="staff" role="radio" aria-checked="false" aria-label="Masuk sebagai Staff Administrasi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21h16M6 21V7l6-4 6 4v14M9 11h6M9 15h6"/></svg><span class="rx"><b>Staff Administrasi</b><small>Kelola data sekolah</small></span></button>
       </div>
       <p class="rhint" id="rhint" aria-live="polite"></p>
       <label class="fl" for="u" id="ulab">Username</label>
@@ -337,7 +339,9 @@ const ROLES = {
   guru: { nama: 'Guru', label: 'Username guru / NIP', ph: 'Username dari administrator', hint: 'Guru dapat mengelola kelas, materi, tugas, kuis, dan penilaian.' },
   kepala_sekolah: { nama: 'Kepala Sekolah', label: 'Username Kepala Sekolah', ph: 'Username dari administrator', hint: 'Melihat rekap seluruh kelas untuk pengawasan pembelajaran. Hak ubah nilai tidak diberikan otomatis.' },
   kurikulum: { nama: 'Kurikulum', label: 'Username Kurikulum', ph: 'Username dari administrator', hint: 'Memantau aktivitas seluruh kelas dan rekap pembelajaran. Guru dengan tugas tambahan dapat memiliki kedua peran.' },
-  admin: { nama: 'Administrator', label: 'Username administrator', ph: 'Username administrator', hint: 'Akses khusus pengelolaan sistem dan seluruh kelas.' }
+  admin: { nama: 'Administrator', label: 'Username administrator', ph: 'Username administrator', hint: 'Akses khusus pengelolaan sistem dan seluruh kelas.' },
+  guru_bk: { nama: 'Guru BK', label: 'Username Guru BK', ph: 'Username dari administrator', hint: 'Mengelola data siswa dan kelas sesuai kewenangan BK.' },
+  staff: { nama: 'Staff Administrasi', label: 'Username staf administrasi', ph: 'Username dari administrator', hint: 'Mengelola data siswa, guru, kelas, dan jadwal sekolah.' }
 };
 let loginRole = 'siswa'; try { const r = localStorage.getItem('lms_r'); if (ROLES[r]) loginRole = r; } catch (e) {}
 function pilihRole(k, fokus) {
@@ -377,7 +381,7 @@ function logout(call) {
 }
 function start() {
   $('#login').classList.add('hide'); $('#app').classList.remove('hide');
-  $('#wr').textContent = hasR('kepala_sekolah') ? 'KEPALA SEKOLAH' : hasR('kurikulum') ? (hasR('guru') ? 'GURU • KURIKULUM' : 'KURIKULUM') : S.user.role === 'siswa' ? 'SISWA' : S.user.role === 'admin' ? 'ADMIN' : 'GURU / PENGAJAR'; $('#wr').className = 'bd ' + S.user.role; document.querySelector('aside').classList.remove('open');
+  $('#wr').textContent = hasR('staff') || hasR('staf') ? 'STAFF ADMINISTRASI' : hasR('guru_bk') ? 'GURU BK' : hasR('kepala_sekolah') ? 'KEPALA SEKOLAH' : hasR('kurikulum') ? (hasR('guru') ? 'GURU • KURIKULUM' : 'KURIKULUM') : S.user.role === 'siswa' ? 'SISWA' : S.user.role === 'admin' ? 'ADMIN' : 'GURU / PENGAJAR'; $('#wr').className = 'bd ' + S.user.role; document.querySelector('aside').classList.remove('open');
   buildMenu(); vDash();
 }
 function nav(k) { clearInterval(QT); window.onbeforeunload = null; document.querySelectorAll('.mi').forEach(b => b.classList.toggle('on', b.id === 'n-' + k)); }
@@ -385,10 +389,11 @@ function nav(k) { clearInterval(QT); window.onbeforeunload = null; document.quer
 /* ---------- formulir modal ---------- */
 function modal(title, fields, fn, cta) {
   const m = document.createElement('div'); m.className = 'ov';
-  m.innerHTML = `<form class="md"><h3>${title}</h3>${fields.map(f => `<label>${f.l}${f.t === 'textarea'
-    ? `<textarea name="${f.n}"${f.r === false ? '' : ' required'}></textarea>`
-    : `<input name="${f.n}" type="${f.t || 'text'}"${f.v ? ` value="${f.v}"` : ''}${f.r === false ? '' : ' required'}>`}</label>`).join('')}
-    <div class="row"><button type="button" class="btn2" data-x>Batal</button><button class="btn">${cta || 'Simpan'}</button></div></form>`;
+  m.innerHTML = `<form class="md"><h3>${esc(title)}</h3>${fields.map(f => f.t === 'hidden' ? `<input name="${f.n}" type="hidden" value="${esc(f.v || '')}">` : `<label>${esc(f.l)}${f.t === 'textarea'
+    ? `<textarea name="${f.n}"${f.r === false ? '' : ' required'}>${esc(f.v || '')}</textarea>`
+    : f.t === 'select' ? `<select name="${f.n}"${f.r === false ? '' : ' required'}>${(f.opts || []).map(o => `<option value="${esc(o.v)}"${String(o.v) === String(f.v ?? '') ? ' selected' : ''}>${esc(o.l)}</option>`).join('')}</select>`
+    : `<input name="${f.n}" type="${f.t || 'text'}"${f.v !== undefined ? ` value="${esc(f.v)}"` : ''}${f.r === false ? '' : ' required'}${f.min ? ` minlength="${f.min}"` : ''}>`}</label>`).join('')}
+    <div class="row"><button type="button" class="btn2" data-x>Batal</button><button class="btn">${esc(cta || 'Simpan')}</button></div></form>`;
   document.body.appendChild(m);
   const close = () => m.remove();
   m.querySelector('[data-x]').onclick = close;
@@ -574,6 +579,65 @@ async function delPost(id) {
   catch (e) { toast(e.message, true); }
 }
 
+/* ---------- administrasi sekolah (khusus admin) ---------- */
+function canManageStudents() { return hasR('admin') || hasR('staff') || hasR('staf') || hasR('guru_bk'); }
+function canManageClasses() { return canManageStudents(); }
+function canManageStaffData() { return hasR('admin') || hasR('staff') || hasR('staf'); }
+function adminOnly() { if (!canManageStudents()) { toast('Menu ini memerlukan akses administrasi sekolah.', true); vDash(); return false; } return true; }
+const roleLabel = r => ({siswa:'Siswa',guru:'Guru',admin:'Administrator',staff:'Staff Administrasi',staf:'Staff Administrasi',guru_bk:'Guru BK',kurikulum:'Kurikulum',kepala_sekolah:'Kepala Sekolah'}[String(r||'').toLowerCase()] || r || '—');
+async function adminUsersPage(role) {
+  if (!adminOnly()) return;
+  if (role === 'guru' && !canManageStaffData()) { toast('Data guru hanya dapat dikelola administrator atau staf administrasi.', true); vDash(); return; }
+  nav(role === 'siswa' ? 'adminStudents' : 'adminTeachers'); view('<p class="empty">Memuat data akun...</p>');
+  try {
+    const {users} = await api('adminUsers'); const list = users.filter(x => String(x.role).toLowerCase() === role || String(x.extra_roles||'').toLowerCase().split(/[,;|]/).includes(role));
+    view(`<div class="top"><div><h2>Data ${role === 'siswa' ? 'Siswa' : 'Guru'}</h2><p>Kelola akun, status akses, dan reset sandi awal.</p></div><div class="acts"><button class="btn" onclick="editAdminUser('${role}')">+ Tambah ${role === 'siswa' ? 'siswa' : 'guru'}</button></div></div>
+    <div class="card" style="overflow-x:auto"><table><thead><tr><th>Nama</th><th>Username</th><th>Peran</th><th>Status</th><th>Aksi</th></tr></thead><tbody>${list.map(x=>`<tr><td><b>${esc(x.full_name)}</b><div class="meta">${esc(x.email||'')}</div></td><td>${esc(x.username)}</td><td>${esc(roleLabel(x.role))}${x.extra_roles ? `<div class="meta">Tambahan: ${esc(x.extra_roles)}</div>`:''}</td><td><span class="badge ${String(x.status).toLowerCase()==='aktif'?'ok':'warn'}">${esc(x.status||'—')}</span></td><td><div class="acts"><button class="btn2" onclick="editAdminUser('${role}','${esc(x.user_id)}')">Ubah</button><button class="btn2" onclick="resetAdminAccount('${esc(x.user_id)}','${esc(x.username)}')">Reset sandi</button><button class="link" onclick="deleteAdminUser('${esc(x.user_id)}','${esc(x.full_name)}')">Hapus</button></div></td></tr>`).join('') || `<tr><td colspan="5">Belum ada data ${role === 'siswa' ? 'siswa' : 'guru'}.</td></tr>`}</tbody></table></div>`);
+  } catch(e) { view(`<div class="card empty"><b>Data belum dapat dimuat</b>${esc(e.message)}<p><button class="btn2" onclick="adminUsersPage('${role}')">Coba lagi</button></p></div>`); }
+}
+async function editAdminUser(role, id) {
+  if (!adminOnly()) return;
+  let user = null;
+  if (id) { try { user = (await api('adminUsers')).users.find(x=>x.user_id===id); } catch(e) { toast(e.message,true); return; } if (!user) return toast('Akun tidak ditemukan.',true); }
+  const roles = (hasR('admin') ? [{v:role,l:roleLabel(role)},{v:'guru',l:'Guru'},{v:'siswa',l:'Siswa'},{v:'guru_bk',l:'Guru BK'},{v:'staff',l:'Staff Administrasi'},{v:'kurikulum',l:'Kurikulum'},{v:'kepala_sekolah',l:'Kepala Sekolah'},{v:'admin',l:'Administrator'}] : canManageStaffData() ? [{v:role,l:roleLabel(role)},{v:'guru',l:'Guru'},{v:'siswa',l:'Siswa'}] : [{v:'siswa',l:'Siswa'}]).filter((o,i,a)=>a.findIndex(x=>x.v===o.v)===i);
+  const fields = [
+    {n:'full_name',l:'Nama lengkap',v:user?.full_name||''}, {n:'username',l:'Username',v:user?.username||''},
+    {n:'role',l:'Peran utama',t:'select',v:user?.role||role,opts:roles},
+    {n:'extra_roles',l:'Peran tambahan (opsional, pisahkan koma)',v:user?.extra_roles||'',r:false},
+    {n:'email',l:'Email (opsional)',t:'email',v:user?.email||'',r:false},
+    {n:'status',l:'Status akun',t:'select',v:user?.status||'aktif',opts:[{v:'aktif',l:'Aktif'},{v:'nonaktif',l:'Nonaktif'}]}
+  ];
+  if (!user) fields.push({n:'password',l:'Sandi awal (minimal 8 karakter)',t:'password',min:8});
+  if (user) fields.push({n:'user_id',l:'',v:user.user_id,t:'hidden'});
+  modal(user?'Ubah akun':'Tambah akun '+roleLabel(role),fields,async d=>{ await api('adminSaveUser',d); toast(user?'Data akun diperbarui':'Akun berhasil dibuat'); adminUsersPage(role); },user?'Simpan perubahan':'Buat akun');
+}
+async function resetAdminAccount(id, username) {
+  if (!adminOnly() || !confirm(`Reset sandi akun ${username}? Sandi sementara baru akan ditampilkan satu kali.`)) return;
+  try { const r=await api('adminResetAccount',{user_id:id}); modal('Sandi sementara akun',[{n:'username',l:'Username',v:r.username,r:false},{n:'temporary_password',l:'Sandi sementara — salin dan berikan melalui jalur aman',v:r.temporary_password,r:false}],async()=>{},'Tutup'); }
+  catch(e) { toast(e.message,true); }
+}
+async function deleteAdminUser(id,name) {
+  if (!adminOnly() || !confirm(`Hapus akun ${name}? Riwayat penilaian akan dipertahankan, tetapi akun tidak bisa digunakan lagi.`)) return;
+  try { await api('adminDeleteUser',{user_id:id}); toast('Akun dihapus'); adminUsersPage(hasR('admin') ? (document.querySelector('#n-adminTeachers')?.classList.contains('on')?'guru':'siswa') : 'siswa'); } catch(e) { toast(e.message,true); }
+}
+async function adminClassesPage() {
+  if (!adminOnly()) return; nav('adminClasses'); view('<p class="empty">Memuat data kelas...</p>');
+  try { const r=await api('adminClasses'); const teachers=[{v:'',l:'— Belum ditentukan —'},...r.teachers.map(t=>({v:t.user_id,l:t.full_name}))];
+    view(`<div class="top"><div><h2>Data Kelas</h2><p>Perbarui nama, mata pelajaran, dan guru pengampu.</p></div><button class="btn" onclick="editAdminClass()">+ Tambah kelas</button></div><div class="card" style="overflow-x:auto"><table><thead><tr><th>Kelas</th><th>Mata pelajaran</th><th>Guru pengampu</th><th>Kode gabung</th><th>Aksi</th></tr></thead><tbody>${r.classes.map(c=>`<tr><td><b>${esc(c.name)}</b><div class="meta">${esc(c.description||'')}</div></td><td>${esc(c.subject||'—')}</td><td>${esc(c.teacher_name||'—')}</td><td><code>${esc(c.code||'—')}</code></td><td><div class="acts"><button class="btn2" onclick="editAdminClass('${esc(c.id)}')">Ubah</button><button class="link" onclick="deleteAdminClass('${esc(c.id)}','${esc(c.name)}')">Hapus</button></div></td></tr>`).join('')||'<tr><td colspan="5">Belum ada kelas.</td></tr>'}</tbody></table></div>`);
+    window._adminTeachers=teachers; window._adminClasses=r.classes;
+  } catch(e) { view(`<div class="card empty">${esc(e.message)}<p><button class="btn2" onclick="adminClassesPage()">Coba lagi</button></p></div>`); }
+}
+function editAdminClass(id) { if(!adminOnly())return; const c=(window._adminClasses||[]).find(x=>x.id===id)||{}; modal(id?'Ubah kelas':'Tambah kelas',[{n:'name',l:'Nama kelas',v:c.name||''},{n:'subject',l:'Mata pelajaran',v:c.subject||'',r:false},{n:'teacher_id',l:'Guru pengampu',t:'select',v:c.teacher_id||'',opts:window._adminTeachers||[{v:'',l:'— Belum ditentukan —'}],r:false},{n:'description',l:'Deskripsi',t:'textarea',v:c.description||'',r:false},...(id?[{n:'class_id',l:'',t:'hidden',v:id}]:[])],async d=>{await api('adminSaveClass',d);toast('Data kelas disimpan');adminClassesPage();}); }
+async function deleteAdminClass(id,name) { if(!adminOnly()||!confirm(`Hapus kelas ${name}? Kelas yang masih memiliki anggota/aktivitas tidak dapat dihapus.`))return; try{await api('adminDeleteClass',{class_id:id});toast('Kelas dihapus');adminClassesPage();}catch(e){toast(e.message,true);} }
+async function adminSchedulesPage() {
+  if(!canManageStaffData()){toast('Data jadwal hanya dapat dikelola administrator atau staf administrasi.',true);vDash();return;} nav('adminSchedules'); view('<p class="empty">Memuat jadwal...</p>');
+  try { const r=await api('adminSchedules'); window._adminScheduleData=r; const days=['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'];
+    view(`<div class="top"><div><h2>Data Jadwal</h2><p>Kelola hari, waktu, ruang, mata pelajaran, dan kelas.</p></div><button class="btn" onclick="editAdminSchedule()">+ Tambah jadwal</button></div><div class="card" style="overflow-x:auto"><table><thead><tr><th>Hari / Waktu</th><th>Kelas / Mapel</th><th>Guru</th><th>Ruang</th><th>Aksi</th></tr></thead><tbody>${r.schedules.slice().sort((a,b)=>days.indexOf(a.day)-days.indexOf(b.day)||String(a.start_time).localeCompare(String(b.start_time))).map(x=>`<tr><td><b>${esc(x.day)}</b><div>${esc(x.start_time)}–${esc(x.end_time)}</div></td><td><b>${esc(x.class_name)}</b><div class="meta">${esc(x.subject||'—')}</div></td><td>${esc(x.teacher_name||'—')}</td><td>${esc(x.room||'—')}</td><td><div class="acts"><button class="btn2" onclick="editAdminSchedule('${esc(x.id)}')">Ubah</button><button class="link" onclick="deleteAdminSchedule('${esc(x.id)}')">Hapus</button></div></td></tr>`).join('')||'<tr><td colspan="5">Belum ada jadwal.</td></tr>'}</tbody></table></div>`);
+  } catch(e){view(`<div class="card empty">${esc(e.message)}<p><button class="btn2" onclick="adminSchedulesPage()">Coba lagi</button></p></div>`);}
+}
+function editAdminSchedule(id) { if(!canManageStaffData())return; const data=window._adminScheduleData||{classes:[],schedules:[]}, x=data.schedules.find(a=>a.id===id)||{}; const dayOpts=['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'].map(d=>({v:d,l:d})); const classOpts=data.classes.map(c=>({v:c.id,l:c.name+(c.subject?' — '+c.subject:'')})); modal(id?'Ubah jadwal':'Tambah jadwal',[{n:'class_id',l:'Kelas',t:'select',v:x.class_id||'',opts:classOpts},{n:'day',l:'Hari',t:'select',v:x.day||'Senin',opts:dayOpts},{n:'start_time',l:'Jam mulai (HH:MM)',v:x.start_time||'07:00'},{n:'end_time',l:'Jam selesai (HH:MM)',v:x.end_time||'08:00'},{n:'subject',l:'Mata pelajaran',v:x.subject||'',r:false},{n:'room',l:'Ruang',v:x.room||'',r:false},{n:'notes',l:'Catatan',t:'textarea',v:x.notes||'',r:false},...(id?[{n:'schedule_id',l:'',t:'hidden',v:id}]:[])],async d=>{await api('adminSaveSchedule',d);toast('Jadwal disimpan');adminSchedulesPage();}); }
+async function deleteAdminSchedule(id){if(!canManageStaffData()||!confirm('Hapus jadwal ini?'))return;try{await api('adminDeleteSchedule',{schedule_id:id});toast('Jadwal dihapus');adminSchedulesPage();}catch(e){toast(e.message,true);}}
+
 /* ---------- menu & halaman ringkasan ---------- */
 let O = null, RC = [], MR = [];
 const ICON = {
@@ -604,6 +668,9 @@ function buildMenu() {
   } else if (!monitor) {
     G.push(['Aktivitas belajar', [['home', 'Kelas saya']]]);
   }
+  const canStudents = roles.includes('admin') || roles.includes('staff') || roles.includes('staf') || roles.includes('guru_bk');
+  const canStaffData = roles.includes('admin') || roles.includes('staff') || roles.includes('staf');
+  if (canStudents) { const items = [['adminStudents','Data siswa'],['adminClasses','Data kelas']]; if (canStaffData) items.splice(1,0,['adminTeachers','Data guru']); if (canStaffData) items.push(['adminSchedules','Data jadwal']); G.push(['Manajemen Data', items]); }
   G.push(['Akun', [['profile', 'Profil & keamanan']]]);
   const menu = $('#menu');
   if (!menu) throw new Error('Navigasi LMS tidak ditemukan (#menu).');
@@ -616,7 +683,7 @@ function buildMenu() {
     </button>`).join('') : '';
   }).join('');
 }
-const GO = { dash: () => vDash(), home: () => home(), tasks: () => vTasks(), quizzes: () => vQuiz(), news: () => vNews(), grades: () => grades(), review: () => vReview(), recap: () => vRecap(), profile: () => vProfile() };
+const GO = { dash: () => vDash(), home: () => home(), tasks: () => vTasks(), quizzes: () => vQuiz(), news: () => vNews(), grades: () => grades(), review: () => vReview(), recap: () => vRecap(), profile: () => vProfile(), adminStudents: () => adminUsersPage('siswa'), adminTeachers: () => adminUsersPage('guru'), adminClasses: () => adminClassesPage(), adminSchedules: () => adminSchedulesPage() };
 function go(k) { document.querySelector('aside').classList.remove('open'); GO[k](); }
 function setBadge(k, n) { const b = $('#b-' + k); if (b) b.textContent = n > 0 ? (n > 99 ? '99+' : n) : ''; }
 async function loadO() {
