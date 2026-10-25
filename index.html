@@ -2873,9 +2873,13 @@ function attInput(d) {
   var jt = function (x) { try { return new Date(x).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } };
   var sj = se ? '<p class="meta" style="margin-bottom:.8rem">Pertemuan ' + (dar ? 'daring' + (se.platform ? ' • ' + esc(se.platform) : '') + ' • ' + Object.keys(jd).length + ' siswa telah bergabung' : se.mode === 'mandiri' ? 'belajar mandiri' : 'tatap muka') + (se.topic ? ' • Topik: ' + esc(se.topic) : '') + '</p>' : '';
   if (!AT.st.length) { $('#atb').innerHTML = '<div class="card empty"><b>Belum ada siswa di kelas ini</b>Siswa bergabung memakai kode kelas.</div>'; return; }
-  AT.st.forEach(function (s) { var r = d.records[s.user_id]; AT.marks[s.user_id] = r ? r.status : 'H'; });
+  /* Usulan dari data Gabung: hanya untuk pertemuan daring yang presensinya belum dicatat. Guru tetap harus mengonfirmasi dengan menekan Simpan. */
+  var sug = dar && !d.saved && Object.keys(jd).length > 0;
+  AT.st.forEach(function (s) { var r = d.records[s.user_id]; AT.marks[s.user_id] = r ? r.status : (sug ? (jd[s.user_id] ? 'H' : 'A') : 'H'); });
+  if (sug) sj += '<div class="walert info" style="margin-bottom:.8rem">Usulan otomatis dari data tombol Gabung: siswa yang sudah bergabung diusulkan <b>Hadir daring</b>, yang belum bergabung diusulkan <b>Alpa</b>. Periksa, ubah bila perlu (misalnya Sakit atau Izin), lalu tekan Simpan presensi untuk mengonfirmasi.</div>';
   var rows = AT.st.map(function (s) {
     var r = d.records[s.user_id] || {}, u = esc(s.user_id);
+    if (sug && !d.records[s.user_id] && jd[s.user_id] && !r.note) r = { note: 'Hadir daring' };
     return '<div class="at-r" data-u="' + u + '"><b>' + esc(s.full_name) + (dar ? '<small class="at-j">' + (jd[s.user_id] ? 'Bergabung ' + esc(jt(jd[s.user_id])) : 'Belum bergabung') + '</small>' : '') + '</b><div class="at-s">' + ['H', 'S', 'I', 'A'].map(function (k) {
       return '<button type="button" class="pill' + (AT.marks[s.user_id] === k ? ' on' : '') + '" data-u="' + u + '" data-s="' + k + '" onclick="attSet(this)" aria-label="' + ATL[k] + '">' + ATL[k] + '</button>';
     }).join('') + '</div><input class="at-n" data-n="' + u + '" maxlength="120" placeholder="Catatan (opsional)" value="' + esc(r.note || '') + '" aria-label="Catatan"></div>';
