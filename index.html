@@ -432,10 +432,12 @@ async function openClass(id, tab) {
   catch (e) { toast(e.message, true); home(); }
 }
 const reload = tab => openClass(C.cls.id, tab);
+const canManageCurrentClass = () => !!C && C.access_mode === 'teacher_operational';
+const isReadOnlyMonitor = () => !!C && C.access_mode === 'monitor_readonly';
 const empty = (t, s) => `<div class="card empty"><b>${t}</b>${s}</div>`;
 
 function drawClass(tab) {
-  const { cls } = C, t = isT();
+  const { cls } = C, t = canManageCurrentClass(), readOnly = isReadOnlyMonitor();
   const add = (label, fn) => t ? `<div class="row" style="margin-bottom:14px"><button class="btn" onclick="${fn}">${label}</button></div>` : '';
   let body = '';
   if (tab === 'ann') body = add('Buat pengumuman', 'addAnn()') + (C.announcements.map(a => `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${esc(a.author)} • ${tgl(a.created)}</div><p>${esc(a.body)}</p></div>`).join('') || empty('Belum ada pengumuman', 'Pengumuman dari guru akan tampil di sini.'));
@@ -444,7 +446,7 @@ function drawClass(tab) {
   if (tab === 'qz') body = add('Buat kuis', 'addQuiz()') + (C.quizzes.map(quizCard).join('') || empty('Belum ada kuis', 'Kuis dari guru akan tampil di sini.'));
   if (tab === 'fr') body = forumView();
   view(`<button class="back" onclick="home()">Kembali ke daftar kelas</button>
-    <div class="cover"><h1>${esc(cls.name)}</h1><p>${esc(cls.subject)} • ${esc(cls.teacher_name)}${t ? ` • ${C.memberCount} siswa` : ''}</p>${t ? `<span class="chip">Kode kelas: ${esc(cls.code)}</span>` : ''}</div>
+    <div class="cover"><h1>${esc(cls.name)}</h1><p>${esc(cls.subject)} • ${esc(cls.teacher_name)}${t ? ` • ${C.memberCount} siswa` : readOnly ? ' • Mode pemantauan (hanya baca)' : ''}</p>${t ? `<span class="chip">Kode kelas: ${esc(cls.code)}</span>` : ''}</div>
     <div class="tabs">${[['ann','Pengumuman'],['mat','Materi'],['asg','Tugas'],['qz','Kuis'],['fr','Forum']].map(([k, l]) => `<button class="${k === tab ? 'on' : ''}" onclick="drawClass('${k}')">${l}</button>`).join('')}</div>${body}`);
 }
 
@@ -455,6 +457,8 @@ function asgCard(a, t) {
     foot = `<details><summary>${subs.length} pengumpulan</summary>${subs.map(s => `<div class="sr"><div><b>${esc(s.full_name)}</b><br>${s.file_url ? `<a href="${esc(s.file_url)}" target="_blank" rel="noopener">Buka berkas</a> ` : ''}<span class="meta">${esc(s.note)}</span></div>
       <input id="sc-${s.id}" type="number" min="0" max="${a.max_score}" value="${esc(s.score)}" placeholder="/${a.max_score}" aria-label="Nilai"><input id="fb-${s.id}" value="${esc(s.feedback)}" placeholder="Umpan balik" aria-label="Umpan balik">
       <button class="btn" onclick="gradeIt('${s.id}')">Simpan</button></div>`).join('') || '<p class="meta" style="margin-top:8px">Belum ada yang mengumpulkan.</p>'}</details>`;
+  } else if (isReadOnlyMonitor()) {
+    foot = `<details><summary>${subs.length} pengumpulan • mode pemantauan</summary>${subs.map(s => `<div class="sr"><div><b>${esc(s.full_name)}</b></div><span class="badge ${s.score !== '' ? 'ok' : 'warn'}">${s.score !== '' ? `Nilai ${esc(s.score)}/${a.max_score}` : 'Belum dinilai'}</span></div>`).join('') || '<p class="meta" style="margin-top:8px">Belum ada yang mengumpulkan.</p>'}</details>`;
   } else {
     const s = subs[0];
     foot = `<div class="row" style="justify-content:space-between;align-items:center;margin-top:10px"><span class="badge ${s ? (s.score !== '' ? 'ok' : 'warn') : ''}">${s ? (s.score !== '' ? `Nilai ${s.score}/${a.max_score}` : 'Menunggu dinilai') : 'Belum dikumpulkan'}</span>
@@ -475,9 +479,10 @@ async function gradeIt(id) {
 
 /* ---------- kuis ---------- */
 function quizCard(q) {
-  const t = isT(), at = C.attempts.filter(a => a.quiz_id === q.id);
+  const t = canManageCurrentClass(), readOnly = isReadOnlyMonitor(), at = C.attempts.filter(a => a.quiz_id === q.id);
   let foot;
   if (t) foot = `<details><summary>${at.filter(a => a.submitted).length} siswa selesai</summary>${at.map(a => `<div class="qr"><span>${esc(a.full_name)}</span><b>${a.submitted ? a.score + '/' + a.max : 'Sedang mengerjakan'}</b></div>`).join('') || '<p class="meta" style="margin-top:8px">Belum ada yang mengerjakan.</p>'}</details>`;
+  else if (readOnly) foot = `<details><summary>${at.filter(a => a.submitted).length} siswa selesai • mode pemantauan</summary>${at.map(a => `<div class="qr"><span>${esc(a.full_name)}</span><b>${a.submitted ? a.score + '/' + a.max : 'Sedang mengerjakan'}</b></div>`).join('') || '<p class="meta" style="margin-top:8px">Belum ada aktivitas kuis.</p>'}</details>`;
   else { const a = at[0];
     foot = `<div class="row" style="justify-content:space-between;align-items:center;margin-top:10px">${a && a.submitted ? `<span class="badge ok">Nilai ${a.score}/${a.max}</span>` : `<span class="badge">${a ? 'Sedang dikerjakan' : 'Belum dikerjakan'}</span><button class="btn" onclick="startQuiz('${q.id}')">${a ? 'Lanjutkan' : 'Mulai kuis'}</button>`}</div>`; }
   return `<div class="card item"><h4>${esc(q.title)}</h4><div class="meta">${q.qcount} soal • ${q.duration} menit</div>${q.description ? `<p>${esc(q.description)}</p>` : ''}${foot}</div>`;
@@ -550,13 +555,12 @@ function addQuiz() {
 /* ---------- forum ---------- */
 const tglw = d => d ? new Date(d).toLocaleString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : '';
 function forumView() {
-  const me = S.user.user_id, ts = x => String(x.created);
+  const me = S.user.user_id, ts = x => String(x.created), readOnly = isReadOnlyMonitor(), t = canManageCurrentClass();
   const tops = C.posts.filter(p => !p.parent_id).sort((a, b) => ts(b).localeCompare(ts(a)));
   const reps = id => C.posts.filter(p => p.parent_id === id).sort((a, b) => ts(a).localeCompare(ts(b)));
-  const head = p => `<div class="fh"><span class="fav${p.role !== 'siswa' ? ' g' : ''}" aria-hidden="true">${esc(String(p.full_name).charAt(0).toUpperCase())}</span><div><b>${esc(p.full_name)}</b>${p.role !== 'siswa' ? '<span class="badge ok">Guru</span>' : ''}<div class="meta">${tglw(p.created)}</div></div>${isT() || p.user_id == me ? `<button class="link" onclick="delPost('${p.id}')">Hapus</button>` : ''}</div>`;
-  return `<div class="card item"><textarea class="fnew" id="fnew" maxlength="2000" placeholder="Tulis pertanyaan atau topik diskusi untuk kelas ini"></textarea><div class="row"><button class="btn" onclick="sendPost('')">Kirim topik</button></div></div>` +
-    (tops.map(p => `<div class="card item">${head(p)}<p class="fb">${esc(p.body)}</p>${reps(p.id).length ? `<div class="fr">${reps(p.id).map(r => `<div class="item">${head(r)}<p class="fb">${esc(r.body)}</p></div>`).join('')}</div>` : ''}<div class="fq"><input id="rp-${p.id}" maxlength="2000" placeholder="Tulis balasan" aria-label="Balasan" onkeydown="if(event.key==='Enter')sendPost('${p.id}')"><button class="btn2" onclick="sendPost('${p.id}')">Balas</button></div></div>`).join('')
-      || empty('Belum ada diskusi', 'Mulai dengan menulis pertanyaan atau topik pertama.'));
+  const head = p => `<div class="fh"><span class="fav${p.role !== 'siswa' ? ' g' : ''}" aria-hidden="true">${esc(String(p.full_name).charAt(0).toUpperCase())}</span><div><b>${esc(p.full_name)}</b>${p.role !== 'siswa' ? '<span class="badge ok">Guru</span>' : ''}<div class="meta">${tglw(p.created)}</div></div>${!readOnly && (t || p.user_id == me) ? `<button class="link" onclick="delPost('${p.id}')">Hapus</button>` : ''}</div>`;
+  const composer = readOnly ? '<p class="meta">Forum ditampilkan dalam mode pemantauan. Anda tidak dapat mengirim atau menghapus pesan dari tampilan ini.</p>' : `<div class="card item"><textarea class="fnew" id="fnew" maxlength="2000" placeholder="Tulis pertanyaan atau topik diskusi untuk kelas ini"></textarea><div class="row"><button class="btn" onclick="sendPost('')">Kirim topik</button></div></div>`;
+  return composer + (tops.map(p => `<div class="card item">${head(p)}<p class="fb">${esc(p.body)}</p>${reps(p.id).length ? `<div class="fr">${reps(p.id).map(r => `<div class="item">${head(r)}<p class="fb">${esc(r.body)}</p></div>`).join('')}</div>` : ''}${readOnly ? '' : `<div class="fq"><input id="rp-${p.id}" maxlength="2000" placeholder="Tulis balasan" aria-label="Balasan" onkeydown="if(event.key==='Enter')sendPost('${p.id}')"><button class="btn2" onclick="sendPost('${p.id}')">Balas</button></div>`}</div>`).join('') || empty('Belum ada diskusi', 'Mulai dengan menulis pertanyaan atau topik pertama.'));
 }
 async function sendPost(parent) {
   const el = $(parent ? '#rp-' + parent : '#fnew'), body = el.value.trim();
