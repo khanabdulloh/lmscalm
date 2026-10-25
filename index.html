@@ -659,7 +659,11 @@ async function adminUsersPage(role) {
     <div class="card" style="overflow-x:auto"><table><thead><tr><th>Nama</th><th>Username</th><th>Peran</th><th>Status</th><th>Aksi</th></tr></thead><tbody>${list.map(x=>`<tr><td><b>${esc(x.full_name)}</b><div class="meta">${esc(x.email||'')}</div></td><td>${esc(x.username)}</td><td>${esc(roleLabel(x.role))}${x.extra_roles ? `<div class="meta">Tambahan: ${esc(x.extra_roles)}</div>`:''}</td><td><span class="badge ${String(x.status).toLowerCase()==='aktif'?'ok':'warn'}">${esc(x.status||'—')}</span></td><td><div class="acts"><button class="btn2" onclick="editAdminUser('${role}','${esc(x.user_id)}')">Ubah</button><button class="btn2" onclick="resetAdminAccount('${esc(x.user_id)}','${esc(x.username)}')">Reset sandi</button><button class="link" onclick="deleteAdminUser('${esc(x.user_id)}','${esc(x.full_name)}','${role}')">Hapus</button></div></td></tr>`).join('') || `<tr><td colspan="5">Belum ada data ${role === 'siswa' ? 'siswa' : 'guru'}.</td></tr>`}</tbody></table></div>`);
   } catch(e) { view(`<div class="card empty"><b>Data belum dapat dimuat</b>${esc(e.message)}<p><button class="btn2" onclick="adminUsersPage('${role}')">Coba lagi</button></p></div>`); }
 }
-function csvCell(v) { const s=String(v ?? ''); return /[",\r\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s; }
+function csvCell(v) { 
+  const s = String(v ?? ''); 
+  // Memaksa format teks dengan tanda kutip ganda agar Excel tidak membuang angka 0 di depan
+  return '"' + s.replace(/"/g, '""') + '"'; 
+}
 function downloadCsv(filename, rows) {
   const csv='\ufeff'+rows.map(row=>row.map(csvCell).join(',')).join('\r\n');
   const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
