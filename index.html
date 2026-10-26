@@ -1257,6 +1257,12 @@ aside.collapsed .mi svg{background:none}
 .fgb:hover{text-decoration:underline}
 .fgt{margin:-.8rem 0 1.2rem;padding:.7rem .85rem;border-radius:.8rem;background:#eef2ff;border:1px solid #c7d2fe;color:#3730a3;font-size:.8rem;line-height:1.5}
 .fgt .link{font-size:.8rem;color:#3730a3}
+/* Perbaikan menu terpotong: anak flex tidak boleh menyusut, submenu tidak dibatasi 600px, tinggi mengikuti layar sebenarnya */
+aside>*,aside nav,#menu>*{flex-shrink:0}
+.submenu{max-height:1600px}
+aside{padding-bottom:1.5rem;overscroll-behavior:contain;scroll-padding-bottom:1.5rem}
+@media(min-width:768px){aside{height:100vh;height:100dvh}}
+aside .mi{gap:.65rem;padding:.55rem .7rem}
 </style>
 </head>
 <body>
@@ -1642,6 +1648,7 @@ function setOpenGroup(id) {
     sm.classList.toggle('closed', !open);
     const h = sm.previousElementSibling; if (h) h.setAttribute('aria-expanded', String(open));
   });
+  if (id) setTimeout(function () { var sm = document.getElementById('sub-' + id), l = sm && sm.lastElementChild; if (l && !sm.classList.contains('closed')) l.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); }, 340);
   try { localStorage.setItem('lms_menu_open', id || ''); } catch (e) {}
 }
 function toggleMenuGroup(id, el) { setOpenGroup(el.getAttribute('aria-expanded') === 'true' ? '' : id); }
