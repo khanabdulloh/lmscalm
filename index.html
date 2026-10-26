@@ -1554,6 +1554,43 @@ aside :focus-visible,.ls :focus-visible,.hm-hero :focus-visible{outline-color:va
 [data-theme=dark] .ks{color:var(--navy)}
 [data-theme=dark] :is(.ktag,.kav,.sp-file){background:var(--soft);color:var(--navy)}
 
+/* ===== Perapihan tampilan kelas di HP (tidak memengaruhi desktop) ===== */
+@media(pointer:coarse){.kc-more{flex:none;width:2.75rem;height:2.75rem;min-height:0}}
+.social-kc .ktag{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:767px){
+.back{min-height:2.75rem;margin-bottom:.4rem}
+.toolbar:has(#kq) .searchbox{flex:1 1 100%;max-width:none}
+.pills:has(.pill[data-j]){flex-wrap:nowrap;overflow-x:auto;margin-inline:-1rem;padding:.1rem 1rem .5rem;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.pills:has(.pill[data-j])::-webkit-scrollbar{display:none}
+.pills:has(.pill[data-j]) .pill{flex:none}
+.social-kc{min-height:0}
+.sc{border-radius:1.1rem;margin-bottom:.8rem}
+.sc-in{flex-direction:column;align-items:flex-start;gap:.55rem;padding:0 1rem 1rem;margin-top:-2rem}
+.sc-av{width:4rem;height:4rem;font-size:1.1rem}
+.sc-tx{flex:none;width:100%;min-width:0;padding-top:0}
+.sc-tx h1{font-size:1.3rem;overflow-wrap:anywhere}
+.sc-tx p{margin:.2rem 0 .7rem;font-size:.86rem}
+.sc-code{max-width:100%}
+.tabs.sc-tabs{display:flex;flex-wrap:nowrap;overflow-x:auto;overflow-y:hidden;gap:.4rem;top:var(--mbh);margin:0 -1rem .6rem;padding:.5rem 1rem;scroll-snap-type:x proximity}
+.tabs.sc-tabs button{flex:none;scroll-snap-align:center;padding:.5rem .95rem;font-size:.84rem}
+.sp{border-radius:1.1rem}
+.sp-h{gap:.6rem;padding:.8rem 1rem .25rem}
+.sp-w b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sp-k{padding:.22rem .6rem}
+.sp .card.item{padding:.2rem 1rem 1rem}
+.sp .card.qc{border:0;border-radius:0;box-shadow:none;margin:0;padding:.35rem 1rem 1rem;content-visibility:visible}
+.sp .qc::before{display:none}
+.qc h4{font-size:1.1rem;overflow-wrap:anywhere}
+.qch{gap:.8rem}
+.qst{min-width:0;flex:1 1 100%}
+.qft{gap:.7rem}
+.qft>.btn,.qft>.btn2{flex:1 1 9rem}
+.sp-comp{padding:.7rem}
+.sp-ph{min-height:2.75rem;padding:.65rem .9rem;font-size:.88rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sp-qa{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.4rem}
+.sp-qa button{flex:none;justify-content:center;min-height:2.75rem;padding:.6rem .4rem;font-size:.82rem}
+}
+
 </style>
 </head>
 <body>
@@ -2496,6 +2533,8 @@ function drawClass(tab) {
   view(`<button class="back" onclick="home()">← Kembali ke daftar kelas</button>${offn}
     <div class="sc"><div class="sc-ban" aria-hidden="true"></div><div class="sc-in"><span class="sc-av" aria-hidden="true">${esc(ini)}</span><div class="sc-tx"><h1>${esc(cls.name)}</h1><p>${esc(cls.subject || '—')} • ${esc(cls.teacher_name || '—')}${readOnly ? ' • Mode pemantauan' : ''}</p><div class="sc-st"><span>${lic('users')} ${C.memberCount} anggota</span><span>${lic('layers')} ${nPost} kiriman</span>${t ? `<button type="button" class="sc-code" onclick="copyCode(${jsq(cls.code)})" title="Salin kode kelas">${lic('key')} ${esc(cls.code)} • Salin</button>` : ''}</div></div></div></div>
     <div class="tabs sc-tabs" role="tablist">${[['feed', lic('home') + 'Beranda'], ['ann', lic('megaphone') + 'Info'], ['mat', lic('book') + 'Materi'], ['asg', lic('task') + 'Tugas'], ['qz', lic('quiz') + 'Kuis'], ['fr', lic('forum') + 'Forum']].map(([k, l]) => `<button role="tab" aria-selected="${k === tab}" class="${k === tab ? 'on' : ''}" onclick="drawClass('${k}')">${l}</button>`).join('')}</div><div class="sp-feed">${body}</div>`);
+  const tb = document.querySelector('.sc-tabs'), on = tb && tb.querySelector('.on');
+  if (tb && on && tb.scrollWidth > tb.clientWidth) tb.scrollLeft = on.offsetLeft - (tb.clientWidth - on.offsetWidth) / 2;
 }
 
 /* ===== Ubah konten & komentar kelas ===== */
