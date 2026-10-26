@@ -2651,9 +2651,10 @@ async function editAdminUser(role, id) {
   let user = null;
   if (id) { try { user = (await api('adminUsers')).users.find(x=>x.user_id===id); } catch(e) { toast(e.message,true); return; } if (!user) return toast('Akun tidak ditemukan.',true); }
   const dflt = role === 'staf' ? 'staff' : role;
-  const roleOpts = hasR('admin') ? [{v:dflt,l:roleLabel(dflt)},{v:'guru',l:'Guru'},{v:'siswa',l:'Siswa'},{v:'guru_bk',l:'Guru BK'},{v:'staff',l:'Staf Administrasi'},{v:'kurikulum',l:'Kurikulum'},{v:'kepala_sekolah',l:'Kepala Sekolah'},{v:'admin',l:'Administrator'}]
+  const roleOpts0 = hasR('admin') ? [{v:dflt,l:roleLabel(dflt)},{v:'guru',l:'Guru'},{v:'siswa',l:'Siswa'},{v:'guru_bk',l:'Guru BK'},{v:'staff',l:'Staf Administrasi'},{v:'kurikulum',l:'Kurikulum'},{v:'kepala_sekolah',l:'Kepala Sekolah'},{v:'admin',l:'Administrator'}]
     : canManageStaffData() ? (role === 'staf' ? [{v:'staff',l:'Staf Administrasi'},{v:'guru_bk',l:'Guru BK'},{v:'kurikulum',l:'Kurikulum'},{v:'kepala_sekolah',l:'Kepala Sekolah'}] : [{v:dflt,l:roleLabel(dflt)},{v:'guru',l:'Guru'},{v:'siswa',l:'Siswa'}])
     : [{v:'siswa',l:'Siswa'}];
+  const roleOpts = roleOpts0.filter((o,k,a)=>a.findIndex(z=>z.v===o.v)===k);
   const fields = [
     {n:'full_name',l:'Nama lengkap',v:user?.full_name||''}, {n:'username',l:'Username',v:user?.username||''},
     {n:'role',l:'Peran utama',t:'select',v:user?.role||dflt,opts:(user && user.role && !roleOpts.some(o=>o.v===user.role)) ? [{v:user.role,l:roleLabel(user.role)}].concat(roleOpts) : roleOpts},
