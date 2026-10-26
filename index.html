@@ -1083,76 +1083,6 @@ aside nav{margin-top:1.1rem}
 }
 @media(max-width:340px){.tabs button{font-size:.72rem}}
 
-/* ===== Panel kiri login: tampilan futuristik (dekoratif; tidak memengaruhi logika) ===== */
-.ls{--g:1rem;gap:var(--g);padding:clamp(1.4rem,3.4vh,2.4rem) clamp(1.5rem,3vw,3rem);background:radial-gradient(60% 45% at 88% 28%,rgba(56,189,248,.2),transparent 70%),radial-gradient(70% 50% at 0 0,rgba(74,118,201,.3),transparent 65%),linear-gradient(165deg,#0c3f94 0%,#0a2f72 50%,#071a40 100%)}
-@media(min-width:901px) and (max-height:900px){.ls{--g:.8rem}}
-.ls::before{display:block;content:"";position:absolute;z-index:-1;top:0;right:0;bottom:0;left:0;width:auto;height:auto;border:0;border-radius:0;background:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px) 0 0/40px 40px,linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px) 0 0/40px 40px;-webkit-mask-image:radial-gradient(75% 65% at 60% 45%,#000 20%,transparent 78%);mask-image:radial-gradient(75% 65% at 60% 45%,#000 20%,transparent 78%)}
-.ls .br{gap:.7rem}.ls .lg{width:2.5rem;height:2.5rem;border-radius:.75rem}
-.ls .br b{font-size:.92rem}.ls .br small{font-size:.7rem}
-.ls .hero-l{max-width:30rem}
-.ls-eye{display:inline-flex;align-items:center;gap:.5rem;margin-bottom:.7rem;padding:.25rem .75rem;border:1px solid rgba(125,211,252,.32);border-radius:99px;background:rgba(56,189,248,.08);font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#bfe6ff}
-.ls-eye i{width:.4rem;height:.4rem;border-radius:50%;background:#7dd3fc;box-shadow:0 0 0 0 rgba(125,211,252,.6);animation:lseye 2.4s ease-out infinite}
-@keyframes lseye{0%{box-shadow:0 0 0 0 rgba(125,211,252,.55)}100%{box-shadow:0 0 0 .5rem rgba(125,211,252,0)}}
-.ls .hero-l h1{font-size:clamp(1.9rem,2.7vw,2.5rem);line-height:1.05;font-weight:500;background:linear-gradient(90deg,#fff 30%,#a9dcff);-webkit-background-clip:text;background-clip:text;color:transparent}
-.ls .hero-l h1::after{width:2.2rem;margin-top:.8rem}
-.ls .hero-l>p{margin-top:.8rem;max-width:25rem;font-size:.8rem;line-height:1.65;color:rgba(255,255,255,.68)}
-
-.ls-art{display:flex;flex-direction:column;flex:1 1 0;min-height:0;margin-top:calc(.2rem - var(--g));container-type:size;pointer-events:none;user-select:none}
-.ls-scene{position:relative;flex:1 1 0;min-height:0}
-.ls-scene svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;animation:lsin .9s cubic-bezier(.2,.7,.2,1) both}
-.ls-cap{flex:none;align-self:center;display:inline-flex;align-items:center;gap:.55rem;margin-top:.3rem;padding:.35rem .95rem;border:1px solid rgba(255,255,255,.14);border-radius:99px;background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font-size:.72rem;color:rgba(255,255,255,.82);transition:opacity .35s,transform .35s}
-.ls-cap i{flex:none;width:.4rem;height:.4rem;border-radius:50%;background:var(--gold)}
-.ls-cap.sw{opacity:0;transform:translateY(4px)}
-@container (max-height:9rem){.ls-scene,.ls-cap{display:none}}
-
-.ls .fe{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;max-width:none;margin:0;padding:0;list-style:none}
-.ls .fe li{position:relative;overflow:hidden;display:flex;align-items:center;gap:.7rem;padding:.7rem .8rem;border:1px solid rgba(255,255,255,.14);border-radius:.95rem;background:linear-gradient(150deg,rgba(255,255,255,.11),rgba(255,255,255,.03));-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 12px 26px -18px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .25s,border-color .25s,box-shadow .25s;animation:lcIn .6s cubic-bezier(.2,.7,.2,1) both}
-.ls .fe li:nth-child(2){animation-delay:.08s}.ls .fe li:nth-child(3){animation-delay:.16s}.ls .fe li:nth-child(4){animation-delay:.24s}
-.ls .fe li::before{content:"";position:absolute;left:14%;right:14%;top:0;height:1px;background:linear-gradient(90deg,transparent,#7dd3fc,transparent);opacity:.7}
-.ls .fe li:hover{transform:translateY(-2px);border-color:rgba(125,211,252,.5);box-shadow:0 0 0 1px rgba(56,189,248,.22),0 16px 32px -16px rgba(56,189,248,.5)}
-.ls .fe .fi{flex:none;width:2.05rem;height:2.05rem;border-radius:.65rem;background:rgba(56,189,248,.14);box-shadow:inset 0 0 0 1px rgba(125,211,252,.3);color:#bfe6ff}
-.ls .fe .fi svg{width:1rem;height:1rem}
-.ls .fe b{width:auto;padding:0;margin:0 0 .12rem;border:0;font-size:.78rem;font-weight:600}
-.ls .fe div>span{font-size:.66rem;line-height:1.4;color:rgba(255,255,255,.6)}
-.ls .fe li>div{min-width:0}
-@media(min-width:901px) and (max-height:820px){.ls .fe div>span{display:none}.ls .fe li{padding:.55rem .7rem}}
-@media(min-width:901px) and (max-height:720px){.ls .hero-l>p{display:none}.ls-eye{margin-bottom:.45rem}}
-@media(min-width:901px) and (max-height:620px){.ls .fe{display:none}}
-@media(min-width:901px) and (max-width:1100px){.ls .fe{grid-template-columns:1fr}.ls .fe div>span{display:none}}
-
-.ls-sun{transition:transform 1s ease;transform:translate(190px,-8px)}
-.ls-sun .orb{fill:#fde68a;transition:fill 1s}.ls-sun .halo{fill:#fde68a;opacity:.18;transition:fill 1s}
-.ls-art[data-tod=pagi] .ls-sun{transform:translate(0,40px)}
-.ls-art[data-tod=pagi] .orb,.ls-art[data-tod=pagi] .halo{fill:#fcd34d}
-.ls-art[data-tod=sore] .ls-sun{transform:translate(228px,96px)}
-.ls-art[data-tod=sore] .orb,.ls-art[data-tod=sore] .halo{fill:#fb923c}
-.ls-art[data-tod=malam] .ls-sun{transform:translate(0,0)}
-.ls-art[data-tod=malam] .orb,.ls-art[data-tod=malam] .halo{fill:#e2e8f0}
-.ls-stars{opacity:0;transition:opacity 1s}.ls-art[data-tod=malam] .ls-stars{opacity:1}
-.ls-clouds{opacity:.18;transition:opacity 1s}.ls-art[data-tod=malam] .ls-clouds{opacity:.05}
-.ls-cloud{animation:lscl 32s ease-in-out infinite alternate}.ls-cloud.c2{animation-duration:26s;animation-direction:alternate-reverse}
-.fl{animation:lsf 6s ease-in-out infinite}.fl.d2{animation-duration:7s;animation-delay:-2s}.fl.d3{animation-duration:5.5s;animation-delay:-4s}
-.tw{transform-box:fill-box;transform-origin:center;animation:lst 3.2s ease-in-out infinite}
-.ls-w{opacity:.55;animation:lsw 5s ease-in-out infinite}.ls-w.g{fill:#d6b46a}
-.ls-b{transform-box:fill-box;transform-origin:bottom;animation:lsb 4s ease-in-out infinite;animation-delay:calc(var(--i) * -.6s)}
-.ls-flag{transform-box:fill-box;transform-origin:left center;animation:lsfl 3.4s ease-in-out infinite}
-.ls-flow{stroke-dasharray:4 6;animation:lsflow 2.4s linear infinite}
-.ls-ring{stroke-dasharray:3 7;animation:lsflow 7s linear infinite}
-.ls-pulse{transform-box:fill-box;transform-origin:center;animation:lspulse 4.5s ease-out infinite}
-.ls-beam{animation:lsbeam 5s ease-in-out infinite}
-.ls-orb{offset-path:path('M24 232a236 58 0 1 0 472 0a236 58 0 1 0 -472 0');offset-rotate:0deg;animation:lsorb 16s linear infinite}
-.ls-orb.o2{animation-duration:23s;animation-direction:reverse}
-@keyframes lsin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@keyframes lsf{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-@keyframes lst{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
-@keyframes lsw{0%,100%{opacity:.4}50%{opacity:.95}}
-@keyframes lsb{0%,100%{transform:scaleY(.78)}50%{transform:scaleY(1)}}
-@keyframes lsfl{0%,100%{transform:scaleX(1) skewY(0)}50%{transform:scaleX(.88) skewY(-5deg)}}
-@keyframes lscl{from{transform:translateX(-28px)}to{transform:translateX(28px)}}
-@keyframes lsflow{to{stroke-dashoffset:-20}}
-@keyframes lspulse{0%{transform:scale(.55);opacity:.55}100%{transform:scale(1.25);opacity:0}}
-@keyframes lsbeam{0%,100%{opacity:.55}50%{opacity:1}}
-@keyframes lsorb{from{offset-distance:0%}to{offset-distance:100%}}
 /* ===== TEMA FUTURISTIK-MINIMALIS (lapisan override, tanpa mengubah logika) ===== */
 :root{--ink:#0f172a;--mut:#5b6678;--faint:#8b95a7;--line:#e9ecf3;--line2:#d9dfeb;--bg:#f6f7fb;--navy:#4f46e5;--navyd:#0f172a;--navyx:#0b1020;--side:#0b1020;--soft:#eef0ff;--gold:#22d3ee;--serif:'Plus Jakarta Sans',system-ui,sans-serif;--r:1.1rem;--rad:1.1rem;--ac:linear-gradient(135deg,#6366f1 0%,#22d3ee 140%);--shadow-sm:0 1px 2px rgba(15,23,42,.04),0 4px 16px -8px rgba(15,23,42,.08);--shadow-md:0 12px 32px -14px rgba(79,70,229,.25);--shadow-lg:0 24px 48px -24px rgba(79,70,229,.35)}
 body{background:var(--bg);letter-spacing:-.006em}
@@ -1294,6 +1224,136 @@ aside .mi{gap:.65rem;padding:.55rem .7rem}
 .cmt{margin-top:.9rem;border-top:1px solid var(--line);padding-top:.7rem}
 .cm{display:flex;gap:.7rem;padding:.6rem 0;border-bottom:1px solid var(--line)}.cm:last-of-type{border-bottom:0}
 .cm .fav{width:2rem;height:2rem;font-size:.82rem}.cm>div{flex:1;min-width:0}.cm b{font-size:.88rem;margin-right:.4rem}.cm .meta{display:inline}.cm .fb{margin-top:.15rem;font-size:.88rem}
+
+/* ===== Panel kiri login v7: hologram futuristik ringan =====
+   Prinsip performa: hanya transform/opacity yang dianimasikan, tanpa filter/blur/backdrop-filter,
+   tanpa JS per-frame, tanpa gambar/font tambahan. Animasi berhenti saat tab disembunyikan (.pz),
+   saat mode hemat data (.lite) dan saat prefers-reduced-motion. Panel disembunyikan di layar <=900px. */
+#login .ls{--hc:#7dd3fc;--hc2:#d6b46a;--hg:56,189,248;--g:1rem;gap:var(--g);contain:layout paint style;isolation:isolate;transform:translateZ(0);
+ padding:clamp(1.4rem,3.4vh,2.4rem) clamp(1.5rem,3vw,3rem);
+ background:radial-gradient(60% 42% at 88% 30%,rgba(56,189,248,.20),transparent 70%),radial-gradient(70% 50% at 0 0,rgba(74,118,201,.34),transparent 65%),linear-gradient(165deg,#0c3f94 0%,#0a2f72 50%,#071a40 100%)}
+#login .ls::before{display:block;content:"";position:absolute;z-index:-1;inset:0;width:auto;height:auto;border:0;border-radius:0;
+ background:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px) 0 0/44px 44px,linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px) 0 0/44px 44px;
+ -webkit-mask-image:radial-gradient(80% 70% at 62% 48%,#000 15%,transparent 78%);mask-image:radial-gradient(80% 70% at 62% 48%,#000 15%,transparent 78%)}
+#login .ls::after{content:"";position:absolute;z-index:-1;left:auto;right:0;top:8%;bottom:8%;width:1px;height:auto;border-radius:0;background:linear-gradient(transparent,rgba(125,211,252,.55),transparent)}
+@media(min-width:901px) and (max-height:900px){#login .ls{--g:.8rem}}
+#login .ls .br{gap:.7rem}
+#login .ls .lg{width:2.5rem;height:2.5rem;border-radius:.75rem;box-shadow:0 0 0 1px rgba(125,211,252,.4),0 0 1.4rem -.2rem rgba(56,189,248,.55)}
+#login .ls .br b{font-size:.92rem}#login .ls .br small{font-size:.7rem}
+#login .ls .hero-l{max-width:30rem}
+#login .ls-eye{display:inline-flex;align-items:center;gap:.55rem;margin-bottom:.7rem;padding:.28rem .8rem .28rem .65rem;border:1px solid rgba(125,211,252,.3);border-radius:.4rem .9rem .4rem .9rem;background:rgba(56,189,248,.07);font:600 .6rem/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.14em;text-transform:uppercase;color:#bfe6ff}
+#login .ls-eye i{position:relative;width:.4rem;height:.4rem;border-radius:50%;background:var(--hc);box-shadow:none;animation:none}
+#login .ls-eye i::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--hc);animation:hxp 2.4s ease-out infinite}
+@keyframes hxp{from{transform:scale(1);opacity:.7}to{transform:scale(3.4);opacity:0}}
+#login .ls .hero-l h1{font-size:clamp(2rem,3vw,2.7rem);line-height:1.04;font-weight:800;letter-spacing:-.035em;background:linear-gradient(95deg,#fff 25%,#cfe6ff 70%,#9cc4ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+#login .ls .hero-l h1::after{width:3.2rem;height:3px;margin-top:.9rem;border-radius:9px;background:linear-gradient(90deg,var(--hc),var(--hc2))}
+#login .ls .hero-l>p{margin-top:.8rem;max-width:25rem;font-size:.8rem;line-height:1.65;color:rgba(255,255,255,.7)}
+
+#login .ls-art{position:relative;display:flex;flex-direction:column;flex:1 1 0;min-height:0;margin:0;container-type:size;pointer-events:none;user-select:none}
+.ls-art[data-tod=pagi]{--hc:#7dd3fc;--hc2:#d6b46a}
+.ls-art[data-tod=sore]{--hc:#93c5fd;--hc2:#d6b46a}
+.ls-art[data-tod=malam]{--hc:#a9c4ff;--hc2:#d6b46a;--hg:120,160,255}
+#login .ls-scene{position:relative;flex:1 1 0;min-height:0;display:grid;place-items:center}
+@container (max-height:11rem){#login .ls-scene,#login .ls-cap{display:none}}
+.hx{position:relative;width:min(100%,30rem);aspect-ratio:520/380;animation:lsin .9s cubic-bezier(.2,.7,.2,1) both}
+@supports(width:1cqw){.hx{width:min(100cqw,calc((100cqh - 2.8rem) * 1.368),34rem)}}
+@keyframes lsin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.hx::before{content:"";position:absolute;inset:0;background:radial-gradient(40% 46% at 50% 46%,rgba(var(--hg),.20),transparent 72%),radial-gradient(48% 13% at 50% 84%,rgba(var(--hg),.34),transparent 75%)}
+.hx-tilt{position:absolute;left:8%;width:84%;aspect-ratio:1/1;top:82%;transform:translateY(-50%) rotateX(70deg)}
+.hx-ring{position:absolute;border-radius:50%;border:1.5px solid rgba(125,211,252,.16);animation:hxr 48s linear infinite}
+.hx-ring.r1{inset:0;border-top-color:var(--hc);border-left-color:rgba(125,211,252,.45)}
+.hx-ring.r2{inset:13%;border-style:dashed;border-color:rgba(165,180,252,.42);animation-duration:70s;animation-direction:reverse}
+.hx-ring.r3{inset:27%;border-bottom-color:var(--hc);animation-duration:34s}
+@keyframes hxr{to{transform:rotate(360deg)}}
+.hx-ring b{position:absolute;inset:0;transform:rotate(var(--a))}
+.hx-ring b::after{content:"";position:absolute;top:-.25rem;left:calc(50% - .25rem);width:.5rem;height:.5rem;border-radius:50%;background:var(--hc);box-shadow:0 0 .8rem .1rem rgba(var(--hg),.8)}
+.hx-ring.r2 b::after{background:var(--hc2);box-shadow:0 0 .8rem .1rem rgba(214,180,106,.7)}
+.hx-ring b.au::after{background:#d6b46a;box-shadow:0 0 .8rem .1rem rgba(214,180,106,.8)}
+.hx-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.ls-sun{transform:translate(190px,-8px)}.ls-sun .orb,.ls-sun .halo{fill:#fde68a}.ls-sun .halo{opacity:.18}
+.ls-art[data-tod=pagi] .ls-sun{transform:translate(0,40px)}.ls-art[data-tod=pagi] .orb,.ls-art[data-tod=pagi] .halo{fill:#fcd34d}
+.ls-art[data-tod=sore] .ls-sun{transform:translate(228px,96px)}.ls-art[data-tod=sore] .orb,.ls-art[data-tod=sore] .halo{fill:#fb923c}
+.ls-art[data-tod=malam] .ls-sun{transform:translate(0,0)}.ls-art[data-tod=malam] .orb,.ls-art[data-tod=malam] .halo{fill:#e2e8f0}
+.ls-stars{opacity:0}.ls-art[data-tod=malam] .ls-stars{opacity:1}
+.ls-clouds{opacity:.18}.ls-art[data-tod=malam] .ls-clouds{opacity:.05}
+.hx-scan{position:absolute;inset:0;overflow:hidden}
+.hx-scan::before{content:"";position:absolute;left:6%;right:6%;top:0;height:16%;background:linear-gradient(90deg,transparent,rgba(210,238,255,.85),transparent) bottom/100% 1px no-repeat,radial-gradient(62% 100% at 50% 100%,rgba(var(--hg),.38),transparent 72%);transform:translateY(-100%);animation:hxs 6s linear infinite}
+@keyframes hxs{0%{transform:translateY(-100%);opacity:0}12%{opacity:1}88%{opacity:1}100%{transform:translateY(625%);opacity:0}}
+.hx-k{position:absolute;width:1.1rem;height:1.1rem;border:0 solid rgba(125,211,252,.55)}
+.hx-k.a{top:0;left:0;border-width:1.5px 0 0 1.5px}.hx-k.b{top:0;right:0;border-width:1.5px 1.5px 0 0}
+.hx-k.c{bottom:0;left:0;border-width:0 0 1.5px 1.5px}.hx-k.d{bottom:0;right:0;border-width:0 1.5px 1.5px 0}
+.hx-tag{position:absolute;top:.5rem;left:1.7rem;font:600 .6rem/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.12em;text-transform:uppercase;color:rgba(191,230,255,.75)}
+.hx-tag::before{content:"Selamat siang"}
+.ls-art[data-tod=pagi] .hx-tag::before{content:"Selamat pagi"}
+.ls-art[data-tod=sore] .hx-tag::before{content:"Selamat sore"}
+.ls-art[data-tod=malam] .hx-tag::before{content:"Selamat malam"}
+#login .ls-cap{flex:none;align-self:center;display:inline-flex;align-items:center;gap:.55rem;margin-top:.3rem;padding:.35rem .95rem;border:1px solid rgba(125,211,252,.22);border-radius:.4rem .9rem .4rem .9rem;background:rgba(10,40,100,.6);-webkit-backdrop-filter:none;backdrop-filter:none;font-size:.72rem;color:rgba(255,255,255,.85);transition:opacity .35s,transform .35s}
+#login .ls-cap i{flex:none;width:.4rem;height:.4rem;border-radius:50%;background:var(--hc);box-shadow:0 0 .5rem var(--hc)}
+#login .ls-cap.sw{opacity:0;transform:translateY(4px)}
+
+#login .ls .fe{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;max-width:none;margin:0;padding:0;list-style:none}
+#login .ls .fe li{position:relative;display:flex;align-items:center;gap:.7rem;padding:.7rem .8rem;border:1px solid transparent;border-radius:.4rem .95rem .4rem .95rem;
+ background:linear-gradient(150deg,#123f8c,#0a2b69) padding-box,linear-gradient(135deg,rgba(125,211,252,.65),rgba(125,211,252,.1) 45%,rgba(214,180,106,.5)) border-box;
+ transition:transform .25s,box-shadow .25s;animation:lcIn .6s cubic-bezier(.2,.7,.2,1) both}
+#login .ls .fe li:nth-child(2){animation-delay:.08s}#login .ls .fe li:nth-child(3){animation-delay:.16s}#login .ls .fe li:nth-child(4){animation-delay:.24s}
+#login .ls .fe li::before{content:"";position:absolute;left:14%;right:14%;top:-1px;height:1px;background:linear-gradient(90deg,transparent,var(--hc),transparent);opacity:.8}
+@media(hover:hover){#login .ls .fe li:hover{transform:translateY(-2px);box-shadow:0 14px 30px -16px rgba(56,189,248,.65)}}
+#login .ls .fe .fi{flex:none;width:2.05rem;height:2.05rem;border-radius:.6rem;background:rgba(56,189,248,.12);box-shadow:inset 0 0 0 1px rgba(125,211,252,.3);-webkit-backdrop-filter:none;backdrop-filter:none;color:#bfe6ff}
+#login .ls .fe .fi svg{width:1rem;height:1rem}
+#login .ls .fe b{width:auto;padding:0;margin:0 0 .12rem;border:0;font-size:.78rem;font-weight:700}
+#login .ls .fe div>span{font-size:.66rem;line-height:1.4;color:rgba(255,255,255,.62)}
+#login .ls .fe li>div{min-width:0}
+#login .ls .lf{border-top-color:rgba(125,211,252,.16)}
+@media(min-width:901px) and (max-height:820px){#login .ls .fe div>span{display:none}#login .ls .fe li{padding:.55rem .7rem}}
+@media(min-width:901px) and (max-height:720px){#login .ls .hero-l>p{display:none}#login .ls-eye{margin-bottom:.45rem}}
+@media(min-width:901px) and (max-height:620px){#login .ls .fe{display:none}}
+@media(min-width:901px) and (max-width:1100px){#login .ls .fe{grid-template-columns:1fr}#login .ls .fe div>span{display:none}}
+#login.pz .ls *,#login.pz .ls *::before,#login.pz .ls *::after{animation-play-state:paused!important}
+
+/* ===== Optimasi layar kecil (HP) ===== */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{overflow-wrap:break-word;-webkit-tap-highlight-color:rgba(11,61,145,.12)}
+button,select,summary,.rt,.pill,.btn,.btn2,.mi,.rem{touch-action:manipulation}
+img{max-width:100%}
+@media(max-width:900px),(pointer:coarse){
+ .ov{-webkit-backdrop-filter:none;backdrop-filter:none;background:rgba(7,20,46,.72)}
+ .mbar{-webkit-backdrop-filter:none;backdrop-filter:none;background:#071a40}
+ .hero-clock,.sb-user{-webkit-backdrop-filter:none;backdrop-filter:none}
+}
+@supports(overflow:clip){@media(max-width:767px){html,body{overflow-x:clip}}}
+@media(max-width:560px){
+ .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+ .st{padding:.9rem .9rem .9rem 1.1rem}.st b{font-size:1.6rem}.st small{font-size:.7rem;letter-spacing:.03em}
+ .grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,16rem),1fr))}
+ table{font-size:.8rem}th,td{padding:.65rem .7rem}th{letter-spacing:.03em;white-space:nowrap}
+ [style*="overflow-x:auto"]{overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+}
+@media(max-width:480px){
+ main{padding-top:1rem}
+ .hero-dash{padding:1.1rem 1.1rem 1.2rem}.hero-text h2{font-size:1.4rem}
+ .ov{padding:max(.5rem,env(safe-area-inset-top,0px)) max(.5rem,env(safe-area-inset-right,0px)) max(.5rem,env(safe-area-inset-bottom,0px)) max(.5rem,env(safe-area-inset-left,0px))}
+ .md{padding:1.25rem 1.1rem;border-radius:1.25rem}
+ /* Login HP: lebih ringkas agar kolom username & sandi terlihat tanpa banyak menggulir */
+ .lm{padding-top:calc(1.1rem + env(safe-area-inset-top,0px));padding-bottom:calc(1.1rem + env(safe-area-inset-bottom,0px))}
+ .mbrand{flex-direction:row;justify-content:center;gap:.7rem;margin-bottom:1rem;text-align:left}
+ .mbrand img{width:2.9rem;height:2.9rem;padding:.4rem;border-radius:.9rem}
+ .lc h2{font-size:clamp(1.45rem,6.6vw,1.8rem)}.lc h2::after{margin-top:.5rem}
+ .lc .sub{margin:.5rem auto 1rem;font-size:.86rem}
+ .rg{grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}
+ .rt{flex-direction:column;align-items:flex-start;gap:.35rem;padding:.65rem .7rem;min-height:3.7rem}
+ .rt .rx small{display:none}
+ .rt::after{top:.55rem;margin-top:0;right:.5rem;width:.9rem;height:.9rem}
+ .rx b{font-size:.82rem;line-height:1.25}
+ .rhint{margin:.7rem 0 1rem;font-size:.78rem;line-height:1.5}
+ .fd{margin-bottom:.95rem}.fld{min-height:3rem;text-overflow:ellipsis}.fld::placeholder{font-size:.9rem}
+ .rem{margin:.1rem 0 1.1rem}.sb{min-height:3.1rem}
+}
+@media(max-width:380px){.fld::placeholder{font-size:.84rem}}
+@media(max-width:340px){
+ .lm{padding-left:max(.9rem,env(safe-area-inset-left,0px));padding-right:max(.9rem,env(safe-area-inset-right,0px))}
+ .rx b{font-size:.78rem}.rt{padding:.6rem .6rem}
+ .fld{padding-left:2.6rem}.fd>svg{left:.85rem}
+}
 </style>
 </head>
 <body>
@@ -1307,36 +1367,37 @@ aside .mi{gap:.65rem;padding:.55rem .7rem}
       <p>Platform pembelajaran terpadu SMK CALM untuk pengelolaan kelas, materi, penugasan, kuis, dan penilaian, dengan hak akses yang disesuaikan bagi setiap peran.</p>
     </div>
     <div class="ls-art" id="lsart" data-tod="siang" aria-hidden="true">
-      <div class="ls-scene"><svg viewBox="0 0 520 380" preserveAspectRatio="xMidYMid meet" focusable="false">
+      <div class="ls-scene"><div class="hx">
+        <svg class="hx-svg" viewBox="0 0 520 380" preserveAspectRatio="xMidYMid meet" focusable="false">
         <defs>
           <linearGradient id="lsgb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfeaff" stop-opacity=".24"/><stop offset="1" stop-color="#7dd3fc" stop-opacity=".06"/></linearGradient>
           <linearGradient id="lsedge" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7dd3fc" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity=".22"/></linearGradient>
           <radialGradient id="lsplat" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#38bdf8" stop-opacity=".6"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></radialGradient>
           <radialGradient id="lsbeam" cx=".5" cy="1" r=".9"><stop offset="0" stop-color="#7dd3fc" stop-opacity=".26"/><stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/></radialGradient>
-          <filter id="lsblur" x="-30%" y="-120%" width="160%" height="340%"><feGaussianBlur stdDeviation="9"/></filter>
+          
         </defs>
 
         <g class="ls-stars" fill="#fff">
-          <circle class="tw" cx="40" cy="28" r="1.6"/><circle class="tw" style="animation-delay:-1s" cx="170" cy="20" r="1.2"/><circle class="tw" style="animation-delay:-2s" cx="236" cy="46" r="1.5"/><circle class="tw" style="animation-delay:-.5s" cx="330" cy="16" r="1.3"/><circle class="tw" style="animation-delay:-1.6s" cx="496" cy="40" r="1.6"/><circle class="tw" style="animation-delay:-2.6s" cx="470" cy="104" r="1.2"/>
+          <circle cx="40" cy="28" r="1.6"/><circle cx="170" cy="20" r="1.2"/><circle cx="236" cy="46" r="1.5"/><circle cx="330" cy="16" r="1.3"/><circle cx="496" cy="40" r="1.6"/><circle cx="470" cy="104" r="1.2"/>
         </g>
         <g class="ls-clouds" fill="#fff">
-          <g transform="translate(170 56)"><g class="ls-cloud"><ellipse cx="0" cy="0" rx="28" ry="8"/><ellipse cx="-14" cy="-6" rx="14" ry="8"/><ellipse cx="10" cy="-8" rx="16" ry="9"/></g></g>
-          <g transform="translate(450 118)"><g class="ls-cloud c2"><ellipse cx="0" cy="0" rx="22" ry="7"/><ellipse cx="-10" cy="-5" rx="11" ry="7"/><ellipse cx="8" cy="-7" rx="12" ry="8"/></g></g>
+          <g transform="translate(170 56)"><g><ellipse cx="0" cy="0" rx="28" ry="8"/><ellipse cx="-14" cy="-6" rx="14" ry="8"/><ellipse cx="10" cy="-8" rx="16" ry="9"/></g></g>
+          <g transform="translate(450 118)"><g><ellipse cx="0" cy="0" rx="22" ry="7"/><ellipse cx="-10" cy="-5" rx="11" ry="7"/><ellipse cx="8" cy="-7" rx="12" ry="8"/></g></g>
         </g>
         <g class="ls-sun"><circle class="halo" cx="92" cy="58" r="36"/><circle class="orb" cx="92" cy="58" r="17"/></g>
 
-        <ellipse cx="260" cy="322" rx="215" ry="34" fill="url(#lsplat)" filter="url(#lsblur)"/>
-        <rect class="ls-beam" x="150" y="96" width="220" height="226" fill="url(#lsbeam)"/>
-        <ellipse cx="260" cy="232" rx="236" ry="58" fill="none" stroke="#7dd3fc" stroke-opacity=".3" stroke-width="1" stroke-dasharray="2 6"/>
+        <ellipse cx="260" cy="322" rx="215" ry="34" fill="url(#lsplat)"/>
+        <rect x="150" y="96" width="220" height="226" fill="url(#lsbeam)"/>
+        
 
-        <ellipse class="ls-pulse" cx="260" cy="320" rx="150" ry="22" fill="none" stroke="#7dd3fc" stroke-width="1.2"/>
-        <ellipse class="ls-pulse" style="animation-delay:-2.2s" cx="260" cy="320" rx="150" ry="22" fill="none" stroke="#7dd3fc" stroke-width="1.2"/>
-        <ellipse class="ls-ring" cx="260" cy="320" rx="214" ry="34" fill="none" stroke="#7dd3fc" stroke-opacity=".6" stroke-width="1.2"/>
-        <ellipse cx="260" cy="320" rx="172" ry="26" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/>
-        <ellipse cx="260" cy="320" rx="236" ry="38" fill="none" stroke="#fff" stroke-opacity=".07" stroke-width="1"/>
+        
+        
+        
+        
+        
 
         <g class="ls-links" fill="none" stroke="#7dd3fc" stroke-opacity=".6" stroke-width="1.2">
-          <path class="ls-flow" d="M356 76Q332 100 306 148"/><path class="ls-flow" d="M404 160L350 200"/><path class="ls-flow" d="M114 156L172 196"/><path class="ls-flow" d="M114 244L128 250"/><path class="ls-flow" d="M400 252L392 252"/>
+          <path d="M356 76Q332 100 306 148"/><path d="M404 160L350 200"/><path d="M114 156L172 196"/><path d="M114 244L128 250"/><path d="M400 252L392 252"/>
         </g>
         <g fill="#7dd3fc"><circle cx="306" cy="148" r="3"/><circle cx="350" cy="200" r="3"/><circle cx="172" cy="196" r="3"/><circle cx="128" cy="250" r="3"/><circle cx="392" cy="252" r="3"/></g>
 
@@ -1349,13 +1410,13 @@ aside .mi{gap:.65rem;padding:.55rem .7rem}
         <circle cx="260" cy="153" r="11" fill="#d6b46a"/>
         <path d="M254 153c3-2 5-2 6 0 1-2 3-2 6 0v6c-3-2-5-2-6 0-1-2-3-2-6 0z" fill="#0a2250"/>
         <line x1="260" y1="122" x2="260" y2="88" stroke="#fff" stroke-opacity=".7" stroke-width="1.6"/>
-        <path class="ls-flag" d="M260 88h26l-6 6 6 6h-26z" fill="#d6b46a"/>
+        <path d="M260 88h26l-6 6 6 6h-26z" fill="#d6b46a"/>
         <g fill="#7dd3fc">
-          <rect class="ls-w" x="184" y="198" width="24" height="32" rx="3"/><rect class="ls-w g" style="animation-delay:-2s" x="212" y="198" width="24" height="32" rx="3"/>
-          <rect class="ls-w" style="animation-delay:-1s" x="184" y="244" width="24" height="32" rx="3"/><rect class="ls-w" style="animation-delay:-3s" x="212" y="244" width="24" height="32" rx="3"/>
-          <rect class="ls-w" style="animation-delay:-2.5s" x="284" y="198" width="24" height="32" rx="3"/><rect class="ls-w" style="animation-delay:-.5s" x="312" y="198" width="24" height="32" rx="3"/>
-          <rect class="ls-w" style="animation-delay:-3.5s" x="284" y="244" width="24" height="32" rx="3"/><rect class="ls-w g" style="animation-delay:-1.5s" x="312" y="244" width="24" height="32" rx="3"/>
-          <rect class="ls-w" style="animation-delay:-4s" x="139" y="252" width="22" height="30" rx="3"/><rect class="ls-w" style="animation-delay:-1.2s" x="359" y="252" width="22" height="30" rx="3"/>
+          <rect opacity=".7" x="184" y="198" width="24" height="32" rx="3"/><rect fill="#d6b46a" opacity=".85" x="212" y="198" width="24" height="32" rx="3"/>
+          <rect opacity=".7" x="184" y="244" width="24" height="32" rx="3"/><rect opacity=".7" x="212" y="244" width="24" height="32" rx="3"/>
+          <rect opacity=".7" x="284" y="198" width="24" height="32" rx="3"/><rect opacity=".7" x="312" y="198" width="24" height="32" rx="3"/>
+          <rect opacity=".7" x="284" y="244" width="24" height="32" rx="3"/><rect fill="#d6b46a" opacity=".85" x="312" y="244" width="24" height="32" rx="3"/>
+          <rect opacity=".7" x="139" y="252" width="22" height="30" rx="3"/><rect opacity=".7" x="359" y="252" width="22" height="30" rx="3"/>
         </g>
         <path d="M238 316V288a22 22 0 0 1 44 0V316Z" fill="#d6b46a" fill-opacity=".95"/>
         <line x1="260" y1="266" x2="260" y2="316" stroke="#0a2250" stroke-opacity=".35" stroke-width="1.4"/>
@@ -1363,22 +1424,31 @@ aside .mi{gap:.65rem;padding:.55rem .7rem}
 
         <g><rect x="46" y="300" width="60" height="10" rx="2" fill="#0ea5e9"/><rect x="52" y="290" width="50" height="10" rx="2" fill="#fff" fill-opacity=".88"/><rect x="49" y="280" width="54" height="10" rx="2" fill="#d6b46a"/></g>
 
-        <path d="M24 232A236 58 0 0 0 496 232" fill="none" stroke="#7dd3fc" stroke-opacity=".55" stroke-width="1.2" stroke-dasharray="2 6"/>
-        <circle class="ls-orb" cx="0" cy="0" r="4.5" fill="#bfe6ff"/><circle class="ls-orb o2" cx="0" cy="0" r="3" fill="#d6b46a"/>
+        
+        
 
-        <g transform="translate(356 36)"><g class="fl"><rect width="108" height="56" rx="12" fill="#fff" fill-opacity=".12" stroke="url(#lsedge)" stroke-width="1.2"/><circle cx="26" cy="28" r="12" fill="#10b981"/><path d="M20 28.5l4.4 4.4 7.6-8.6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><text x="47" y="26" font-size="11.5" font-weight="700" fill="#fff">Kuis</text><rect x="47" y="33" width="46" height="4.5" rx="2.2" fill="#fff" fill-opacity=".38"/><rect x="47" y="42" width="30" height="4.5" rx="2.2" fill="#fff" fill-opacity=".2"/></g></g>
-        <g transform="translate(404 128)"><g class="fl d2"><rect width="108" height="56" rx="12" fill="#fff" fill-opacity=".12" stroke="url(#lsedge)" stroke-width="1.2"/><text x="14" y="21" font-size="11.5" font-weight="700" fill="#fff">Nilai</text><path d="M14 44l16-11 12 6 20-16 14 7" fill="none" stroke="#7dd3fc" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="88" cy="20" r="8" fill="#d6b46a"/><path d="M84.4 20l2.6 2.6 4.8-5.2" fill="none" stroke="#0a2250" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></g></g>
-        <g transform="translate(10 128)"><g class="fl d3"><rect width="104" height="56" rx="12" fill="#fff" fill-opacity=".12" stroke="url(#lsedge)" stroke-width="1.2"/><text x="14" y="21" font-size="11.5" font-weight="700" fill="#fff">Tugas</text><rect x="14" y="30" width="11" height="11" rx="3" fill="#38bdf8"/><path d="M16.2 35.6l2.4 2.4 4-4.4" fill="none" stroke="#06235a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="31" y="32" width="46" height="5" rx="2.5" fill="#fff" fill-opacity=".34"/><rect x="14" y="46" width="62" height="3" rx="1.5" fill="#fff" fill-opacity=".14"/></g></g>
-        <g transform="translate(14 214)"><g class="fl d2" style="animation-delay:-3s"><rect width="100" height="56" rx="12" fill="#fff" fill-opacity=".12" stroke="url(#lsedge)" stroke-width="1.2"/><path d="M14 40V22c4-3 8-3 12 0 4-3 8-3 12 0v18c-4-3-8-3-12 0-4-3-8-3-12 0z" fill="#7dd3fc" fill-opacity=".9"/><text x="48" y="28" font-size="11.5" font-weight="700" fill="#fff">Materi</text><rect x="48" y="35" width="34" height="4.5" rx="2.2" fill="#fff" fill-opacity=".34"/></g></g>
-        <g transform="translate(400 224)"><g class="fl d3" style="animation-delay:-1s"><rect width="108" height="72" rx="12" fill="#fff" fill-opacity=".12" stroke="url(#lsedge)" stroke-width="1.2"/><text x="14" y="21" font-size="11.5" font-weight="700" fill="#fff">Rekap</text><g fill="#7dd3fc"><rect class="ls-b" style="--i:0" x="16" y="48" width="10" height="12" rx="2"/><rect class="ls-b" style="--i:1" x="31" y="42" width="10" height="18" rx="2"/><rect class="ls-b" style="--i:2" x="46" y="45" width="10" height="15" rx="2"/><rect class="ls-b" style="--i:3" x="61" y="36" width="10" height="24" rx="2"/><rect class="ls-b" style="--i:4;fill:#d6b46a" x="76" y="30" width="10" height="30" rx="2"/></g></g></g>
+        <g transform="translate(356 36)"><g><rect width="108" height="56" rx="12" fill="#fff" fill-opacity=".12" stroke="url(#lsedge)" stroke-width="1.2"/><circle cx="26" cy="28" r="12" fill="#10b981"/><path d="M20 28.5l4.4 4.4 7.6-8.6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><text x="47" y="26" font-size="11.5" font-weight="700" fill="#fff">Kuis</text><rect x="47" y="33" width="46" height="4.5" rx="2.2" fill="#fff" fill-opacity=".38"/><rect x="47" y="42" width="30" height="4.5" rx="2.2" fill="#fff" fill-opacity=".2"/></g></g>
+        <g transform="translate(404 128)"><g><rect width="108" height="56" rx="12" fill="#fff" fill-opacity=".12" stroke="url(#lsedge)" stroke-width="1.2"/><text x="14" y="21" font-size="11.5" font-weight="700" fill="#fff">Nilai</text><path d="M14 44l16-11 12 6 20-16 14 7" fill="none" stroke="#7dd3fc" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="88" cy="20" r="8" fill="#d6b46a"/><path d="M84.4 20l2.6 2.6 4.8-5.2" fill="none" stroke="#0a2250" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></g></g>
+        <g transform="translate(10 128)"><g><rect width="104" height="56" rx="12" fill="#fff" fill-opacity=".12" stroke="url(#lsedge)" stroke-width="1.2"/><text x="14" y="21" font-size="11.5" font-weight="700" fill="#fff">Tugas</text><rect x="14" y="30" width="11" height="11" rx="3" fill="#38bdf8"/><path d="M16.2 35.6l2.4 2.4 4-4.4" fill="none" stroke="#06235a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="31" y="32" width="46" height="5" rx="2.5" fill="#fff" fill-opacity=".34"/><rect x="14" y="46" width="62" height="3" rx="1.5" fill="#fff" fill-opacity=".14"/></g></g>
+        <g transform="translate(14 214)"><g><rect width="100" height="56" rx="12" fill="#fff" fill-opacity=".12" stroke="url(#lsedge)" stroke-width="1.2"/><path d="M14 40V22c4-3 8-3 12 0 4-3 8-3 12 0v18c-4-3-8-3-12 0-4-3-8-3-12 0z" fill="#7dd3fc" fill-opacity=".9"/><text x="48" y="28" font-size="11.5" font-weight="700" fill="#fff">Materi</text><rect x="48" y="35" width="34" height="4.5" rx="2.2" fill="#fff" fill-opacity=".34"/></g></g>
+        <g transform="translate(400 224)"><g><rect width="108" height="72" rx="12" fill="#fff" fill-opacity=".12" stroke="url(#lsedge)" stroke-width="1.2"/><text x="14" y="21" font-size="11.5" font-weight="700" fill="#fff">Rekap</text><g fill="#7dd3fc"><rect x="16" y="48" width="10" height="12" rx="2"/><rect x="31" y="42" width="10" height="18" rx="2"/><rect x="46" y="45" width="10" height="15" rx="2"/><rect x="61" y="36" width="10" height="24" rx="2"/><rect style="--i:4;fill:#d6b46a" x="76" y="30" width="10" height="30" rx="2"/></g></g></g>
 
         <g fill="#d6b46a">
-          <path class="tw" d="M150 36l2.2 5.8 5.8 2.2-5.8 2.2-2.2 5.8-2.2-5.8-5.8-2.2 5.8-2.2z"/>
-          <path class="tw" style="animation-delay:-1.4s" d="M490 78l1.8 4.6 4.6 1.8-4.6 1.8-1.8 4.6-1.8-4.6-4.6-1.8 4.6-1.8z"/>
-          <path class="tw" style="animation-delay:-2.2s" d="M36 100l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z"/>
-          <path class="tw" style="animation-delay:-.8s" d="M498 206l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z"/>
+          <path d="M150 36l2.2 5.8 5.8 2.2-5.8 2.2-2.2 5.8-2.2-5.8-5.8-2.2 5.8-2.2z"/>
+          <path d="M490 78l1.8 4.6 4.6 1.8-4.6 1.8-1.8 4.6-1.8-4.6-4.6-1.8 4.6-1.8z"/>
+          <path d="M36 100l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z"/>
+          <path d="M498 206l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z"/>
         </g>
-      </svg></div>
+      </svg>
+        <div class="hx-tilt">
+          <i class="hx-ring r1"><b style="--a:0deg"></b><b class="au" style="--a:150deg"></b><b style="--a:250deg"></b></i>
+          <i class="hx-ring r2"><b style="--a:60deg"></b><b style="--a:200deg"></b></i>
+          <i class="hx-ring r3"><b style="--a:110deg"></b></i>
+        </div>
+        <span class="hx-scan"></span>
+        <span class="hx-k a"></span><span class="hx-k b"></span><span class="hx-k c"></span><span class="hx-k d"></span>
+        <span class="hx-tag"></span>
+      </div></div>
       <p class="ls-cap" id="lscap"><i></i><span>Materi, tugas, dan kuis dalam satu tempat</span></p>
     </div>
     <ul class="fe">
@@ -3879,7 +3949,10 @@ function hmAttStu(el, cl) {
       sync(); cap.classList.add('sw');
       setTimeout(function () { i = (i + 1) % tips.length; txt.textContent = tips[i]; cap.classList.remove('sw'); }, 380);
     }, 7000);
-    document.addEventListener('visibilitychange', function () { if (!document.hidden) sync(); });
+    var lw = document.getElementById('login');
+    function pz() { if (lw) lw.classList.toggle('pz', document.hidden); }
+    document.addEventListener('visibilitychange', function () { pz(); if (!document.hidden) sync(); });
+    pz();
   } catch (e) {}
 })();
 </script>
