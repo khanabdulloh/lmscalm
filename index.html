@@ -1355,6 +1355,16 @@ img{max-width:100%}
  .fld{padding-left:2.6rem}.fd>svg{left:.85rem}
 }
 </style>
+
+<style id="kelola-kelas-social-styles">
+/* Kelola kelas: nuansa komunitas belajar yang ramah dan interaktif */
+.social-kc{display:flex;flex-direction:column;gap:.55rem;min-height:17rem;padding:1rem 1rem .85rem;border-radius:1.15rem;background:#fff;box-shadow:0 3px 14px rgba(25,55,100,.06);}
+.social-kc::before{height:4px;background:linear-gradient(90deg,var(--c1),var(--c2));}
+.social-kc-top{display:flex;align-items:center;gap:.65rem;min-width:0}.social-kc-top .kic{width:2.6rem;height:2.6rem;border-radius:.85rem}.social-kc-top .ktag{margin-left:auto}.kc-more{border:0;background:#f1f5fb;color:#52627c;border-radius:50%;width:2rem;height:2rem;font-weight:800;letter-spacing:1px}.kc-more:hover{background:#e4edfb;color:var(--navy)}
+.kc-open{display:flex;flex:1;flex-direction:column;align-items:flex-start;gap:.35rem;width:100%;border:0;background:transparent;text-align:left;padding:.2rem 0 .35rem}.kc-emoji{display:grid;place-items:center;width:2.8rem;height:2.8rem;margin:.1rem 0 .25rem;border-radius:1rem;background:color-mix(in srgb,var(--c1) 9%,white);font-size:1.55rem}.social-kc h3{font-size:1.08rem;line-height:1.35;color:var(--navyd)}.social-kc .ks{font-size:.82rem;font-weight:700;color:var(--c1)}.kc-desc{font-size:.8rem;line-height:1.5;color:var(--mut);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.kc-open-label{display:flex;align-items:center;gap:.35rem;margin-top:auto;padding-top:.65rem;color:var(--navy);font-size:.82rem;font-weight:800}.kc-open-label span{transition:transform .18s}.kc-open:hover .kc-open-label span{transform:translateX(4px)}.social-kc .kfoot{margin-top:.2rem;padding-top:.7rem;border-top:1px solid var(--line);font-size:.75rem}.social-kc .kav{width:1.8rem;height:1.8rem}.kc-friendly{margin-left:auto;font-size:.68rem;color:#7b8ba5;white-space:nowrap}.social-kc:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(25,55,100,.1)}
+@media(max-width:767px){.social-kc{min-height:16rem}.kc-friendly{display:none}}
+</style>
+
 </head>
 <body>
 
@@ -2121,17 +2131,17 @@ async function home() {
   nav('home'); _kj = 'all'; view('<p class="empty">Memuat daftar kelas…</p>');
   try {
     const { classes } = await api('classes');
+    window._kelasHomeCache = classes.slice();
     const t = isT(), student = !t && !isMonitor();
     const title = t ? 'Kelas yang Dikelola' : student ? 'Kelas Saya' : 'Daftar Kelas';
     const items = classes.map(c => { const k = jurOf(c); return { c, k, d: JUR[k] }; });
     const used = [...new Set(items.map(x => x.k))];
     const cta = t ? '<button class="btn" onclick="newClass()">+ Buat kelas</button>' : student ? '<button class="btn" onclick="joinClass()">+ Gabung kelas</button>' : '';
-    const card = ({ c, k, d }, i) => `<button class="kc" type="button" data-j="${k}" data-q="${esc((String(c.name || '') + ' ' + (c.subject || '') + ' ' + (c.teacher_name || '') + ' ' + d.n).toLowerCase())}" style="--c1:${d.c[0]};--c2:${d.c[1]};animation-delay:${Math.min(i, 12) * 40}ms" onclick="openClass(${esc(JSON.stringify(String(c.id)))})">
-        <span class="kwm" aria-hidden="true">${jIcon(d.i)}</span>
-        <span class="ktop"><span class="kic" aria-hidden="true">${jIcon(d.i)}</span><span class="ktag">${esc(d.n)}</span></span>
-        <h3>${esc(c.name)}</h3><span class="ks">${esc(c.subject || 'Mata pelajaran')}</span>
-        <span class="kfoot"><span class="kav" aria-hidden="true">${esc(String(c.teacher_name || '?').trim().charAt(0).toUpperCase())}</span><span class="kt">${esc(c.teacher_name || 'Guru belum ditetapkan')}</span><svg class="kgo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-      </button>`;
+    const card = ({ c, k, d }, i) => `<article class="kc social-kc" data-j="${k}" data-q="${esc((String(c.name || '') + ' ' + (c.subject || '') + ' ' + (c.teacher_name || '') + ' ' + d.n).toLowerCase())}" style="--c1:${d.c[0]};--c2:${d.c[1]};animation-delay:${Math.min(i, 12) * 40}ms">
+        <div class="social-kc-top"><span class="kic" aria-hidden="true">${jIcon(d.i)}</span><span class="ktag">${esc(d.n)}</span>${t ? `<button class="kc-more" type="button" aria-label="Kelola ${esc(c.name)}" onclick="event.stopPropagation();kelasMenu(${esc(JSON.stringify(String(c.id)))})">•••</button>` : ''}</div>
+        <button class="kc-open" type="button" onclick="openClass(${esc(JSON.stringify(String(c.id)))})"><span class="kc-emoji">${({'net':'🌐','code':'💻','design':'🎨','acc':'🧾','office':'🗂️','market':'🛍️','auto':'🚗','elec':'⚡','mech':'⚙️','pharma':'🧪','health':'🩺','cook':'🍳','fashion':'🧵','hotel':'🏨','agri':'🌱','marine':'🚢','math':'📐','lang':'💬','relig':'🌙','sport':'⚽','sci':'🔬','civic':'🏛️','art':'🎵','def':'📚'})[k] || '✨'}</span><h3>${esc(c.name)}</h3><span class="ks">${esc(c.subject || 'Mata pelajaran')}</span><span class="kc-desc">${esc(c.description || 'Yuk, mulai belajar dan berbagi aktivitas di kelas ini!')}</span><span class="kc-open-label">Masuk kelas <span>→</span></span></button>
+        <div class="kfoot"><span class="kav" aria-hidden="true">${esc(String(c.teacher_name || '?').trim().charAt(0).toUpperCase())}</span><span class="kt">${esc(c.teacher_name || 'Guru belum ditetapkan')}</span><span class="kc-friendly">✨ ruang belajar</span></div>
+      </article>`;
     const pillsHtml = used.length > 1 ? `<div class="pills"><button class="pill on" type="button" data-j="all" onclick="kelasJur('all')">Semua<i>${items.length}</i></button>${used.map(k => `<button class="pill" type="button" data-j="${k}" onclick="kelasJur('${k}')">${esc(JUR[k].n)}<i>${items.filter(x => x.k === k).length}</i></button>`).join('')}</div>` : '';
     view(`<div class="top"><div><h2>${title}</h2><p>${classes.length ? 'Pilih kelas untuk melihat materi, tugas, dan kuis.' : 'Belum ada kelas yang tersedia.'}</p></div><div class="acts">${cta}</div></div>
       ${classes.length
@@ -2144,7 +2154,38 @@ async function home() {
     view(`<div class="card empty"><b>Kelas belum dapat dimuat</b>${esc(e.message)}<br><br><button class="btn" onclick="home()">Coba lagi</button></div>`);
   }
 }
-const newClass = () => modal('Buat kelas', [
+function kelasMenu(id) {
+  const c = window._kelasHomeCache && window._kelasHomeCache.find(x => String(x.id) === String(id));
+  if (!c || !isT()) return;
+  modal('Kelola kelas ✨', [
+    {n:'_action',l:'Pilih tindakan',t:'select',v:'edit',opts:[{v:'edit',l:'✏️ Edit informasi kelas'},{v:'delete',l:'🗑️ Hapus kelas'}]}
+  ], d => {
+    // Tutup modal pilihan sebelum membuka dialog berikutnya agar tidak bertumpuk.
+    const action = d._action;
+    setTimeout(() => {
+      if (action === 'delete') hapusKelasGuru(id, c.name);
+      else editKelasGuru(id);
+    }, 0);
+  }, 'Lanjutkan', {sub:'Atur kelas dengan mudah. Perubahan hanya berlaku pada kelas yang Anda kelola.'});
+}
+function editKelasGuru(id) {
+  if (!isT()) return;
+  const c = (window._kelasHomeCache || []).find(x => String(x.id) === String(id)); if (!c) return;
+  modal('Edit kelas ✏️', [
+    {n:'name',l:'Nama kelas',v:c.name||''},
+    {n:'subject',l:'Mata pelajaran',v:c.subject||''},
+    {n:'description',l:'Deskripsi kelas',t:'textarea',v:c.description||'',r:false},
+    {n:'class_id',l:'',t:'hidden',v:String(c.id)}
+  ], async d => { await api('teacherEditClass',d); toast('✨ Informasi kelas berhasil diperbarui.'); cacheClear(); home(); }, 'Simpan perubahan', {sub:'Perbarui informasi kelas agar siswa lebih mudah mengenali ruang belajarnya.'});
+}
+async function hapusKelasGuru(id, name) {
+  if (!isT()) return;
+  if (!(await dlg({title:'Hapus kelas?',msg:`Kelas “${name}” akan dihapus. Demi menjaga riwayat belajar, kelas yang sudah memiliki anggota, materi, tugas, pengumuman, kuis, postingan, atau jadwal tidak dapat dihapus.`,ok:'Hapus kelas',tone:'danger'}))) return;
+  try { await api('teacherDeleteClass',{class_id:String(id)}); toast('Kelas berhasil dihapus.'); cacheClear(); home(); }
+  catch(e) { toast(e.message,true); }
+}
+
+const newClass = () => modal('Buat kelas ✨', [
   {n:'name', l:'Nama kelas (contoh: XI TKJ 1)'},
   {n:'subject', l:'Mata pelajaran'},
   {n:'description', l:'Deskripsi (opsional)', t:'textarea', r:false}
@@ -2191,8 +2232,8 @@ function drawClass(tab) {
   CT = tab; const { cls } = C, t = canManageCurrentClass(), readOnly = isReadOnlyMonitor();
   const add = (label, fn) => t ? `<div class="row" style="margin-bottom:14px"><button class="btn" onclick="${fn}">${label}</button></div>` : '';
   let body = '';
-  if (tab === 'ann') body = add('Buat pengumuman', 'addAnn()') + (C.announcements.map(a => `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${esc(a.author)} • ${tgl(a.created)}</div><p>${esc(a.body)}</p>${editLn(t, 'editAnn', a.id)}${cmtBlock('ann', a.id)}</div>`).join('') || empty('Belum ada pengumuman', 'Pengumuman dari guru akan ditampilkan di sini.'));
-  if (tab === 'mat') body = add('Tambah materi', 'addMat()') + (C.materials.map(m => `<div class="card item"><h4>${esc(m.title)}</h4><div class="meta">${tgl(m.created)}</div>${m.description ? `<p>${esc(m.description)}</p>` : ''}${safeUrl(m.file_url) ? `<p><a href="${safeUrl(m.file_url)}" target="_blank" rel="noopener">Buka berkas</a></p>` : ''}${editLn(t, 'editMat', m.id)}${cmtBlock('mat', m.id)}</div>`).join('') || empty('Belum ada materi', 'Materi yang diunggah guru akan ditampilkan di sini.'));
+  if (tab === 'ann') body = add('Buat pengumuman', 'addAnn()') + (C.announcements.map(a => `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${esc(a.author)} • ${tgl(a.created)}</div><p>${esc(a.body)}</p>${contentActions(t, 'editAnn', 'deleteAnn', a.id, 'pengumuman')}${cmtBlock('ann', a.id)}</div>`).join('') || empty('Belum ada pengumuman', 'Pengumuman dari guru akan ditampilkan di sini.'));
+  if (tab === 'mat') body = add('Tambah materi', 'addMat()') + (C.materials.map(m => `<div class="card item"><h4>${esc(m.title)}</h4><div class="meta">${tgl(m.created)}</div>${m.description ? `<p>${esc(m.description)}</p>` : ''}${safeUrl(m.file_url) ? `<p><a href="${safeUrl(m.file_url)}" target="_blank" rel="noopener">Buka berkas</a></p>` : ''}${contentActions(t, 'editMat', 'deleteMat', m.id, 'materi')}${cmtBlock('mat', m.id)}</div>`).join('') || empty('Belum ada materi', 'Materi yang diunggah guru akan ditampilkan di sini.'));
   if (tab === 'asg') body = add('Buat tugas', 'addAsg()') + (C.assignments.map(a => asgCard(a, t)).join('') || empty('Belum ada tugas', 'Tugas dari guru akan ditampilkan di sini.'));
   if (tab === 'qz')  body = add('Buat kuis', 'addQuiz()') + (C.quizzes.map(quizCard).join('') || empty('Belum ada kuis', 'Kuis yang diterbitkan guru akan ditampilkan di sini.'));
   if (tab === 'fr')  body = forumView();
@@ -2204,7 +2245,8 @@ function drawClass(tab) {
 
 /* ===== Ubah konten & komentar kelas ===== */
 var CM = { open: {}, busy: false };
-const editLn = (t, fn, id) => t ? `<div class="fa"><button type="button" class="link" onclick="${fn}(${jsq(id)})">Ubah</button></div>` : '';
+const editLn = (t, fn, id) => t ? `<div class="fa"><button type="button" class="link" onclick="${fn}(${jsq(id)})">Edit</button></div>` : '';
+const contentActions = (t, editFn, delFn, id, label) => t ? `<div class="fa" style="display:flex;gap:.55rem;flex-wrap:wrap"><button type="button" class="link" onclick="${editFn}(${jsq(id)})">✏️ Edit</button><button type="button" class="link" style="color:#b42318" onclick="${delFn}(${jsq(id)})">🗑️ Hapus ${label}</button></div>` : '';
 async function cmRefresh() {
   const y = window.scrollY, id = C.cls.id;
   const data = await api('classDetail', { class_id: id }, 30000, { fresh: true });
@@ -2238,26 +2280,43 @@ async function cmtDel(cmid) {
   try { await api('deleteComment', { comment_id: cmid }); await cmRefresh(); toast('Komentar dihapus.'); }
   catch (e) { toast(e.message, true); }
 }
+async function deleteContent(kind, id, title) {
+  const cfg = {
+    ann: { api: 'deleteAnnouncement', label: 'pengumuman', tab: 'ann' },
+    mat: { api: 'deleteMaterial', label: 'materi', tab: 'mat' },
+    asg: { api: 'deleteAssignment', label: 'tugas', tab: 'asg' },
+    qz:  { api: 'deleteQuiz', label: 'kuis', tab: 'qz' }
+  }[kind];
+  if (!cfg) return;
+  if (!(await dlg({title: `Hapus ${cfg.label}?`, msg: `“${title || cfg.label}” akan dihapus. Tindakan ini tidak dapat dibatalkan. Jika masih ada pengumpulan tugas atau pengerjaan kuis, sistem akan melindungi riwayat tersebut dan menolak penghapusan.`, ok: `Hapus ${cfg.label}`, tone: 'danger'}))) return;
+  try { await api(cfg.api, kind === 'qz' ? {quiz_id:id} : {id}); toast(`${cfg.label[0].toUpperCase()+cfg.label.slice(1)} berhasil dihapus.`); await cmRefresh(); }
+  catch(e) { toast(e.message, true); }
+}
+function deleteAnn(id) { const x=C.announcements.find(v=>v.id===id); return deleteContent('ann',id,x&&x.title); }
+function deleteMat(id) { const x=C.materials.find(v=>v.id===id); return deleteContent('mat',id,x&&x.title); }
+function deleteAsg(id) { const x=C.assignments.find(v=>v.id===id); return deleteContent('asg',id,x&&x.title); }
+function deleteQuiz(id) { const x=C.quizzes.find(v=>v.id===id); return deleteContent('qz',id,x&&x.title); }
+
 function editAnn(id) {
   const a = C.announcements.find(x => x.id === id); if (!a) return;
-  modal('Ubah pengumuman', [{ n: 'title', l: 'Judul', v: a.title }, { n: 'body', l: 'Isi pengumuman', t: 'textarea', v: a.body }],
+  modal('Edit pengumuman', [{ n: 'title', l: 'Judul', v: a.title }, { n: 'body', l: 'Isi pengumuman', t: 'textarea', v: a.body }],
     async d => { await api('editAnnouncement', { id, title: d.title, body: d.body }); toast('Pengumuman diperbarui.'); await cmRefresh(); }, 'Simpan perubahan', { sub: 'Perubahan langsung tampil bagi seluruh anggota kelas.' });
 }
 function editMat(id) {
   const m = C.materials.find(x => x.id === id); if (!m) return;
-  modal('Ubah materi', [{ n: 'title', l: 'Judul materi', v: m.title }, { n: 'description', l: 'Keterangan (opsional)', t: 'textarea', v: m.description || '', r: false }, { n: 'file', l: 'Berkas pengganti (opsional, maks. 10 MB)', t: 'file', r: false }, { n: 'link', l: 'Tautan baru (opsional)', t: 'url', r: false }],
+  modal('Edit materi', [{ n: 'title', l: 'Judul materi', v: m.title }, { n: 'description', l: 'Keterangan (opsional)', t: 'textarea', v: m.description || '', r: false }, { n: 'file', l: 'Berkas pengganti (opsional, maks. 10 MB)', t: 'file', r: false }, { n: 'link', l: 'Tautan baru (opsional)', t: 'url', r: false }],
     async d => { await api('editMaterial', { id, title: d.title, description: d.description, link: d.link || '', file_data: d.file_data, file_name: d.file_name, file_type: d.file_type }); toast('Materi diperbarui.'); await cmRefresh(); }, 'Simpan perubahan', { sub: 'Kosongkan berkas dan tautan untuk mempertahankan lampiran yang sekarang.', busy: 'Menyimpan…' });
 }
 function editAsg(id) {
   const a = C.assignments.find(x => x.id === id); if (!a) return;
   const dv = a.due ? ymd(new Date(a.due)) : '';
-  modal('Ubah tugas', [{ n: 'title', l: 'Judul tugas', v: a.title }, { n: 'description', l: 'Petunjuk (opsional)', t: 'textarea', v: a.description || '', r: false }, { n: 'due', l: 'Batas pengumpulan', t: 'date', v: dv, r: false }, { n: 'max_score', l: 'Nilai maksimal', t: 'number', v: a.max_score }],
+  modal('Edit tugas', [{ n: 'title', l: 'Judul tugas', v: a.title }, { n: 'description', l: 'Petunjuk (opsional)', t: 'textarea', v: a.description || '', r: false }, { n: 'due', l: 'Batas pengumpulan', t: 'date', v: dv, r: false }, { n: 'max_score', l: 'Nilai maksimal', t: 'number', v: a.max_score }],
     async d => { await api('editAssignment', { id, title: d.title, description: d.description, due: d.due || '', max_score: d.max_score }); toast('Tugas diperbarui.'); await cmRefresh(); }, 'Simpan perubahan', { sub: 'Nilai yang sudah diberikan tidak berubah. Pengumpulan diterima hingga akhir hari pada tanggal batas.' });
 }
 function editQuiz(id) {
   const q = C.quizzes.find(x => x.id === id); if (!q) return;
   const { c, text } = qcfg(q.description);
-  modal('Ubah kuis', [{ n: 'title', l: 'Judul kuis', v: q.title }, { n: 'duration', l: 'Durasi total (menit)', t: 'number', v: q.duration }, { n: 'qt', l: 'Waktu per soal (detik; 0 = nonaktif)', t: 'number', v: c.qt || 0, r: false }, { n: 'pass', l: 'Nilai ketuntasan minimal (0–100)', t: 'number', v: c.pass || 0, r: false }, { n: 'description', l: 'Petunjuk untuk siswa (opsional)', t: 'textarea', v: text, r: false }],
+  modal('Edit kuis', [{ n: 'title', l: 'Judul kuis', v: q.title }, { n: 'duration', l: 'Durasi total (menit)', t: 'number', v: q.duration }, { n: 'qt', l: 'Waktu per soal (detik; 0 = nonaktif)', t: 'number', v: c.qt || 0, r: false }, { n: 'pass', l: 'Nilai ketuntasan minimal (0–100)', t: 'number', v: c.pass || 0, r: false }, { n: 'description', l: 'Petunjuk untuk siswa (opsional)', t: 'textarea', v: text, r: false }],
     async d => {
       const cfg = Object.assign({}, c); delete cfg.qt; delete cfg.pass;
       if (+d.qt > 0) cfg.qt = +d.qt; if (+d.pass > 0) cfg.pass = +d.pass;
@@ -2280,7 +2339,7 @@ function asgCard(a, t) {
     foot = `<div class="row" style="justify-content:space-between;align-items:center;margin-top:10px"><span class="badge ${s ? (s.score !== '' ? 'ok' : 'warn') : ''}">${s ? (s.score !== '' ? `Nilai ${s.score}/${a.max_score}` : 'Menunggu penilaian') : 'Belum dikumpulkan'}</span>
       <button class="btn${s ? '2' : ''}" onclick="submitIt(${esc(JSON.stringify(String(a.id)))})">${s ? 'Kumpulkan ulang' : 'Kumpulkan tugas'}</button></div>${s && s.feedback ? `<p class="meta">Umpan balik: ${esc(s.feedback)}</p>` : ''}`;
   }
-  return `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${a.due ? 'Batas: ' + tgl(a.due) + ' • ' : ''}Nilai maksimal ${a.max_score}</div>${a.description ? `<p>${esc(a.description)}</p>` : ''}${editLn(t, 'editAsg', a.id)}${foot}${cmtBlock('asg', a.id)}</div>`;
+  return `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${a.due ? 'Batas: ' + tgl(a.due) + ' • ' : ''}Nilai maksimal ${a.max_score}</div>${a.description ? `<p>${esc(a.description)}</p>` : ''}${contentActions(t, 'editAsg', 'deleteAsg', a.id, 'tugas')}${foot}${cmtBlock('asg', a.id)}</div>`;
 }
 
 const cid = () => ({ class_id: C.cls.id });
@@ -2401,7 +2460,7 @@ function quizCard(q) {
   const chips = [q.qcount + ' soal', q.duration + ' menit', c.qt ? c.qt + ' detik/soal' : '', c.shuf ? 'Soal diacak' : '', c.pass ? 'Ketuntasan ≥ ' + c.pass : ''].filter(Boolean).map(x => `<span>${x}</span>`).join('');
   const rows = at.map(a => `<div class="qr"><span>${esc(a.full_name)}</span><b>${a.submitted ? a.score + '/' + a.max : 'Sedang dikerjakan'}</b></div>`).join('') || '<p class="meta">Belum ada hasil.</p>';
   let foot, done = false;
-  if (t || ro) foot = `<div class="qft"><div class="qst"><div><b>${fin.length}</b><small>selesai</small></div><div><b>${fin.length ? avg : '–'}</b><small>rata-rata</small></div><div class="qbm"><i style="width:${avg}%"></i></div></div></div><details><summary>Lihat hasil siswa${ro ? ' • pemantauan' : ''}</summary>${rows}</details>${fin.length ? `<div style="margin-top:.8rem"><button class="btn2" onclick="quizStats(${esc(JSON.stringify(String(q.id)))})">Analisis soal</button></div>` : ''}${t ? `<div style="margin-top:.8rem"><button class="btn2" onclick="editQuiz(${esc(JSON.stringify(String(q.id)))})">Ubah kuis</button></div>` : ''}`;
+  if (t || ro) foot = `<div class="qft"><div class="qst"><div><b>${fin.length}</b><small>selesai</small></div><div><b>${fin.length ? avg : '–'}</b><small>rata-rata</small></div><div class="qbm"><i style="width:${avg}%"></i></div></div></div><details><summary>Lihat hasil siswa${ro ? ' • pemantauan' : ''}</summary>${rows}</details>${fin.length ? `<div style="margin-top:.8rem"><button class="btn2" onclick="quizStats(${esc(JSON.stringify(String(q.id)))})">Analisis soal</button></div>` : ''}${t ? `<div style="margin-top:.8rem"><button class="btn2" onclick="editQuiz(${esc(JSON.stringify(String(q.id)))})">Edit kuis</button><button class="btn2" onclick="deleteQuiz(${esc(JSON.stringify(String(q.id)))})" style="color:#b42318;border-color:#f3c7c4">Hapus kuis</button></div>` : ''}`;
   else { const a = at[0]; done = !!(a && a.submitted);
     const pass = done && c.pass ? (pc(a) >= c.pass ? '<span class="badge ok">Tuntas</span>' : '<span class="badge warn">Belum tuntas</span>') : '';
     foot = `<div class="qft">${done ? `<div class="qsc">${a.score}<small> / ${a.max}</small></div>${pass}${c.rev === 0 ? '' : `<button class="btn2" onclick="reviewQuiz(${esc(JSON.stringify(String(q.id)))})">Lihat pembahasan</button>`}` : `<span class="badge${a ? ' warn' : ''}">${a ? 'Sedang dikerjakan' : 'Belum dikerjakan'}</span><button class="btn" onclick="startQuiz(${esc(JSON.stringify(String(q.id)))})">${a ? 'Lanjutkan' : 'Mulai kuis'}</button>`}</div>`; }
@@ -2571,13 +2630,14 @@ function frTopics() {
   if (FR.f === 'done') list = list.filter(p => yes(p, 'answered'));
   if (q) list = list.filter(p => (p.title + ' ' + p.body + ' ' + p.full_name + ' ' + (rp[p.id] || []).map(r => r.body).join(' ')).toLowerCase().indexOf(q) > -1);
   list.sort((a, b) => (yes(b, 'pinned') - yes(a, 'pinned')) || String(b.created).localeCompare(String(a.created)));
-  return { list, cnt, rp };
+  FR.cache = list; return { list, cnt, rp };
 }
 function frActs(p, top) {
   if (isReadOnlyMonitor()) return '';
   const t = canManageCurrentClass(), mine = String(p.user_id) === String(S.user.user_id), a = [];
   const L = (label, fn) => `<button type="button" class="link" onclick="${fn}">${label}</button>`;
   if (top && (t || mine)) a.push(L(yes(p, 'answered') ? 'Batalkan Terjawab' : 'Tandai terjawab', `postAct('${esc(p.id)}','answer')`));
+  if (t || mine) a.push(L('Edit', `editPost('${esc(p.id)}')`));
   if (!top && t) a.push(L(yes(p, 'best') ? 'Lepas jawaban terbaik' : 'Jadikan jawaban terbaik', `postAct('${esc(p.id)}','best')`));
   if (top && t) { a.push(L(yes(p, 'pinned') ? 'Lepas sematan' : 'Sematkan', `postAct('${esc(p.id)}','pin')`)); a.push(L(yes(p, 'closed') ? 'Buka utas' : 'Tutup utas', `postAct('${esc(p.id)}','close')`)); }
   if (t) a.push(L(yes(p, 'hidden') ? 'Tampilkan' : 'Sembunyikan', `postAct('${esc(p.id)}','hide')`));
@@ -2674,6 +2734,13 @@ async function frHoursOff() {
   if (!(await dlg({ title: 'Hapus batas jam layanan?', msg: 'Notifikasi forum akan kembali diterima sepanjang waktu dan keterangan jam layanan tidak ditampilkan kepada siswa.', ok: 'Hapus batas jam' }))) return;
   try { await api('hoursSave', { class_id: C.cls.id, off: '1' }); toast('Batas jam layanan dihapus.'); await frRefresh(); }
   catch (e) { toast(e.message, true); }
+}
+function editPost(id) {
+  const x = (FR.cache || []).find(p => String(p.id) === String(id)) || (C.posts || []).find(p => String(p.id) === String(id));
+  if (!x) { toast('Pesan tidak ditemukan. Muat ulang forum lalu coba lagi.', true); return; }
+  modal('Edit pesan forum', [{n:'title',l:'Judul topik (opsional)',v:x.title||'',r:false},{n:'body',l:'Isi pesan',t:'textarea',v:x.body||'',rows:5}], async d => {
+    await api('editPost',{post_id:id,title:d.title||'',body:d.body||''}); toast('Pesan forum berhasil diperbarui.'); await frRefresh();
+  }, 'Simpan perubahan', {sub:'Periksa kembali judul dan isi sebelum menyimpan.'});
 }
 async function delPost(id) {
   if (!(await dlg({ title: 'Hapus pesan?', msg: 'Pesan beserta seluruh balasannya akan dihapus secara permanen.', ok: 'Hapus pesan', tone: 'danger' }))) return;
