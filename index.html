@@ -1263,14 +1263,33 @@ aside>*,aside nav,#menu>*{flex-shrink:0}
 aside{padding-bottom:1.5rem;overscroll-behavior:contain;scroll-padding-bottom:1.5rem}
 @media(min-width:768px){aside{height:100vh;height:100dvh}}
 aside .mi{gap:.65rem;padding:.55rem .7rem}
-.ntb{display:flex;align-items:flex-start;gap:.9rem;margin-bottom:1.2rem;padding:.9rem 1.1rem;border-radius:var(--r);background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.4);border-left-width:5px;color:var(--ink)}
-.ntb.pemeliharaan{background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.55)}
-.ntb.penting{background:rgba(244,63,94,.1);border-color:rgba(244,63,94,.5)}
-.ntb>i{flex:none;display:grid;place-items:center;width:2.1rem;height:2.1rem;border-radius:50%;background:rgba(127,127,127,.15)}
-.ntb>i svg{width:1.1rem;height:1.1rem}
-.ntb>div{flex:1;min-width:0}.ntb b{display:block;font-size:.96rem}.ntb span{display:block;font-size:.88rem;margin-top:.15rem;white-space:pre-line}.ntb small{display:block;margin-top:.3rem;font-size:.76rem;color:var(--mut)}
-.ntb .btn2{flex:none;padding:.4rem .9rem;font-size:.8rem}
+.ntb{--k:#6366f1;--k2:#38bdf8;position:relative;display:flex;align-items:flex-start;gap:.95rem;margin-bottom:1.3rem;padding:1rem 1.15rem 1rem 1.3rem;border-radius:1.15rem;background:rgba(127,127,127,.07);background:linear-gradient(100deg,color-mix(in srgb,var(--k) 12%,transparent),color-mix(in srgb,var(--k2) 5%,transparent));border:1px solid rgba(127,127,127,.2);border:1px solid color-mix(in srgb,var(--k) 28%,transparent);box-shadow:0 14px 30px -22px var(--k);color:var(--ink);overflow:hidden;animation:ntIn .4s cubic-bezier(.2,.7,.2,1) both}
+.ntb::before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:linear-gradient(180deg,var(--k),var(--k2))}
+.ntb>i{flex:none;display:grid;place-items:center;width:2.5rem;height:2.5rem;border-radius:.85rem;background:linear-gradient(135deg,var(--k),var(--k2));color:#fff;box-shadow:0 8px 16px -8px var(--k)}
+.ntb>i svg{width:1.2rem;height:1.2rem}
+.ntt{flex:1;min-width:0}
+.ntm0{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap;margin-bottom:.15rem}
+.ntm0 em,.ntdh em{font-style:normal;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--k)}
+.ntm0 small{font-size:.74rem;color:var(--mut)}
+.ntb b{display:block;font-size:1rem;font-weight:700;letter-spacing:-.01em}
+.ntb span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:.15rem;font-size:.88rem;line-height:1.55;color:var(--mut);white-space:pre-line}
+.ntmore{border:0;background:none;padding:.35rem 0 0;font-size:.8rem;font-weight:700;color:var(--k);cursor:pointer}.ntmore:hover{text-decoration:underline}
+.ntb .btn2{flex:none;align-self:center;padding:.4rem .95rem;font-size:.8rem}
 .ntx{flex:none;border:0;background:none;font-size:1.5rem;line-height:1;cursor:pointer;color:var(--mut);padding:.1rem .55rem;border-radius:.5rem}.ntx:hover{background:rgba(127,127,127,.15)}
+.md.ntm{border-radius:1.4rem}
+.ntp-w{margin:.2rem 0 1rem;padding:.8rem;border-radius:1rem;background:rgba(127,127,127,.07)}
+.ntp-w>small{display:block;margin-bottom:.55rem;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.ntp-w .ntb{margin:0;animation:none}.ntp-w .ntb span{-webkit-line-clamp:unset;display:block}
+.ntd{--k:#6366f1;--k2:#38bdf8;text-align:left}
+.ntdh{display:flex;align-items:center;gap:.95rem;margin-bottom:1rem;padding-right:2rem}
+.ntdh>i{flex:none;display:grid;place-items:center;width:3rem;height:3rem;border-radius:1rem;background:linear-gradient(135deg,var(--k),var(--k2));color:#fff;box-shadow:0 12px 22px -10px var(--k)}
+.ntdh>i svg{width:1.45rem;height:1.45rem}
+.ntdh h3{margin:.1rem 0 0;font-size:1.2rem;letter-spacing:-.02em;line-height:1.3}
+.ntdb{margin:0 0 1rem;font-size:.95rem;line-height:1.65;white-space:pre-line;color:var(--ink)}
+.ntdm{margin-bottom:1.1rem;padding:.6rem .8rem;border-radius:.8rem;background:rgba(127,127,127,.09);font-size:.78rem;color:var(--mut)}
+@keyframes ntIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.ntb{animation:none}}
+@media(max-width:560px){.ntb{padding:.9rem .9rem .9rem 1.1rem;gap:.75rem}.ntb>i{width:2.2rem;height:2.2rem}.ntb .btn2{display:none}}
 </style>
 </head>
 <body>
@@ -3220,18 +3239,40 @@ document.addEventListener('click', function (e) { var p = $('#np'); if (p && !p.
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(function () {});
 
 /* ===== Pengumuman sekolah (mis. pemeliharaan data) ===== */
-const NT_ICO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1ZM15 9a4 4 0 0 1 0 6M18 6a8 8 0 0 1 0 12"/></svg>';
 const NT_TPL = { title: 'Pemeliharaan data sekolah', kind: 'pemeliharaan', message: 'Sistem sedang menjalani pemeliharaan data. Sebagian data dapat berubah atau belum tampil. Hindari mengubah data selama proses berlangsung dan mohon bersabar.' };
 const ntFmt = x => new Date(Number(x)).toLocaleString('id-ID', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
 const ntKey = () => (NT && NT.on) ? String(NT.at) + '|' + NT.exp : '';
+const NT_K = {
+  pemeliharaan: { l: 'Pemeliharaan', c: '#f59e0b', c2: '#fb923c', ico: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4Z"/>' },
+  info: { l: 'Informasi', c: '#6366f1', c2: '#38bdf8', ico: '<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>' },
+  penting: { l: 'Penting', c: '#f43f5e', c2: '#fb923c', ico: '<path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0ZM12 9v4M12 17h.01"/>' }
+};
+const ntSvg = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${k.ico}</svg>`;
+function ntBox(o, bar) {
+  const k = NT_K[o.kind] || NT_K.info, adm = hasR('admin'), long = String(o.message || '').length > 90 || /\n/.test(o.message || '');
+  const side = !bar ? '' : adm ? (CUR === 'schoolNotice' ? '' : '<button type="button" class="btn2" onclick="go(\'schoolNotice\')">Kelola</button>') : '<button type="button" class="ntx" aria-label="Tutup pengumuman" onclick="ntHide()">×</button>';
+  return `<div ${bar ? 'id="ntb" ' : ''}class="ntb" style="--k:${k.c};--k2:${k.c2}" role="status"><i>${ntSvg(k)}</i><div class="ntt"><div class="ntm0"><em>${k.l}</em>${o.exp ? `<small>Sampai ${esc(ntFmt(o.exp))}</small>` : ''}</div><b>${esc(o.title || 'Judul pengumuman')}</b><span>${esc(o.message || 'Isi pesan akan tampil di sini.')}</span>${bar && long ? '<button type="button" class="ntmore" onclick="ntDetail()">Selengkapnya</button>' : ''}</div>${side}</div>`;
+}
 function ntApply() {
   const m = $('#main'); if (!m || !S) return;
   const old = $('#ntb'); if (old) old.remove();
   if ($('.qbar') || !NT || !NT.on || NT.exp <= Date.now()) return;
-  const adm = hasR('admin'); let hid = ''; try { hid = sessionStorage.getItem('lms_nt_hide') || ''; } catch (e) {}
+  const adm = hasR('admin'); let hid = '', seen = ''; try { hid = sessionStorage.getItem('lms_nt_hide') || ''; seen = sessionStorage.getItem('lms_nt_seen') || ''; } catch (e) {}
   if (!adm && hid === ntKey()) return;
-  const lb = { pemeliharaan: 'Pemeliharaan', info: 'Informasi', penting: 'Penting' }[NT.kind] || 'Informasi';
-  m.insertAdjacentHTML('afterbegin', `<div id="ntb" class="ntb ${esc(NT.kind)}" role="status"><i aria-hidden="true">${NT_ICO}</i><div><b>${esc(NT.title)}</b><span>${esc(NT.message)}</span><small>${lb} • tampil sampai ${esc(ntFmt(NT.exp))}</small></div>${adm ? (CUR === 'schoolNotice' ? '' : '<button type="button" class="btn2" onclick="go(\'schoolNotice\')">Kelola</button>') : '<button type="button" class="ntx" aria-label="Tutup pengumuman" onclick="ntHide()">×</button>'}</div>`);
+  m.insertAdjacentHTML('afterbegin', ntBox(NT, true));
+  if (!adm && NT.kind !== 'info' && seen !== ntKey() && !$('.ov')) setTimeout(function () { if (!$('.ov') && !$('.qbar') && NT && NT.on) ntDetail(); }, 700);
+}
+function ntDetail() {
+  if (!NT || !NT.on) return;
+  try { sessionStorage.setItem('lms_nt_seen', ntKey()); } catch (e) {}
+  const k = NT_K[NT.kind] || NT_K.info, prev = document.activeElement, m = document.createElement('div'); m.className = 'ov';
+  m.innerHTML = `<div class="md ntm ntd" role="dialog" aria-modal="true" aria-labelledby="ntdt" style="--k:${k.c};--k2:${k.c2}"><button type="button" class="mx" data-x aria-label="Tutup">${XICO}</button><div class="ntdh"><i>${ntSvg(k)}</i><div><em>${k.l}</em><h3 id="ntdt">${esc(NT.title)}</h3></div></div><p class="ntdb">${esc(NT.message)}</p><div class="ntdm">Berlaku sampai ${esc(ntFmt(NT.exp))}${NT.by ? ' • ' + esc(NT.by) : ''}</div><div class="row"><button type="button" class="btn" data-x>Mengerti</button></div></div>`;
+  document.body.appendChild(m); trapFocus(m);
+  const kill = () => { m.remove(); try { prev && prev.focus && prev.focus(); } catch (e) {} };
+  m.querySelectorAll('[data-x]').forEach(b => b.onclick = kill);
+  m.onmousedown = e => { if (e.target === m) kill(); };
+  m.addEventListener('keydown', e => { if (e.key === 'Escape') kill(); });
+  const ok = m.querySelector('.btn'); if (ok) ok.focus();
 }
 function ntHide() { try { sessionStorage.setItem('lms_nt_hide', ntKey()); } catch (e) {} const b = $('#ntb'); if (b) b.remove(); }
 function ntLoad(force) {
@@ -3262,6 +3303,13 @@ function ntOpen(pre) {
     await api('noticeSet', { on: '1', kind: d.kind, title: d.title, message: d.message, until: d.until || '' });
     await ntLoad(true); toast('Pengumuman diterbitkan untuk seluruh pengguna.');
   }, 'Terbitkan', { sub: 'Pesan akan tampil di bagian atas halaman semua pengguna.', busy: 'Menerbitkan…' });
+  try {
+    const ov = [].slice.call(document.querySelectorAll('.ov')).pop(), f = ov && ov.querySelector('form.md'), row = f && f.querySelector('.row');
+    if (!row) return;
+    f.classList.add('ntm'); row.insertAdjacentHTML('beforebegin', '<div class="ntp-w"><small>Pratinjau</small><div id="ntp"></div></div>');
+    const draw = () => { const g = n => (f.elements[n] ? f.elements[n].value : ''); let exp = 0; if (g('until')) { const t = new Date(g('until')).getTime(); if (t) exp = t; } $('#ntp').innerHTML = ntBox({ kind: g('kind'), title: g('title'), message: g('message'), exp: exp }, false); };
+    f.addEventListener('input', draw); f.addEventListener('change', draw); draw();
+  } catch (e) {}
 }
 async function ntOff() {
   if (!(await dlg({ title: 'Nonaktifkan pengumuman?', msg: 'Pengumuman akan hilang dari seluruh pengguna.', ok: 'Nonaktifkan' }))) return;
