@@ -1263,6 +1263,14 @@ aside>*,aside nav,#menu>*{flex-shrink:0}
 aside{padding-bottom:1.5rem;overscroll-behavior:contain;scroll-padding-bottom:1.5rem}
 @media(min-width:768px){aside{height:100vh;height:100dvh}}
 aside .mi{gap:.65rem;padding:.55rem .7rem}
+.ntb{display:flex;align-items:flex-start;gap:.9rem;margin-bottom:1.2rem;padding:.9rem 1.1rem;border-radius:var(--r);background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.4);border-left-width:5px;color:var(--ink)}
+.ntb.pemeliharaan{background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.55)}
+.ntb.penting{background:rgba(244,63,94,.1);border-color:rgba(244,63,94,.5)}
+.ntb>i{flex:none;display:grid;place-items:center;width:2.1rem;height:2.1rem;border-radius:50%;background:rgba(127,127,127,.15)}
+.ntb>i svg{width:1.1rem;height:1.1rem}
+.ntb>div{flex:1;min-width:0}.ntb b{display:block;font-size:.96rem}.ntb span{display:block;font-size:.88rem;margin-top:.15rem;white-space:pre-line}.ntb small{display:block;margin-top:.3rem;font-size:.76rem;color:var(--mut)}
+.ntb .btn2{flex:none;padding:.4rem .9rem;font-size:.8rem}
+.ntx{flex:none;border:0;background:none;font-size:1.5rem;line-height:1;cursor:pointer;color:var(--mut);padding:.1rem .55rem;border-radius:.5rem}.ntx:hover{background:rgba(127,127,127,.15)}
 </style>
 </head>
 <body>
@@ -1415,7 +1423,7 @@ aside .mi{gap:.65rem;padding:.55rem .7rem}
 <script>
 const API = (() => { const u = String((window.LMS_CONFIG && window.LMS_CONFIG.apiUrl) || 'https://script.google.com/macros/s/AKfycbwwxNMD1c_2GugaKiXlqicOW-NeUsYSL-WvJzAt4xXvH8dQjAfMD-epQubbhkXHhbwW_w/exec').trim(); return /^https:\/\//i.test(u) ? u : ''; })();
 let S = null, C = null, O = null, QT, CLOCK_INT;
-let EM = { on: false };
+let EM = { on: false }, NT = { on: false };
 let _syncCred = [];
 let CUR = 'dash', CT = 'ann';
 let _adminClassesCache = null, _adminTeachersCache = null, _adminSchedulesCache = null, _recapData = null, _openSeq = 0;
@@ -1456,7 +1464,7 @@ function loaderOff() {
 }
 
 const CACHE_TTL = 5 * 60 * 1000;
-const CACHE_READ = ['classes', 'classDetail', 'overview', 'myGrades', 'adminUsers', 'adminClasses', 'adminSchedules', 'attendanceGet', 'attendanceRecap', 'dashHome', 'emergencyGet'];
+const CACHE_READ = ['classes', 'classDetail', 'overview', 'myGrades', 'adminUsers', 'adminClasses', 'adminSchedules', 'attendanceGet', 'attendanceRecap', 'dashHome', 'emergencyGet', 'noticeGet'];
 const _cache = new Map(), _inflight = new Map();
 let _gen = 0;
 let _freshUntil = 0;
@@ -2830,6 +2838,7 @@ const ICON = {
   adminClasses:   '<path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6M12 10h.01"/>',
   adminSchedules: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
   adminSync:      '<path d="M21 12a9 9 0 0 1-15.5 6.2M3 12a9 9 0 0 1 15.5-6.2M18.5 2v4h-4M5.5 22v-4h4"/>',
+  schoolNotice:   '<path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1ZM15 9a4 4 0 0 1 0 6M18 6a8 8 0 0 1 0 12"/>',
   agenda:         '<rect x="3" y="4" width="18" height="18" rx="2.5"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h3M8 18h3M14.5 14h1.5M14.5 18h1.5"/>',
   attendance:     '<rect x="4" y="3.5" width="16" height="18" rx="2.5"/><path d="M9 3.5V3h6v.5M8.5 9h7M8.5 13h2"/><path d="m12.5 17 1.7 1.7 3.3-3.6"/>'
 };
@@ -2896,6 +2905,7 @@ function buildMenu() {
       items.splice(1, 0, { key: 'adminTeachers',  label: 'Data guru' });
       if (rs.includes('admin')) items.splice(2, 0, { key: 'adminStaff', label: 'Data staf' });
       items.push({ key: 'adminSchedules', label: 'Data jadwal' });
+      if (rs.includes('admin')) items.push({ key: 'schoolNotice', label: 'Pengumuman sekolah' });
       if (rs.includes('admin')) items.push({ key: 'adminSync', label: 'Sinkronisasi Portal' });
     }
     groups.push({ id: 'g-data', icon: ICON.adminStudents, label: 'Manajemen Data', items });
@@ -2930,7 +2940,8 @@ const GO = {
   adminStaff:     () => adminUsersPage('staf'),
   adminClasses:   () => adminClassesPage(),
   adminSchedules: () => adminSchedulesPage(),
-  adminSync:      () => adminSyncPage()
+  adminSync:      () => adminSyncPage(),
+  schoolNotice:   () => vSchoolNotice()
 };
 function go(k) { setMenu(false); (GO[k] || vDash)(); }
 function setBadge(k, n) { const b = $('#b-' + k); if (b) b.textContent = n > 0 ? (n > 99 ? '99+' : n) : ''; }
@@ -3208,17 +3219,68 @@ document.addEventListener('keydown', function (e) {
 document.addEventListener('click', function (e) { var p = $('#np'); if (p && !p.classList.contains('hide') && !p.contains(e.target)) closeNotifs(); });
 if ('serviceWorker' in navigator && location.protocol === 'https:') navigator.serviceWorker.register('sw.js').catch(function () {});
 
+/* ===== Pengumuman sekolah (mis. pemeliharaan data) ===== */
+const NT_ICO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1ZM15 9a4 4 0 0 1 0 6M18 6a8 8 0 0 1 0 12"/></svg>';
+const NT_TPL = { title: 'Pemeliharaan data sekolah', kind: 'pemeliharaan', message: 'Sistem sedang menjalani pemeliharaan data. Sebagian data dapat berubah atau belum tampil. Hindari mengubah data selama proses berlangsung dan mohon bersabar.' };
+const ntFmt = x => new Date(Number(x)).toLocaleString('id-ID', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+const ntKey = () => (NT && NT.on) ? String(NT.at) + '|' + NT.exp : '';
+function ntApply() {
+  const m = $('#main'); if (!m || !S) return;
+  const old = $('#ntb'); if (old) old.remove();
+  if ($('.qbar') || !NT || !NT.on || NT.exp <= Date.now()) return;
+  const adm = hasR('admin'); let hid = ''; try { hid = sessionStorage.getItem('lms_nt_hide') || ''; } catch (e) {}
+  if (!adm && hid === ntKey()) return;
+  const lb = { pemeliharaan: 'Pemeliharaan', info: 'Informasi', penting: 'Penting' }[NT.kind] || 'Informasi';
+  m.insertAdjacentHTML('afterbegin', `<div id="ntb" class="ntb ${esc(NT.kind)}" role="status"><i aria-hidden="true">${NT_ICO}</i><div><b>${esc(NT.title)}</b><span>${esc(NT.message)}</span><small>${lb} • tampil sampai ${esc(ntFmt(NT.exp))}</small></div>${adm ? (CUR === 'schoolNotice' ? '' : '<button type="button" class="btn2" onclick="go(\'schoolNotice\')">Kelola</button>') : '<button type="button" class="ntx" aria-label="Tutup pengumuman" onclick="ntHide()">×</button>'}</div>`);
+}
+function ntHide() { try { sessionStorage.setItem('lms_nt_hide', ntKey()); } catch (e) {} const b = $('#ntb'); if (b) b.remove(); }
+function ntLoad(force) {
+  if (!S) return Promise.resolve();
+  return api('noticeGet', {}, 20000, { fresh: !!force }).then(d => {
+    NT = d.notice || { on: false }; ntApply();
+    if ($('#ntc')) $('#ntc').innerHTML = ntCard();
+  }).catch(() => {});
+}
+function ntCard() {
+  if (NT && NT.on) return `<div class="emh"><span class="badge warn">Sedang tampil</span><h3>${esc(NT.title)}</h3><p>${esc(NT.message)}</p><p class="sub">Berakhir ${esc(ntFmt(NT.exp))}${NT.by ? ' • diatur oleh ' + esc(NT.by) : ''}. Pengguna yang sedang masuk menerimanya paling lambat sekitar 5 menit.</p></div><div class="row"><button type="button" class="btn" onclick="ntOpen(NT)">Ubah</button><button type="button" class="btn2" onclick="ntOff()">Nonaktifkan sekarang</button></div>`;
+  return `<div class="emh"><h3>Belum ada pengumuman aktif</h3><p>Gunakan templat untuk pemeliharaan data, atau tulis pesan sendiri. Pesan tampil di bagian atas halaman semua pengguna dan berakhir otomatis.</p></div><div class="row"><button type="button" class="btn" onclick="ntOpen(NT_TPL)">Pemeliharaan data</button><button type="button" class="btn2" onclick="ntOpen()">Tulis pengumuman</button></div>`;
+}
+function vSchoolNotice() {
+  if (!hasR('admin')) { toast('Fitur ini hanya tersedia bagi administrator.', true); return; }
+  nav('schoolNotice');
+  view(`<div class="top"><div><h2>Pengumuman sekolah</h2><p>Sampaikan pemberitahuan penting, misalnya pemeliharaan data, kepada seluruh pengguna.</p></div></div><div class="card" id="ntc">${ntCard()}</div>`);
+  ntLoad(true);
+}
+function ntOpen(pre) {
+  const p = pre && pre.title ? pre : {};
+  modal('Pengumuman sekolah', [
+    { n: 'kind', l: 'Jenis', t: 'select', v: p.kind || 'info', opts: [{ v: 'pemeliharaan', l: 'Pemeliharaan' }, { v: 'info', l: 'Informasi' }, { v: 'penting', l: 'Penting' }] },
+    { n: 'title', l: 'Judul (maksimal 80 karakter)', v: p.title || '' },
+    { n: 'message', l: 'Isi pesan (maksimal 400 karakter)', t: 'textarea', v: p.message || '', rows: 4 },
+    { n: 'until', l: 'Tampil sampai (kosongkan = 24 jam)', t: 'datetime-local', r: false }
+  ], async d => {
+    await api('noticeSet', { on: '1', kind: d.kind, title: d.title, message: d.message, until: d.until || '' });
+    await ntLoad(true); toast('Pengumuman diterbitkan untuk seluruh pengguna.');
+  }, 'Terbitkan', { sub: 'Pesan akan tampil di bagian atas halaman semua pengguna.', busy: 'Menerbitkan…' });
+}
+async function ntOff() {
+  if (!(await dlg({ title: 'Nonaktifkan pengumuman?', msg: 'Pengumuman akan hilang dari seluruh pengguna.', ok: 'Nonaktifkan' }))) return;
+  try { await api('noticeSet', { on: '0' }); await ntLoad(true); toast('Pengumuman dinonaktifkan.'); } catch (e) { toast(e.message, true); }
+}
+
 /* ===== Mode darurat sekolah ===== */
 const canEm = () => hasR('admin') || hasR('kepala_sekolah');
 const EM_ICO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0ZM12 9v4M12 17h.01"/></svg>';
 function emApply() {
   const m = $('#main'); if (!m || !S) return;
+  try { ntApply(); } catch (e) {}
   const old = $('#eb'); if (old) old.remove();
   if ($('.qbar') || !EM || !EM.on) return;
   m.insertAdjacentHTML('afterbegin', `<div id="eb" class="eb" role="alert"><i aria-hidden="true">${EM_ICO}</i><div><b>Pembelajaran daring hari ini</b><span>${esc(EM.message || '')}</span>${EM.reason ? `<small>Alasan: ${esc(EM.reason)}</small>` : ''}</div>${canEm() ? '<button type="button" class="btn2" onclick="emOpen()">Kelola</button>' : ''}</div>`);
 }
 function emLoad(force) {
   if (!S) return Promise.resolve();
+  try { ntLoad(force); } catch (e) {}
   return api('emergencyGet', {}, 20000, { fresh: !!force }).then(d => {
     EM = d.emergency || { on: false }; emApply(); try { updateNotifs(); } catch (e) {}
     if (HM.data && $('#hm-sched')) { hmSched(); hmLineSet(); }
