@@ -1290,6 +1290,10 @@ aside .mi{gap:.65rem;padding:.55rem .7rem}
 @keyframes ntIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.ntb{animation:none}}
 @media(max-width:560px){.ntb{padding:.9rem .9rem .9rem 1.1rem;gap:.75rem}.ntb>i{width:2.2rem;height:2.2rem}.ntb .btn2{display:none}}
+
+.cmt{margin-top:.9rem;border-top:1px solid var(--line);padding-top:.7rem}
+.cm{display:flex;gap:.7rem;padding:.6rem 0;border-bottom:1px solid var(--line)}.cm:last-of-type{border-bottom:0}
+.cm .fav{width:2rem;height:2rem;font-size:.82rem}.cm>div{flex:1;min-width:0}.cm b{font-size:.88rem;margin-right:.4rem}.cm .meta{display:inline}.cm .fb{margin-top:.15rem;font-size:.88rem}
 </style>
 </head>
 <body>
@@ -2117,8 +2121,8 @@ function drawClass(tab) {
   CT = tab; const { cls } = C, t = canManageCurrentClass(), readOnly = isReadOnlyMonitor();
   const add = (label, fn) => t ? `<div class="row" style="margin-bottom:14px"><button class="btn" onclick="${fn}">${label}</button></div>` : '';
   let body = '';
-  if (tab === 'ann') body = add('Buat pengumuman', 'addAnn()') + (C.announcements.map(a => `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${esc(a.author)} • ${tgl(a.created)}</div><p>${esc(a.body)}</p></div>`).join('') || empty('Belum ada pengumuman', 'Pengumuman dari guru akan ditampilkan di sini.'));
-  if (tab === 'mat') body = add('Tambah materi', 'addMat()') + (C.materials.map(m => `<div class="card item"><h4>${esc(m.title)}</h4><div class="meta">${tgl(m.created)}</div>${m.description ? `<p>${esc(m.description)}</p>` : ''}${safeUrl(m.file_url) ? `<p><a href="${safeUrl(m.file_url)}" target="_blank" rel="noopener">Buka berkas</a></p>` : ''}</div>`).join('') || empty('Belum ada materi', 'Materi yang diunggah guru akan ditampilkan di sini.'));
+  if (tab === 'ann') body = add('Buat pengumuman', 'addAnn()') + (C.announcements.map(a => `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${esc(a.author)} • ${tgl(a.created)}</div><p>${esc(a.body)}</p>${editLn(t, 'editAnn', a.id)}${cmtBlock('ann', a.id)}</div>`).join('') || empty('Belum ada pengumuman', 'Pengumuman dari guru akan ditampilkan di sini.'));
+  if (tab === 'mat') body = add('Tambah materi', 'addMat()') + (C.materials.map(m => `<div class="card item"><h4>${esc(m.title)}</h4><div class="meta">${tgl(m.created)}</div>${m.description ? `<p>${esc(m.description)}</p>` : ''}${safeUrl(m.file_url) ? `<p><a href="${safeUrl(m.file_url)}" target="_blank" rel="noopener">Buka berkas</a></p>` : ''}${editLn(t, 'editMat', m.id)}${cmtBlock('mat', m.id)}</div>`).join('') || empty('Belum ada materi', 'Materi yang diunggah guru akan ditampilkan di sini.'));
   if (tab === 'asg') body = add('Buat tugas', 'addAsg()') + (C.assignments.map(a => asgCard(a, t)).join('') || empty('Belum ada tugas', 'Tugas dari guru akan ditampilkan di sini.'));
   if (tab === 'qz')  body = add('Buat kuis', 'addQuiz()') + (C.quizzes.map(quizCard).join('') || empty('Belum ada kuis', 'Kuis yang diterbitkan guru akan ditampilkan di sini.'));
   if (tab === 'fr')  body = forumView();
@@ -2126,6 +2130,70 @@ function drawClass(tab) {
   view(`<button class="back" onclick="home()">← Kembali ke daftar kelas</button>${offn}
     <div class="cover"><h1>${esc(cls.name)}</h1><p>${esc(cls.subject || '—')} • ${esc(cls.teacher_name || '—')}${t ? ` • ${C.memberCount} siswa` : readOnly ? ' • Mode pemantauan' : ''}</p>${t ? `<span class="chip">Kode kelas: ${esc(cls.code)}</span>` : ''}</div>
     <div class="tabs">${[['ann','Pengumuman'],['mat','Materi'],['asg','Tugas'],['qz','Kuis'],['fr','Forum']].map(([k, l]) => `<button class="${k === tab ? 'on' : ''}" onclick="drawClass('${k}')">${l}</button>`).join('')}</div>${body}`);
+}
+
+/* ===== Ubah konten & komentar kelas ===== */
+var CM = { open: {}, busy: false };
+const editLn = (t, fn, id) => t ? `<div class="fa"><button type="button" class="link" onclick="${fn}(${jsq(id)})">Ubah</button></div>` : '';
+async function cmRefresh() {
+  const y = window.scrollY, id = C.cls.id;
+  const data = await api('classDetail', { class_id: id }, 30000, { fresh: true });
+  C = data; snapSave(id, data); drawClass(CT); jumpTo(y);
+}
+function cmtBlock(type, id) {
+  const k = type + ':' + id, ro = isReadOnlyMonitor(), mod = canManageCurrentClass(), me = S ? String(S.user.user_id) : '';
+  const l = (C.comments || []).filter(x => x.target_type === type && x.target_id === id).sort((a, b) => String(a.created).localeCompare(String(b.created)));
+  const items = l.map(x => {
+    const mine = String(x.user_id) === me, guru = x.role !== 'siswa';
+    const acts = ro ? '' : [mine ? `<button type="button" class="link" onclick="cmtEdit(${jsq(x.id)})">Ubah</button>` : '', (mine || mod) ? `<button type="button" class="link" onclick="cmtDel(${jsq(x.id)})">Hapus</button>` : ''].join('');
+    return `<div class="cm"><span class="fav${guru ? ' g' : ''}" aria-hidden="true">${esc(String(x.full_name || '?').charAt(0).toUpperCase())}</span><div><b>${esc(x.full_name)}</b>${guru ? '<span class="badge ok">Guru</span> ' : ''}<span class="meta">${esc(tglw(x.created))}${String(x.edited) === 'y' ? ' • diubah' : ''}</span><p class="fb">${esc(x.body)}</p>${acts ? `<div class="fa">${acts}</div>` : ''}</div></div>`;
+  }).join('');
+  const form = ro ? '' : `<div class="fq"><input maxlength="1000" placeholder="Tulis komentar" aria-label="Komentar" onkeydown="if(event.key==='Enter'){event.preventDefault();this.nextElementSibling.click()}"><button class="btn2" type="button" onclick="cmtSend(${jsq(type)},${jsq(id)},this)">Kirim</button></div>`;
+  return `<details class="cmt"${CM.open[k] ? ' open' : ''} ontoggle="CM.open[${jsq(k)}]=this.open"><summary>Komentar (${l.length})</summary>${items || '<p class="meta" style="margin:.6rem 0">Belum ada komentar.</p>'}${form}</details>`;
+}
+async function cmtSend(type, id, btn) {
+  const inp = btn.parentNode.querySelector('input'), body = inp.value.trim();
+  if (!body) { toast('Mohon isi komentar terlebih dahulu.', true); inp.focus(); return; }
+  if (CM.busy) return; CM.busy = true; btn.disabled = true;
+  try { await api('addComment', { ...cid(), target_type: type, target_id: id, body }); CM.open[type + ':' + id] = true; await cmRefresh(); toast('Komentar terkirim.'); }
+  catch (e) { toast(e.message, true); btn.disabled = false; }
+  finally { CM.busy = false; }
+}
+function cmtEdit(cmid) {
+  const x = (C.comments || []).find(r => r.id === cmid); if (!x) return;
+  modal('Ubah komentar', [{ n: 'body', l: 'Komentar', t: 'textarea', v: x.body, rows: 4 }], async d => { await api('editComment', { comment_id: cmid, body: d.body }); toast('Komentar diperbarui.'); await cmRefresh(); }, 'Simpan perubahan', { sub: 'Komentar yang diubah akan diberi tanda “diubah”.' });
+}
+async function cmtDel(cmid) {
+  if (!(await dlg({ title: 'Hapus komentar?', msg: 'Komentar akan dihapus secara permanen.', ok: 'Hapus komentar', tone: 'danger' }))) return;
+  try { await api('deleteComment', { comment_id: cmid }); await cmRefresh(); toast('Komentar dihapus.'); }
+  catch (e) { toast(e.message, true); }
+}
+function editAnn(id) {
+  const a = C.announcements.find(x => x.id === id); if (!a) return;
+  modal('Ubah pengumuman', [{ n: 'title', l: 'Judul', v: a.title }, { n: 'body', l: 'Isi pengumuman', t: 'textarea', v: a.body }],
+    async d => { await api('editAnnouncement', { id, title: d.title, body: d.body }); toast('Pengumuman diperbarui.'); await cmRefresh(); }, 'Simpan perubahan', { sub: 'Perubahan langsung tampil bagi seluruh anggota kelas.' });
+}
+function editMat(id) {
+  const m = C.materials.find(x => x.id === id); if (!m) return;
+  modal('Ubah materi', [{ n: 'title', l: 'Judul materi', v: m.title }, { n: 'description', l: 'Keterangan (opsional)', t: 'textarea', v: m.description || '', r: false }, { n: 'file', l: 'Berkas pengganti (opsional, maks. 10 MB)', t: 'file', r: false }, { n: 'link', l: 'Tautan baru (opsional)', t: 'url', r: false }],
+    async d => { await api('editMaterial', { id, title: d.title, description: d.description, link: d.link || '', file_data: d.file_data, file_name: d.file_name, file_type: d.file_type }); toast('Materi diperbarui.'); await cmRefresh(); }, 'Simpan perubahan', { sub: 'Kosongkan berkas dan tautan untuk mempertahankan lampiran yang sekarang.', busy: 'Menyimpan…' });
+}
+function editAsg(id) {
+  const a = C.assignments.find(x => x.id === id); if (!a) return;
+  const dv = a.due ? ymd(new Date(a.due)) : '';
+  modal('Ubah tugas', [{ n: 'title', l: 'Judul tugas', v: a.title }, { n: 'description', l: 'Petunjuk (opsional)', t: 'textarea', v: a.description || '', r: false }, { n: 'due', l: 'Batas pengumpulan', t: 'date', v: dv, r: false }, { n: 'max_score', l: 'Nilai maksimal', t: 'number', v: a.max_score }],
+    async d => { await api('editAssignment', { id, title: d.title, description: d.description, due: d.due || '', max_score: d.max_score }); toast('Tugas diperbarui.'); await cmRefresh(); }, 'Simpan perubahan', { sub: 'Nilai yang sudah diberikan tidak berubah. Pengumpulan diterima hingga akhir hari pada tanggal batas.' });
+}
+function editQuiz(id) {
+  const q = C.quizzes.find(x => x.id === id); if (!q) return;
+  const { c, text } = qcfg(q.description);
+  modal('Ubah kuis', [{ n: 'title', l: 'Judul kuis', v: q.title }, { n: 'duration', l: 'Durasi total (menit)', t: 'number', v: q.duration }, { n: 'qt', l: 'Waktu per soal (detik; 0 = nonaktif)', t: 'number', v: c.qt || 0, r: false }, { n: 'pass', l: 'Nilai ketuntasan minimal (0–100)', t: 'number', v: c.pass || 0, r: false }, { n: 'description', l: 'Petunjuk untuk siswa (opsional)', t: 'textarea', v: text, r: false }],
+    async d => {
+      const cfg = Object.assign({}, c); delete cfg.qt; delete cfg.pass;
+      if (+d.qt > 0) cfg.qt = +d.qt; if (+d.pass > 0) cfg.pass = +d.pass;
+      const desc = String(d.description || '').trim() + (Object.keys(cfg).length ? '\n[[cfg:' + JSON.stringify(cfg) + ']]' : '');
+      await api('editQuiz', { quiz_id: id, title: d.title, duration: d.duration, description: desc }); toast('Kuis diperbarui.'); await cmRefresh();
+    }, 'Simpan perubahan', { sub: 'Soal tidak diubah di sini. Siswa yang sedang mengerjakan tetap memakai sisa waktu yang sudah berjalan.' });
 }
 
 function asgCard(a, t) {
@@ -2142,7 +2210,7 @@ function asgCard(a, t) {
     foot = `<div class="row" style="justify-content:space-between;align-items:center;margin-top:10px"><span class="badge ${s ? (s.score !== '' ? 'ok' : 'warn') : ''}">${s ? (s.score !== '' ? `Nilai ${s.score}/${a.max_score}` : 'Menunggu penilaian') : 'Belum dikumpulkan'}</span>
       <button class="btn${s ? '2' : ''}" onclick="submitIt(${esc(JSON.stringify(String(a.id)))})">${s ? 'Kumpulkan ulang' : 'Kumpulkan tugas'}</button></div>${s && s.feedback ? `<p class="meta">Umpan balik: ${esc(s.feedback)}</p>` : ''}`;
   }
-  return `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${a.due ? 'Batas: ' + tgl(a.due) + ' • ' : ''}Nilai maksimal ${a.max_score}</div>${a.description ? `<p>${esc(a.description)}</p>` : ''}${foot}</div>`;
+  return `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${a.due ? 'Batas: ' + tgl(a.due) + ' • ' : ''}Nilai maksimal ${a.max_score}</div>${a.description ? `<p>${esc(a.description)}</p>` : ''}${editLn(t, 'editAsg', a.id)}${foot}${cmtBlock('asg', a.id)}</div>`;
 }
 
 const cid = () => ({ class_id: C.cls.id });
@@ -2263,7 +2331,7 @@ function quizCard(q) {
   const chips = [q.qcount + ' soal', q.duration + ' menit', c.qt ? c.qt + ' detik/soal' : '', c.shuf ? 'Soal diacak' : '', c.pass ? 'Ketuntasan ≥ ' + c.pass : ''].filter(Boolean).map(x => `<span>${x}</span>`).join('');
   const rows = at.map(a => `<div class="qr"><span>${esc(a.full_name)}</span><b>${a.submitted ? a.score + '/' + a.max : 'Sedang dikerjakan'}</b></div>`).join('') || '<p class="meta">Belum ada hasil.</p>';
   let foot, done = false;
-  if (t || ro) foot = `<div class="qft"><div class="qst"><div><b>${fin.length}</b><small>selesai</small></div><div><b>${fin.length ? avg : '–'}</b><small>rata-rata</small></div><div class="qbm"><i style="width:${avg}%"></i></div></div></div><details><summary>Lihat hasil siswa${ro ? ' • pemantauan' : ''}</summary>${rows}</details>${fin.length ? `<div style="margin-top:.8rem"><button class="btn2" onclick="quizStats(${esc(JSON.stringify(String(q.id)))})">Analisis soal</button></div>` : ''}`;
+  if (t || ro) foot = `<div class="qft"><div class="qst"><div><b>${fin.length}</b><small>selesai</small></div><div><b>${fin.length ? avg : '–'}</b><small>rata-rata</small></div><div class="qbm"><i style="width:${avg}%"></i></div></div></div><details><summary>Lihat hasil siswa${ro ? ' • pemantauan' : ''}</summary>${rows}</details>${fin.length ? `<div style="margin-top:.8rem"><button class="btn2" onclick="quizStats(${esc(JSON.stringify(String(q.id)))})">Analisis soal</button></div>` : ''}${t ? `<div style="margin-top:.8rem"><button class="btn2" onclick="editQuiz(${esc(JSON.stringify(String(q.id)))})">Ubah kuis</button></div>` : ''}`;
   else { const a = at[0]; done = !!(a && a.submitted);
     const pass = done && c.pass ? (pc(a) >= c.pass ? '<span class="badge ok">Tuntas</span>' : '<span class="badge warn">Belum tuntas</span>') : '';
     foot = `<div class="qft">${done ? `<div class="qsc">${a.score}<small> / ${a.max}</small></div>${pass}${c.rev === 0 ? '' : `<button class="btn2" onclick="reviewQuiz(${esc(JSON.stringify(String(q.id)))})">Lihat pembahasan</button>`}` : `<span class="badge${a ? ' warn' : ''}">${a ? 'Sedang dikerjakan' : 'Belum dikerjakan'}</span><button class="btn" onclick="startQuiz(${esc(JSON.stringify(String(q.id)))})">${a ? 'Lanjutkan' : 'Mulai kuis'}</button>`}</div>`; }
