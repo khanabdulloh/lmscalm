@@ -1591,6 +1591,34 @@ aside :focus-visible,.ls :focus-visible,.hm-hero :focus-visible{outline-color:va
 .sp-qa button{flex:none;justify-content:center;min-height:2.75rem;padding:.6rem .4rem;font-size:.82rem}
 }
 
+/* ===== Modul materi, video, rubrik, pendampingan ===== */
+details.mod{margin:0 0 1rem;border-top:0;padding-top:0}
+.mod>summary{display:flex;align-items:center;justify-content:space-between;gap:.6rem;list-style:none;padding:.75rem 1rem;border:1px solid var(--line);border-radius:1rem;background:var(--card);box-shadow:var(--shadow-sm);margin-bottom:.8rem;font-weight:700;color:var(--navyd)}
+.mod>summary::-webkit-details-marker{display:none}
+.mod>summary i{font-style:normal;font-size:.78rem;font-weight:600;color:var(--mut);margin-left:auto}
+.mod>summary::after{content:"";flex:none;width:.5rem;height:.5rem;border:solid var(--mut);border-width:0 2px 2px 0;transform:rotate(45deg);transition:transform .2s}
+.mod[open]>summary::after{transform:rotate(-135deg)}
+.mod-n{min-width:0;overflow-wrap:anywhere}
+.yt{position:relative;aspect-ratio:16/9;margin:.6rem 0;border-radius:.9rem;overflow:hidden;background:#0b1322}
+.yt-b{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;width:100%;border:0;background:linear-gradient(135deg,#0b3d91,#071a40);color:#fff;font-weight:700;font-size:.9rem}
+.yt-b span{display:grid;place-items:center;width:3rem;height:3rem;border-radius:50%;background:rgba(255,255,255,.18);font-size:1.1rem}
+.yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.rub{margin:.7rem 0;padding:.8rem 1rem;border:1px solid var(--line);border-radius:.9rem;background:var(--soft)}
+.rub>b{display:block;font-size:.82rem;color:var(--navyd);margin-bottom:.3rem}
+.rub ul{list-style:none}
+.rub li{display:flex;justify-content:space-between;gap:.8rem;padding:.3rem 0;border-bottom:1px dashed var(--line2);font-size:.86rem}
+.rub li:last-child{border-bottom:0}
+.rub li i{font-style:normal;font-weight:700;color:var(--navy);flex:none}
+.rub small{display:block;margin-top:.4rem;font-size:.78rem;color:var(--mut)}
+.badge.bad{background:#fee2e2;color:#991b1b}
+[data-theme=dark] .badge.bad{background:#5a1218;color:#fecdd3}
+.rk-r{display:flex;justify-content:space-between;align-items:flex-start;gap:.8rem;padding:.9rem 0;border-bottom:1px solid var(--line)}
+.rk-r:last-child{border-bottom:0}
+.rk-r>div{min-width:0}
+.rk-r .badge{flex:none}
+.rk-why{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.4rem}
+.rk-why span{font-size:.78rem;padding:.15rem .6rem;border-radius:99px;background:var(--bg);border:1px solid var(--line);color:var(--mut)}
+
 </style>
 </head>
 <body>
@@ -2495,7 +2523,32 @@ async function openFile(kind, id, btn) {
   } catch (e) { toast(e.message, true); }
   finally { btn.disabled = false; btn.textContent = lbl; }
 }
-const matCard = (m, t) => `<div class="card item"><h4>${esc(m.title)}</h4>${m.description ? `<p>${esc(m.description)}</p>` : ''}${fileLink('mat', m.id, m.file_url, 'sp-file')}${contentActions(t, 'editMat', 'deleteMat', m.id, 'materi')}${cmtBlock('mat', m.id)}</div>`;
+const MODRE = /\n?\[\[mod:(\{.*?\})\]\]\s*$/;
+const mcfg = d => { const m = String(d || '').match(MODRE); let c = {}; try { c = m ? JSON.parse(m[1]) || {} : {}; } catch (e) {} return { c, text: String(d || '').replace(MODRE, '').trim() }; };
+const mencode = (text, name, ord) => { const c = {}, n = String(name || '').replace(/\s+/g, ' ').trim().slice(0, 60), o = Math.floor(Number(ord)); if (n) c.n = n; if (o > 0 && o < 1000) c.o = o; return String(text || '').trim() + (Object.keys(c).length ? '\n[[mod:' + JSON.stringify(c) + ']]' : ''); };
+function ytId(u) { const m = String(u || '').trim().match(/^https:\/\/(?:www\.|m\.)?(?:youtube\.com\/(?:watch\?(?:[^#]*&)?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([\w-]{11})(?:[?&#\/]|$)/i); return m ? m[1] : ''; }
+const ytBlock = u => { const id = ytId(u); return id ? `<div class="yt" data-id="${id}"><button type="button" class="yt-b" onclick="ytPlay(this)" aria-label="Putar video materi"><span aria-hidden="true">▶</span>Putar video di sini</button></div>` : ''; };
+function ytPlay(btn) {
+  const w = btn.parentNode, id = w.dataset.id; if (!/^[\w-]{11}$/.test(id)) return;
+  w.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + id + '?rel=0&autoplay=1" title="Video materi" loading="lazy" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';
+}
+const matCard = (m, t, hideMod) => { const x = mcfg(m.description); return `<div class="card item"><h4>${esc(m.title)}</h4>${x.c.n && !hideMod ? `<div class="meta"><span class="badge">${esc(x.c.n)}</span></div>` : ''}${x.text ? `<p>${esc(x.text)}</p>` : ''}${ytBlock(m.file_url)}${fileLink('mat', m.id, m.file_url, 'sp-file')}${contentActions(t, 'editMat', 'deleteMat', m.id, 'materi')}${cmtBlock('mat', m.id)}</div>`; };
+const MOD = { shut: {} };
+function matList(t) {
+  const L = C.materials || [], tn = C.cls.teacher_name, cidv = C.cls.id;
+  if (!L.length) return empty('Belum ada materi', 'Materi yang diunggah guru akan ditampilkan di sini.');
+  const one = (m, hide) => `<article class="sp">${spHead('mat', tn, m.created)}${matCard(m, t, hide)}</article>`;
+  const info = L.map(m => Object.assign({ m }, mcfg(m.description).c));
+  if (!info.some(x => x.n)) return L.map(m => one(m, false)).join('');
+  const g = {}; info.forEach(x => { const k = x.n || ''; (g[k] = g[k] || []).push(x); });
+  const cr = (a, b) => String(a.m.created).localeCompare(String(b.m.created));
+  const omin = k => Math.min.apply(null, g[k].map(x => x.o || 9999)), first = k => g[k].slice().sort(cr)[0].m.created;
+  const keys = Object.keys(g).filter(k => k).sort((a, b) => omin(a) - omin(b) || String(first(a)).localeCompare(String(first(b))) || a.localeCompare(b, 'id'));
+  const sec = (k, label, arr, hide) => { const sk = cidv + '|' + k; return `<details class="mod"${MOD.shut[sk] ? '' : ' open'} ontoggle="MOD.shut[${jsq(sk)}]=!this.open"><summary><span class="mod-n">${esc(label)}</span><i>${arr.length} materi</i></summary>${arr.map(x => one(x.m, hide)).join('')}</details>`; };
+  let out = keys.map(k => sec(k, k, g[k].slice().sort((a, b) => (a.o || 9999) - (b.o || 9999) || cr(a, b)), true)).join('');
+  if (g['']) out += sec('', 'Materi lainnya', g[''].slice().sort((a, b) => cr(b, a)), false);
+  return out;
+}
 function copyCode(c) { try { navigator.clipboard.writeText(c).then(() => toast('Kode kelas disalin.'), () => toast('Salin kode secara manual: ' + c, true)); } catch (e) { toast('Salin kode secara manual: ' + c, true); } }
 function feedView(t, readOnly) {
   const items = [];
@@ -2523,7 +2576,7 @@ function drawClass(tab) {
   let body = '';
   if (tab === 'feed') body = feedView(t, readOnly);
   if (tab === 'ann') body = add('Buat pengumuman', 'addAnn()') + (C.announcements.map(a => `<article class="sp">${spHead('ann', a.author, a.created)}${annCard(a, t)}</article>`).join('') || empty('Belum ada pengumuman', 'Pengumuman dari guru akan ditampilkan di sini.'));
-  if (tab === 'mat') body = add('Tambah materi', 'addMat()') + (C.materials.map(m => `<article class="sp">${spHead('mat', cls.teacher_name, m.created)}${matCard(m, t)}</article>`).join('') || empty('Belum ada materi', 'Materi yang diunggah guru akan ditampilkan di sini.'));
+  if (tab === 'mat') body = add('Tambah materi', 'addMat()') + matList(t);
   if (tab === 'asg') body = add('Buat tugas', 'addAsg()') + (C.assignments.map(a => `<article class="sp">${spHead('asg', cls.teacher_name, a.created)}${asgCard(a, t)}</article>`).join('') || empty('Belum ada tugas', 'Tugas dari guru akan ditampilkan di sini.'));
   if (tab === 'qz')  body = add('Buat kuis', 'addQuiz()') + (C.quizzes.map(q => `<article class="sp">${spHead('qz', cls.teacher_name, q.created)}${quizCard(q)}</article>`).join('') || empty('Belum ada kuis', 'Kuis yang diterbitkan guru akan ditampilkan di sini.'));
   if (tab === 'fr')  body = forumView();
@@ -2598,14 +2651,15 @@ function editAnn(id) {
 }
 function editMat(id) {
   const m = C.materials.find(x => x.id === id); if (!m) return;
-  modal('Edit materi', [{ n: 'title', l: 'Judul materi', v: m.title }, { n: 'description', l: 'Keterangan (opsional)', t: 'textarea', v: m.description || '', r: false }, { n: 'file', l: 'Berkas pengganti (opsional, maks. 5 MB)', t: 'file', r: false }, { n: 'link', l: 'Tautan baru (opsional)', t: 'url', r: false }],
-    async d => { await api('editMaterial', { id, title: d.title, description: d.description, link: d.link || '', file_data: d.file_data, file_name: d.file_name, file_type: d.file_type }); toast('Materi diperbarui.'); await cmRefresh(); }, 'Simpan perubahan', { sub: 'Kosongkan berkas dan tautan untuk mempertahankan lampiran yang sekarang.', busy: 'Menyimpan…' });
+  const x = mcfg(m.description);
+  modal('Edit materi', [{ n: 'title', l: 'Judul materi', v: m.title }, { n: 'topic', l: 'Topik / bab (opsional)', v: x.c.n || '', r: false }, { n: 'ord', l: 'Urutan dalam kelas (opsional, angka)', t: 'number', v: x.c.o || '', r: false }, { n: 'description', l: 'Keterangan (opsional)', t: 'textarea', v: x.text, r: false }, { n: 'file', l: 'Berkas pengganti (opsional, maks. 5 MB)', t: 'file', r: false }, { n: 'link', l: 'Tautan baru (opsional)', t: 'url', r: false }],
+    async d => { await api('editMaterial', { id, title: d.title, description: mencode(d.description, d.topic, d.ord), link: d.link || '', file_data: d.file_data, file_name: d.file_name, file_type: d.file_type }); toast('Materi diperbarui.'); await cmRefresh(); }, 'Simpan perubahan', { sub: 'Kosongkan berkas dan tautan untuk mempertahankan lampiran yang sekarang.', busy: 'Menyimpan…' });
 }
 function editAsg(id) {
   const a = C.assignments.find(x => x.id === id); if (!a) return;
-  const dv = a.due ? ymd(new Date(a.due)) : '';
-  modal('Edit tugas', [{ n: 'title', l: 'Judul tugas', v: a.title }, { n: 'description', l: 'Petunjuk (opsional)', t: 'textarea', v: a.description || '', r: false }, { n: 'due', l: 'Batas pengumpulan', t: 'date', v: dv, r: false }, { n: 'max_score', l: 'Nilai maksimal', t: 'number', v: a.max_score }],
-    async d => { await api('editAssignment', { id, title: d.title, description: d.description, due: d.due || '', max_score: d.max_score }); toast('Tugas diperbarui.'); await cmRefresh(); }, 'Simpan perubahan', { sub: 'Nilai yang sudah diberikan tidak berubah. Pengumpulan diterima hingga akhir hari pada tanggal batas.' });
+  const dv = a.due ? ymd(new Date(a.due)) : '', R = rcfg(a.description);
+  modal('Edit tugas', [{ n: 'title', l: 'Judul tugas', v: a.title }, { n: 'description', l: 'Petunjuk (opsional)', t: 'textarea', v: R.text, r: false }, { n: 'rubric', l: 'Rubrik penilaian (opsional): satu kriteria per baris, contoh “Ketepatan isi | 40”', t: 'textarea', v: rubText(R.rub), r: false, rows: 4 }, { n: 'due', l: 'Batas pengumpulan', t: 'date', v: dv, r: false }, { n: 'max_score', l: 'Nilai maksimal', t: 'number', v: a.max_score }],
+    async d => { const rub = rubParse(d.rubric); await api('editAssignment', { id, title: d.title, description: rubEncode(d.description, rub), due: d.due || '', max_score: d.max_score }); toast('Tugas diperbarui.'); await cmRefresh(); }, 'Simpan perubahan', { sub: 'Nilai yang sudah diberikan tidak berubah. Pengumpulan diterima hingga akhir hari pada tanggal batas.' });
 }
 function editQuiz(id) {
   const q = C.quizzes.find(x => x.id === id); if (!q) return;
@@ -2620,10 +2674,10 @@ function editQuiz(id) {
 }
 
 function asgCard(a, t) {
-  const subs = C.submissions.filter(s => s.assignment_id === a.id);
+  const subs = C.submissions.filter(s => s.assignment_id === a.id), R = rcfg(a.description);
   let foot = '';
   if (t) {
-    foot = `<details><summary>${subs.length} pengumpulan</summary>${subs.map(s => `<div class="sr"><div><b>${esc(s.full_name)}</b><br>${fileLink('sub', s.id, s.file_url, 'sp-file sm')}<span class="meta">${esc(s.note || '')}</span></div>
+    foot = `<details><summary>${subs.length} pengumpulan</summary>${subs.map(s => `<div class="sr"><div><b>${esc(s.full_name)}</b><br>${fileLink('sub', s.id, s.file_url, 'sp-file sm')}<span class="meta">${esc(s.note || '')}</span>${R.rub.length ? `<br><button type="button" class="link" onclick="rubGrade(${jsq(a.id)},${jsq(s.id)})">Nilai dengan rubrik</button>` : ''}</div>
       <input id="sc-${s.id}" type="number" min="0" max="${a.max_score}" value="${esc(s.score)}" placeholder="/${a.max_score}" aria-label="Nilai"><input id="fb-${s.id}" value="${esc(s.feedback || '')}" placeholder="Umpan balik" aria-label="Umpan balik">
       <button class="btn" onclick="gradeIt(${esc(JSON.stringify(String(s.id)))})">Simpan nilai</button></div>`).join('') || '<p class="meta" style="margin-top:8px">Belum ada pengumpulan.</p>'}</details>`;
   } else if (isReadOnlyMonitor()) {
@@ -2633,13 +2687,42 @@ function asgCard(a, t) {
     foot = `<div class="row" style="justify-content:space-between;align-items:center;margin-top:10px"><span class="badge ${s ? (s.score !== '' ? 'ok' : 'warn') : ''}">${s ? (s.score !== '' ? `Nilai ${s.score}/${a.max_score}` : 'Menunggu penilaian') : 'Belum dikumpulkan'}</span>
       <button class="btn${s ? '2' : ''}" onclick="submitIt(${esc(JSON.stringify(String(a.id)))})">${s ? 'Kumpulkan ulang' : 'Kumpulkan tugas'}</button></div>${s && s.feedback ? `<p class="meta">Umpan balik: ${esc(s.feedback)}</p>` : ''}`;
   }
-  return `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${a.due ? 'Batas: ' + tgl(a.due) + ' • ' : ''}Nilai maksimal ${a.max_score}</div>${a.description ? `<p>${esc(a.description)}</p>` : ''}${contentActions(t, 'editAsg', 'deleteAsg', a.id, 'tugas')}${foot}${cmtBlock('asg', a.id)}</div>`;
+  return `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${a.due ? 'Batas: ' + tgl(a.due) + ' • ' : ''}Nilai maksimal ${a.max_score}</div>${R.text ? `<p>${esc(R.text)}</p>` : ''}${rubBlock(R.rub)}${contentActions(t, 'editAsg', 'deleteAsg', a.id, 'tugas')}${foot}${cmtBlock('asg', a.id)}</div>`;
 }
 
 const cid = () => ({ class_id: C.cls.id });
 const addAnn = () => modal('Buat pengumuman', [{n:'title',l:'Judul'},{n:'body',l:'Isi pengumuman',t:'textarea'}], async d => { await api('addAnnouncement', {...d, ...cid()}); loadO(true).catch(function () {}); toast('Pengumuman berhasil diterbitkan.'); reload(CT==='feed'?'feed':'ann'); }, 'Terbitkan', { sub: 'Pengumuman akan ditampilkan kepada seluruh anggota kelas.', busy: 'Menerbitkan…' });
-const addMat = () => modal('Tambah materi', [{n:'title',l:'Judul materi'},{n:'description',l:'Keterangan (opsional)',t:'textarea',r:false},{n:'file',l:'Berkas (maks. 5 MB)',t:'file',r:false},{n:'link',l:'Atau tautan (opsional)',t:'url',r:false}], async d => { await api('addMaterial', {...d, ...cid()}); toast('Materi berhasil ditambahkan.'); reload(CT==='feed'?'feed':'mat'); }, 'Tambah materi', { sub: 'Lampirkan berkas atau tautan sebagai bahan belajar bagi siswa.', busy: 'Mengunggah…' });
-const addAsg = () => modal('Buat tugas', [{n:'title',l:'Judul tugas'},{n:'description',l:'Petunjuk (opsional)',t:'textarea',r:false},{n:'due',l:'Batas pengumpulan',t:'date',r:false},{n:'max_score',l:'Nilai maksimal',t:'number',v:100}], async d => { await api('addAssignment', {...d, ...cid()}); toast('Tugas berhasil dibuat.'); reload(CT==='feed'?'feed':'asg'); }, 'Buat tugas', { sub: 'Tentukan petunjuk, batas pengumpulan, dan nilai maksimal. Pengumpulan diterima hingga akhir hari pada tanggal batas.', busy: 'Membuat tugas…' });
+const addMat = () => modal('Tambah materi', [{n:'title',l:'Judul materi'},{n:'topic',l:'Topik / bab (opsional, mis. “Bab 1: Jaringan Dasar”)',r:false},{n:'ord',l:'Urutan dalam kelas (opsional, angka)',t:'number',r:false},{n:'description',l:'Keterangan (opsional)',t:'textarea',r:false},{n:'file',l:'Berkas (maks. 5 MB)',t:'file',r:false},{n:'link',l:'Atau tautan (opsional; tautan YouTube bisa diputar langsung)',t:'url',r:false}], async d => { const { topic, ord, ...r } = d; await api('addMaterial', {...r, description: mencode(r.description, topic, ord), ...cid()}); toast('Materi berhasil ditambahkan.'); reload(CT==='feed'?'feed':'mat'); }, 'Tambah materi', { sub: 'Materi dengan topik yang sama dikelompokkan dan diurutkan menurut angka urutan.', busy: 'Mengunggah…' });
+const RUBRE = /\n?\[\[rub:(\{.*?\})\]\]\s*$/, RUBFB = /\s*(?:\|\|\s*)?Rincian rubrik:[\s\S]*$/;
+const rcfg = d => { const m = String(d || '').match(RUBRE); let rub = []; try { const j = m ? JSON.parse(m[1]) : {}; rub = (Array.isArray(j.c) ? j.c : []).filter(x => Array.isArray(x) && x[0] && Number(x[1]) > 0).map(x => [String(x[0]), Number(x[1])]); } catch (e) {} return { rub, text: String(d || '').replace(RUBRE, '').trim() }; };
+const rubText = rub => rub.map(x => x[0] + ' | ' + x[1]).join('\n');
+const rubEncode = (text, rub) => String(text || '').trim() + (rub.length ? '\n[[rub:' + JSON.stringify({ c: rub }) + ']]' : '');
+function rubParse(txt) {
+  const out = [], lines = String(txt || '').split(/\r?\n/).map(x => x.trim()).filter(Boolean);
+  if (lines.length > 10) throw new Error('Rubrik maksimal 10 kriteria.');
+  lines.forEach((ln, i) => {
+    const k = ln.lastIndexOf('|'); if (k < 1) throw new Error('Baris rubrik ke-' + (i + 1) + ' harus berformat: Nama kriteria | skor maksimal.');
+    const name = ln.slice(0, k).trim().replace(/\s+/g, ' ').replace(/;/g, ',').slice(0, 60), pts = Math.round(Number(ln.slice(k + 1).trim().replace(',', '.')) * 10) / 10;
+    if (!name) throw new Error('Nama kriteria pada baris ke-' + (i + 1) + ' belum diisi.');
+    if (!(pts > 0 && pts <= 1000)) throw new Error('Skor maksimal pada baris ke-' + (i + 1) + ' harus berupa angka lebih dari 0.');
+    out.push([name, pts]);
+  });
+  return out;
+}
+const rubBlock = rub => rub.length ? `<div class="rub"><b>Kriteria penilaian</b><ul>${rub.map(x => `<li><span>${esc(x[0])}</span><i>${x[1]}</i></li>`).join('')}</ul><small>Total ${Math.round(rub.reduce((a, x) => a + x[1], 0) * 10) / 10} poin</small></div>` : '';
+function rubGrade(aid, sid) {
+  const a = (C.assignments || []).find(x => x.id === aid), s = (C.submissions || []).find(x => x.id === sid); if (!a || !s) return;
+  const R = rcfg(a.description), old = {}, fbo = String(s.feedback || ''), note = fbo.replace(RUBFB, '').trim(), mm = fbo.match(/Rincian rubrik: ([\s\S]*)$/);
+  if (mm) mm[1].split('; ').forEach(p => { const q = p.match(/^(.*) (\d+(?:\.\d+)?)\/\d+(?:\.\d+)?$/); if (q) old[q[1]] = q[2]; });
+  modal('Nilai dengan rubrik', R.rub.map((x, i) => ({ n: 'r' + i, l: x[0] + ' (maks. ' + x[1] + ')', t: 'number', v: old[x[0]] !== undefined ? old[x[0]] : '' })).concat([{ n: 'feedback', l: 'Umpan balik (opsional)', t: 'textarea', v: note, r: false, rows: 3 }]), async d => {
+    let sum = 0, max = 0; const parts = [];
+    R.rub.forEach((x, i) => { const v = Number(String(d['r' + i]).replace(',', '.')); if (!isFinite(v) || v < 0 || v > x[1]) throw new Error('Skor “' + x[0] + '” harus antara 0 dan ' + x[1] + '.'); sum += v; max += x[1]; parts.push(x[0] + ' ' + v + '/' + x[1]); });
+    const score = Math.round(sum / max * (Number(a.max_score) || 100)), n = String(d.feedback || '').trim();
+    await api('grade', { submission_id: sid, score: score, feedback: (n ? n + ' || ' : '') + 'Rincian rubrik: ' + parts.join('; ') });
+    toast('Nilai ' + score + '/' + a.max_score + ' tersimpan.'); await cmRefresh();
+  }, 'Simpan nilai', { sub: s.full_name + ' • Skor akhir dihitung dari total poin, lalu disesuaikan dengan nilai maksimal tugas (dibulatkan).', busy: 'Menyimpan…' });
+}
+const addAsg = () => modal('Buat tugas', [{n:'title',l:'Judul tugas'},{n:'description',l:'Petunjuk (opsional)',t:'textarea',r:false},{n:'rubric',l:'Rubrik penilaian (opsional): satu kriteria per baris, contoh “Ketepatan isi | 40”',t:'textarea',r:false,rows:4},{n:'due',l:'Batas pengumpulan',t:'date',r:false},{n:'max_score',l:'Nilai maksimal',t:'number',v:100}], async d => { const rub = rubParse(d.rubric), { rubric, ...r } = d; await api('addAssignment', {...r, description: rubEncode(r.description, rub), ...cid()}); toast('Tugas berhasil dibuat.'); reload(CT==='feed'?'feed':'asg'); }, 'Buat tugas', { sub: 'Tentukan petunjuk, rubrik, batas pengumpulan, dan nilai maksimal. Pengumpulan diterima hingga akhir hari pada tanggal batas.', busy: 'Membuat tugas…' });
 const submitIt = id => modal('Kumpulkan tugas', [{n:'file',l:'Berkas (maks. 5 MB)',t:'file',r:false},{n:'note',l:'Catatan (opsional)',t:'textarea',r:false}], async d => { await api('submit', {...d, assignment_id: id}); toast('Tugas berhasil dikumpulkan.'); reload('asg'); }, 'Kumpulkan', { sub: 'Lampirkan berkas dan/atau tuliskan catatan. Pengumpulan ulang akan memperbarui kiriman Anda sebelumnya.', busy: 'Mengirim…' });
 async function gradeIt(id) {
   const sc = $('#sc-' + id);
@@ -2679,6 +2762,9 @@ const FAQ = [
   ['Guru', 'Bagaimana cara menilai tugas dan memberi umpan balik?', 'Buka menu “Perlu dinilai” atau tab Tugas pada kelas, buka daftar pengumpulan, isi nilai sesuai skor maksimal, tambahkan umpan balik bila diperlukan, lalu pilih “Simpan nilai”.', ['guru']],
   ['Guru', 'Bagaimana membaca analisis soal?', 'Pada kartu kuis, pilih “Analisis soal” untuk melihat persentase siswa yang menjawab benar pada setiap soal. Soal dengan persentase rendah dapat dibahas ulang di kelas.', ['guru']],
   ['Guru', 'Bagaimana memperoleh rekapitulasi nilai?', 'Buka menu Penilaian, pilih “Rekap nilai”, tentukan kelas, lalu gunakan “Unduh CSV” untuk memperoleh rata-rata nilai tugas dan kuis setiap siswa.', ['guru']],
+  ['Guru', 'Bagaimana mengelompokkan materi per topik atau pertemuan?', 'Saat menambah atau mengubah materi, isi kolom “Topik / bab” dan “Urutan”. Materi dengan topik yang sama dikelompokkan pada tab Materi dan diurutkan menurut angka urutan. Tautan YouTube ditampilkan sebagai video yang dapat diputar langsung di halaman.', ['guru']],
+  ['Guru', 'Bagaimana membuat dan memakai rubrik penilaian tugas?', 'Pada formulir tugas, isi kolom Rubrik dengan satu kriteria per baris, misalnya “Ketepatan isi | 40”. Siswa melihat kriteria tersebut. Saat menilai, pilih “Nilai dengan rubrik”, isi skor tiap kriteria, dan nilai akhir dihitung otomatis sesuai nilai maksimal tugas. Rincian skor ikut tersimpan pada umpan balik.', ['guru']],
+  ['Guru', 'Apa fungsi halaman Perlu pendampingan?', 'Halaman ini menandai siswa dengan kehadiran rendah, banyak alpa, tugas lewat batas yang belum dikumpulkan, atau rata-rata nilai rendah. Gunakan sebagai petunjuk awal untuk menyapa dan mendampingi siswa, bukan sebagai penilaian akhir.', ['guru']],
 
   ['Pengawasan', 'Apa cakupan akses Kepala Sekolah dan Kurikulum?', 'Kepala Sekolah dan Kurikulum dapat meninjau seluruh kelas serta rekapitulasi aktivitas dan capaian nilai dalam mode pemantauan (hanya-lihat). Perubahan nilai tidak dapat dilakukan melalui mode ini, dan berkas, catatan, maupun umpan balik individu siswa tidak ditampilkan.', ['kepala_sekolah', 'kurikulum']],
   ['Pengawasan', 'Bagaimana membaca rekap seluruh kelas?', 'Rekap menampilkan jumlah tugas, pengumpulan, tugas yang belum dinilai, kuis, dan rata-rata nilai (dalam persen) pada setiap kelas. Tanda “—” berarti belum ada nilai. Rekap dapat diunduh dalam format CSV.', ['kepala_sekolah', 'kurikulum']],
@@ -3345,7 +3431,8 @@ const ICON = {
   adminSync:      '<path d="M21 12a9 9 0 0 1-15.5 6.2M3 12a9 9 0 0 1 15.5-6.2M18.5 2v4h-4M5.5 22v-4h4"/>',
   schoolNotice:   '<path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1ZM15 9a4 4 0 0 1 0 6M18 6a8 8 0 0 1 0 12"/>',
   agenda:         '<rect x="3" y="4" width="18" height="18" rx="2.5"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="M8 14h3M8 18h3M14.5 14h1.5M14.5 18h1.5"/>',
-  attendance:     '<rect x="4" y="3.5" width="16" height="18" rx="2.5"/><path d="M9 3.5V3h6v.5M8.5 9h7M8.5 13h2"/><path d="m12.5 17 1.7 1.7 3.3-3.6"/>'
+  attendance:     '<rect x="4" y="3.5" width="16" height="18" rx="2.5"/><path d="M9 3.5V3h6v.5M8.5 9h7M8.5 13h2"/><path d="m12.5 17 1.7 1.7 3.3-3.6"/>',
+  risk:           '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.5"/><path d="m5.6 5.6 3.9 3.9M14.5 14.5l3.9 3.9M18.4 5.6l-3.9 3.9M9.5 14.5l-3.9 3.9"/>'
 };
 
 function buildMenu() {
@@ -3392,7 +3479,8 @@ function buildMenu() {
   if (teacher) {
     groups.push({ id: 'g-grades', icon: ICON.grades, label: 'Penilaian', items: [
       { key: 'review', label: 'Perlu dinilai' },
-      { key: 'recap',  label: monitor ? 'Rekap seluruh kelas' : 'Rekap nilai' }
+      { key: 'recap',  label: monitor ? 'Rekap seluruh kelas' : 'Rekap nilai' },
+      { key: 'risk', label: 'Perlu pendampingan' }
     ]});
   } else if (rs.includes('siswa')) {
     groups.push({ id: 'g-grades', icon: ICON.grades, label: 'Penilaian', items: [
@@ -3446,7 +3534,8 @@ const GO = {
   adminClasses:   () => adminClassesPage(),
   adminSchedules: () => adminSchedulesPage(),
   adminSync:      () => adminSyncPage(),
-  schoolNotice:   () => vSchoolNotice()
+  schoolNotice:   () => vSchoolNotice(),
+  risk:           () => vRisk()
 };
 function go(k) { setMenu(false); (GO[k] || vDash)(); }
 function setBadge(k, n) { const b = $('#b-' + k); if (b) b.textContent = n > 0 ? (n > 99 ? '99+' : n) : ''; }
@@ -3577,6 +3666,61 @@ function exportRecap() {
   const csv = ['Nama,Rata-rata tugas,Rata-rata kuis,Rata-rata akhir'].concat(recap.map(r => [q(r.n), f(r.t), f(r.q), f(r.all)].join(','))).join('\n');
   const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8' })); a.download = 'rekap-nilai.csv'; a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 2000); toast('Rekapitulasi nilai telah diunduh.');
+}
+
+/* ===== Perlu pendampingan: peringatan dini dari kehadiran, tugas, dan nilai (khusus guru) ===== */
+var RK = { cid: '', seq: 0, rows: [], cn: '' };
+var RK_LV = ['Aman', 'Perhatian', 'Sedang', 'Prioritas tinggi'];
+function vRisk() {
+  if (!isT()) { toast('Halaman ini khusus guru pengampu.', true); return vDash(); }
+  return page('risk', 'Perlu pendampingan', 'Tanda awal kehadiran, tugas, dan nilai yang perlu ditindaklanjuti.', function () {
+    if (!O.classes.length) return '<div class="card empty"><b>Belum ada kelas</b>Halaman ini tersedia setelah Anda memiliki kelas.</div>';
+    if (!O.classes.some(function (c) { return c.id === RK.cid; })) RK.cid = O.classes[0].id;
+    return '<div class="at-bar"><select class="sel" aria-label="Pilih kelas" onchange="RK.cid=this.value;rkLoad()">' + O.classes.map(function (c) { return '<option value="' + esc(c.id) + '"' + (c.id === RK.cid ? ' selected' : '') + '>' + esc(c.name) + '</option>'; }).join('') + '</select></div><div id="rkb"></div>';
+  }).then(function () { if ($('#rkb')) rkLoad(); });
+}
+function rkLoad() {
+  var b = $('#rkb'); if (!b) return; var n = ++RK.seq; b.innerHTML = '<p class="empty">Memuat…</p>';
+  api('attendanceRecap', { class_id: RK.cid, from: '', to: '' }).then(function (d) { if (n === RK.seq && $('#rkb')) rkDraw(d); })
+    .catch(function (e) { if (n === RK.seq && $('#rkb')) $('#rkb').innerHTML = '<div class="card empty"><b>Data belum dapat dimuat</b>' + esc(e.message) + '</div>'; });
+}
+function rkCompute(d, cid, O) {
+  var now = Date.now(), DAY = 864e5, aid = {};
+  var asg = O.assignments.filter(function (a) { return a.class_id === cid; }); asg.forEach(function (a) { aid[a.id] = a; });
+  var due = asg.filter(function (a) { return a.due && new Date(a.due).getTime() + DAY < now; }), qid = {};
+  O.quizzes.forEach(function (q) { if (q.class_id === cid) qid[q.id] = 1; });
+  return d.rows.map(function (r) {
+    var uid = r.user_id != null && r.user_id !== '' ? String(r.user_id) : '', nm = String(r.full_name || '').trim().toLowerCase();
+    var mine = function (x) { return uid ? String(x.user_id) === uid : String(x.full_name || '').trim().toLowerCase() === nm; };
+    var subs = O.submissions.filter(function (s) { return aid[s.assignment_id] && mine(s); });
+    var miss = due.filter(function (a) { return !subs.some(function (s) { return s.assignment_id === a.id; }); }).length, sc = [];
+    subs.forEach(function (s) { if (s.score !== '' && s.score != null) { var v = Number(s.score) / (Number(aid[s.assignment_id].max_score) || 100) * 100; if (isFinite(v)) sc.push(v); } });
+    O.attempts.forEach(function (a) { if (qid[a.quiz_id] && a.submitted && a.grade_status !== 'pending' && Number(a.max) > 0 && mine(a)) sc.push(Number(a.score) / Number(a.max) * 100); });
+    var avg = sc.length >= 2 ? sc.reduce(function (x, y) { return x + y; }, 0) / sc.length : null, why = [], pts = 0;
+    if (r.total >= 3 && r.pct < 75) { why.push('Kehadiran ' + r.pct + '%'); pts += r.pct < 60 ? 3 : 2; }
+    if (r.A >= 3) { why.push('Alpa ' + r.A + ' kali'); pts += 2; }
+    if (miss) { why.push(miss + ' tugas lewat batas belum dikumpulkan'); pts += miss >= 3 ? 3 : miss === 2 ? 2 : 1; }
+    if (avg !== null && avg < 70) { why.push('Rata-rata nilai ' + Math.round(avg) + '%'); pts += avg < 50 ? 3 : 2; }
+    return { name: r.full_name, pct: r.total ? r.pct : null, A: r.A || 0, miss: miss, avg: avg, why: why, pts: pts, lv: pts >= 5 ? 3 : pts >= 3 ? 2 : pts >= 1 ? 1 : 0 };
+  }).sort(function (a, b) { return b.pts - a.pts || String(a.name).localeCompare(String(b.name), 'id'); });
+}
+function rkDraw(d) {
+  var rows = rkCompute(d, RK.cid, O); RK.rows = rows; RK.cn = d.class_name || '';
+  if (!rows.length) { $('#rkb').innerHTML = '<div class="card empty"><b>Belum ada siswa di kelas ini</b>Siswa bergabung otomatis melalui sinkronisasi atau memakai kode kelas.</div>'; return; }
+  var c = [0, 0, 0, 0]; rows.forEach(function (r) { c[r.lv]++; });
+  var kp = [['Jumlah siswa', rows.length, ''], ['Prioritas tinggi', c[3], c[3] ? 'bad' : 'ok'], ['Sedang / perhatian', c[2] + c[1], ''], ['Aman', c[0], 'ok']];
+  var fl = rows.filter(function (r) { return r.lv > 0; });
+  var list = fl.length ? fl.map(function (r) {
+    return '<div class="rk-r"><div><b>' + esc(r.name) + '</b><div class="rk-why">' + r.why.map(function (w) { return '<span>' + esc(w) + '</span>'; }).join('') + '</div></div><span class="badge ' + (r.lv === 3 ? 'bad' : 'warn') + '">' + RK_LV[r.lv] + '</span></div>';
+  }).join('') : '<p class="empty">Tidak ada siswa yang perlu pendampingan saat ini.</p>';
+  $('#rkb').innerHTML = '<div class="at-h" style="border:0;padding-bottom:.4rem"><span><b style="color:var(--ink)">' + esc(RK.cn) + '</b> • ' + fl.length + ' dari ' + rows.length + ' siswa ditandai</span><span class="at-ba"><button type="button" class="pill" onclick="rkCsv()">Unduh CSV</button></span></div>'
+    + '<div class="at-kpi">' + kp.map(function (k) { return '<div class="card at-k ' + k[2] + '"><small>' + k[0] + '</small><b>' + k[1] + '</b></div>'; }).join('') + '</div>'
+    + '<div class="card">' + list + '</div>'
+    + '<p class="at-cap" style="margin-top:.7rem">Penanda: kehadiran di bawah 75% (minimal 3 pertemuan), alpa 3 kali atau lebih, tugas lewat batas yang belum dikumpulkan, dan rata-rata nilai di bawah 70% (minimal 2 nilai). Ini indikator awal untuk memulai percakapan dengan siswa, bukan penilaian. Siswa dicocokkan dengan nama jika sistem tidak menyertakan ID.</p>';
+}
+function rkCsv() {
+  if (!RK.rows.length) return;
+  downloadCsv('perlu-pendampingan-' + String(RK.cn).replace(/\W+/g, '-').toLowerCase() + '.csv', [['Nama', 'Tingkat', 'Kehadiran %', 'Alpa', 'Tugas lewat batas belum dikumpulkan', 'Rata-rata nilai %', 'Alasan']].concat(RK.rows.map(function (r) { return [r.name, RK_LV[r.lv], r.pct === null ? '' : r.pct, r.A, r.miss, r.avg === null ? '' : Math.round(r.avg), r.why.join('; ')]; })));
 }
 
 function vProfile() {
