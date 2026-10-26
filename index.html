@@ -1406,6 +1406,7 @@ img{max-width:100%}
 input[type=file]{font-size:.88rem;color:var(--mut)}
 input[type=file]::file-selector-button{margin-right:.8rem;padding:.5rem 1rem;border:0;border-radius:.7rem;background:var(--soft);color:var(--navy);font-weight:700;font-family:inherit;cursor:pointer;transition:background .15s}
 input[type=file]::file-selector-button:hover{background:#dbe7fb}
+.sp-file{border:0;cursor:pointer;font-family:inherit;font-size:.86rem}.sp-file.sm{padding:.3rem .7rem;font-size:.78rem;margin-top:.3rem}.sp-file:disabled{opacity:.6;cursor:wait}
 </style>
 </head>
 <body>
@@ -1876,9 +1877,9 @@ function modal(title, fields, fn, cta, opt) {
       const d = Object.fromEntries([...new FormData(f)].filter(([, v]) => typeof v === 'string'));
       let file = f.querySelector('input[type=file]')?.files[0];
       if (file) {
-        if (file.size > (/^image\//i.test(file.type) ? 25 : 10) * 1048576) throw new Error('Ukuran berkas maksimal 10 MB.');
+        if (file.size > (/^image\//i.test(file.type) ? 25 : 5) * 1048576) throw new Error('Ukuran berkas maksimal 5 MB.');
         file = await squeezeImage(file);
-        if (file.size > 10 * 1048576) throw new Error('Ukuran berkas maksimal 10 MB.');
+        if (file.size > 5 * 1048576) throw new Error('Ukuran berkas maksimal 5 MB.');
         d.file_data = await new Promise((ok, no) => { const r = new FileReader(); r.onload = () => ok(r.result.split(',')[1]); r.onerror = no; r.readAsDataURL(file); });
         d.file_name = file.name; d.file_type = file.type;
       }
@@ -2275,7 +2276,25 @@ const ago = d => { if (!d) return ''; const s = (Date.now() - new Date(d)) / 100
 const SP_KIND = { ann: ['📢', 'Pengumuman'], mat: ['📎', 'Materi'], asg: ['📝', 'Tugas'], qz: ['🎯', 'Kuis'], fr: ['💬', 'Diskusi'] };
 const spHead = (kind, who, when) => `<div class="sp-h"><span class="fav g" aria-hidden="true">${esc(String(who || 'G').trim().charAt(0).toUpperCase())}</span><div class="sp-w"><b>${esc(who || 'Guru')}</b><span class="meta">${ago(when)}</span></div><span class="sp-k sp-${kind}">${SP_KIND[kind][0]} ${SP_KIND[kind][1]}</span></div>`;
 const annCard = (a, t) => `<div class="card item"><h4>${esc(a.title)}</h4><p>${esc(a.body)}</p>${contentActions(t, 'editAnn', 'deleteAnn', a.id, 'pengumuman')}${cmtBlock('ann', a.id)}</div>`;
-const matCard = (m, t) => `<div class="card item"><h4>${esc(m.title)}</h4>${m.description ? `<p>${esc(m.description)}</p>` : ''}${safeUrl(m.file_url) ? `<p><a class="sp-file" href="${safeUrl(m.file_url)}" target="_blank" rel="noopener">📄 Buka berkas</a></p>` : ''}${contentActions(t, 'editMat', 'deleteMat', m.id, 'materi')}${cmtBlock('mat', m.id)}</div>`;
+/* Berkas unggahan dibuka lewat LMS (privat di Drive); tautan eksternal tetap dibuka langsung. */
+function fileLink(kind, id, url, cls) {
+  const u = String(url || '');
+  if (u.indexOf('drive:') === 0) return `<p><button type="button" class="${cls}" onclick="openFile('${kind}',${jsq(id)},this)">📄 Buka berkas</button></p>`;
+  return safeUrl(u) ? `<p><a class="${cls}" href="${safeUrl(u)}" target="_blank" rel="noopener">🔗 Buka tautan</a></p>` : '';
+}
+async function openFile(kind, id, btn) {
+  const lbl = btn.textContent; btn.disabled = true; btn.textContent = 'Menyiapkan berkas…';
+  try {
+    const r = await api('getFile', { kind, id }, 120000);
+    const bin = atob(r.data), u8 = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i);
+    const blob = new Blob([u8], { type: r.mime || 'application/octet-stream' }), url = URL.createObjectURL(blob);
+    const dl = () => { const a = document.createElement('a'); a.href = url; a.download = r.name || 'berkas'; document.body.appendChild(a); a.click(); a.remove(); };
+    if (/^(application\/pdf|image\/)/.test(blob.type)) { if (!window.open(url, '_blank')) dl(); } else dl();
+    setTimeout(() => URL.revokeObjectURL(url), 120000);
+  } catch (e) { toast(e.message, true); }
+  finally { btn.disabled = false; btn.textContent = lbl; }
+}
+const matCard = (m, t) => `<div class="card item"><h4>${esc(m.title)}</h4>${m.description ? `<p>${esc(m.description)}</p>` : ''}${fileLink('mat', m.id, m.file_url, 'sp-file')}${contentActions(t, 'editMat', 'deleteMat', m.id, 'materi')}${cmtBlock('mat', m.id)}</div>`;
 function copyCode(c) { try { navigator.clipboard.writeText(c).then(() => toast('Kode kelas disalin.'), () => toast('Salin kode secara manual: ' + c, true)); } catch (e) { toast('Salin kode secara manual: ' + c, true); } }
 function feedView(t, readOnly) {
   const items = [];
@@ -2339,7 +2358,7 @@ async function cmtSend(type, id, btn) {
   const inp = btn.parentNode.querySelector('input'), body = inp.value.trim();
   if (!body) { toast('Mohon isi komentar terlebih dahulu.', true); inp.focus(); return; }
   if (CM.busy) return; CM.busy = true; btn.disabled = true;
-  try { await api('addComment', { ...cid(), target_type: type, target_id: id, body }); CM.open[type + ':' + id] = true; await cmRefresh(); toast('Komentar terkirim.'); }
+  try { const r = await api('addComment', { ...cid(), target_type: type, target_id: id, body }); CM.open[type + ':' + id] = true; if (r && r.comment) { const y = window.scrollY; (C.comments = C.comments || []).push(r.comment); snapSave(C.cls.id, C); drawClass(CT); jumpTo(y); } else await cmRefresh(); toast('Komentar terkirim.'); }
   catch (e) { toast(e.message, true); btn.disabled = false; }
   finally { CM.busy = false; }
 }
@@ -2376,7 +2395,7 @@ function editAnn(id) {
 }
 function editMat(id) {
   const m = C.materials.find(x => x.id === id); if (!m) return;
-  modal('Edit materi', [{ n: 'title', l: 'Judul materi', v: m.title }, { n: 'description', l: 'Keterangan (opsional)', t: 'textarea', v: m.description || '', r: false }, { n: 'file', l: 'Berkas pengganti (opsional, maks. 10 MB)', t: 'file', r: false }, { n: 'link', l: 'Tautan baru (opsional)', t: 'url', r: false }],
+  modal('Edit materi', [{ n: 'title', l: 'Judul materi', v: m.title }, { n: 'description', l: 'Keterangan (opsional)', t: 'textarea', v: m.description || '', r: false }, { n: 'file', l: 'Berkas pengganti (opsional, maks. 5 MB)', t: 'file', r: false }, { n: 'link', l: 'Tautan baru (opsional)', t: 'url', r: false }],
     async d => { await api('editMaterial', { id, title: d.title, description: d.description, link: d.link || '', file_data: d.file_data, file_name: d.file_name, file_type: d.file_type }); toast('Materi diperbarui.'); await cmRefresh(); }, 'Simpan perubahan', { sub: 'Kosongkan berkas dan tautan untuk mempertahankan lampiran yang sekarang.', busy: 'Menyimpan…' });
 }
 function editAsg(id) {
@@ -2401,7 +2420,7 @@ function asgCard(a, t) {
   const subs = C.submissions.filter(s => s.assignment_id === a.id);
   let foot = '';
   if (t) {
-    foot = `<details><summary>${subs.length} pengumpulan</summary>${subs.map(s => `<div class="sr"><div><b>${esc(s.full_name)}</b><br>${safeUrl(s.file_url) ? `<a href="${safeUrl(s.file_url)}" target="_blank" rel="noopener">Buka berkas</a> ` : ''}<span class="meta">${esc(s.note || '')}</span></div>
+    foot = `<details><summary>${subs.length} pengumpulan</summary>${subs.map(s => `<div class="sr"><div><b>${esc(s.full_name)}</b><br>${fileLink('sub', s.id, s.file_url, 'sp-file sm')}<span class="meta">${esc(s.note || '')}</span></div>
       <input id="sc-${s.id}" type="number" min="0" max="${a.max_score}" value="${esc(s.score)}" placeholder="/${a.max_score}" aria-label="Nilai"><input id="fb-${s.id}" value="${esc(s.feedback || '')}" placeholder="Umpan balik" aria-label="Umpan balik">
       <button class="btn" onclick="gradeIt(${esc(JSON.stringify(String(s.id)))})">Simpan nilai</button></div>`).join('') || '<p class="meta" style="margin-top:8px">Belum ada pengumpulan.</p>'}</details>`;
   } else if (isReadOnlyMonitor()) {
@@ -2416,9 +2435,9 @@ function asgCard(a, t) {
 
 const cid = () => ({ class_id: C.cls.id });
 const addAnn = () => modal('Buat pengumuman', [{n:'title',l:'Judul'},{n:'body',l:'Isi pengumuman',t:'textarea'}], async d => { await api('addAnnouncement', {...d, ...cid()}); loadO(true).catch(function () {}); toast('Pengumuman berhasil diterbitkan.'); reload(CT==='feed'?'feed':'ann'); }, 'Terbitkan', { sub: 'Pengumuman akan ditampilkan kepada seluruh anggota kelas.', busy: 'Menerbitkan…' });
-const addMat = () => modal('Tambah materi', [{n:'title',l:'Judul materi'},{n:'description',l:'Keterangan (opsional)',t:'textarea',r:false},{n:'file',l:'Berkas (maks. 10 MB)',t:'file',r:false},{n:'link',l:'Atau tautan (opsional)',t:'url',r:false}], async d => { await api('addMaterial', {...d, ...cid()}); toast('Materi berhasil ditambahkan.'); reload(CT==='feed'?'feed':'mat'); }, 'Tambah materi', { sub: 'Lampirkan berkas atau tautan sebagai bahan belajar bagi siswa.', busy: 'Mengunggah…' });
+const addMat = () => modal('Tambah materi', [{n:'title',l:'Judul materi'},{n:'description',l:'Keterangan (opsional)',t:'textarea',r:false},{n:'file',l:'Berkas (maks. 5 MB)',t:'file',r:false},{n:'link',l:'Atau tautan (opsional)',t:'url',r:false}], async d => { await api('addMaterial', {...d, ...cid()}); toast('Materi berhasil ditambahkan.'); reload(CT==='feed'?'feed':'mat'); }, 'Tambah materi', { sub: 'Lampirkan berkas atau tautan sebagai bahan belajar bagi siswa.', busy: 'Mengunggah…' });
 const addAsg = () => modal('Buat tugas', [{n:'title',l:'Judul tugas'},{n:'description',l:'Petunjuk (opsional)',t:'textarea',r:false},{n:'due',l:'Batas pengumpulan',t:'date',r:false},{n:'max_score',l:'Nilai maksimal',t:'number',v:100}], async d => { await api('addAssignment', {...d, ...cid()}); toast('Tugas berhasil dibuat.'); reload(CT==='feed'?'feed':'asg'); }, 'Buat tugas', { sub: 'Tentukan petunjuk, batas pengumpulan, dan nilai maksimal. Pengumpulan diterima hingga akhir hari pada tanggal batas.', busy: 'Membuat tugas…' });
-const submitIt = id => modal('Kumpulkan tugas', [{n:'file',l:'Berkas (maks. 10 MB)',t:'file',r:false},{n:'note',l:'Catatan (opsional)',t:'textarea',r:false}], async d => { await api('submit', {...d, assignment_id: id}); toast('Tugas berhasil dikumpulkan.'); reload('asg'); }, 'Kumpulkan', { sub: 'Lampirkan berkas dan/atau tuliskan catatan. Pengumpulan ulang akan memperbarui kiriman Anda sebelumnya.', busy: 'Mengirim…' });
+const submitIt = id => modal('Kumpulkan tugas', [{n:'file',l:'Berkas (maks. 5 MB)',t:'file',r:false},{n:'note',l:'Catatan (opsional)',t:'textarea',r:false}], async d => { await api('submit', {...d, assignment_id: id}); toast('Tugas berhasil dikumpulkan.'); reload('asg'); }, 'Kumpulkan', { sub: 'Lampirkan berkas dan/atau tuliskan catatan. Pengumpulan ulang akan memperbarui kiriman Anda sebelumnya.', busy: 'Mengirim…' });
 async function gradeIt(id) {
   const sc = $('#sc-' + id);
   if (sc.value === '') { toast('Mohon isi nilai terlebih dahulu.', true); sc.focus(); return; }
@@ -2432,7 +2451,7 @@ const FAQ = [
   ['Umum', 'Siapa saja yang dapat menggunakan portal ini?', 'Portal digunakan oleh siswa, guru, kepala sekolah, kurikulum, guru BK, staf administrasi, dan administrator. Satu akun dapat memiliki lebih dari satu peran, misalnya guru yang juga bertugas pada bidang kurikulum.'],
   ['Umum', 'Perangkat dan peramban apa yang disarankan?', 'Portal dapat diakses melalui komputer, tablet, dan ponsel menggunakan peramban versi terbaru, seperti Google Chrome, Microsoft Edge, Safari, atau Firefox. Pastikan koneksi internet stabil, terutama saat mengerjakan kuis.'],
   ['Umum', 'Mengapa data yang tampil belum berubah?', 'Agar tetap responsif, sebagian data ditampilkan dari penyimpanan sementara selama maksimal lima menit. Pilih tombol segarkan di sudut kanan bawah untuk memuat data terbaru.'],
-  ['Umum', 'Berapa ukuran berkas yang dapat diunggah?', 'Setiap unggahan materi atau tugas dapat berukuran hingga 10 MB. Untuk materi yang lebih besar, guru dapat menyertakan tautan ke layanan penyimpanan daring.'],
+  ['Umum', 'Berapa ukuran berkas yang dapat diunggah?', 'Setiap unggahan materi atau tugas dapat berukuran hingga 5 MB. Untuk materi yang lebih besar, guru dapat menyertakan tautan ke layanan penyimpanan daring.'],
 
   ['Akun dan Keamanan', 'Bagaimana cara masuk ke portal?', 'Pilih peran pada bagian “Masuk sebagai”, lalu masukkan username dan sandi dari sekolah. Siswa menggunakan username atau NISN, sedangkan guru menggunakan username atau NIP sesuai informasi dari administrator. Peran yang dipilih harus sesuai dengan peran pada akun Anda.'],
   ['Akun dan Keamanan', 'Mengapa saya tidak dapat masuk?', 'Periksa kembali peran yang dipilih, username, dan sandi Anda, serta pastikan Caps Lock tidak aktif. Akun yang berstatus nonaktif tidak dapat digunakan. Setelah lima kali percobaan masuk yang gagal, akses dijeda selama sepuluh menit demi keamanan akun.'],
@@ -2442,7 +2461,7 @@ const FAQ = [
   ['Akun dan Keamanan', 'Bagaimana keamanan data akun saya dijaga?', 'Sandi disimpan dalam bentuk hash sehingga tidak dapat dibaca kembali oleh siapa pun, termasuk administrator. Pilih “Keluar” setelah menggunakan perangkat bersama, dan jangan menyimpan sandi pada peramban perangkat umum.'],
 
   ['Siswa', 'Bagaimana cara bergabung ke sebuah kelas?', 'Buka menu “Kelas saya”, pilih “Gabung kelas”, lalu masukkan kode kelas yang diberikan oleh guru. Setelah berhasil, kelas akan tampil pada daftar kelas Anda.', ['siswa']],
-  ['Siswa', 'Bagaimana cara mengumpulkan tugas?', 'Masuk ke kelas terkait, buka tab Tugas, lalu pilih “Kumpulkan tugas”. Lampirkan berkas (maksimal 10 MB) dan/atau tuliskan catatan. Pengumpulan diterima hingga akhir hari pada tanggal batas yang ditetapkan guru. Selama masih dalam batas waktu, Anda dapat mengumpulkan ulang untuk memperbarui kiriman sebelumnya.', ['siswa']],
+  ['Siswa', 'Bagaimana cara mengumpulkan tugas?', 'Masuk ke kelas terkait, buka tab Tugas, lalu pilih “Kumpulkan tugas”. Lampirkan berkas (maksimal 5 MB) dan/atau tuliskan catatan. Pengumpulan diterima hingga akhir hari pada tanggal batas yang ditetapkan guru. Selama masih dalam batas waktu, Anda dapat mengumpulkan ulang untuk memperbarui kiriman sebelumnya.', ['siswa']],
   ['Siswa', 'Di mana saya dapat melihat nilai dan umpan balik?', 'Nilai dan umpan balik guru tersedia pada menu “Nilai saya”. Nilai kuis ditampilkan segera setelah jawaban dikumpulkan.', ['siswa']],
   ['Siswa', 'Bagaimana saya mengetahui tugas yang mendekati tenggat?', 'Halaman Beranda menampilkan pengingat bagi tugas yang belum dikumpulkan dengan batas waktu dalam tiga hari ke depan, termasuk yang baru saja melewati batas. Lencana pada menu “Tugas saya” menunjukkan jumlah tugas yang belum dikumpulkan.', ['siswa']],
 
