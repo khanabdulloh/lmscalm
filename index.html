@@ -883,6 +883,16 @@ button.kp{cursor:pointer;transition:transform .18s,box-shadow .18s}button.kp:hov
 .fbd{display:flex;flex-wrap:wrap;gap:.35rem;margin:-.2rem 0 .6rem 3.2rem}
 .badge.pin{background:rgba(214,180,106,.25);color:#7a5b12}
 [data-theme=dark] .badge.pin{background:rgba(214,180,106,.2);color:#f0d79a}
+/* Aksi konten: tombol ringkas, konsisten, dan ramah sentuhan */
+.content-actions{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;margin:.9rem 0 .25rem;padding-top:.75rem;border-top:1px solid var(--line)}
+.content-action{display:inline-flex;align-items:center;justify-content:center;gap:.42rem;min-height:2.35rem;padding:.48rem .82rem;border:1px solid #dbe4f0;border-radius:.7rem;background:#fff;color:#24446f;font-size:.8rem;font-weight:700;letter-spacing:.005em;text-decoration:none;cursor:pointer;transition:background .16s,border-color .16s,transform .16s,box-shadow .16s}
+.content-action:hover{background:#f2f6fc;border-color:#a9bfdc;box-shadow:0 3px 10px rgba(20,45,85,.07);transform:translateY(-1px)}
+.content-action:focus-visible{outline:3px solid rgba(49,105,190,.25);outline-offset:2px}
+.content-action .action-icon{width:1rem;height:1rem;display:inline-flex;align-items:center;justify-content:center;font-size:.9rem;line-height:1}
+.content-action--delete{color:#a92d36;border-color:#f0d8da;background:#fff}
+.content-action--delete:hover{background:#fff3f3;border-color:#e8b8bc}
+.quiz-actions{display:flex;align-items:center;flex-wrap:wrap;gap:.5rem;margin-top:.85rem}
+.quiz-actions .content-action{min-height:2.35rem}
 .fa{display:flex;flex-wrap:wrap;gap:.25rem 1rem;margin-top:.7rem}.fa .link{font-size:.76rem}
 .fr .item.best,.item.best{border-color:rgba(16,185,129,.55)!important;background:rgba(16,185,129,.09)}
 .card.pinned{border-color:rgba(214,180,106,.75)}
@@ -2246,7 +2256,7 @@ function drawClass(tab) {
 /* ===== Ubah konten & komentar kelas ===== */
 var CM = { open: {}, busy: false };
 const editLn = (t, fn, id) => t ? `<div class="fa"><button type="button" class="link" onclick="${fn}(${jsq(id)})">Edit</button></div>` : '';
-const contentActions = (t, editFn, delFn, id, label) => t ? `<div class="fa" style="display:flex;gap:.55rem;flex-wrap:wrap"><button type="button" class="link" onclick="${editFn}(${jsq(id)})">✏️ Edit</button><button type="button" class="link" style="color:#b42318" onclick="${delFn}(${jsq(id)})">🗑️ Hapus ${label}</button></div>` : '';
+const contentActions = (t, editFn, delFn, id, label) => t ? `<div class="content-actions" aria-label="Aksi ${esc(label)}"><button type="button" class="content-action" onclick="${editFn}(${jsq(id)})" aria-label="Edit ${esc(label)}"><span class="action-icon" aria-hidden="true">✎</span><span>Edit</span></button><button type="button" class="content-action content-action--delete" onclick="${delFn}(${jsq(id)})" aria-label="Hapus ${esc(label)}"><span class="action-icon" aria-hidden="true">⌫</span><span>Hapus</span></button></div>` : '';
 async function cmRefresh() {
   const y = window.scrollY, id = C.cls.id;
   const data = await api('classDetail', { class_id: id }, 30000, { fresh: true });
@@ -2460,7 +2470,7 @@ function quizCard(q) {
   const chips = [q.qcount + ' soal', q.duration + ' menit', c.qt ? c.qt + ' detik/soal' : '', c.shuf ? 'Soal diacak' : '', c.pass ? 'Ketuntasan ≥ ' + c.pass : ''].filter(Boolean).map(x => `<span>${x}</span>`).join('');
   const rows = at.map(a => `<div class="qr"><span>${esc(a.full_name)}</span><b>${a.submitted ? a.score + '/' + a.max : 'Sedang dikerjakan'}</b></div>`).join('') || '<p class="meta">Belum ada hasil.</p>';
   let foot, done = false;
-  if (t || ro) foot = `<div class="qft"><div class="qst"><div><b>${fin.length}</b><small>selesai</small></div><div><b>${fin.length ? avg : '–'}</b><small>rata-rata</small></div><div class="qbm"><i style="width:${avg}%"></i></div></div></div><details><summary>Lihat hasil siswa${ro ? ' • pemantauan' : ''}</summary>${rows}</details>${fin.length ? `<div style="margin-top:.8rem"><button class="btn2" onclick="quizStats(${esc(JSON.stringify(String(q.id)))})">Analisis soal</button></div>` : ''}${t ? `<div style="margin-top:.8rem"><button class="btn2" onclick="editQuiz(${esc(JSON.stringify(String(q.id)))})">Edit kuis</button><button class="btn2" onclick="deleteQuiz(${esc(JSON.stringify(String(q.id)))})" style="color:#b42318;border-color:#f3c7c4">Hapus kuis</button></div>` : ''}`;
+  if (t || ro) foot = `<div class="qft"><div class="qst"><div><b>${fin.length}</b><small>selesai</small></div><div><b>${fin.length ? avg : '–'}</b><small>rata-rata</small></div><div class="qbm"><i style="width:${avg}%"></i></div></div></div><details><summary>Lihat hasil siswa${ro ? ' • pemantauan' : ''}</summary>${rows}</details>${fin.length ? `<div style="margin-top:.8rem"><button class="btn2" onclick="quizStats(${esc(JSON.stringify(String(q.id)))})">Analisis soal</button></div>` : ''}${t ? `<div class="quiz-actions" aria-label="Aksi kuis"><button type="button" class="content-action" onclick="editQuiz(${esc(JSON.stringify(String(q.id)))})"><span class="action-icon" aria-hidden="true">✎</span><span>Edit</span></button><button type="button" class="content-action content-action--delete" onclick="deleteQuiz(${esc(JSON.stringify(String(q.id)))})"><span class="action-icon" aria-hidden="true">⌫</span><span>Hapus</span></button></div>` : ''}`;
   else { const a = at[0]; done = !!(a && a.submitted);
     const pass = done && c.pass ? (pc(a) >= c.pass ? '<span class="badge ok">Tuntas</span>' : '<span class="badge warn">Belum tuntas</span>') : '';
     foot = `<div class="qft">${done ? `<div class="qsc">${a.score}<small> / ${a.max}</small></div>${pass}${c.rev === 0 ? '' : `<button class="btn2" onclick="reviewQuiz(${esc(JSON.stringify(String(q.id)))})">Lihat pembahasan</button>`}` : `<span class="badge${a ? ' warn' : ''}">${a ? 'Sedang dikerjakan' : 'Belum dikerjakan'}</span><button class="btn" onclick="startQuiz(${esc(JSON.stringify(String(q.id)))})">${a ? 'Lanjutkan' : 'Mulai kuis'}</button>`}</div>`; }
