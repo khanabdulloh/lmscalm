@@ -1080,6 +1080,77 @@ aside nav{margin-top:1.1rem}
  .cover h1{font-size:1.55rem}
 }
 @media(max-width:340px){.tabs button{font-size:.72rem}}
+
+/* ===== Panel kiri login: tampilan futuristik (dekoratif; tidak memengaruhi logika) ===== */
+.ls{--g:1rem;gap:var(--g);padding:clamp(1.4rem,3.4vh,2.4rem) clamp(1.5rem,3vw,3rem);background:radial-gradient(60% 45% at 88% 28%,rgba(56,189,248,.2),transparent 70%),radial-gradient(70% 50% at 0 0,rgba(74,118,201,.3),transparent 65%),linear-gradient(165deg,#0c3f94 0%,#0a2f72 50%,#071a40 100%)}
+@media(min-width:901px) and (max-height:900px){.ls{--g:.8rem}}
+.ls::before{display:block;content:"";position:absolute;z-index:-1;top:0;right:0;bottom:0;left:0;width:auto;height:auto;border:0;border-radius:0;background:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px) 0 0/40px 40px,linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px) 0 0/40px 40px;-webkit-mask-image:radial-gradient(75% 65% at 60% 45%,#000 20%,transparent 78%);mask-image:radial-gradient(75% 65% at 60% 45%,#000 20%,transparent 78%)}
+.ls .br{gap:.7rem}.ls .lg{width:2.5rem;height:2.5rem;border-radius:.75rem}
+.ls .br b{font-size:.92rem}.ls .br small{font-size:.7rem}
+.ls .hero-l{max-width:30rem}
+.ls-eye{display:inline-flex;align-items:center;gap:.5rem;margin-bottom:.7rem;padding:.25rem .75rem;border:1px solid rgba(125,211,252,.32);border-radius:99px;background:rgba(56,189,248,.08);font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#bfe6ff}
+.ls-eye i{width:.4rem;height:.4rem;border-radius:50%;background:#7dd3fc;box-shadow:0 0 0 0 rgba(125,211,252,.6);animation:lseye 2.4s ease-out infinite}
+@keyframes lseye{0%{box-shadow:0 0 0 0 rgba(125,211,252,.55)}100%{box-shadow:0 0 0 .5rem rgba(125,211,252,0)}}
+.ls .hero-l h1{font-size:clamp(1.9rem,2.7vw,2.5rem);line-height:1.05;font-weight:500;background:linear-gradient(90deg,#fff 30%,#a9dcff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ls .hero-l h1::after{width:2.2rem;margin-top:.8rem}
+.ls .hero-l>p{margin-top:.8rem;max-width:25rem;font-size:.8rem;line-height:1.65;color:rgba(255,255,255,.68)}
+
+.ls-art{display:flex;flex-direction:column;flex:1 1 0;min-height:0;margin-top:calc(.2rem - var(--g));container-type:size;pointer-events:none;user-select:none}
+.ls-scene{position:relative;flex:1 1 0;min-height:0}
+.ls-scene svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;animation:lsin .9s cubic-bezier(.2,.7,.2,1) both}
+.ls-cap{flex:none;align-self:center;display:inline-flex;align-items:center;gap:.55rem;margin-top:.3rem;padding:.35rem .95rem;border:1px solid rgba(255,255,255,.14);border-radius:99px;background:rgba(255,255,255,.06);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font-size:.72rem;color:rgba(255,255,255,.82);transition:opacity .35s,transform .35s}
+.ls-cap i{flex:none;width:.4rem;height:.4rem;border-radius:50%;background:var(--gold)}
+.ls-cap.sw{opacity:0;transform:translateY(4px)}
+@container (max-height:9rem){.ls-scene,.ls-cap{display:none}}
+
+.ls .fe{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;max-width:none;margin:0;padding:0;list-style:none}
+.ls .fe li{position:relative;overflow:hidden;display:flex;align-items:center;gap:.7rem;padding:.7rem .8rem;border:1px solid rgba(255,255,255,.14);border-radius:.95rem;background:linear-gradient(150deg,rgba(255,255,255,.11),rgba(255,255,255,.03));-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 12px 26px -18px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .25s,border-color .25s,box-shadow .25s;animation:lcIn .6s cubic-bezier(.2,.7,.2,1) both}
+.ls .fe li:nth-child(2){animation-delay:.08s}.ls .fe li:nth-child(3){animation-delay:.16s}.ls .fe li:nth-child(4){animation-delay:.24s}
+.ls .fe li::before{content:"";position:absolute;left:14%;right:14%;top:0;height:1px;background:linear-gradient(90deg,transparent,#7dd3fc,transparent);opacity:.7}
+.ls .fe li:hover{transform:translateY(-2px);border-color:rgba(125,211,252,.5);box-shadow:0 0 0 1px rgba(56,189,248,.22),0 16px 32px -16px rgba(56,189,248,.5)}
+.ls .fe .fi{flex:none;width:2.05rem;height:2.05rem;border-radius:.65rem;background:rgba(56,189,248,.14);box-shadow:inset 0 0 0 1px rgba(125,211,252,.3);color:#bfe6ff}
+.ls .fe .fi svg{width:1rem;height:1rem}
+.ls .fe b{width:auto;padding:0;margin:0 0 .12rem;border:0;font-size:.78rem;font-weight:600}
+.ls .fe div>span{font-size:.66rem;line-height:1.4;color:rgba(255,255,255,.6)}
+.ls .fe li>div{min-width:0}
+@media(min-width:901px) and (max-height:820px){.ls .fe div>span{display:none}.ls .fe li{padding:.55rem .7rem}}
+@media(min-width:901px) and (max-height:720px){.ls .hero-l>p{display:none}.ls-eye{margin-bottom:.45rem}}
+@media(min-width:901px) and (max-height:620px){.ls .fe{display:none}}
+@media(min-width:901px) and (max-width:1100px){.ls .fe{grid-template-columns:1fr}.ls .fe div>span{display:none}}
+
+.ls-sun{transition:transform 1s ease;transform:translate(190px,-8px)}
+.ls-sun .orb{fill:#fde68a;transition:fill 1s}.ls-sun .halo{fill:#fde68a;opacity:.18;transition:fill 1s}
+.ls-art[data-tod=pagi] .ls-sun{transform:translate(0,40px)}
+.ls-art[data-tod=pagi] .orb,.ls-art[data-tod=pagi] .halo{fill:#fcd34d}
+.ls-art[data-tod=sore] .ls-sun{transform:translate(228px,96px)}
+.ls-art[data-tod=sore] .orb,.ls-art[data-tod=sore] .halo{fill:#fb923c}
+.ls-art[data-tod=malam] .ls-sun{transform:translate(0,0)}
+.ls-art[data-tod=malam] .orb,.ls-art[data-tod=malam] .halo{fill:#e2e8f0}
+.ls-stars{opacity:0;transition:opacity 1s}.ls-art[data-tod=malam] .ls-stars{opacity:1}
+.ls-clouds{opacity:.18;transition:opacity 1s}.ls-art[data-tod=malam] .ls-clouds{opacity:.05}
+.ls-cloud{animation:lscl 32s ease-in-out infinite alternate}.ls-cloud.c2{animation-duration:26s;animation-direction:alternate-reverse}
+.fl{animation:lsf 6s ease-in-out infinite}.fl.d2{animation-duration:7s;animation-delay:-2s}.fl.d3{animation-duration:5.5s;animation-delay:-4s}
+.tw{transform-box:fill-box;transform-origin:center;animation:lst 3.2s ease-in-out infinite}
+.ls-w{opacity:.55;animation:lsw 5s ease-in-out infinite}.ls-w.g{fill:#d6b46a}
+.ls-b{transform-box:fill-box;transform-origin:bottom;animation:lsb 4s ease-in-out infinite;animation-delay:calc(var(--i) * -.6s)}
+.ls-flag{transform-box:fill-box;transform-origin:left center;animation:lsfl 3.4s ease-in-out infinite}
+.ls-flow{stroke-dasharray:4 6;animation:lsflow 2.4s linear infinite}
+.ls-ring{stroke-dasharray:3 7;animation:lsflow 7s linear infinite}
+.ls-pulse{transform-box:fill-box;transform-origin:center;animation:lspulse 4.5s ease-out infinite}
+.ls-beam{animation:lsbeam 5s ease-in-out infinite}
+.ls-orb{offset-path:path('M24 232a236 58 0 1 0 472 0a236 58 0 1 0 -472 0');offset-rotate:0deg;animation:lsorb 16s linear infinite}
+.ls-orb.o2{animation-duration:23s;animation-direction:reverse}
+@keyframes lsin{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes lsf{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes lst{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
+@keyframes lsw{0%,100%{opacity:.4}50%{opacity:.95}}
+@keyframes lsb{0%,100%{transform:scaleY(.78)}50%{transform:scaleY(1)}}
+@keyframes lsfl{0%,100%{transform:scaleX(1) skewY(0)}50%{transform:scaleX(.88) skewY(-5deg)}}
+@keyframes lscl{from{transform:translateX(-28px)}to{transform:translateX(28px)}}
+@keyframes lsflow{to{stroke-dashoffset:-20}}
+@keyframes lspulse{0%{transform:scale(.55);opacity:.55}100%{transform:scale(1.25);opacity:0}}
+@keyframes lsbeam{0%,100%{opacity:.55}50%{opacity:1}}
+@keyframes lsorb{from{offset-distance:0%}to{offset-distance:100%}}
 </style>
 </head>
 <body>
@@ -1088,15 +1159,91 @@ aside nav{margin-top:1.1rem}
   <div class="ls">
     <div class="br"><span class="lg"><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt="Logo SMK CALM"></span><div><b>SMK CALM</b><small>Yayasan Al-Musaddadiyah Garut</small></div></div>
     <div class="hero-l">
+      <span class="ls-eye"><i></i>Learning Management System</span>
       <h1>Portal LMS</h1>
       <p>Platform pembelajaran terpadu SMK CALM untuk pengelolaan kelas, materi, penugasan, kuis, dan penilaian, dengan hak akses yang disesuaikan bagi setiap peran.</p>
-      <ul class="fe">
-        <li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6M12 10h.01"/></svg></span><div><b>Kelas</b><span>Pengelolaan kelas dan keanggotaan peserta didik secara terstruktur</span></div></li>
-        <li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3Z"/><path d="M5 17a3 3 0 0 1 3-3h11M9 8h6M9 11h4"/></svg></span><div><b>Materi</b><span>Penyampaian materi pembelajaran yang tertata dan mudah diakses</span></div></li>
-        <li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="17" rx="2.5"/><path d="M9 4V3h6v1M8.5 12.5l2 2 4.5-4.5M8.5 18h7"/></svg></span><div><b>Tugas &amp; Kuis</b><span>Penugasan dan kuis dengan tenggat waktu yang jelas</span></div></li>
-        <li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V11M10 20V5M16 20v-7M22 20H2"/><path d="m3 7 5-3 5 4 7-5"/></svg></span><div><b>Nilai</b><span>Penilaian terdokumentasi disertai umpan balik dari guru</span></div></li>
-      </ul>
     </div>
+    <div class="ls-art" id="lsart" data-tod="siang" aria-hidden="true">
+      <div class="ls-scene"><svg viewBox="0 0 520 380" preserveAspectRatio="xMidYMid meet" focusable="false">
+        <defs>
+          <linearGradient id="lsgb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfeaff" stop-opacity=".24"/><stop offset="1" stop-color="#7dd3fc" stop-opacity=".06"/></linearGradient>
+          <linearGradient id="lsedge" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7dd3fc" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity=".22"/></linearGradient>
+          <radialGradient id="lsplat" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#38bdf8" stop-opacity=".6"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></radialGradient>
+          <radialGradient id="lsbeam" cx=".5" cy="1" r=".9"><stop offset="0" stop-color="#7dd3fc" stop-opacity=".26"/><stop offset="1" stop-color="#7dd3fc" stop-opacity="0"/></radialGradient>
+          <filter id="lsblur" x="-30%" y="-120%" width="160%" height="340%"><feGaussianBlur stdDeviation="9"/></filter>
+        </defs>
+
+        <g class="ls-stars" fill="#fff">
+          <circle class="tw" cx="40" cy="28" r="1.6"/><circle class="tw" style="animation-delay:-1s" cx="170" cy="20" r="1.2"/><circle class="tw" style="animation-delay:-2s" cx="236" cy="46" r="1.5"/><circle class="tw" style="animation-delay:-.5s" cx="330" cy="16" r="1.3"/><circle class="tw" style="animation-delay:-1.6s" cx="496" cy="40" r="1.6"/><circle class="tw" style="animation-delay:-2.6s" cx="470" cy="104" r="1.2"/>
+        </g>
+        <g class="ls-clouds" fill="#fff">
+          <g transform="translate(170 56)"><g class="ls-cloud"><ellipse cx="0" cy="0" rx="28" ry="8"/><ellipse cx="-14" cy="-6" rx="14" ry="8"/><ellipse cx="10" cy="-8" rx="16" ry="9"/></g></g>
+          <g transform="translate(450 118)"><g class="ls-cloud c2"><ellipse cx="0" cy="0" rx="22" ry="7"/><ellipse cx="-10" cy="-5" rx="11" ry="7"/><ellipse cx="8" cy="-7" rx="12" ry="8"/></g></g>
+        </g>
+        <g class="ls-sun"><circle class="halo" cx="92" cy="58" r="36"/><circle class="orb" cx="92" cy="58" r="17"/></g>
+
+        <ellipse cx="260" cy="322" rx="215" ry="34" fill="url(#lsplat)" filter="url(#lsblur)"/>
+        <rect class="ls-beam" x="150" y="96" width="220" height="226" fill="url(#lsbeam)"/>
+        <ellipse cx="260" cy="232" rx="236" ry="58" fill="none" stroke="#7dd3fc" stroke-opacity=".3" stroke-width="1" stroke-dasharray="2 6"/>
+
+        <ellipse class="ls-pulse" cx="260" cy="320" rx="150" ry="22" fill="none" stroke="#7dd3fc" stroke-width="1.2"/>
+        <ellipse class="ls-pulse" style="animation-delay:-2.2s" cx="260" cy="320" rx="150" ry="22" fill="none" stroke="#7dd3fc" stroke-width="1.2"/>
+        <ellipse class="ls-ring" cx="260" cy="320" rx="214" ry="34" fill="none" stroke="#7dd3fc" stroke-opacity=".6" stroke-width="1.2"/>
+        <ellipse cx="260" cy="320" rx="172" ry="26" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="1"/>
+        <ellipse cx="260" cy="320" rx="236" ry="38" fill="none" stroke="#fff" stroke-opacity=".07" stroke-width="1"/>
+
+        <g class="ls-links" fill="none" stroke="#7dd3fc" stroke-opacity=".6" stroke-width="1.2">
+          <path class="ls-flow" d="M356 76Q332 100 306 148"/><path class="ls-flow" d="M404 160L350 200"/><path class="ls-flow" d="M114 156L172 196"/><path class="ls-flow" d="M114 244L128 250"/><path class="ls-flow" d="M400 252L392 252"/>
+        </g>
+        <g fill="#7dd3fc"><circle cx="306" cy="148" r="3"/><circle cx="350" cy="200" r="3"/><circle cx="172" cy="196" r="3"/><circle cx="128" cy="250" r="3"/><circle cx="392" cy="252" r="3"/></g>
+
+        <g stroke="#bfe6ff" stroke-opacity=".55" stroke-width="1.3" stroke-linejoin="round">
+          <rect x="128" y="232" width="44" height="84" rx="4" fill="url(#lsgb)"/>
+          <rect x="348" y="232" width="44" height="84" rx="4" fill="url(#lsgb)"/>
+          <rect x="172" y="176" width="176" height="140" rx="5" fill="url(#lsgb)"/>
+          <path d="M160 179L260 122L360 179Z" fill="#cfeaff" fill-opacity=".16"/>
+        </g>
+        <circle cx="260" cy="153" r="11" fill="#d6b46a"/>
+        <path d="M254 153c3-2 5-2 6 0 1-2 3-2 6 0v6c-3-2-5-2-6 0-1-2-3-2-6 0z" fill="#0a2250"/>
+        <line x1="260" y1="122" x2="260" y2="88" stroke="#fff" stroke-opacity=".7" stroke-width="1.6"/>
+        <path class="ls-flag" d="M260 88h26l-6 6 6 6h-26z" fill="#d6b46a"/>
+        <g fill="#7dd3fc">
+          <rect class="ls-w" x="184" y="198" width="24" height="32" rx="3"/><rect class="ls-w g" style="animation-delay:-2s" x="212" y="198" width="24" height="32" rx="3"/>
+          <rect class="ls-w" style="animation-delay:-1s" x="184" y="244" width="24" height="32" rx="3"/><rect class="ls-w" style="animation-delay:-3s" x="212" y="244" width="24" height="32" rx="3"/>
+          <rect class="ls-w" style="animation-delay:-2.5s" x="284" y="198" width="24" height="32" rx="3"/><rect class="ls-w" style="animation-delay:-.5s" x="312" y="198" width="24" height="32" rx="3"/>
+          <rect class="ls-w" style="animation-delay:-3.5s" x="284" y="244" width="24" height="32" rx="3"/><rect class="ls-w g" style="animation-delay:-1.5s" x="312" y="244" width="24" height="32" rx="3"/>
+          <rect class="ls-w" style="animation-delay:-4s" x="139" y="252" width="22" height="30" rx="3"/><rect class="ls-w" style="animation-delay:-1.2s" x="359" y="252" width="22" height="30" rx="3"/>
+        </g>
+        <path d="M238 316V288a22 22 0 0 1 44 0V316Z" fill="#d6b46a" fill-opacity=".95"/>
+        <line x1="260" y1="266" x2="260" y2="316" stroke="#0a2250" stroke-opacity=".35" stroke-width="1.4"/>
+        <rect x="224" y="314" width="72" height="6" rx="2" fill="#fff" fill-opacity=".4"/>
+
+        <g><rect x="46" y="300" width="60" height="10" rx="2" fill="#0ea5e9"/><rect x="52" y="290" width="50" height="10" rx="2" fill="#fff" fill-opacity=".88"/><rect x="49" y="280" width="54" height="10" rx="2" fill="#d6b46a"/></g>
+
+        <path d="M24 232A236 58 0 0 0 496 232" fill="none" stroke="#7dd3fc" stroke-opacity=".55" stroke-width="1.2" stroke-dasharray="2 6"/>
+        <circle class="ls-orb" cx="0" cy="0" r="4.5" fill="#bfe6ff"/><circle class="ls-orb o2" cx="0" cy="0" r="3" fill="#d6b46a"/>
+
+        <g transform="translate(356 36)"><g class="fl"><rect width="108" height="56" rx="12" fill="#fff" fill-opacity=".12" stroke="url(#lsedge)" stroke-width="1.2"/><circle cx="26" cy="28" r="12" fill="#10b981"/><path d="M20 28.5l4.4 4.4 7.6-8.6" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><text x="47" y="26" font-size="11.5" font-weight="700" fill="#fff">Kuis</text><rect x="47" y="33" width="46" height="4.5" rx="2.2" fill="#fff" fill-opacity=".38"/><rect x="47" y="42" width="30" height="4.5" rx="2.2" fill="#fff" fill-opacity=".2"/></g></g>
+        <g transform="translate(404 128)"><g class="fl d2"><rect width="108" height="56" rx="12" fill="#fff" fill-opacity=".12" stroke="url(#lsedge)" stroke-width="1.2"/><text x="14" y="21" font-size="11.5" font-weight="700" fill="#fff">Nilai</text><path d="M14 44l16-11 12 6 20-16 14 7" fill="none" stroke="#7dd3fc" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="88" cy="20" r="8" fill="#d6b46a"/><path d="M84.4 20l2.6 2.6 4.8-5.2" fill="none" stroke="#0a2250" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></g></g>
+        <g transform="translate(10 128)"><g class="fl d3"><rect width="104" height="56" rx="12" fill="#fff" fill-opacity=".12" stroke="url(#lsedge)" stroke-width="1.2"/><text x="14" y="21" font-size="11.5" font-weight="700" fill="#fff">Tugas</text><rect x="14" y="30" width="11" height="11" rx="3" fill="#38bdf8"/><path d="M16.2 35.6l2.4 2.4 4-4.4" fill="none" stroke="#06235a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><rect x="31" y="32" width="46" height="5" rx="2.5" fill="#fff" fill-opacity=".34"/><rect x="14" y="46" width="62" height="3" rx="1.5" fill="#fff" fill-opacity=".14"/></g></g>
+        <g transform="translate(14 214)"><g class="fl d2" style="animation-delay:-3s"><rect width="100" height="56" rx="12" fill="#fff" fill-opacity=".12" stroke="url(#lsedge)" stroke-width="1.2"/><path d="M14 40V22c4-3 8-3 12 0 4-3 8-3 12 0v18c-4-3-8-3-12 0-4-3-8-3-12 0z" fill="#7dd3fc" fill-opacity=".9"/><text x="48" y="28" font-size="11.5" font-weight="700" fill="#fff">Materi</text><rect x="48" y="35" width="34" height="4.5" rx="2.2" fill="#fff" fill-opacity=".34"/></g></g>
+        <g transform="translate(400 224)"><g class="fl d3" style="animation-delay:-1s"><rect width="108" height="72" rx="12" fill="#fff" fill-opacity=".12" stroke="url(#lsedge)" stroke-width="1.2"/><text x="14" y="21" font-size="11.5" font-weight="700" fill="#fff">Rekap</text><g fill="#7dd3fc"><rect class="ls-b" style="--i:0" x="16" y="48" width="10" height="12" rx="2"/><rect class="ls-b" style="--i:1" x="31" y="42" width="10" height="18" rx="2"/><rect class="ls-b" style="--i:2" x="46" y="45" width="10" height="15" rx="2"/><rect class="ls-b" style="--i:3" x="61" y="36" width="10" height="24" rx="2"/><rect class="ls-b" style="--i:4;fill:#d6b46a" x="76" y="30" width="10" height="30" rx="2"/></g></g></g>
+
+        <g fill="#d6b46a">
+          <path class="tw" d="M150 36l2.2 5.8 5.8 2.2-5.8 2.2-2.2 5.8-2.2-5.8-5.8-2.2 5.8-2.2z"/>
+          <path class="tw" style="animation-delay:-1.4s" d="M490 78l1.8 4.6 4.6 1.8-4.6 1.8-1.8 4.6-1.8-4.6-4.6-1.8 4.6-1.8z"/>
+          <path class="tw" style="animation-delay:-2.2s" d="M36 100l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z"/>
+          <path class="tw" style="animation-delay:-.8s" d="M498 206l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z"/>
+        </g>
+      </svg></div>
+      <p class="ls-cap" id="lscap"><i></i><span>Materi, tugas, dan kuis dalam satu tempat</span></p>
+    </div>
+    <ul class="fe">
+        <li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V9l7-5 7 5v12"/><path d="M9 21v-6h6v6M12 10h.01"/></svg></span><div><b>Kelas</b><span>Kelas dan anggota tertata rapi</span></div></li>
+        <li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3Z"/><path d="M5 17a3 3 0 0 1 3-3h11M9 8h6M9 11h4"/></svg></span><div><b>Materi</b><span>Materi mudah diakses kapan saja</span></div></li>
+        <li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="17" rx="2.5"/><path d="M9 4V3h6v1M8.5 12.5l2 2 4.5-4.5M8.5 18h7"/></svg></span><div><b>Tugas &amp; Kuis</b><span>Tenggat jelas, kuis terukur</span></div></li>
+        <li><span class="fi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V11M10 20V5M16 20v-7M22 20H2"/><path d="m3 7 5-3 5 4 7-5"/></svg></span><div><b>Nilai</b><span>Nilai disertai umpan balik guru</span></div></li>
+      </ul>
     <div class="lf"><p class="accr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.4 1.8 3-.2 1 2.8 2.5 1.7-.9 2.9.9 2.9-2.5 1.7-1 2.8-3-.2L12 21l-2.4-1.8-3 .2-1-2.8-2.5-1.7.9-2.9-.9-2.9 2.5-1.7 1-2.8 3 .2z"/><path d="m9 12 2 2 4-4"/></svg><span><b>Terakreditasi A</b><small>BAN-PDM</small></span></p><p>&copy; 2026 SMKS Ciledug Al-Musaddadiyah Garut</p></div>
   </div>
   <div class="lm"><div class="lc">
@@ -1163,6 +1310,8 @@ try { S = JSON.parse(sessionStorage.getItem('lms')); } catch (e) {}
 
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const jsq = v => esc(JSON.stringify(String(v ?? '')));
+const safeUrl = u => /^https?:\/\//i.test(String(u || '').trim()) ? esc(String(u).trim()) : '';
 const roles = () => (S && S.user && (Array.isArray(S.user.roles) ? S.user.roles : [S.user.role])) || [];
 const hasR = r => roles().includes(r);
 const isMonitor = () => hasR('kepala_sekolah') || hasR('kurikulum') || hasR('admin');
@@ -1272,7 +1421,7 @@ $('#lform').addEventListener('submit', async e => {
   const b = $('#lbtn'); b.disabled = true; b.innerHTML = '<span class="spin"></span>Memeriksa…'; lerr('');
   try {
     S = await api('login', { username: u, password: pw });
-    if (!roles().includes(loginRole)) {
+    if (!roles().includes(loginRole) && !(loginRole === 'staff' && roles().includes('staf'))) {
       const nm = (ROLES[S.user.role] || {}).nama || S.user.role;
       await api('logout').catch(() => {}); S = null;
       throw new Error(`Akun ini terdaftar sebagai ${nm}. Silakan pilih peran “${nm}” pada bagian “Masuk sebagai”, lalu coba kembali.`);
@@ -1296,7 +1445,9 @@ $('#srvr').onclick = cekServer;
 
 function logout(call) {
   if (call && S) api('logout').catch(() => {});
-  setMenu(false); S = null; document.documentElement.removeAttribute('data-theme'); sessionStorage.removeItem('lms'); sessionStorage.removeItem('quoteShown'); snapClear(); cacheClear(); clearInterval(CLOCK_INT); O = null; C = null; EM = { on: false };
+  clearInterval(QT); window.onbeforeunload = null; setMenu(false); S = null; document.documentElement.removeAttribute('data-theme'); sessionStorage.removeItem('lms'); sessionStorage.removeItem('quoteShown'); snapClear(); cacheClear(); clearInterval(CLOCK_INT); O = null; C = null; EM = { on: false };
+  HM = { data: null, day: '', cid: '', seq: HM.seq + 1 }; AT = { cid: '', date: '', tab: 'in', seq: AT.seq + 1, st: [], marks: {}, rp: 'all', from: '', to: '' };
+  _syncCred = []; _adminClassesCache = null; _adminTeachersCache = null; _adminSchedulesCache = null; _recapData = null; window._attRows = null; window._attStu = null; NL = []; FR.busy = false;
   $('#app').classList.add('hide'); $('#login').classList.remove('hide'); $('#pw').value = ''; cekServer();
 }
 
@@ -1811,7 +1962,7 @@ function drawClass(tab) {
   const add = (label, fn) => t ? `<div class="row" style="margin-bottom:14px"><button class="btn" onclick="${fn}">${label}</button></div>` : '';
   let body = '';
   if (tab === 'ann') body = add('Buat pengumuman', 'addAnn()') + (C.announcements.map(a => `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${esc(a.author)} • ${tgl(a.created)}</div><p>${esc(a.body)}</p></div>`).join('') || empty('Belum ada pengumuman', 'Pengumuman dari guru akan ditampilkan di sini.'));
-  if (tab === 'mat') body = add('Tambah materi', 'addMat()') + (C.materials.map(m => `<div class="card item"><h4>${esc(m.title)}</h4><div class="meta">${tgl(m.created)}</div>${m.description ? `<p>${esc(m.description)}</p>` : ''}${m.file_url ? `<p><a href="${esc(m.file_url)}" target="_blank" rel="noopener">Buka berkas</a></p>` : ''}</div>`).join('') || empty('Belum ada materi', 'Materi yang diunggah guru akan ditampilkan di sini.'));
+  if (tab === 'mat') body = add('Tambah materi', 'addMat()') + (C.materials.map(m => `<div class="card item"><h4>${esc(m.title)}</h4><div class="meta">${tgl(m.created)}</div>${m.description ? `<p>${esc(m.description)}</p>` : ''}${safeUrl(m.file_url) ? `<p><a href="${safeUrl(m.file_url)}" target="_blank" rel="noopener">Buka berkas</a></p>` : ''}</div>`).join('') || empty('Belum ada materi', 'Materi yang diunggah guru akan ditampilkan di sini.'));
   if (tab === 'asg') body = add('Buat tugas', 'addAsg()') + (C.assignments.map(a => asgCard(a, t)).join('') || empty('Belum ada tugas', 'Tugas dari guru akan ditampilkan di sini.'));
   if (tab === 'qz')  body = add('Buat kuis', 'addQuiz()') + (C.quizzes.map(quizCard).join('') || empty('Belum ada kuis', 'Kuis yang diterbitkan guru akan ditampilkan di sini.'));
   if (tab === 'fr')  body = forumView();
@@ -1825,7 +1976,7 @@ function asgCard(a, t) {
   const subs = C.submissions.filter(s => s.assignment_id === a.id);
   let foot = '';
   if (t) {
-    foot = `<details><summary>${subs.length} pengumpulan</summary>${subs.map(s => `<div class="sr"><div><b>${esc(s.full_name)}</b><br>${s.file_url ? `<a href="${esc(s.file_url)}" target="_blank" rel="noopener">Buka berkas</a> ` : ''}<span class="meta">${esc(s.note || '')}</span></div>
+    foot = `<details><summary>${subs.length} pengumpulan</summary>${subs.map(s => `<div class="sr"><div><b>${esc(s.full_name)}</b><br>${safeUrl(s.file_url) ? `<a href="${safeUrl(s.file_url)}" target="_blank" rel="noopener">Buka berkas</a> ` : ''}<span class="meta">${esc(s.note || '')}</span></div>
       <input id="sc-${s.id}" type="number" min="0" max="${a.max_score}" value="${esc(s.score)}" placeholder="/${a.max_score}" aria-label="Nilai"><input id="fb-${s.id}" value="${esc(s.feedback || '')}" placeholder="Umpan balik" aria-label="Umpan balik">
       <button class="btn" onclick="gradeIt(${esc(JSON.stringify(String(s.id)))})">Simpan nilai</button></div>`).join('') || '<p class="meta" style="margin-top:8px">Belum ada pengumpulan.</p>'}</details>`;
   } else if (isReadOnlyMonitor()) {
@@ -2027,7 +2178,7 @@ function takeQuiz(d) {
     else if (b.hasAttribute('data-fin')) fin(false);
   };
   document.onkeydown = e => {
-    if (!$('.qbar') || done || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
+    if (!$('.qbar') || done || e.ctrlKey || e.metaKey || e.altKey || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
     const q = qs[cur], i = 'abcdef'.indexOf(e.key.toLowerCase()), k = +e.key;
     if (e.key === 'ArrowRight') go(cur + 1); else if (e.key === 'ArrowLeft' && !qsec) go(cur - 1);
     else { const o = optsOf(q)[k ? k - 1 : i]; if (o) { ans[q.id] = o[1]; save(); draw(); } }
@@ -2269,7 +2420,7 @@ async function adminUsersPage(role) {
       : `<button class="btn2" onclick="exportAdminUsers('${role}')">Ekspor CSV</button>`;
     view(`<div class="top"><div><h2>Data ${role === 'siswa' ? 'Siswa' : role === 'staf' ? 'Staf' : 'Guru'}</h2><p>${w ? 'Kelola akun, status akses, pengaturan ulang sandi, serta impor dan ekspor data.' : 'Daftar akun pengguna. <span class="ro-chip">Hanya lihat</span>'}</p></div><div class="acts">${acts}</div></div>
     <div class="toolbar">${searchBox('Cari nama, username, atau status')}<span class="meta">${list.length} akun</span></div>
-    <div class="card" style="overflow-x:auto;padding:0"><table style="margin:0"><thead><tr><th>Nama</th><th>Username</th><th>Peran</th><th>Status</th>${w ? '<th>Aksi</th>' : ''}</tr></thead><tbody>${list.map(x=>`<tr><td><b>${esc(x.full_name)}</b><div class="meta">${esc(x.email||'')}</div></td><td>${esc(x.username)}</td><td><span class="badge">${esc(roleLabel(x.role))}</span>${x.extra_roles ? `<div class="meta">Tambahan: ${esc(String(x.extra_roles).split(/[,;|]/).map(r => roleLabel(r.trim())).join(', '))}</div>`:''}</td><td><span class="badge ${String(x.status).toLowerCase()==='aktif'?'ok':'warn'}">${String(x.status).toLowerCase()==='aktif'?'Aktif':String(x.status).toLowerCase()==='nonaktif'?'Nonaktif':esc(x.status||'—')}</span></td>${w ? `<td><div class="acts" style="justify-content:flex-start"><button class="btn2" style="padding:.4rem .8rem" onclick="editAdminUser('${role}','${esc(x.user_id)}')">Ubah</button><button class="btn2" style="padding:.4rem .8rem" onclick="resetAdminAccount('${esc(x.user_id)}','${esc(x.username)}')">Reset sandi</button><button class="link" onclick="deleteAdminUser('${esc(x.user_id)}','${esc(x.full_name)}','${role}')">Hapus</button></div></td>` : ''}</tr>`).join('') || `<tr><td colspan="${w ? 5 : 4}" style="text-align:center;padding:2rem">Belum ada akun ${nm}.</td></tr>`}</tbody></table></div>`);
+    <div class="card" style="overflow-x:auto;padding:0"><table style="margin:0"><thead><tr><th>Nama</th><th>Username</th><th>Peran</th><th>Status</th>${w ? '<th>Aksi</th>' : ''}</tr></thead><tbody>${list.map(x=>`<tr><td><b>${esc(x.full_name)}</b><div class="meta">${esc(x.email||'')}</div></td><td>${esc(x.username)}</td><td><span class="badge">${esc(roleLabel(x.role))}</span>${x.extra_roles ? `<div class="meta">Tambahan: ${esc(String(x.extra_roles).split(/[,;|]/).map(r => roleLabel(r.trim())).join(', '))}</div>`:''}</td><td><span class="badge ${String(x.status).toLowerCase()==='aktif'?'ok':'warn'}">${String(x.status).toLowerCase()==='aktif'?'Aktif':String(x.status).toLowerCase()==='nonaktif'?'Nonaktif':esc(x.status||'—')}</span></td>${w ? `<td><div class="acts" style="justify-content:flex-start"><button class="btn2" style="padding:.4rem .8rem" onclick="editAdminUser('${role}',${jsq(x.user_id)})">Ubah</button><button class="btn2" style="padding:.4rem .8rem" onclick="resetAdminAccount(${jsq(x.user_id)},${jsq(x.username)})">Reset sandi</button><button class="link" onclick="deleteAdminUser(${jsq(x.user_id)},${jsq(x.full_name)},'${role}')">Hapus</button></div></td>` : ''}</tr>`).join('') || `<tr><td colspan="${w ? 5 : 4}" style="text-align:center;padding:2rem">Belum ada akun ${nm}.</td></tr>`}</tbody></table></div>`);
   } catch(e) { view(`<div class="card empty"><b>Data belum dapat dimuat</b>${esc(e.message)}<p><button class="btn2" onclick="adminUsersPage('${role}')">Coba lagi</button></p></div>`); }
 }
 function csvCell(v) { 
@@ -2283,11 +2434,11 @@ function downloadCsv(filename, rows) {
 }
 function parseCsv(text) {
   const rows=[]; let row=[], cell='', quoted=false;
-  text=String(text||'').replace(/^\ufeff/,'');
+  text=String(text||'').replace(/^\ufeff/,''); const _fl=text.split(/\r?\n/)[0]||'', dl=_fl.split(';').length>_fl.split(',').length?';':',';
   for(let i=0;i<text.length;i++) { const ch=text[i];
     if(quoted) { if(ch==='"' && text[i+1]==='"'){cell+='"';i++;} else if(ch==='"') quoted=false; else cell+=ch; }
     else if(ch==='"' && cell==='') quoted=true;
-    else if(ch===','){row.push(cell);cell='';}
+    else if(ch===dl){row.push(cell);cell='';}
     else if(ch==='\n'){row.push(cell.replace(/\r$/,''));if(row.some(x=>x.trim()))rows.push(row);row=[];cell='';}
     else cell+=ch;
   }
@@ -2327,6 +2478,7 @@ function importAdminUsers(role) {
         if(role==='staf' ? !staffRoleSet().includes(rowRole) : rowRole!==role) throw new Error(role==='staf' ? `Kolom “role” harus salah satu dari: ${staffRoleSet().join(', ')}.` : `Kolom “role” harus berisi “${role}”.`);
         if(!r.full_name||!r.username) throw new Error('Nama lengkap dan username wajib diisi.');
         const existing=users.find(x=>String(x.username).toLowerCase()===r.username.toLowerCase());
+        if(existing && !hasR('admin') && !inGroup(existing,role)) throw new Error('Username sudah dipakai akun dengan peran lain dan tidak dapat diubah melalui impor ini.');
         const payload={full_name:r.full_name,username:r.username,role:role==='staf'?rowRole:role,extra_roles:r.extra_roles||'',email:r.email||'',status:r.status||'aktif'};
         if(existing) payload.user_id=existing.user_id;
         else { if(!r.password || r.password.length<8) throw new Error('Akun baru wajib memiliki sandi minimal 8 karakter.'); payload.password=r.password; }
@@ -2348,7 +2500,7 @@ async function editAdminUser(role, id) {
     : [{v:'siswa',l:'Siswa'}];
   const fields = [
     {n:'full_name',l:'Nama lengkap',v:user?.full_name||''}, {n:'username',l:'Username',v:user?.username||''},
-    {n:'role',l:'Peran utama',t:'select',v:user?.role||dflt,opts:roleOpts},
+    {n:'role',l:'Peran utama',t:'select',v:user?.role||dflt,opts:(user && user.role && !roleOpts.some(o=>o.v===user.role)) ? [{v:user.role,l:roleLabel(user.role)}].concat(roleOpts) : roleOpts},
     {n:'extra_roles',l:'Peran tambahan (opsional, pisahkan dengan koma)',v:user?.extra_roles||'',r:false},
     {n:'email',l:'Email (opsional)',t:'email',v:user?.email||'',r:false},
     {n:'gender',l:'Jenis kelamin',t:'select',v:user?.gender||'',opts:[{v:'',l:'Belum diisi'},{v:'L',l:'Laki-laki'},{v:'P',l:'Perempuan'}],r:false},
@@ -2377,7 +2529,7 @@ async function adminClassesPage() {
     _adminClassesCache = r.classes;
     view(`<div class="top"><div><h2>Data Kelas</h2><p>${w ? 'Perbarui nama, mata pelajaran, dan guru pengampu.' : 'Daftar kelas untuk dilihat. <span class="ro-chip">Hanya lihat</span>'}</p></div>${w ? '<button class="btn" onclick="editAdminClass()">+ Tambah kelas</button>' : ''}</div>
     <div class="toolbar">${searchBox('Cari kelas, mata pelajaran, atau guru')}<span class="meta">${r.classes.length} kelas</span></div>
-    <div class="card" style="overflow-x:auto;padding:0"><table style="margin:0"><thead><tr><th>Kelas</th><th>Mata pelajaran</th><th>Guru pengampu</th>${w ? '<th>Kode gabung</th><th>Aksi</th>' : ''}</tr></thead><tbody>${r.classes.map(c=>`<tr><td><b>${esc(c.name)}</b><div class="meta">${esc(c.description||'')}</div></td><td>${esc(c.subject||'—')}</td><td>${esc(c.teacher_name||'—')}</td>${w ? `<td><code>${esc(c.code||'—')}</code></td><td><div class="acts" style="justify-content:flex-start"><button class="btn2" style="padding:.4rem .8rem" onclick="editAdminClass('${esc(c.id)}')">Ubah</button><button class="link" onclick="deleteAdminClass('${esc(c.id)}','${esc(c.name)}')">Hapus</button></div></td>` : ''}</tr>`).join('')||`<tr><td colspan="${w ? 5 : 3}" style="text-align:center;padding:2rem">Belum ada kelas.</td></tr>`}</tbody></table></div>`);
+    <div class="card" style="overflow-x:auto;padding:0"><table style="margin:0"><thead><tr><th>Kelas</th><th>Mata pelajaran</th><th>Guru pengampu</th>${w ? '<th>Kode gabung</th><th>Aksi</th>' : ''}</tr></thead><tbody>${r.classes.map(c=>`<tr><td><b>${esc(c.name)}</b><div class="meta">${esc(c.description||'')}</div></td><td>${esc(c.subject||'—')}</td><td>${esc(c.teacher_name||'—')}</td>${w ? `<td><code>${esc(c.code||'—')}</code></td><td><div class="acts" style="justify-content:flex-start"><button class="btn2" style="padding:.4rem .8rem" onclick="editAdminClass(${jsq(c.id)})">Ubah</button><button class="link" onclick="deleteAdminClass(${jsq(c.id)},${jsq(c.name)})">Hapus</button></div></td>` : ''}</tr>`).join('')||`<tr><td colspan="${w ? 5 : 3}" style="text-align:center;padding:2rem">Belum ada kelas.</td></tr>`}</tbody></table></div>`);
   } catch(e) { view(`<div class="card empty">${esc(e.message)}<p><button class="btn2" onclick="adminClassesPage()">Coba lagi</button></p></div>`); }
 }
 function editAdminClass(id) {
@@ -2403,7 +2555,7 @@ async function adminSchedulesPage() {
     const r=await api('adminSchedules'); _adminSchedulesCache=r;
     const days=['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'];
     view(`<div class="top"><div><h2>Data Jadwal</h2><p>Kelola hari, waktu, ruang, mata pelajaran, dan kelas.</p></div><button class="btn" onclick="editAdminSchedule()">+ Tambah jadwal</button></div>
-      <div class="card" style="overflow-x:auto;padding:0"><table style="margin:0"><thead><tr><th>Hari / Waktu</th><th>Kelas / Mapel</th><th>Guru</th><th>Ruang</th><th>Aksi</th></tr></thead><tbody>${r.schedules.slice().sort((a,b)=>days.indexOf(a.day)-days.indexOf(b.day)||String(a.start_time).localeCompare(String(b.start_time))).map(x=>`<tr><td><b>${esc(x.day)}</b><div style="font-size:.85rem;color:var(--mut)">${esc(x.start_time)}–${esc(x.end_time)}</div></td><td><b>${esc(x.class_name)}</b><div class="meta">${esc(x.subject||'—')}</div></td><td>${esc(x.teacher_name||'—')}</td><td>${esc(x.room||'—')}</td><td><div class="acts" style="justify-content:flex-start"><button class="btn2" style="padding:.4rem .8rem" onclick="editAdminSchedule('${esc(x.id)}')">Ubah</button><button class="link" onclick="deleteAdminSchedule('${esc(x.id)}')">Hapus</button></div></td></tr>`).join('')||'<tr><td colspan="5" style="text-align:center;padding:2rem">Belum ada jadwal.</td></tr>'}</tbody></table></div>`);
+      <div class="card" style="overflow-x:auto;padding:0"><table style="margin:0"><thead><tr><th>Hari / Waktu</th><th>Kelas / Mapel</th><th>Guru</th><th>Ruang</th><th>Aksi</th></tr></thead><tbody>${r.schedules.slice().sort((a,b)=>days.indexOf(a.day)-days.indexOf(b.day)||String(a.start_time).localeCompare(String(b.start_time))).map(x=>`<tr><td><b>${esc(x.day)}</b><div style="font-size:.85rem;color:var(--mut)">${esc(x.start_time)}–${esc(x.end_time)}</div></td><td><b>${esc(x.class_name)}</b><div class="meta">${esc(x.subject||'—')}</div></td><td>${esc(x.teacher_name||'—')}</td><td>${esc(x.room||'—')}</td><td><div class="acts" style="justify-content:flex-start"><button class="btn2" style="padding:.4rem .8rem" onclick="editAdminSchedule(${jsq(x.id)})">Ubah</button><button class="link" onclick="deleteAdminSchedule(${jsq(x.id)})">Hapus</button></div></td></tr>`).join('')||'<tr><td colspan="5" style="text-align:center;padding:2rem">Belum ada jadwal.</td></tr>'}</tbody></table></div>`);
   } catch(e){view(`<div class="card empty">${esc(e.message)}<p><button class="btn2" onclick="adminSchedulesPage()">Coba lagi</button></p></div>`);}
 }
 function editAdminSchedule(id) {
@@ -2727,6 +2879,7 @@ const vReview = () => page('review', 'Perlu dinilai', 'Pengumpulan tugas yang be
 function vRecap(cid) {
   return page('recap', isMonitor() ? 'Rekap seluruh kelas' : 'Rekap nilai', isMonitor() ? 'Ringkasan aktivitas dan capaian nilai lintas kelas untuk pengawasan.' : 'Rata-rata nilai siswa per kelas, dalam persen.', () => {
     if (!O.classes.length) return '<div class="card empty"><b>Belum ada kelas</b>Belum ada data kelas untuk ditampilkan.</div>';
+    cid = cid || O.classes[0].id;
     if (isMonitor()) {
       const avg = xs => xs.length ? Math.round(xs.reduce((a, b) => a + b, 0) / xs.length * 10) / 10 : null;
       const recap = O.classes.map(c => {
@@ -3399,6 +3552,27 @@ function hmAttStu(el, cl) {
     + (all.total ? '<div class="hm-sh"><div class="hm-sum">' + hmRing(pct) + '</div>' + hmLegend(all) + '</div>' : '')
     + '<div>' + rows + '</div>';
 }
+</script>
+<script>
+/* Dekoratif: sesuaikan suasana ilustrasi login dengan waktu dan putar kalimat singkat. Terisolasi dari logika LMS. */
+(function () {
+  try {
+    var el = document.getElementById('lsart'), cap = document.getElementById('lscap');
+    if (!el || !cap) return;
+    var tips = ['Materi, tugas, dan kuis dalam satu tempat', 'Belajar dari mana saja, kapan saja', 'Cek tenggat tugas sebelum hari berganti', 'Presensi dan nilai tercatat dengan rapi', 'Diskusi kelas bersama guru dan teman', 'Satu portal untuk seluruh ruang belajar', 'Mulai dari langkah kecil hari ini', 'Guru dan siswa terhubung di satu kelas'];
+    var i = Math.floor(Math.random() * tips.length), txt = cap.querySelector('span');
+    function tod() { var h = new Date().getHours(); return h < 11 ? 'pagi' : h < 15 ? 'siang' : h < 19 ? 'sore' : 'malam'; }
+    function sync() { el.setAttribute('data-tod', tod()); }
+    txt.textContent = tips[i]; sync();
+    setInterval(function () {
+      var lg = document.getElementById('login');
+      if (document.hidden || !lg || lg.classList.contains('hide')) return;
+      sync(); cap.classList.add('sw');
+      setTimeout(function () { i = (i + 1) % tips.length; txt.textContent = tips[i]; cap.classList.remove('sw'); }, 380);
+    }, 7000);
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) sync(); });
+  } catch (e) {}
+})();
 </script>
 </body>
 </html>
