@@ -1375,6 +1375,31 @@ img{max-width:100%}
 @media(max-width:767px){.social-kc{min-height:16rem}.kc-friendly{display:none}}
 </style>
 
+<style id="kelas-sosmed">
+/* Kelas gaya komunitas: beranda feed, profil kelas, kartu kiriman */
+.sc{background:#fff;border:1px solid var(--line);border-radius:1.3rem;overflow:hidden;margin-bottom:1rem;box-shadow:var(--shadow-sm)}
+.sc-ban{height:7.5rem;background:radial-gradient(60% 120% at 10% 0,rgba(14,165,233,.55),transparent 60%),radial-gradient(50% 120% at 95% 100%,rgba(214,180,106,.5),transparent 60%),linear-gradient(135deg,#0b3d91,#0a2a63)}
+.sc-in{display:flex;gap:1rem;align-items:flex-end;padding:0 1.25rem 1.1rem;margin-top:-2.2rem;flex-wrap:wrap}
+.sc-av{display:grid;place-items:center;flex:none;width:4.8rem;height:4.8rem;border-radius:50%;border:4px solid #fff;background:linear-gradient(135deg,#0ea5e9,#0b3d91);color:#fff;font-weight:800;font-size:1.35rem;box-shadow:0 6px 18px -6px rgba(10,34,80,.5)}
+.sc-tx{flex:1;min-width:12rem;padding-top:2.4rem}.sc-tx h1{font-size:1.45rem;line-height:1.25;color:var(--navyd);margin:0}.sc-tx p{margin:.15rem 0 .6rem;color:var(--mut);font-size:.9rem}
+.sc-st{display:flex;flex-wrap:wrap;gap:.45rem}.sc-st span,.sc-code{font-size:.78rem;font-weight:700;padding:.3rem .7rem;border-radius:99px;background:var(--soft);color:var(--navy);border:0}.sc-code{background:#fff7e0;color:#8a6414;cursor:pointer}
+.sc-tabs{position:sticky;top:0;z-index:5;background:var(--bg);padding:.5rem 0;gap:.4rem;border-bottom:0;margin-bottom:.6rem}
+.sc-tabs button{flex:none;border:1px solid var(--line2);background:#fff;border-radius:99px;padding:.5rem 1rem;font-weight:700;font-size:.86rem;color:var(--mut)}
+.sc-tabs button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.sp-feed{max-width:42rem;margin:0 auto}
+.sp{background:#fff;border:1px solid var(--line);border-radius:1.2rem;margin-bottom:.9rem;box-shadow:var(--shadow-sm);overflow:hidden}
+.sp .card.item{border:0;box-shadow:none;border-radius:0;margin:0;padding:.2rem 1.1rem 1rem}
+.sp-h{display:flex;align-items:center;gap:.7rem;padding:.9rem 1.1rem .3rem}.sp-w{display:flex;flex-direction:column;min-width:0;flex:1;line-height:1.3}.sp-w b{font-size:.92rem;color:var(--ink)}
+.sp-k{font-size:.72rem;font-weight:800;padding:.25rem .65rem;border-radius:99px;background:var(--soft);color:var(--navy);white-space:nowrap}
+.sp-asg{background:#fff1e6;color:#b45309}.sp-qz{background:#f3e8ff;color:#7e22ce}.sp-mat{background:#e6f7f0;color:#047857}.sp-fr{background:#e0f2fe;color:#0369a1}
+.sp-file{display:inline-flex;gap:.4rem;padding:.5rem .9rem;border-radius:.8rem;background:var(--soft);font-weight:700;text-decoration:none}
+.sp-comp{background:#fff;border:1px solid var(--line);border-radius:1.2rem;padding:.8rem;margin-bottom:.9rem;box-shadow:var(--shadow-sm)}
+.sp-cr{display:flex;gap:.7rem;align-items:center}.sp-ph{flex:1;text-align:left;border:1px solid var(--line2);background:var(--bg);border-radius:99px;padding:.7rem 1rem;color:var(--faint);font-size:.9rem;min-width:0}
+.sp-qa{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.7rem;padding-top:.7rem;border-top:1px solid var(--line)}.sp-qa button{flex:1;border:0;background:var(--soft);border-radius:.8rem;padding:.55rem .6rem;font-weight:700;font-size:.8rem;color:var(--navy);white-space:nowrap}
+.sp-due{background:linear-gradient(135deg,#fff7e0,#ffe9d2);border-radius:1.2rem;padding:.9rem 1rem;margin-bottom:.9rem;display:grid;gap:.4rem}.sp-due button{display:flex;justify-content:space-between;gap:.6rem;border:0;background:rgba(255,255,255,.7);border-radius:.8rem;padding:.55rem .8rem;font-size:.85rem;text-align:left}.sp-due i{font-style:normal;color:#b45309;font-weight:700;white-space:nowrap}
+.sp .cmt{border-top:1px solid var(--line);margin-top:.7rem;padding-top:.5rem}.sp .cmt summary{font-weight:700;color:var(--mut);cursor:pointer}
+@media(max-width:767px){.sc-ban{height:5.5rem}.sc-av{width:4rem;height:4rem;font-size:1.1rem}.sc-tx{padding-top:2rem}.sp-qa button{flex:1 1 45%}}
+</style>
 </head>
 <body>
 
@@ -2225,11 +2250,11 @@ async function openClass(id, tab) {
   try {
     const data = await api('classDetail', { class_id: id });
     if (seq !== _openSeq) return;
-    C = data; snapSave(id, data); drawClass(tab || 'ann');
+    C = data; snapSave(id, data); drawClass(tab || 'feed');
   } catch (e) {
     if (seq !== _openSeq) return;
     const sn = snapLoad(id);
-    if (sn && sn.d && (navigator.onLine === false || /koneksi|offline|sinyal|waktu lebih lama/i.test(e.message))) { C = sn.d; C._offline = sn.t; drawClass(tab || 'ann'); toast('Koneksi bermasalah. Menampilkan data terakhir yang tersimpan.', true); return; }
+    if (sn && sn.d && (navigator.onLine === false || /koneksi|offline|sinyal|waktu lebih lama/i.test(e.message))) { C = sn.d; C._offline = sn.t; drawClass(tab || 'feed'); toast('Koneksi bermasalah. Menampilkan data terakhir yang tersimpan.', true); return; }
     toast(e.message, true); home();
   }
 }
@@ -2238,19 +2263,49 @@ const canManageCurrentClass = () => !!C && C.access_mode === 'teacher_operationa
 const isReadOnlyMonitor = () => !!C && C.access_mode === 'monitor_readonly';
 const empty = (t, s) => `<div class="card empty"><b>${t}</b>${s}</div>`;
 
+/* ===== Tampilan kelas gaya media sosial: Beranda (feed), profil kelas, kotak bagikan ===== */
+const ago = d => { if (!d) return ''; const s = (Date.now() - new Date(d)) / 1000; if (!(s >= 0)) return tglw(d); if (s < 60) return 'baru saja'; if (s < 3600) return Math.floor(s / 60) + ' menit lalu'; if (s < 86400) return Math.floor(s / 3600) + ' jam lalu'; if (s < 604800) return Math.floor(s / 86400) + ' hari lalu'; return tgl(d); };
+const SP_KIND = { ann: ['📢', 'Pengumuman'], mat: ['📎', 'Materi'], asg: ['📝', 'Tugas'], qz: ['🎯', 'Kuis'], fr: ['💬', 'Diskusi'] };
+const spHead = (kind, who, when) => `<div class="sp-h"><span class="fav g" aria-hidden="true">${esc(String(who || 'G').trim().charAt(0).toUpperCase())}</span><div class="sp-w"><b>${esc(who || 'Guru')}</b><span class="meta">${ago(when)}</span></div><span class="sp-k sp-${kind}">${SP_KIND[kind][0]} ${SP_KIND[kind][1]}</span></div>`;
+const annCard = (a, t) => `<div class="card item"><h4>${esc(a.title)}</h4><p>${esc(a.body)}</p>${contentActions(t, 'editAnn', 'deleteAnn', a.id, 'pengumuman')}${cmtBlock('ann', a.id)}</div>`;
+const matCard = (m, t) => `<div class="card item"><h4>${esc(m.title)}</h4>${m.description ? `<p>${esc(m.description)}</p>` : ''}${safeUrl(m.file_url) ? `<p><a class="sp-file" href="${safeUrl(m.file_url)}" target="_blank" rel="noopener">📄 Buka berkas</a></p>` : ''}${contentActions(t, 'editMat', 'deleteMat', m.id, 'materi')}${cmtBlock('mat', m.id)}</div>`;
+function copyCode(c) { try { navigator.clipboard.writeText(c).then(() => toast('Kode kelas disalin.'), () => toast('Salin kode secara manual: ' + c, true)); } catch (e) { toast('Salin kode secara manual: ' + c, true); } }
+function feedView(t, readOnly) {
+  const items = [];
+  (C.announcements || []).forEach(a => items.push({ k: 'ann', c: a.created, who: a.author || C.cls.teacher_name, h: annCard(a, t) }));
+  (C.materials || []).forEach(m => items.push({ k: 'mat', c: m.created, who: C.cls.teacher_name, h: matCard(m, t) }));
+  (C.assignments || []).forEach(a => items.push({ k: 'asg', c: a.created, who: C.cls.teacher_name, h: asgCard(a, t) }));
+  (C.quizzes || []).forEach(q => items.push({ k: 'qz', c: q.created, who: C.cls.teacher_name, h: quizCard(q) }));
+  (C.posts || []).filter(p => !p.parent_id && String(p.hidden) !== 'y').forEach(p => items.push({ k: 'fr', c: p.created, who: p.full_name, h: `<div class="card item">${p.title ? `<h4>${esc(p.title)}</h4>` : ''}<p>${esc(String(p.body || '').slice(0, 280))}${String(p.body || '').length > 280 ? '…' : ''}</p><button type="button" class="link" onclick="drawClass('fr')">Buka diskusi & balas →</button></div>` }));
+  items.sort((a, b) => String(b.c).localeCompare(String(a.c)));
+  let due = '';
+  if (!t && !readOnly) {
+    const done = new Set((C.submissions || []).map(s => String(s.assignment_id))), now = Date.now() - 864e5;
+    const up = (C.assignments || []).filter(a => a.due && !done.has(String(a.id)) && new Date(a.due).getTime() >= now).sort((a, b) => new Date(a.due) - new Date(b.due)).slice(0, 3);
+    if (up.length) due = `<div class="sp-due"><b>⏰ Tenggat terdekat</b>${up.map(a => `<button type="button" onclick="drawClass('asg')"><span>${esc(a.title)}</span><i>${tgl(a.due)}</i></button>`).join('')}</div>`;
+  }
+  const me = S ? String(S.user.full_name || '') : '';
+  const comp = readOnly ? '' : t
+    ? `<div class="sp-comp"><div class="sp-cr"><span class="fav g" aria-hidden="true">${esc((me || 'G').charAt(0).toUpperCase())}</span><button type="button" class="sp-ph" onclick="addAnn()">Bagikan sesuatu ke kelas, ${esc(me.split(' ')[0] || 'Bapak/Ibu')}…</button></div><div class="sp-qa"><button type="button" onclick="addAnn()">📢 Pengumuman</button><button type="button" onclick="addMat()">📎 Materi</button><button type="button" onclick="addAsg()">📝 Tugas</button><button type="button" onclick="addQuiz()">🎯 Kuis</button></div></div>`
+    : `<div class="sp-comp"><div class="sp-cr"><span class="fav" aria-hidden="true">${esc((me || 'S').charAt(0).toUpperCase())}</span><button type="button" class="sp-ph" onclick="drawClass('fr')">Ada yang ingin ditanyakan atau dibahas? Tulis di sini…</button></div></div>`;
+  return due + comp + (items.map(x => `<article class="sp">${spHead(x.k, x.who, x.c)}${x.h}</article>`).join('') || empty('Beranda kelas masih sepi', t ? 'Bagikan pengumuman, materi, atau tugas pertama agar kelas mulai ramai.' : 'Kiriman dari guru dan teman sekelas akan muncul di sini.'));
+}
 function drawClass(tab) {
   CT = tab; const { cls } = C, t = canManageCurrentClass(), readOnly = isReadOnlyMonitor();
   const add = (label, fn) => t ? `<div class="row" style="margin-bottom:14px"><button class="btn" onclick="${fn}">${label}</button></div>` : '';
   let body = '';
-  if (tab === 'ann') body = add('Buat pengumuman', 'addAnn()') + (C.announcements.map(a => `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${esc(a.author)} • ${tgl(a.created)}</div><p>${esc(a.body)}</p>${contentActions(t, 'editAnn', 'deleteAnn', a.id, 'pengumuman')}${cmtBlock('ann', a.id)}</div>`).join('') || empty('Belum ada pengumuman', 'Pengumuman dari guru akan ditampilkan di sini.'));
-  if (tab === 'mat') body = add('Tambah materi', 'addMat()') + (C.materials.map(m => `<div class="card item"><h4>${esc(m.title)}</h4><div class="meta">${tgl(m.created)}</div>${m.description ? `<p>${esc(m.description)}</p>` : ''}${safeUrl(m.file_url) ? `<p><a href="${safeUrl(m.file_url)}" target="_blank" rel="noopener">Buka berkas</a></p>` : ''}${contentActions(t, 'editMat', 'deleteMat', m.id, 'materi')}${cmtBlock('mat', m.id)}</div>`).join('') || empty('Belum ada materi', 'Materi yang diunggah guru akan ditampilkan di sini.'));
-  if (tab === 'asg') body = add('Buat tugas', 'addAsg()') + (C.assignments.map(a => asgCard(a, t)).join('') || empty('Belum ada tugas', 'Tugas dari guru akan ditampilkan di sini.'));
-  if (tab === 'qz')  body = add('Buat kuis', 'addQuiz()') + (C.quizzes.map(quizCard).join('') || empty('Belum ada kuis', 'Kuis yang diterbitkan guru akan ditampilkan di sini.'));
+  if (tab === 'feed') body = feedView(t, readOnly);
+  if (tab === 'ann') body = add('Buat pengumuman', 'addAnn()') + (C.announcements.map(a => `<article class="sp">${spHead('ann', a.author, a.created)}${annCard(a, t)}</article>`).join('') || empty('Belum ada pengumuman', 'Pengumuman dari guru akan ditampilkan di sini.'));
+  if (tab === 'mat') body = add('Tambah materi', 'addMat()') + (C.materials.map(m => `<article class="sp">${spHead('mat', cls.teacher_name, m.created)}${matCard(m, t)}</article>`).join('') || empty('Belum ada materi', 'Materi yang diunggah guru akan ditampilkan di sini.'));
+  if (tab === 'asg') body = add('Buat tugas', 'addAsg()') + (C.assignments.map(a => `<article class="sp">${spHead('asg', cls.teacher_name, a.created)}${asgCard(a, t)}</article>`).join('') || empty('Belum ada tugas', 'Tugas dari guru akan ditampilkan di sini.'));
+  if (tab === 'qz')  body = add('Buat kuis', 'addQuiz()') + (C.quizzes.map(q => `<article class="sp">${spHead('qz', cls.teacher_name, q.created)}${quizCard(q)}</article>`).join('') || empty('Belum ada kuis', 'Kuis yang diterbitkan guru akan ditampilkan di sini.'));
   if (tab === 'fr')  body = forumView();
   const offn = C._offline ? `<div class="walert info" style="margin-bottom:1rem">Mode offline: menampilkan data kelas yang tersimpan pada ${esc(tglw(C._offline))}. Pesan, tugas, dan kuis baru baru bisa dikirim setelah koneksi kembali. <button type="button" class="link" onclick="reload(CT)">Muat ulang</button></div>` : '';
+  const ini = String(cls.name || 'K').split(/\s+/).map(w => w.charAt(0)).join('').slice(0, 3).toUpperCase();
+  const nPost = (C.announcements || []).length + (C.materials || []).length + (C.assignments || []).length + (C.quizzes || []).length;
   view(`<button class="back" onclick="home()">← Kembali ke daftar kelas</button>${offn}
-    <div class="cover"><h1>${esc(cls.name)}</h1><p>${esc(cls.subject || '—')} • ${esc(cls.teacher_name || '—')}${t ? ` • ${C.memberCount} siswa` : readOnly ? ' • Mode pemantauan' : ''}</p>${t ? `<span class="chip">Kode kelas: ${esc(cls.code)}</span>` : ''}</div>
-    <div class="tabs">${[['ann','Pengumuman'],['mat','Materi'],['asg','Tugas'],['qz','Kuis'],['fr','Forum']].map(([k, l]) => `<button class="${k === tab ? 'on' : ''}" onclick="drawClass('${k}')">${l}</button>`).join('')}</div>${body}`);
+    <div class="sc"><div class="sc-ban" aria-hidden="true"></div><div class="sc-in"><span class="sc-av" aria-hidden="true">${esc(ini)}</span><div class="sc-tx"><h1>${esc(cls.name)}</h1><p>${esc(cls.subject || '—')} • ${esc(cls.teacher_name || '—')}${readOnly ? ' • Mode pemantauan' : ''}</p><div class="sc-st"><span>👥 ${C.memberCount} anggota</span><span>🗂️ ${nPost} kiriman</span>${t ? `<button type="button" class="sc-code" onclick="copyCode(${jsq(cls.code)})" title="Salin kode kelas">🔑 ${esc(cls.code)} • Salin</button>` : ''}</div></div></div></div>
+    <div class="tabs sc-tabs" role="tablist">${[['feed', '🏠 Beranda'], ['ann', '📢 Info'], ['mat', '📎 Materi'], ['asg', '📝 Tugas'], ['qz', '🎯 Kuis'], ['fr', '💬 Forum']].map(([k, l]) => `<button role="tab" aria-selected="${k === tab}" class="${k === tab ? 'on' : ''}" onclick="drawClass('${k}')">${l}</button>`).join('')}</div><div class="sp-feed">${body}</div>`);
 }
 
 /* ===== Ubah konten & komentar kelas ===== */
@@ -2353,9 +2408,9 @@ function asgCard(a, t) {
 }
 
 const cid = () => ({ class_id: C.cls.id });
-const addAnn = () => modal('Buat pengumuman', [{n:'title',l:'Judul'},{n:'body',l:'Isi pengumuman',t:'textarea'}], async d => { await api('addAnnouncement', {...d, ...cid()}); loadO(true).catch(function () {}); toast('Pengumuman berhasil diterbitkan.'); reload('ann'); }, 'Terbitkan', { sub: 'Pengumuman akan ditampilkan kepada seluruh anggota kelas.', busy: 'Menerbitkan…' });
-const addMat = () => modal('Tambah materi', [{n:'title',l:'Judul materi'},{n:'description',l:'Keterangan (opsional)',t:'textarea',r:false},{n:'file',l:'Berkas (maks. 10 MB)',t:'file',r:false},{n:'link',l:'Atau tautan (opsional)',t:'url',r:false}], async d => { await api('addMaterial', {...d, ...cid()}); toast('Materi berhasil ditambahkan.'); reload('mat'); }, 'Tambah materi', { sub: 'Lampirkan berkas atau tautan sebagai bahan belajar bagi siswa.', busy: 'Mengunggah…' });
-const addAsg = () => modal('Buat tugas', [{n:'title',l:'Judul tugas'},{n:'description',l:'Petunjuk (opsional)',t:'textarea',r:false},{n:'due',l:'Batas pengumpulan',t:'date',r:false},{n:'max_score',l:'Nilai maksimal',t:'number',v:100}], async d => { await api('addAssignment', {...d, ...cid()}); toast('Tugas berhasil dibuat.'); reload('asg'); }, 'Buat tugas', { sub: 'Tentukan petunjuk, batas pengumpulan, dan nilai maksimal. Pengumpulan diterima hingga akhir hari pada tanggal batas.', busy: 'Membuat tugas…' });
+const addAnn = () => modal('Buat pengumuman', [{n:'title',l:'Judul'},{n:'body',l:'Isi pengumuman',t:'textarea'}], async d => { await api('addAnnouncement', {...d, ...cid()}); loadO(true).catch(function () {}); toast('Pengumuman berhasil diterbitkan.'); reload(CT==='feed'?'feed':'ann'); }, 'Terbitkan', { sub: 'Pengumuman akan ditampilkan kepada seluruh anggota kelas.', busy: 'Menerbitkan…' });
+const addMat = () => modal('Tambah materi', [{n:'title',l:'Judul materi'},{n:'description',l:'Keterangan (opsional)',t:'textarea',r:false},{n:'file',l:'Berkas (maks. 10 MB)',t:'file',r:false},{n:'link',l:'Atau tautan (opsional)',t:'url',r:false}], async d => { await api('addMaterial', {...d, ...cid()}); toast('Materi berhasil ditambahkan.'); reload(CT==='feed'?'feed':'mat'); }, 'Tambah materi', { sub: 'Lampirkan berkas atau tautan sebagai bahan belajar bagi siswa.', busy: 'Mengunggah…' });
+const addAsg = () => modal('Buat tugas', [{n:'title',l:'Judul tugas'},{n:'description',l:'Petunjuk (opsional)',t:'textarea',r:false},{n:'due',l:'Batas pengumpulan',t:'date',r:false},{n:'max_score',l:'Nilai maksimal',t:'number',v:100}], async d => { await api('addAssignment', {...d, ...cid()}); toast('Tugas berhasil dibuat.'); reload(CT==='feed'?'feed':'asg'); }, 'Buat tugas', { sub: 'Tentukan petunjuk, batas pengumpulan, dan nilai maksimal. Pengumpulan diterima hingga akhir hari pada tanggal batas.', busy: 'Membuat tugas…' });
 const submitIt = id => modal('Kumpulkan tugas', [{n:'file',l:'Berkas (maks. 10 MB)',t:'file',r:false},{n:'note',l:'Catatan (opsional)',t:'textarea',r:false}], async d => { await api('submit', {...d, assignment_id: id}); toast('Tugas berhasil dikumpulkan.'); reload('asg'); }, 'Kumpulkan', { sub: 'Lampirkan berkas dan/atau tuliskan catatan. Pengumpulan ulang akan memperbarui kiriman Anda sebelumnya.', busy: 'Mengirim…' });
 async function gradeIt(id) {
   const sc = $('#sc-' + id);
