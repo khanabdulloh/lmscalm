@@ -1204,6 +1204,50 @@ tbody tr{transition:background .15s}tbody tr:hover{background:#f8f9ff}
 .walert.info{background:#eef2ff;border-color:#c7d2fe;color:#3730a3}
 ::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-thumb{background:#cbd2e3;border-radius:9px;border:3px solid transparent;background-clip:content-box}
 @supports(content-visibility:auto){.card{content-visibility:auto;contain-intrinsic-size:auto 200px}}
+/* ===== POLES MENU DALAM (sidebar + konten) ===== */
+aside{scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.18) transparent}
+aside .nm{font-size:1.02rem}
+.sb-user{margin:.7rem 0 .2rem;padding:.55rem .75rem;border-radius:.85rem;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);color:#e6eeff}
+aside nav{gap:.15rem}
+aside .mi{position:relative;min-height:2.6rem;padding:.55rem .8rem;font-weight:500;transition:background .2s,color .2s,transform .2s}
+aside .mi svg{padding:.28rem;box-sizing:content-box;width:1.05rem;height:1.05rem;border-radius:.6rem;background:rgba(255,255,255,.06);opacity:.85;transition:background .2s,transform .2s}
+aside .mi:hover{background:rgba(255,255,255,.07);transform:translateX(2px)}
+aside .mi:hover svg{background:rgba(255,255,255,.12)}
+aside .mi.on{font-weight:700}
+aside .mi.on svg{background:linear-gradient(135deg,#3b82f6,#38bdf8);color:#fff;opacity:1;box-shadow:0 6px 14px -6px rgba(56,189,248,.8)}
+aside .mi.top{letter-spacing:.005em;margin-top:.45rem}
+aside .mi.out{color:#fcd9a0}
+aside .mi.out:hover{background:rgba(248,113,113,.14);color:#fecaca}
+aside.collapsed .mi svg{background:none}
+.mbar{background:rgba(7,26,64,.88);box-shadow:0 8px 24px -16px rgba(0,0,0,.6)}
+/* Konten */
+#main>*{animation:mIn .38s cubic-bezier(.2,.7,.2,1) both}
+#main>*:nth-child(2){animation-delay:.04s}#main>*:nth-child(3){animation-delay:.08s}#main>*:nth-child(n+4){animation-delay:.12s}
+@keyframes mIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.top h2{font-weight:700;letter-spacing:-.03em;font-size:clamp(1.5rem,2.5vw,1.95rem)}
+.top p{margin-top:.15rem}
+.hero-dash,.hm-hero{border-radius:1.5rem}
+.hero-dash::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;background:radial-gradient(rgba(255,255,255,.14) 1px,transparent 1.5px) 0 0/18px 18px;-webkit-mask-image:linear-gradient(100deg,transparent 35%,#000);mask-image:linear-gradient(100deg,transparent 35%,#000)}
+.hero-text h2{font-weight:700;letter-spacing:-.03em}
+.hero-clock{border-radius:1.1rem}
+.stats{gap:1rem}
+.st{border-radius:1.1rem;transition:transform .22s,box-shadow .22s}
+.st:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.st b{font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.st small{text-transform:uppercase;letter-spacing:.06em;font-size:.7rem;color:var(--faint)}
+.st::before{width:3px;border-radius:0 3px 3px 0}
+.sec h3{font-weight:700;letter-spacing:-.02em}
+.kc{border-radius:1.15rem}
+.kc h3{font-weight:700}
+.kc:hover{transform:translateY(-3px)}
+.hm-c{border-radius:1.15rem}
+.hm-h h3{font-weight:700;letter-spacing:-.02em}
+.hm-b{border-radius:.95rem;transition:transform .18s,box-shadow .18s}
+.hm-b:hover{transform:translateX(3px);box-shadow:var(--shadow-sm)}
+.hm-d{border-radius:.8rem;transition:background .18s,border-color .18s}
+.hm-list{scrollbar-width:thin}
+@media(max-width:767px){main{padding-top:1.2rem}.top h2{font-size:1.45rem}.st:hover,.kc:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){#main>*{animation:none}}
 </style>
 </head>
 <body>
