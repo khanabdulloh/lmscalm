@@ -2146,7 +2146,7 @@ function asgCard(a, t) {
 }
 
 const cid = () => ({ class_id: C.cls.id });
-const addAnn = () => modal('Buat pengumuman', [{n:'title',l:'Judul'},{n:'body',l:'Isi pengumuman',t:'textarea'}], async d => { await api('addAnnouncement', {...d, ...cid()}); toast('Pengumuman berhasil diterbitkan.'); reload('ann'); }, 'Terbitkan', { sub: 'Pengumuman akan ditampilkan kepada seluruh anggota kelas.', busy: 'Menerbitkan…' });
+const addAnn = () => modal('Buat pengumuman', [{n:'title',l:'Judul'},{n:'body',l:'Isi pengumuman',t:'textarea'}], async d => { await api('addAnnouncement', {...d, ...cid()}); loadO(true).catch(function () {}); toast('Pengumuman berhasil diterbitkan.'); reload('ann'); }, 'Terbitkan', { sub: 'Pengumuman akan ditampilkan kepada seluruh anggota kelas.', busy: 'Menerbitkan…' });
 const addMat = () => modal('Tambah materi', [{n:'title',l:'Judul materi'},{n:'description',l:'Keterangan (opsional)',t:'textarea',r:false},{n:'file',l:'Berkas (maks. 10 MB)',t:'file',r:false},{n:'link',l:'Atau tautan (opsional)',t:'url',r:false}], async d => { await api('addMaterial', {...d, ...cid()}); toast('Materi berhasil ditambahkan.'); reload('mat'); }, 'Tambah materi', { sub: 'Lampirkan berkas atau tautan sebagai bahan belajar bagi siswa.', busy: 'Mengunggah…' });
 const addAsg = () => modal('Buat tugas', [{n:'title',l:'Judul tugas'},{n:'description',l:'Petunjuk (opsional)',t:'textarea',r:false},{n:'due',l:'Batas pengumpulan',t:'date',r:false},{n:'max_score',l:'Nilai maksimal',t:'number',v:100}], async d => { await api('addAssignment', {...d, ...cid()}); toast('Tugas berhasil dibuat.'); reload('asg'); }, 'Buat tugas', { sub: 'Tentukan petunjuk, batas pengumpulan, dan nilai maksimal. Pengumpulan diterima hingga akhir hari pada tanggal batas.', busy: 'Membuat tugas…' });
 const submitIt = id => modal('Kumpulkan tugas', [{n:'file',l:'Berkas (maks. 10 MB)',t:'file',r:false},{n:'note',l:'Catatan (opsional)',t:'textarea',r:false}], async d => { await api('submit', {...d, assignment_id: id}); toast('Tugas berhasil dikumpulkan.'); reload('asg'); }, 'Kumpulkan', { sub: 'Lampirkan berkas dan/atau tuliskan catatan. Pengumpulan ulang akan memperbarui kiriman Anda sebelumnya.', busy: 'Mengirim…' });
@@ -3168,6 +3168,7 @@ function buildNotifs() {
     }
     if (!t) (O.forum.replies || []).forEach(function (r) { L.push({ id: 'fr:' + r.id, t: 'Balasan baru di diskusi Anda', m: (r.by || 'Guru') + ' • ' + r.t + ' • ' + cname(r.class_id), k: oc(r.class_id, 'fr') }); });
   }
+  if (NT && NT.on && NT.exp > now) L.push({ id: 'nt:' + ntKey(), u: NT.kind !== 'info' ? 1 : 0, t: 'Pengumuman sekolah: ' + NT.title, m: String(NT.message || '').slice(0, 110), k: hasR('admin') ? "go('schoolNotice')" : 'ntDetail()' });
   (O.announcements || []).forEach(function (n) {
     if (now - new Date(n.created).getTime() < 7 * DAY) L.push({ id: 'a:' + n.id, t: 'Pengumuman: ' + n.title, m: cname(n.class_id), k: oc(n.class_id, 'ann') });
   });
@@ -3279,7 +3280,7 @@ function ntHide() { try { sessionStorage.setItem('lms_nt_hide', ntKey()); } catc
 function ntLoad(force) {
   if (!S) return Promise.resolve();
   return api('noticeGet', {}, 20000, { fresh: !!force }).then(d => {
-    NT = d.notice || { on: false }; ntApply();
+    NT = d.notice || { on: false }; ntApply(); try { updateNotifs(); } catch (e) {}
     if ($('#ntc')) $('#ntc').innerHTML = ntCard();
   }).catch(() => {});
 }
