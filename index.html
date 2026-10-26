@@ -2470,7 +2470,7 @@ function quizCard(q) {
   const chips = [q.qcount + ' soal', q.duration + ' menit', c.qt ? c.qt + ' detik/soal' : '', c.shuf ? 'Soal diacak' : '', c.pass ? 'Ketuntasan ≥ ' + c.pass : ''].filter(Boolean).map(x => `<span>${x}</span>`).join('');
   const rows = at.map(a => `<div class="qr"><span>${esc(a.full_name)}</span><b>${a.submitted ? a.score + '/' + a.max : 'Sedang dikerjakan'}</b></div>`).join('') || '<p class="meta">Belum ada hasil.</p>';
   let foot, done = false;
-  if (t || ro) foot = `<div class="qft"><div class="qst"><div><b>${fin.length}</b><small>selesai</small></div><div><b>${fin.length ? avg : '–'}</b><small>rata-rata</small></div><div class="qbm"><i style="width:${avg}%"></i></div></div></div><details><summary>Lihat hasil siswa${ro ? ' • pemantauan' : ''}</summary>${rows}</details>${fin.length ? `<div style="margin-top:.8rem"><button class="btn2" onclick="quizStats(${esc(JSON.stringify(String(q.id)))})">Analisis soal</button></div>` : ''}${t ? `<div class="quiz-actions" aria-label="Aksi kuis"><button type="button" class="content-action" onclick="editQuiz(${esc(JSON.stringify(String(q.id)))})"><span class="action-icon" aria-hidden="true">✎</span><span>Edit</span></button><button type="button" class="content-action content-action--delete" onclick="deleteQuiz(${esc(JSON.stringify(String(q.id)))})"><span class="action-icon" aria-hidden="true">⌫</span><span>Hapus</span></button></div>` : ''}`;
+  if (t || ro) foot = `<div class="qft"><div class="qst"><div><b>${fin.length}</b><small>selesai</small></div><div><b>${fin.length ? avg : '–'}</b><small>rata-rata</small></div><div class="qbm"><i style="width:${avg}%"></i></div></div></div><details><summary>Lihat hasil siswa${ro ? ' • pemantauan' : ''}</summary>${rows}</details>${fin.length ? `<div style="margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap"><button class="btn2" onclick="quizStats(${esc(JSON.stringify(String(q.id)))})">Analisis soal</button>${at.some(a=>a.submitted&&a.grade_status==='pending') ? `<button class="btn2" onclick="gradeQuizEssays(${esc(JSON.stringify(String(q.id)))})">Periksa esai</button>` : ''}</div>` : ''}${t ? `<div class="quiz-actions" aria-label="Aksi kuis"><button type="button" class="content-action" onclick="editQuiz(${esc(JSON.stringify(String(q.id)))})"><span class="action-icon" aria-hidden="true">✎</span><span>Edit</span></button><button type="button" class="content-action content-action--delete" onclick="deleteQuiz(${esc(JSON.stringify(String(q.id)))})"><span class="action-icon" aria-hidden="true">⌫</span><span>Hapus</span></button></div>` : ''}`;
   else { const a = at[0]; done = !!(a && a.submitted);
     const pass = done && c.pass ? (pc(a) >= c.pass ? '<span class="badge ok">Tuntas</span>' : '<span class="badge warn">Belum tuntas</span>') : '';
     foot = `<div class="qft">${done ? `<div class="qsc">${a.score}<small> / ${a.max}</small></div>${pass}${c.rev === 0 ? '' : `<button class="btn2" onclick="reviewQuiz(${esc(JSON.stringify(String(q.id)))})">Lihat pembahasan</button>`}` : `<span class="badge${a ? ' warn' : ''}">${a ? 'Sedang dikerjakan' : 'Belum dikerjakan'}</span><button class="btn" onclick="startQuiz(${esc(JSON.stringify(String(q.id)))})">${a ? 'Lanjutkan' : 'Mulai kuis'}</button>`}</div>`; }
@@ -2495,6 +2495,7 @@ function takeQuiz(d) {
   nav('home');
   const { c } = qcfg(d.quiz.description), key = 'qa_' + d.attempt_id, qs = c.shuf ? seeded(d.attempt_id, d.questions) : d.questions;
   const n = qs.length, end = Date.now() + d.left * 1000, qsec = +c.qt || 0;
+  const isAnswered = q => { const v = ans[q.id]; if (v === undefined || v === null) return false; if (Array.isArray(v)) return v.some(x => String(x || '').trim() !== ''); return String(v).trim() !== ''; };
   let ans = {}, flg = {}, cur = 0, done = false, qEnd = 0;
   try { ans = JSON.parse(sessionStorage.getItem(key)) || {}; flg = JSON.parse(sessionStorage.getItem(key + 'f')) || {}; } catch (e) {}
   const save = () => { try { sessionStorage.setItem(key, JSON.stringify(ans)); sessionStorage.setItem(key + 'f', JSON.stringify(flg)); } catch (x) {} };
@@ -2502,9 +2503,9 @@ function takeQuiz(d) {
   view(`<div class="qbar"><div><b>${esc(d.quiz.title)}</b><span id="qp"></span></div><div class="qt" id="qt">--:--</div></div><div class="qpg"><i id="qpi"></i></div>
     <div class="qw"><div id="qa"></div><aside class="qside"><h5>Navigasi soal</h5><div class="qnav" id="qn"></div><div class="qleg"><span><i></i>Terjawab</span><span><i class="f"></i>Ragu-ragu</span></div><button class="btn" style="width:100%" data-fin>Kumpulkan jawaban</button></aside></div>`);
   const draw = () => {
-    const q = qs[cur], os = optsOf(q), answered = Object.keys(ans).length;
-    $('#qa').innerHTML = `<div class="qq"><div class="qqh"><span class="qno">Soal ${cur + 1} <small>dari ${n}</small></span><button class="qflag${flg[q.id] ? ' on' : ''}" data-flag>Ragu-ragu</button></div>${qsec ? '<div class="qtm"><i id="qti"></i></div>' : ''}<h3>${esc(q.text)}</h3><div class="qos">${os.map(([o, j], i) => `<button type="button" class="qo${ans[q.id] === j ? ' on' : ''}" data-opt="${j}"><b>${'ABCDEF'[i]}</b><span>${esc(o)}</span></button>`).join('')}</div></div><div class="qfoot">${qsec ? '<span></span>' : `<button class="btn2" data-prev${cur ? '' : ' disabled'}>← Sebelumnya</button>`}${cur < n - 1 ? '<button class="btn" data-next>Selanjutnya →</button>' : '<button class="btn" data-fin>Selesai dan kumpulkan</button>'}</div>`;
-    $('#qn').innerHTML = qs.map((x, i) => `<button data-go="${i}" class="${i === cur ? 'cur' : ans[x.id] !== undefined ? 'ok' : ''}${flg[x.id] && i !== cur ? ' fl' : ''}"${qsec ? ' disabled' : ''}>${i + 1}</button>`).join('');
+    const q = qs[cur], os = q.type === 'mcq' ? optsOf(q) : [], answered = qs.filter(isAnswered).length;
+    $('#qa').innerHTML = `<div class="qq"><div class="qqh"><span class="qno">Soal ${cur + 1} <small>dari ${n}</small></span><button class="qflag${flg[q.id] ? ' on' : ''}" data-flag>Ragu-ragu</button></div>${qsec ? '<div class="qtm"><i id="qti"></i></div>' : ''}<h3>${esc(q.text)}</h3>${q.type==='essay' ? `<textarea data-essay rows="6" placeholder="Tulis jawaban Anda...">${esc(ans[q.id]||'')}</textarea>` : q.type==='truefalse' ? `<div class="qos">${[['true','Benar'],['false','Salah']].map(([v,l])=>`<button type="button" class="qo${String(ans[q.id])===v?' on':''}" data-value="${v}"><b>${l==='Benar'?'B':'S'}</b><span>${l}</span></button>`).join('')}</div>` : q.type==='match' ? `<div class="qos">${q.options.map((o,i)=>`<label class="qo"><b>${i+1}</b><span>${esc(o)}</span><select data-match="${i}"><option value="">Pilih pasangan…</option>${q.answerOptions.map((v,j)=>`<option value="${esc(v)}" ${String((ans[q.id]||[])[i]||'')===String(v)?'selected':''}>${esc(v)}</option>`).join('')}</select></label>`).join('')}</div>` : `<div class="qos">${os.map(([o, j], i) => `<button type="button" class="qo${ans[q.id] === j ? ' on' : ''}" data-opt="${j}"><b>${'ABCDEF'[i]}</b><span>${esc(o)}</span></button>`).join('')}</div>`}</div><div class="qfoot">${qsec ? '<span></span>' : `<button class="btn2" data-prev${cur ? '' : ' disabled'}>← Sebelumnya</button>`}${cur < n - 1 ? '<button class="btn" data-next>Selanjutnya →</button>' : '<button class="btn" data-fin>Selesai dan kumpulkan</button>'}</div>`;
+    $('#qn').innerHTML = qs.map((x, i) => `<button data-go="${i}" class="${i === cur ? 'cur' : isAnswered(x) ? 'ok' : ''}${flg[x.id] && i !== cur ? ' fl' : ''}"${qsec ? ' disabled' : ''}>${i + 1}</button>`).join('');
     const qnv = $('#qn'), qcb = qnv && qnv.querySelector('.cur'); if (qcb && qnv.scrollWidth > qnv.clientWidth) qnv.scrollLeft = qcb.offsetLeft - (qnv.clientWidth - qcb.offsetWidth) / 2;
     $('#qp').textContent = `${answered} dari ${n} soal terjawab`; $('#qpi').style.width = (answered / n * 100) + '%';
   };
@@ -2518,15 +2519,16 @@ function takeQuiz(d) {
   const cleanup = () => { clearInterval(QT); window.onbeforeunload = null; document.onkeydown = null; $('#main').onclick = null; };
   const fin = async auto => {
     if (done) return;
-    const left = n - Object.keys(ans).length;
+    const left = qs.filter(q => !isAnswered(q)).length;
     if (!auto && !(await dlg({ title: left ? 'Masih ada soal yang belum dijawab' : 'Kumpulkan jawaban?', msg: left ? `Terdapat ${left} soal yang belum Anda jawab. Jawaban yang telah dikumpulkan tidak dapat diubah kembali.` : 'Jawaban yang telah dikumpulkan tidak dapat diubah kembali.', ok: 'Kumpulkan sekarang', cancel: 'Periksa kembali', tone: left ? 'warn' : 'info' }))) return;
     done = true; clearInterval(QT);
     try {
       const r = await api('submitQuiz', { attempt_id: d.attempt_id, answers: JSON.stringify(ans) });
       sessionStorage.removeItem(key); sessionStorage.removeItem(key + 'f'); cleanup();
       const p = r.max ? Math.round(r.score / r.max * 100) : 0, ok = !c.pass || p >= c.pass;
+      const pendingEssay = !!r.pending;
       const msg = p >= 85 ? 'Hasil yang sangat baik. Pemahaman Anda terhadap materi sudah kuat.' : p >= 70 ? 'Hasil yang baik. Tinjau beberapa bagian untuk mencapai hasil maksimal.' : p >= 50 ? 'Hasil cukup baik. Disarankan mengulas kembali bagian materi yang belum dikuasai.' : 'Pemahaman Anda masih dapat ditingkatkan. Silakan pelajari kembali materi, lalu diskusikan dengan guru.';
-      view(`<div class="qres"><div class="qring"><svg viewBox="0 0 120 120" width="160" height="160"><circle class="bg" cx="60" cy="60" r="50"/><circle class="fg" id="qrf" cx="60" cy="60" r="50" style="stroke-dashoffset:314"/></svg><b>${p}</b></div><h3>${auto ? 'Waktu habis. Jawaban Anda dikumpulkan secara otomatis.' : 'Kuis telah diselesaikan'}</h3><p>Skor Anda ${r.score} dari ${r.max}. ${msg}</p><div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.2rem">${c.pass ? `<span class="badge ${ok ? 'ok' : 'warn'}">${ok ? 'Tuntas' : 'Belum tuntas (min. ' + c.pass + ')'}</span>` : ''}${r.late ? '<span class="badge warn">Terlambat dikumpulkan</span>' : ''}</div><div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">${c.rev === 0 ? '' : `<button class="btn2" onclick="reviewQuiz('${d.quiz.id}')">Lihat pembahasan</button>`}<button class="btn" onclick="reload('qz')">Kembali ke kelas</button></div></div>`);
+      view(`<div class="qres"><div class="qring"><svg viewBox="0 0 120 120" width="160" height="160"><circle class="bg" cx="60" cy="60" r="50"/><circle class="fg" id="qrf" cx="60" cy="60" r="50" style="stroke-dashoffset:314"/></svg><b>${p}</b></div><h3>${auto ? 'Waktu habis. Jawaban Anda dikumpulkan secara otomatis.' : 'Kuis telah diselesaikan'}</h3><p>${pendingEssay ? 'Jawaban esai menunggu penilaian guru. Skor di bawah ini masih sementara.' : `Skor Anda ${r.score} dari ${r.max}. ${msg}`}</p><div style="display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:1.2rem">${c.pass && !pendingEssay ? `<span class="badge ${ok ? 'ok' : 'warn'}">${ok ? 'Tuntas' : 'Belum tuntas (min. ' + c.pass + ')'}</span>` : pendingEssay ? '<span class="badge warn">Menunggu penilaian esai</span>' : ''}${r.late ? '<span class="badge warn">Terlambat dikumpulkan</span>' : ''}</div><div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap">${c.rev === 0 ? '' : `<button class="btn2" onclick="reviewQuiz('${d.quiz.id}')">Lihat pembahasan</button>`}<button class="btn" onclick="reload('qz')">Kembali ke kelas</button></div></div>`);
       requestAnimationFrame(() => setTimeout(() => { const f = $('#qrf'); if (f) f.style.strokeDashoffset = 314 - 314 * p / 100; }, 80));
     } catch (e) { done = false; toast(e.message, true); QT = setInterval(tick, auto ? 4000 : 500); }
   };
@@ -2534,89 +2536,73 @@ function takeQuiz(d) {
     if (!$('.qbar')) { $('#main').onclick = null; return; }
     const b = e.target.closest('button'); if (!b || done) return; const q = qs[cur];
     if (b.dataset.opt !== undefined) { ans[q.id] = +b.dataset.opt; save(); draw(); }
+    else if (b.dataset.value !== undefined) { ans[q.id] = b.dataset.value; save(); draw(); }
     else if (b.hasAttribute('data-flag')) { flg[q.id] = !flg[q.id]; if (!flg[q.id]) delete flg[q.id]; save(); draw(); }
     else if (b.hasAttribute('data-next')) go(cur + 1);
     else if (b.hasAttribute('data-prev')) go(cur - 1);
     else if (b.dataset.go !== undefined) go(+b.dataset.go);
     else if (b.hasAttribute('data-fin')) fin(false);
+    const ta = e.target.closest('[data-essay]'); if (ta) { ans[q.id] = ta.value; save(); }
+    const mt = e.target.closest('[data-match]'); if (mt) { const vals=[...$('#qa').querySelectorAll('[data-match]')].map(x=>x.value); ans[q.id]=vals; save(); }
   };
+  $('#main').addEventListener('input', e => { const ta=e.target.closest('[data-essay]'); if(ta){ans[qs[cur].id]=ta.value;save();} });
+  $('#main').addEventListener('change', e => { const mt=e.target.closest('[data-match]'); if(mt){ans[qs[cur].id]=[...$('#qa').querySelectorAll('[data-match]')].map(x=>x.value);save();} });
   document.onkeydown = e => {
     if (!$('.qbar') || done || e.ctrlKey || e.metaKey || e.altKey || /INPUT|TEXTAREA/.test(e.target.tagName)) return;
     const q = qs[cur], i = 'abcdef'.indexOf(e.key.toLowerCase()), k = +e.key;
     if (e.key === 'ArrowRight') go(cur + 1); else if (e.key === 'ArrowLeft' && !qsec) go(cur - 1);
-    else { const o = optsOf(q)[k ? k - 1 : i]; if (o) { ans[q.id] = o[1]; save(); draw(); } }
+    else if (q.type === 'mcq') { const o = optsOf(q)[k ? k - 1 : i]; if (o) { ans[q.id] = o[1]; save(); draw(); } }
   };
   window.onbeforeunload = e => { e.preventDefault(); return ''; };
   go(0); tick(); QT = setInterval(tick, 500);
 }
 
 function addQuiz() {
-  const m = document.createElement('div'); m.className = 'ov'; let k = 0;
-  const blk = (d = {}) => { k++; const o = d.options || []; return `<div class="qb"><div class="qh"><b class="qn"></b><span><button type="button" class="link" data-dup>Gandakan</button><button type="button" class="link" data-rm>Hapus</button></span></div><label>Pertanyaan<textarea data-t>${esc(d.text || '')}</textarea></label><p class="hint">Tandai satu pilihan sebagai jawaban yang benar.</p>${[0, 1, 2, 3].map(j => `<span class="oi"><em>${'ABCD'[j]}</em><input type="radio" name="c${k}" value="${j}"${j === (d.answer || 0) ? ' checked' : ''} aria-label="Jawaban benar"><input data-o placeholder="Pilihan ${'ABCD'[j]}" value="${esc(o[j] || '')}"></span>`).join('')}<label style="margin-top:.6rem">Pembahasan (opsional)<textarea data-e rows="2" placeholder="Penjelasan singkat yang ditampilkan kepada siswa setelah kuis selesai">${esc(d.explain || '')}</textarea></label></div>`; };
-  const raw = el => ({ text: el.querySelector('[data-t]').value.trim(), options: [...el.querySelectorAll('[data-o]')].map(o => o.value.trim()), answer: Math.max(0, [...el.querySelectorAll('input[type=radio]')].findIndex(r => r.checked)), explain: el.querySelector('[data-e]').value.trim() });
-  const sw = (n, t, on) => `<label class="sw"><input type="checkbox" name="${n}"${on ? ' checked' : ''}>${t}</label>`;
-  m.innerHTML = `<form class="md wide" role="dialog" aria-modal="true" aria-labelledby="aqt"><h3 id="aqt">Buat kuis</h3><p class="md-sub">Susun soal pilihan ganda, atur durasi dan ketentuan penilaian, lalu terbitkan kuis kepada siswa.</p><div class="qsum" id="qsum"></div><label>Judul kuis<input name="title" required placeholder="Contoh: Kuis Bab 3 – Sistem Pencernaan"></label>
-    <div class="qset"><div class="full"><label>Durasi total (menit)<input name="duration" type="number" min="1" max="300" value="30" required></label><div class="qpre" id="pre">${[10, 20, 30, 45, 60, 90].map(v => `<button type="button" data-d="${v}">${v} menit</button>`).join('')}</div></div>
-    <label>Waktu per soal (detik; isi 0 untuk menonaktifkan)<input name="qt" type="number" min="0" max="600" value="0"></label><label>Nilai ketuntasan minimal (0–100)<input name="pass" type="number" min="0" max="100" value="70"></label>
-    ${sw('shuf', 'Acak urutan soal')}${sw('shufo', 'Acak pilihan jawaban')}${sw('rev', 'Tampilkan pembahasan setelah selesai', 1)}</div>
-    <label>Petunjuk untuk siswa (opsional)<textarea name="description" placeholder="Contoh: Bacalah setiap soal dengan cermat sebelum menjawab."></textarea></label>
-    <details class="qbulk"><summary>Impor cepat: tempel beberapa soal sekaligus</summary><textarea id="bk" placeholder="1. Ibukota Indonesia?\nA. Bandung\nB. Jakarta\nC. Medan\nD. Surabaya\nJawaban: B\n\n2. Soal berikutnya..."></textarea><button type="button" class="btn2" id="bkgo">Tambahkan ke daftar soal</button></details>
-    <div id="qb">${blk()}</div><button type="button" class="btn2" id="qadd" style="margin-bottom:1rem">+ Tambah soal</button><div class="row"><button type="button" class="btn2" data-x>Batal</button><button class="btn">Terbitkan kuis</button></div></form>`;
-  document.body.appendChild(m);
-  const f = m.querySelector('form'), box = m.querySelector('#qb'), kill = () => m.remove();
-  let dirty = false, busy = false; trapFocus(m);
-  m._close = async () => { if (busy) return; if (dirty && !(await dlg(DISCARD))) return; kill(); };
-  const num = () => { box.querySelectorAll('.qn').forEach((e, i) => e.textContent = 'Soal ' + (i + 1)); sum(); };
-  const sum = () => { const q = f.qt.value > 0 ? ` • ${f.qt.value} detik/soal` : ''; m.querySelector('#qsum').textContent = `${box.children.length} soal • ${f.duration.value || 0} menit${q}`; m.querySelectorAll('#pre button').forEach(b => b.classList.toggle('on', b.dataset.d === f.duration.value)); };
-  num();
-  m.oninput = () => { dirty = true; sum(); };
-  m.querySelectorAll('[data-x]').forEach(b => b.onclick = () => m._close());
-  m.querySelector('#pre').onclick = e => { if (e.target.dataset.d) { dirty = true; f.duration.value = e.target.dataset.d; sum(); } };
-  m.querySelector('#qadd').onclick = () => { dirty = true; box.insertAdjacentHTML('beforeend', blk()); num(); box.lastElementChild.querySelector('[data-t]').focus(); };
-  m.querySelector('#bkgo').onclick = () => {
-    const out = m.querySelector('#bk').value.split(/\n\s*\n/).map(ch => { const L = ch.split('\n').map(s => s.trim()).filter(Boolean), o = [], r = { text: '', options: o, answer: 0, explain: '' }; L.forEach(l => { let x; if ((x = l.match(/^(?:jawaban|kunci)\s*[:=]\s*([A-Da-d])/i))) r.answer = 'abcd'.indexOf(x[1].toLowerCase()); else if ((x = l.match(/^(?:pembahasan|penjelasan)\s*[:=]\s*(.+)/i))) r.explain = x[1]; else if ((x = l.match(/^[A-Da-d][.)]\s*(.+)/))) o.push(x[1]); else if (!o.length) r.text += (r.text ? '\n' : '') + l.replace(/^\d+[.)]\s*/, ''); }); return r; }).filter(r => r.text && r.options.length > 1);
-    if (!out.length) return toast('Format teks tidak dikenali. Silakan sesuaikan dengan contoh yang tersedia.', true);
-    [...box.children].filter(el => !raw(el).text).forEach(el => el.remove());
-    dirty = true; out.forEach(r => box.insertAdjacentHTML('beforeend', blk(r))); m.querySelector('#bk').value = ''; num(); toast(out.length + ' soal berhasil ditambahkan.');
-  };
-  box.onclick = e => {
-    const el = e.target.closest('.qb');
-    if (e.target.matches('[data-dup]')) { dirty = true; el.insertAdjacentHTML('afterend', blk(raw(el))); num(); }
-    else if (e.target.matches('[data-rm]')) { if (box.children.length > 1) { dirty = true; el.remove(); num(); } else toast('Kuis memerlukan sedikitnya satu soal.', true); }
-  };
-  f.onsubmit = async e => {
-    e.preventDefault(); const b = f.querySelector('.row .btn:last-child'); busy = true; b.disabled = true; b.textContent = 'Menerbitkan…';
-    try {
-      const qs = [...box.children].map((el, i) => {
-        const r = raw(el), options = []; let answer = -1;
-        r.options.forEach((v, j) => { if (v) { if (j === r.answer) answer = options.length; options.push(v); } });
-        if (!r.text) throw new Error(`Soal ${i + 1}: pertanyaan belum diisi.`);
-        if (options.length < 2) throw new Error(`Soal ${i + 1}: isi minimal dua pilihan.`);
-        if (answer < 0) throw new Error(`Soal ${i + 1}: pilihan yang ditandai benar masih kosong.`);
-        return { text: r.text, options, answer, explain: r.explain };
-      });
-      const cfg = {}; if (+f.qt.value > 0) cfg.qt = +f.qt.value; if (f.shuf.checked) cfg.shuf = 1; if (f.shufo.checked) cfg.shufo = 1; if (!f.rev.checked) cfg.rev = 0; if (+f.pass.value > 0) cfg.pass = +f.pass.value;
-      const desc = f.description.value.trim() + (Object.keys(cfg).length ? '\n[[cfg:' + JSON.stringify(cfg) + ']]' : '');
-      await api('addQuiz', { ...cid(), title: f.title.value, duration: f.duration.value, description: desc, questions: JSON.stringify(qs) });
-      busy = false; kill(); toast('Kuis berhasil diterbitkan.'); reload('qz');
-    } catch (er) { busy = false; toast(er.message, true); b.disabled = false; b.textContent = 'Terbitkan kuis'; }
-  };
-  if (finePtr()) f.title.focus();
+  const m=document.createElement('div'); m.className='ov';
+  let k=0;
+  const blk=(d={})=>{k++;const typ=d.type||'mcq', opts=d.options||[];return `<div class="qb"><div class="qh"><b class="qn"></b><span><button type="button" class="link" data-dup>Gandakan</button><button type="button" class="link" data-rm>Hapus</button></span></div><label>Jenis soal<select data-type><option value="mcq" ${typ==='mcq'?'selected':''}>Pilihan ganda</option><option value="essay" ${typ==='essay'?'selected':''}>Esai</option><option value="truefalse" ${typ==='truefalse'?'selected':''}>Benar / Salah</option><option value="match" ${typ==='match'?'selected':''}>Mencocokkan</option></select></label><label>Pertanyaan<textarea data-t>${esc(d.text||'')}</textarea></label><div data-fields="mcq" ${typ!=='mcq'?'hidden':''}><p class="hint">Tandai satu pilihan sebagai jawaban benar.</p>${[0,1,2,3].map(j=>`<span class="oi"><em>${'ABCD'[j]}</em><input type="radio" name="c${k}" value="${j}"${j===(Number(d.answer)||0)?' checked':''} aria-label="Jawaban benar"><input data-o placeholder="Pilihan ${'ABCD'[j]}" value="${esc(opts[j]||'')}"></span>`).join('')}</div><div data-fields="truefalse" ${typ!=='truefalse'?'hidden':''}><label>Kunci jawaban<select data-tf><option value="true" ${String(d.answer)==='true'?'selected':''}>Benar</option><option value="false" ${String(d.answer)==='false'?'selected':''}>Salah</option></select></label></div><div data-fields="essay" ${typ!=='essay'?'hidden':''}><p class="hint">Jawaban esai akan diperiksa dan diberi nilai oleh guru.</p></div><div data-fields="match" ${typ!=='match'?'hidden':''}><p class="hint">Isi item Kolom A dan pasangan benar dari Kolom B. Siswa akan memilih pasangan untuk setiap item.</p><div data-pairs>${(d.pairs||[{a:'',b:''},{a:'',b:''}]).map((v,i)=>`<div class="oi"><em>${i+1}</em><input data-ma placeholder="Kolom A" value="${esc(v.a||'')}"><input data-mb placeholder="Pasangan benar (Kolom B)" value="${esc(v.b||'')}"></div>`).join('')}</div><button type="button" class="btn2" data-pairadd>+ Tambah pasangan</button></div><label style="margin-top:.6rem">Bobot nilai<input data-points type="number" min="1" max="100" value="${Number(d.points)||1}"></label><label>Pembahasan (opsional)<textarea data-e rows="2">${esc(d.explain||'')}</textarea></label></div>`;};
+  const raw=el=>{const type=el.querySelector('[data-type]').value, text=el.querySelector('[data-t]').value.trim(), points=+el.querySelector('[data-points]').value||1, explain=el.querySelector('[data-e]').value.trim();let options=[],answer;
+    if(type==='mcq'){const rs=[...el.querySelectorAll('input[type=radio]')], rawOpts=[...el.querySelectorAll('[data-o]')];let ai=rs.findIndex(r=>r.checked);rawOpts.forEach((o,i)=>{if(o.value.trim()){if(i===ai)answer=options.length;options.push(o.value.trim());}});}
+    else if(type==='truefalse') answer=el.querySelector('[data-tf]').value;
+    else if(type==='match'){const aa=[...el.querySelectorAll('[data-ma]')],bb=[...el.querySelectorAll('[data-mb]')];options=aa.map((a,i)=>({a:a.value.trim(),b:(bb[i]||{}).value?.trim()||''}));answer=options.map((_,i)=>i);}
+    return {type,text,options,answer,points,explain};};
+  const sw=(n,t,on)=>`<label class="sw"><input type="checkbox" name="${n}"${on?' checked':''}>${t}</label>`;
+  m.innerHTML=`<form class="md wide" role="dialog" aria-modal="true" aria-labelledby="aqt"><h3 id="aqt">Buat kuis</h3><p class="md-sub">Buat kuis dengan pilihan ganda, esai, benar/salah, atau mencocokkan.</p><div class="qsum" id="qsum"></div><label>Judul kuis<input name="title" required></label><div class="qset"><div class="full"><label>Durasi total (menit)<input name="duration" type="number" min="1" max="300" value="30" required></label><div class="qpre" id="pre">${[10,20,30,45,60,90].map(v=>`<button type="button" data-d="${v}">${v} menit</button>`).join('')}</div></div><label>Waktu per soal (detik; 0 untuk nonaktif)<input name="qt" type="number" min="0" max="600" value="0"></label><label>Nilai ketuntasan minimal (0–100)<input name="pass" type="number" min="0" max="100" value="70"></label>${sw('shuf','Acak urutan soal')}${sw('shufo','Acak pilihan jawaban')}${sw('rev','Tampilkan pembahasan setelah selesai',1)}</div><label>Petunjuk untuk siswa (opsional)<textarea name="description"></textarea></label><div id="qb">${blk()}</div><button type="button" class="btn2" id="qadd">+ Tambah soal</button><div class="row"><button type="button" class="btn2" data-x>Batal</button><button class="btn">Terbitkan kuis</button></div></form>`;
+  document.body.appendChild(m);const f=m.querySelector('form'),box=m.querySelector('#qb'),kill=()=>m.remove();let dirty=false,busy=false;trapFocus(m);m._close=async()=>{if(busy)return;if(dirty&&!(await dlg(DISCARD)))return;kill();};
+  const num=()=>{box.querySelectorAll('.qn').forEach((e,i)=>e.textContent='Soal '+(i+1));m.querySelector('#qsum').textContent=box.children.length+' soal • '+(f.duration.value||0)+' menit';};
+  const syncType=el=>{const type=el.querySelector('[data-type]').value;el.querySelectorAll('[data-fields]').forEach(x=>x.hidden=x.dataset.fields!==type);};
+  num();m.oninput=()=>{dirty=true;num();};m.onchange=e=>{if(e.target.matches('[data-type]'))syncType(e.target.closest('.qb'));};m.querySelector('[data-x]').onclick=()=>m._close();m.querySelector('#pre').onclick=e=>{if(e.target.dataset.d){f.duration.value=e.target.dataset.d;dirty=true;num();}};
+  m.querySelector('#qadd').onclick=()=>{dirty=true;box.insertAdjacentHTML('beforeend',blk());syncType(box.lastElementChild);num();};
+  box.onclick=e=>{const el=e.target.closest('.qb');if(!el)return;if(e.target.matches('[data-dup]')){box.insertAdjacentHTML('beforeend',blk(raw(el)));syncType(box.lastElementChild);dirty=true;num();}else if(e.target.matches('[data-rm]')){if(box.children.length>1){el.remove();dirty=true;num();}else toast('Kuis memerlukan sedikitnya satu soal.',true);}else if(e.target.matches('[data-pairadd]')){el.querySelector('[data-pairs]').insertAdjacentHTML('beforeend',`<div class="oi"><em>+</em><input data-ma placeholder="Kolom A"><input data-mb placeholder="Pasangan benar (Kolom B)"></div>`);dirty=true;}};
+  f.onsubmit=async e=>{e.preventDefault();const b=f.querySelector('.row .btn:last-child');busy=true;b.disabled=true;b.textContent='Menerbitkan…';try{const qs=[...box.children].map((el,i)=>{const r=raw(el);if(!r.text)throw Error(`Soal ${i+1}: pertanyaan wajib diisi.`);if(r.type==='mcq'&&(r.options.length<2||!Number.isInteger(r.answer)))throw Error(`Soal ${i+1}: lengkapi pilihan ganda dan tandai kunci.`);if(r.type==='match'){if(r.options.length<2||r.options.some(x=>!x.a||!x.b))throw Error(`Soal ${i+1}: lengkapi minimal dua pasangan.`);r.answer=r.options.map(x=>x.b);}return r;});const cfg={};if(+f.qt.value>0)cfg.qt=+f.qt.value;if(f.shuf.checked)cfg.shuf=1;if(f.shufo.checked)cfg.shufo=1;if(!f.rev.checked)cfg.rev=0;if(+f.pass.value>0)cfg.pass=+f.pass.value;const desc=f.description.value.trim()+(Object.keys(cfg).length?'\n[[cfg:'+JSON.stringify(cfg)+']]':'');await api('addQuiz',{...cid(),title:f.title.value,duration:f.duration.value,description:desc,questions:JSON.stringify(qs)});kill();toast('Kuis berhasil diterbitkan.');reload('qz');}catch(er){busy=false;toast(er.message,true);b.disabled=false;b.textContent='Terbitkan kuis';}};
 }
 
+
+async function gradeQuizEssays(id) {
+  try {
+    const r=await api('quizPendingEssays',{quiz_id:id});
+    if(!r.items.length){toast('Tidak ada jawaban esai yang menunggu penilaian.');return;}
+    const m=document.createElement('div');m.className='ov';
+    m.innerHTML=`<form class="md wide" role="dialog" aria-modal="true"><h3>Penilaian esai</h3><p class="sub">${esc(r.title)} • Nilai setiap jawaban sesuai bobot soal.</p><label>Pilih siswa<select name="attempt" required>${r.items.map((a,i)=>`<option value="${i}">${esc(a.full_name)}</option>`).join('')}</select></label><div id="essaylist"></div><div class="row"><button type="button" class="btn2" data-x>Tutup</button><button class="btn">Simpan nilai</button></div></form>`;
+    document.body.appendChild(m);trapFocus(m);const f=m.querySelector('form'),list=m.querySelector('#essaylist');let busy=false;
+    const draw=()=>{const a=r.items[+f.attempt.value];list.innerHTML=a.items.map((x,i)=>`<div class="qb"><b>Esai ${i+1} • Maks. ${x.points}</b><p>${esc(x.text)}</p><div class="rve"><b>Jawaban siswa</b><p style="white-space:pre-wrap">${esc(x.answer||'(Tidak dijawab)')}</p></div><label>Nilai<input data-score="${x.id}" type="number" min="0" max="${x.points}" step="0.5" value="0" required></label><label>Umpan balik (opsional)<textarea data-feedback="${x.id}" rows="2"></textarea></label></div>`).join('')||'<p>Tidak ada soal esai.</p>';};
+    f.attempt.onchange=draw;draw();m.querySelector('[data-x]').onclick=()=>m.remove();f.onsubmit=async e=>{e.preventDefault();if(busy)return;busy=true;const b=f.querySelector('.row .btn');b.disabled=true;b.textContent='Menyimpan…';try{const a=r.items[+f.attempt.value],grades=a.items.map(x=>({question_id:x.id,score:f.querySelector(`[data-score="${x.id}"]`).value,feedback:f.querySelector(`[data-feedback="${x.id}"]`).value}));const out=await api('gradeQuizEssays',{attempt_id:a.attempt_id,grades:JSON.stringify(grades)});m.remove();toast(`Nilai tersimpan: ${out.score}/${out.max}`);reload('qz');}catch(err){busy=false;b.disabled=false;b.textContent='Simpan nilai';toast(err.message,true);}};
+  } catch(e){toast(e.message,true);}
+}
 
 async function reviewQuiz(id) {
   try {
-    const r = await api('reviewQuiz', { quiz_id: id }), ok = r.items.filter(x => x.chosen === x.answer).length;
+    const r=await api('reviewQuiz',{quiz_id:id});
+    const ok=r.items.filter(x=>x.type==='mcq'?Number(x.chosen)===Number(x.answer):x.type==='truefalse'?String(x.chosen)===String(x.answer):x.type==='match'?Array.isArray(x.chosen)&&x.answer.every((v,i)=>String(v)===String(x.chosen[i])):!!x.essayGrade).length;
     nav('home');
-    view(`<div class="qbar"><div><b>Pembahasan: ${esc(r.title)}</b><span>Benar ${ok} dari ${r.items.length} soal • Nilai ${r.score}/${r.max}</span></div><button class="btn" onclick="reload('qz')">Selesai</button></div>
-    ${r.items.map((x, i) => { const good = x.chosen === x.answer; return `<div class="card rv ${good ? 'g' : 'b'}"><div class="rvh"><b>Soal ${i + 1}</b><span class="badge ${good ? 'ok' : 'warn'}">${x.chosen === null ? 'Tidak dijawab' : good ? 'Benar' : 'Kurang tepat'}</span></div><h4>${esc(x.text)}</h4><div class="qos">${x.options.map((o, j) => `<div class="qo ${j === x.answer ? 'rc' : j === x.chosen ? 'rw' : ''}"><b>${'ABCDEF'[j]}</b><span>${esc(o)}</span>${j === x.answer ? '<em>Jawaban benar</em>' : j === x.chosen ? '<em>Jawaban Anda</em>' : ''}</div>`).join('')}</div>${x.explain ? `<div class="rve"><b>Pembahasan</b>${esc(x.explain)}</div>` : ''}</div>`; }).join('')}`);
-  } catch (e) { toast(e.message, true); }
+    view(`<div class="qbar"><div><b>Pembahasan: ${esc(r.title)}</b><span>${ok} dari ${r.items.length} soal selesai dinilai • Nilai ${r.score}/${r.max}</span></div><button class="btn" onclick="reload('qz')">Selesai</button></div>${r.items.map((x,i)=>{if(x.type==='essay')return `<div class="card rv"><div class="rvh"><b>Soal ${i+1} • Esai</b><span class="badge ${x.essayGrade?'ok':'warn'}">${x.essayGrade?'Sudah dinilai':'Menunggu penilaian guru'}</span></div><h4>${esc(x.text)}</h4><p><b>Jawaban Anda</b></p><div style="white-space:pre-wrap">${esc(x.chosen||'(Tidak dijawab)')}</div>${x.essayGrade?`<p><b>Nilai:</b> ${esc(x.essayGrade.score)} • <b>Umpan balik:</b> ${esc(x.essayGrade.feedback||'—')}</p>`:''}</div>`;const good=x.type==='match'?Array.isArray(x.chosen)&&x.answer.every((v,j)=>String(v)===String(x.chosen[j])):x.type==='truefalse'?String(x.chosen)===String(x.answer):Number(x.chosen)===Number(x.answer);return `<div class="card rv ${good?'g':'b'}"><div class="rvh"><b>Soal ${i+1}</b><span class="badge ${good?'ok':'warn'}">${x.chosen===null?'Tidak dijawab':good?'Benar':'Kurang tepat'}</span></div><h4>${esc(x.text)}</h4>${x.type==='match'?`<div class="qos">${x.options.map((v,j)=>`<div class="qo"><b>${j+1}</b><span>${esc(v)} → Jawaban Anda: ${esc((x.chosen||[])[j]||'—')} • Kunci: ${esc(x.answer[j]||'—')}</span></div>`).join('')}</div>`:x.type==='truefalse'?`<p>Jawaban Anda: ${esc(String(x.chosen||'—'))} • Kunci: ${esc(String(x.answer))}</p>`:`<div class="qos">${x.options.map((o,j)=>`<div class="qo ${j===x.answer?'rc':j===x.chosen?'rw':''}"><b>${'ABCDEF'[j]}</b><span>${esc(o)}</span>${j===x.answer?'<em>Jawaban benar</em>':j===x.chosen?'<em>Jawaban Anda</em>':''}</div>`).join('')}</div>`}${x.explain?`<div class="rve"><b>Pembahasan</b>${esc(x.explain)}</div>`:''}</div>`;}).join('')}`);
+  } catch(e){toast(e.message,true);}
 }
+
 async function quizStats(id) {
   try {
     const r = await api('quizStats', { quiz_id: id }), m = document.createElement('div'); m.className = 'ov';
-    m.innerHTML = `<div class="md wide"><h3>Analisis soal</h3><p class="sub">${esc(r.title)} • ${r.total} siswa selesai. Soal dengan persentase rendah mungkin perlu dibahas ulang.</p>${r.items.map((x, i) => { const p = x.answered ? Math.round(x.correct / r.total * 100) : 0, c = p < 40 ? 'hard' : p < 75 ? 'mid' : 'easy'; return `<div class="stb"><div><b>${i + 1}.</b> ${esc(x.text)}</div><div class="stbar"><i class="${c}" style="width:${p}%"></i></div><small>${p}% benar • ${c === 'hard' ? 'Sulit' : c === 'mid' ? 'Sedang' : 'Mudah'}</small></div>`; }).join('')}<div class="row"><button class="btn" data-x>Tutup</button></div></div>`;
+    m.innerHTML = `<div class="md wide"><h3>Analisis soal</h3><p class="sub">${esc(r.title)} • ${r.total} siswa selesai. Soal dengan persentase rendah mungkin perlu dibahas ulang.</p>${r.items.map((x, i) => { const p = x.type === 'essay' ? null : (x.answered ? Math.round(x.correct / x.answered * 100) : 0), c = p === null ? 'mid' : p < 40 ? 'hard' : p < 75 ? 'mid' : 'easy'; return `<div class="stb"><div><b>${i + 1}.</b> ${esc(x.text)}</div>${p === null ? '<small>Esai • dinilai secara manual oleh guru</small>' : `<div class="stbar"><i class="${c}" style="width:${p}%"></i></div><small>${p}% benar • ${c === 'hard' ? 'Sulit' : c === 'mid' ? 'Sedang' : 'Mudah'}</small>`}</div>`; }).join('')}<div class="row"><button class="btn" data-x>Tutup</button></div></div>`;
     document.body.appendChild(m); trapFocus(m); m.querySelector('[data-x]').onclick = () => m.remove(); m.querySelector('[data-x]').focus();
   } catch (e) { toast(e.message, true); }
 }
