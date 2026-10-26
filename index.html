@@ -1251,6 +1251,12 @@ aside.collapsed .mi svg{background:none}
 @media(max-width:767px){main{padding-top:1.2rem}.top h2{font-size:1.45rem}.st:hover,.kc:hover{transform:none}}
 @media(prefers-reduced-motion:reduce){#main>*{animation:none}}
 .lite *,.lite *::before,.lite *::after{animation:none!important;transition:none!important}.lite .mbar,.lite .hero-clock,.lite .fi,.lite .sb-user{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}.lite .card{content-visibility:auto}
+.rrow{display:flex;align-items:center;justify-content:space-between;gap:.6rem 1rem;flex-wrap:wrap;margin:.1rem 0 1.4rem}
+.rrow .rem{margin:0}
+.fgb{font-size:.82rem;font-weight:600;text-decoration:none;color:#4f46e5;padding:.35rem .2rem;border-radius:.5rem}
+.fgb:hover{text-decoration:underline}
+.fgt{margin:-.8rem 0 1.2rem;padding:.7rem .85rem;border-radius:.8rem;background:#eef2ff;border:1px solid #c7d2fe;color:#3730a3;font-size:.8rem;line-height:1.5}
+.fgt .link{font-size:.8rem;color:#3730a3}
 </style>
 </head>
 <body>
@@ -1365,12 +1371,13 @@ aside.collapsed .mi svg{background:none}
       <div class="labrow"><label class="fl" for="pw">Sandi</label><span id="caps" class="caps hide" role="status">Caps Lock aktif</span></div>
       <div class="fd pw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><input id="pw" type="password" class="fld" placeholder="Masukkan sandi" autocomplete="current-password">
         <button type="button" class="eye" id="eye" aria-label="Tampilkan sandi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
-      <label class="rem"><input type="checkbox" id="rem"><span>Ingat username saya</span></label>
+      <div class="rrow"><label class="rem"><input type="checkbox" id="rem"><span>Ingat username saya</span></label><button type="button" class="link fgb" id="fgb" aria-expanded="false" aria-controls="fgt" onclick="var t=document.getElementById('fgt'),h=t.classList.toggle('hide');this.setAttribute('aria-expanded',String(!h))">Lupa sandi?</button></div>
+      <p class="fgt hide" id="fgt" role="note">Pengaturan ulang sandi dilakukan oleh administrator atau staf administrasi sekolah. Sampaikan username Anda kepada mereka. <button type="button" class="link" onclick="openFaq()">Lihat panduan</button></p>
       <p id="lmsg" class="alert hide" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span></span></p>
       <button class="sb" id="lbtn">Masuk</button>
       <div class="srv" id="srv" data-s=""><i class="dot"></i><span id="srvt">Memeriksa koneksi layanan…</span><button type="button" class="link hide" id="srvr">Coba lagi</button></div>
     </form>
-    <p class="help"><button type="button" class="link" onclick="openFaq()">Pusat Bantuan</button><span>Lupa sandi? Hubungi administrator sekolah.</span></p>
+    <p class="help"><button type="button" class="link" onclick="openFaq()">Pusat Bantuan</button><span>Kendala lain? Hubungi administrator sekolah.</span></p>
   </div></div>
 </div>
 
@@ -1509,13 +1516,13 @@ function refreshData() {
 
 const lerr = m => { const a = $('#lmsg'); a.querySelector('span').textContent = m || ''; a.classList.toggle('hide', !m); };
 const ROLES = {
-  siswa:          { nama: 'Siswa',              label: 'Username siswa / NISN', ph: 'Masukkan username siswa', hint: 'Gunakan username dan sandi awal dari sekolah. Setelah masuk, bergabunglah ke kelas dengan kode dari guru.' },
-  guru:           { nama: 'Guru',               label: 'Username guru / NIP',   ph: 'Username dari administrator sekolah', hint: 'Kelola kelas, materi, tugas, kuis, dan penilaian peserta didik.' },
-  kepala_sekolah: { nama: 'Kepala Sekolah',     label: 'Username Kepala Sekolah', ph: 'Username dari administrator sekolah', hint: 'Pantau rekapitulasi seluruh kelas untuk supervisi pembelajaran. Hak mengubah nilai tidak diberikan secara otomatis.' },
-  kurikulum:      { nama: 'Kurikulum',          label: 'Username Kurikulum',     ph: 'Username dari administrator sekolah', hint: 'Pantau aktivitas dan rekapitulasi pembelajaran seluruh kelas. Guru dengan tugas tambahan dapat memiliki kedua peran.' },
-  admin:          { nama: 'Administrator',      label: 'Username administrator', ph: 'Username administrator', hint: 'Akses pengelolaan sistem dan seluruh kelas, khusus bagi administrator.' },
-  guru_bk:        { nama: 'Guru BK',            label: 'Username Guru BK',       ph: 'Username dari administrator sekolah', hint: 'Kelola data siswa dan kelas sesuai kewenangan bimbingan dan konseling.' },
-  staff:          { nama: 'Staf Administrasi', label: 'Username staf administrasi', ph: 'Username dari administrator sekolah', hint: 'Mengelola data siswa, guru, kelas, dan jadwal sekolah.' }
+  siswa:          { nama: 'Siswa',              label: 'Username siswa / NISN', ph: 'Masukkan username atau NISN Anda', hint: 'Gunakan username dan sandi awal dari sekolah. Setelah masuk, bergabunglah ke kelas dengan kode dari guru.' },
+  guru:           { nama: 'Guru',               label: 'Username guru / NIP',   ph: 'Masukkan username atau NIP Anda', hint: 'Kelola kelas, materi, tugas, kuis, dan penilaian peserta didik.' },
+  kepala_sekolah: { nama: 'Kepala Sekolah',     label: 'Username Kepala Sekolah', ph: 'Masukkan username Anda', hint: 'Pantau rekapitulasi seluruh kelas untuk supervisi pembelajaran. Hak mengubah nilai tidak diberikan secara otomatis.' },
+  kurikulum:      { nama: 'Kurikulum',          label: 'Username Kurikulum',     ph: 'Masukkan username Anda', hint: 'Pantau aktivitas dan rekapitulasi pembelajaran seluruh kelas. Guru dengan tugas tambahan dapat memiliki kedua peran.' },
+  admin:          { nama: 'Administrator',      label: 'Username administrator', ph: 'Masukkan username Anda', hint: 'Akses pengelolaan sistem dan seluruh kelas, khusus bagi administrator.' },
+  guru_bk:        { nama: 'Guru BK',            label: 'Username Guru BK',       ph: 'Masukkan username Anda', hint: 'Kelola data siswa dan kelas sesuai kewenangan bimbingan dan konseling.' },
+  staff:          { nama: 'Staf Administrasi', label: 'Username staf administrasi', ph: 'Masukkan username Anda', hint: 'Mengelola data siswa, guru, kelas, dan jadwal sekolah.' }
 };
 let loginRole = 'siswa';
 try { const r = localStorage.getItem('lms_r'); if (ROLES[r]) loginRole = r; } catch (e) {}
