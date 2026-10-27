@@ -1864,6 +1864,47 @@ html:has(#login:not(.hide)){font-size:clamp(12px,min(1.08vw,2.05vh),17px)}
 #login .rhint{display:none}
 #login .lc .sub{display:none}
 }
+
+/* ===== LOGIN v2: panel kiri lebih lebar, panel kanan minimalis ===== */
+@media(min-width:901px){
+#login.lw{grid-template-columns:minmax(0,1.32fr) minmax(0,1fr)}
+#login .ls{padding:clamp(1.25rem,4.4vh,2.75rem) clamp(2rem,4.2vw,4.5rem)}
+#login .ls .hero-l{max-width:38rem}
+#login .ls .hero-l h1{font-size:clamp(2.2rem,3.6vw,3.3rem)}
+#login .ls .hero-l>p{max-width:32rem;font-size:.9rem}
+#login .hx{width:min(100cqw,calc((100cqh - 2.8rem) * 1.368),44rem)}
+#login .ls .fe{gap:.7rem}
+#login .lm{background:linear-gradient(180deg,#fff,#fafbfe)}
+#login .lm::before{display:none}
+#login .lc{max-width:23.5rem}
+#login .lc h2{font-size:1.95rem;text-align:left}
+#login .lc h2::after{display:none}
+#login .lc .sub{margin:.4rem 0 1.5rem;max-width:none;text-align:left;font-size:.88rem;color:#7a879c}
+#login .rh{margin-bottom:.7rem}
+#login .rlab,#login .fl{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#8a96aa}
+#login .adm{font-size:.76rem;color:#8a96aa;padding:.2rem .55rem}
+#login .rg{gap:.45rem}
+#login .rt,#login .rt:not([aria-checked=true]){min-height:2.9rem;padding:.55rem 1.6rem .55rem .75rem;border:1px solid transparent;border-radius:.8rem;background:#f4f6fa;box-shadow:none}
+#login .rt>svg{width:1.15rem;height:1.15rem;color:#9aa8bf}
+#login .rx b{font-size:.84rem;font-weight:600;color:#3b4a63}
+#login .rt:hover{background:#edf1f8;border-color:transparent}
+#login .rt[aria-checked=true]{background:#fff;border-color:var(--navy);box-shadow:0 0 0 3px rgba(11,61,145,.08),0 10px 20px -14px rgba(11,61,145,.5)}
+#login .rt[aria-checked=true]>svg{color:var(--navy)}
+#login .rt[aria-checked=true] .rx b{color:var(--navyd)}
+#login .rhint{margin:.9rem 0 1.3rem;padding:0;border:0;background:none;font-size:.78rem;line-height:1.5;color:#7a879c}
+#login .rhint::before{background:var(--gold)}
+#login .fd{margin-bottom:1rem}
+#login .fld{min-height:2.95rem;border:1px solid transparent;border-radius:.8rem;background:#f4f6fa;font-size:.9rem}
+#login .fld:hover{border-color:#dbe3ef}
+#login .fld:focus{background:#fff;border-color:var(--navy);box-shadow:0 0 0 4px rgba(11,61,145,.1)}
+#login .fl{margin-bottom:.4rem}
+#login .rem{font-size:.78rem;color:#7a879c}
+#login .fgb{font-size:.78rem}
+#login .rrow{margin:0 0 1.3rem}
+#login .sb{min-height:3rem;border-radius:.8rem;background:linear-gradient(135deg,#0d46a8,#0a2f72);box-shadow:0 14px 24px -14px rgba(11,61,145,.8)}
+#login .srv{margin-top:1rem;font-size:.75rem}
+#login .help{margin-top:.6rem;padding-top:0;border:0;font-size:.75rem;color:#9aa6b9}
+}
 </style>
 </head>
 <body>
