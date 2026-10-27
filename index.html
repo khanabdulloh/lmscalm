@@ -1627,7 +1627,7 @@ details.mod{margin:0 0 1rem;border-top:0;padding-top:0}
 
 /* Kepala kelas */
 .sc{background:var(--card);border-radius:1.5rem;border-color:var(--soft-line);box-shadow:var(--shadow-sm)}
-.sc-ban,.sc .sc-ban{height:8.5rem;background:radial-gradient(40rem 12rem at 100% 120%,rgba(214,180,106,.32),transparent 60%),linear-gradient(135deg,#0d46a8,#0a2a63)}
+.sc-ban,.sc .sc-ban{height:3.5rem;background:radial-gradient(40rem 12rem at 100% 120%,rgba(214,180,106,.32),transparent 60%),linear-gradient(135deg,#0d46a8,#0a2a63)}
 .sc-av{border-radius:1.35rem;border:4px solid var(--card);background:linear-gradient(145deg,#1556c0,#0a2a63);box-shadow:0 8px 20px -10px rgba(10,34,80,.55)}
 .sc-tx h1{font-family:var(--serif);font-weight:600;font-size:1.6rem;letter-spacing:-.015em}
 .sc-tx p{font-size:.92rem}
@@ -1635,6 +1635,10 @@ details.mod{margin:0 0 1rem;border-top:0;padding-top:0}
 .sc-st span{background:var(--tint)}
 .sc-code{border:1px dashed color-mix(in srgb,var(--gold-ink) 40%,transparent);transition:background .15s}
 .sc-code:hover{background:color-mix(in srgb,var(--gold) 22%,var(--gold-soft))}
+
+.sc-in{margin-top:-1.75rem;padding-bottom:1.15rem}.sc-av{width:4.2rem;height:4.2rem;font-size:1.2rem}.sc-tx{padding-top:2rem}
+/* Pengumuman guru diberi aksen emas agar beda dari percakapan */
+.sp:has(.sp-k.sp-ann){box-shadow:inset 3px 0 0 var(--gold)}
 
 /* Tab kelas: sticky dengan latar kaca, tanpa kotak berat */
 .sc-tabs{background:color-mix(in srgb,var(--bg) 86%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
@@ -1697,7 +1701,7 @@ details.mod{margin:0 0 1rem;border-top:0;padding-top:0}
 [data-theme=dark] .sp-k.sp-qz{background:color-mix(in srgb,#a78bfa 16%,var(--card));color:#c4b5fd}
 [data-theme=dark] .sp-k.sp-mat{background:color-mix(in srgb,#34d399 14%,var(--card));color:#6ee7b7}
 [data-theme=dark] .sp-k.sp-fr{background:color-mix(in srgb,#38bdf8 14%,var(--card));color:#7dd3fc}
-@media(max-width:767px){.sc{border-radius:1.25rem}.sc-ban,.sc .sc-ban{height:6.5rem}.sc-av{border-radius:1.15rem}.sc-tx h1{font-size:1.35rem}.sp,.sp-comp{border-radius:1.1rem}.sp-h{padding:.9rem 1rem .3rem}}
+@media(max-width:767px){.sc{border-radius:1.25rem}.sc-ban,.sc .sc-ban{height:3rem}.sc-in{margin-top:-1.6rem}.sc-av{width:3.5rem;height:3.5rem;font-size:1rem;border-radius:1.05rem}.sc-tx h1{font-size:1.35rem}.sp,.sp-comp{border-radius:1.1rem}.sp-h{padding:.9rem 1rem .3rem}}
 </style>
 </head>
 <body>
@@ -2646,7 +2650,7 @@ function feedView(t, readOnly) {
   const me = S ? String(S.user.full_name || '') : '';
   const comp = readOnly ? '' : t
     ? `<div class="sp-comp"><div class="sp-cr"><span class="fav g" aria-hidden="true">${esc((me || 'G').charAt(0).toUpperCase())}</span><button type="button" class="sp-ph" onclick="addAnn()">Bagikan sesuatu ke kelas, ${esc(me.split(' ')[0] || 'Bapak/Ibu')}…</button></div><div class="sp-qa"><button type="button" onclick="addAnn()">${lic('megaphone')} Pengumuman</button><button type="button" onclick="addMat()">${lic('book')} Materi</button><button type="button" onclick="addAsg()">${lic('task')} Tugas</button><button type="button" onclick="addQuiz()">${lic('quiz')} Kuis</button></div></div>`
-    : `<div class="sp-comp"><div class="sp-cr"><span class="fav" aria-hidden="true">${esc((me || 'S').charAt(0).toUpperCase())}</span><button type="button" class="sp-ph" onclick="drawClass('fr')">Ada yang ingin ditanyakan atau dibahas? Tulis di sini…</button></div></div>`;
+    : `<div class="sp-comp"><div class="sp-cr"><span class="fav" aria-hidden="true">${esc((me || 'S').charAt(0).toUpperCase())}</span><button type="button" class="sp-ph" onclick="drawClass('fr')">Ada yang ingin ditanyakan atau dibahas? Tulis di sini…</button></div><div class="sp-qa"><button type="button" onclick="drawClass('fr')">${lic('forum')} Tulis diskusi</button><button type="button" onclick="drawClass('mat')">${lic('book')} Materi</button><button type="button" onclick="drawClass('asg')">${lic('task')} Tugas</button><button type="button" onclick="drawClass('qz')">${lic('quiz')} Kuis</button></div></div>`;
   return due + comp + (items.map(x => `<article class="sp">${spHead(x.k, x.who, x.c)}${x.h}</article>`).join('') || empty('Beranda kelas masih sepi', t ? 'Bagikan pengumuman, materi, atau tugas pertama agar kelas mulai ramai.' : 'Kiriman dari guru dan teman sekelas akan muncul di sini.'));
 }
 function drawClass(tab) {
@@ -2663,7 +2667,7 @@ function drawClass(tab) {
   const ini = String(cls.name || 'K').split(/\s+/).map(w => w.charAt(0)).join('').slice(0, 3).toUpperCase();
   const nPost = (C.announcements || []).length + (C.materials || []).length + (C.assignments || []).length + (C.quizzes || []).length;
   view(`<button class="back" onclick="home()">← Kembali ke daftar kelas</button>${offn}
-    <div class="sc"><div class="sc-ban" aria-hidden="true"></div><div class="sc-in"><span class="sc-av" aria-hidden="true">${esc(ini)}</span><div class="sc-tx"><h1>${esc(cls.name)}</h1><p>${esc(cls.subject || '—')} • ${esc(cls.teacher_name || '—')}${readOnly ? ' • Mode pemantauan' : ''}</p><div class="sc-st"><span>${lic('users')} ${C.memberCount} anggota</span><span>${lic('layers')} ${nPost} kiriman</span>${t ? `<button type="button" class="sc-code" onclick="copyCode(${jsq(cls.code)})" title="Salin kode kelas">${lic('key')} ${esc(cls.code)} • Salin</button>` : ''}</div></div></div></div>
+    <div class="sc"><div class="sc-ban" aria-hidden="true"></div><div class="sc-in"><span class="sc-av" aria-hidden="true">${esc(ini)}</span><div class="sc-tx"><h1>${esc(cls.name)}</h1><p>${esc(cls.subject || '—')} • ${esc(cls.teacher_name || '—')}${readOnly ? ' • Mode pemantauan' : ''}</p><div class="sc-st"><span>${lic('users')} ${C.memberCount} anggota</span><span>${lic('book')} ${(C.materials || []).length} materi</span><span>${lic('task')} ${(C.assignments || []).length} tugas</span><span>${lic('quiz')} ${(C.quizzes || []).length} kuis</span>${t ? `<button type="button" class="sc-code" onclick="copyCode(${jsq(cls.code)})" title="Salin kode kelas">${lic('key')} ${esc(cls.code)} • Salin</button>` : ''}</div></div></div></div>
     <div class="tabs sc-tabs" role="tablist">${[['feed', lic('home') + 'Beranda'], ['ann', lic('megaphone') + 'Info'], ['mat', lic('book') + 'Materi'], ['asg', lic('task') + 'Tugas'], ['qz', lic('quiz') + 'Kuis'], ['fr', lic('forum') + 'Forum']].map(([k, l]) => `<button role="tab" aria-selected="${k === tab}" class="${k === tab ? 'on' : ''}" onclick="drawClass('${k}')">${l}</button>`).join('')}</div><div class="sp-feed">${body}</div>`);
   const tb = document.querySelector('.sc-tabs'), on = tb && tb.querySelector('.on');
   if (tb && on && tb.scrollWidth > tb.clientWidth) tb.scrollLeft = on.offsetLeft - (tb.clientWidth - on.offsetWidth) / 2;
