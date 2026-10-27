@@ -2276,8 +2276,8 @@ function vDash() {
     const now = new Date().getTime();
     const reminders = t ? [] : todo.filter(a => {
       if (!a.due) return false;
-      const diff = new Date(a.due).getTime() - now;
-      return diff > -86400000 && diff < (3 * 86400000); // H-3 hingga kemarin
+      const rem = dEnd(a) - now;
+      return rem > 0 && rem < (4 * 86400000); // H-3 hingga batas berakhir
     });
 
     const gp = O.submissions.filter(s => s.score !== '' && s.score !== null).map(s => Number(s.score) / (Number(asgOf(s.assignment_id).max_score) || 100) * 100)
@@ -2292,7 +2292,7 @@ function vDash() {
          kpi('Menunggu penilaian', ung.length, ung.length ? 'dari ' + O.submissions.length + ' pengumpulan' : 'Seluruh pengumpulan telah dinilai', "go('review')"),
          kpi('Kelas diampu', O.classes.length, O.assignments.length + ' tugas • ' + O.quizzes.length + ' kuis', "go('home')")]
       : [kpi('Pelajaran hari ini', '–', 'Memuat jadwal…', '', 'kp-s'),
-         kpi('Tugas menunggu', todo.length, todo.length ? (nxt ? 'Terdekat: ' + tgl(nxt.due) : 'Tanpa batas waktu') : 'Seluruh tugas telah dikumpulkan', "go('tasks')"),
+         kpi('Tugas menunggu', todo.length, todo.length ? (nxt ? 'Terdekat: ' + dueFmt(nxt) : 'Tanpa batas waktu') : 'Seluruh tugas telah dikumpulkan', "go('tasks')"),
          kpi('Kuis tersedia', qTodo, qTodo ? 'Belum dikerjakan' : 'Tidak ada kuis tertunda', "go('quizzes')"),
          kpi('Rata-rata nilai', avgTxt, gp.length ? 'dari ' + gp.length + ' penilaian' : 'Belum ada penilaian', "go('grades')")];
 
@@ -2561,8 +2561,8 @@ function feedView(t, readOnly) {
   let due = '';
   if (!t && !readOnly) {
     const done = new Set((C.submissions || []).map(s => String(s.assignment_id))), now = Date.now() - 864e5;
-    const up = (C.assignments || []).filter(a => a.due && !done.has(String(a.id)) && new Date(a.due).getTime() >= now).sort((a, b) => new Date(a.due) - new Date(b.due)).slice(0, 3);
-    if (up.length) due = `<div class="sp-due"><b>${lic('clock')} Tenggat terdekat</b>${up.map(a => `<button type="button" onclick="drawClass('asg')"><span>${esc(a.title)}</span><i>${tgl(a.due)}</i></button>`).join('')}</div>`;
+    const up = (C.assignments || []).filter(a => a.due && !done.has(String(a.id)) && dEnd(a) >= Date.now()).sort((a, b) => dEnd(a) - dEnd(b)).slice(0, 3);
+    if (up.length) due = `<div class="sp-due"><b>${lic('clock')} Tenggat terdekat</b>${up.map(a => `<button type="button" onclick="drawClass('asg')"><span>${esc(a.title)}</span><i>${dueFmt(a)}</i></button>`).join('')}</div>`;
   }
   const me = S ? String(S.user.full_name || '') : '';
   const comp = readOnly ? '' : t
@@ -2657,20 +2657,24 @@ function editMat(id) {
 }
 function editAsg(id) {
   const a = C.assignments.find(x => x.id === id); if (!a) return;
-  const dv = a.due ? ymd(new Date(a.due)) : '', R = rcfg(a.description);
-  modal('Edit tugas', [{ n: 'title', l: 'Judul tugas', v: a.title }, { n: 'description', l: 'Petunjuk (opsional)', t: 'textarea', v: R.text, r: false }, { n: 'rubric', l: 'Rubrik penilaian (opsional): satu kriteria per baris, contoh “Ketepatan isi | 40”', t: 'textarea', v: rubText(R.rub), r: false, rows: 4 }, { n: 'due', l: 'Batas pengumpulan', t: 'date', v: dv, r: false }, { n: 'max_score', l: 'Nilai maksimal', t: 'number', v: a.max_score }],
-    async d => { const rub = rubParse(d.rubric); await api('editAssignment', { id, title: d.title, description: rubEncode(d.description, rub), due: d.due || '', max_score: d.max_score }); toast('Tugas diperbarui.'); await cmRefresh(); }, 'Simpan perubahan', { sub: 'Nilai yang sudah diberikan tidak berubah. Pengumpulan diterima hingga akhir hari pada tanggal batas.' });
+  const dv = a.due ? ymd(new Date(a.due)) : '', R = rcfg(a.description), tvN = Number(a.due_time), tv = a.due && a.due_time !== '' && a.due_time != null && isFinite(tvN) ? pad2(Math.floor(tvN / 60)) + ':' + pad2(tvN % 60) : '';
+  modal('Edit tugas', [{ n: 'title', l: 'Judul tugas', v: a.title }, { n: 'description', l: 'Petunjuk (opsional)', t: 'textarea', v: R.text, r: false }, { n: 'rubric', l: 'Rubrik penilaian (opsional): satu kriteria per baris, contoh “Ketepatan isi | 40”', t: 'textarea', v: rubText(R.rub), r: false, rows: 4 }, { n: 'due', l: 'Batas pengumpulan', t: 'date', v: dv, r: false }, { n: 'due_time', l: 'Jam batas (opsional; kosongkan = berakhir di akhir hari)', t: 'time', v: tv, r: false }, { n: 'max_score', l: 'Nilai maksimal', t: 'number', v: a.max_score }],
+    async d => { const rub = rubParse(d.rubric); await api('editAssignment', { id, title: d.title, description: rubEncode(d.description, rub), due: d.due || '', due_time: d.due_time || '', max_score: d.max_score }); toast('Tugas diperbarui.'); await cmRefresh(); }, 'Simpan perubahan', { sub: 'Nilai yang sudah diberikan tidak berubah. Pengumpulan diterima hingga jam batas yang ditentukan, atau hingga akhir hari pada tanggal batas bila jam dikosongkan.' });
 }
 function editQuiz(id) {
   const q = C.quizzes.find(x => x.id === id); if (!q) return;
   const { c, text } = qcfg(q.description);
-  modal('Edit kuis', [{ n: 'title', l: 'Judul kuis', v: q.title }, { n: 'duration', l: 'Durasi total (menit)', t: 'number', v: q.duration }, { n: 'qt', l: 'Waktu per soal (detik; 0 = nonaktif)', t: 'number', v: c.qt || 0, r: false }, { n: 'pass', l: 'Nilai ketuntasan minimal (0–100)', t: 'number', v: c.pass || 0, r: false }, { n: 'description', l: 'Petunjuk untuk siswa (opsional)', t: 'textarea', v: text, r: false }],
+  modal('Edit kuis', [{ n: 'title', l: 'Judul kuis', v: q.title }, { n: 'duration', l: 'Durasi total (menit)', t: 'number', v: q.duration }, { n: 'qt', l: 'Waktu per soal (detik; 0 = nonaktif)', t: 'number', v: c.qt || 0, r: false }, { n: 'pass', l: 'Nilai ketuntasan minimal (0–100)', t: 'number', v: c.pass || 0, r: false }, { n: 'open', l: 'Dibuka pada (opsional)', t: 'datetime-local', v: c.open ? dtl(c.open) : '', r: false }, { n: 'close', l: 'Ditutup pada (opsional)', t: 'datetime-local', v: c.close ? dtl(c.close) : '', r: false }, { n: 'description', l: 'Petunjuk untuk siswa (opsional)', t: 'textarea', v: text, r: false }],
     async d => {
-      const cfg = Object.assign({}, c); delete cfg.qt; delete cfg.pass;
+      const cfg = Object.assign({}, c); delete cfg.qt; delete cfg.pass; delete cfg.open; delete cfg.close;
       if (+d.qt > 0) cfg.qt = +d.qt; if (+d.pass > 0) cfg.pass = +d.pass;
+      const wo = d.open ? new Date(d.open).getTime() : 0, wc = d.close ? new Date(d.close).getTime() : 0;
+      if ((d.open && isNaN(wo)) || (d.close && isNaN(wc))) throw new Error('Format tanggal buka/tutup tidak valid.');
+      if (wo && wc && wc <= wo) throw new Error('Waktu tutup harus setelah waktu buka.');
+      if (wo) cfg.open = wo; if (wc) cfg.close = wc;
       const desc = String(d.description || '').trim() + (Object.keys(cfg).length ? '\n[[cfg:' + JSON.stringify(cfg) + ']]' : '');
       await api('editQuiz', { quiz_id: id, title: d.title, duration: d.duration, description: desc }); toast('Kuis diperbarui.'); await cmRefresh();
-    }, 'Simpan perubahan', { sub: 'Soal tidak diubah di sini. Siswa yang sedang mengerjakan tetap memakai sisa waktu yang sudah berjalan.' });
+    }, 'Simpan perubahan', { sub: 'Untuk memperbaiki soal, gunakan tombol “Edit soal”. Siswa yang sedang mengerjakan tetap memakai sisa waktu yang sudah berjalan.' });
 }
 
 function asgCard(a, t) {
@@ -2687,7 +2691,7 @@ function asgCard(a, t) {
     foot = `<div class="row" style="justify-content:space-between;align-items:center;margin-top:10px"><span class="badge ${s ? (s.score !== '' ? 'ok' : 'warn') : ''}">${s ? (s.score !== '' ? `Nilai ${s.score}/${a.max_score}` : 'Menunggu penilaian') : 'Belum dikumpulkan'}</span>
       <button class="btn${s ? '2' : ''}" onclick="submitIt(${esc(JSON.stringify(String(a.id)))})">${s ? 'Kumpulkan ulang' : 'Kumpulkan tugas'}</button></div>${s && s.feedback ? `<p class="meta">Umpan balik: ${esc(s.feedback)}</p>` : ''}`;
   }
-  return `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${a.due ? 'Batas: ' + tgl(a.due) + ' • ' : ''}Nilai maksimal ${a.max_score}</div>${R.text ? `<p>${esc(R.text)}</p>` : ''}${rubBlock(R.rub)}${contentActions(t, 'editAsg', 'deleteAsg', a.id, 'tugas')}${foot}${cmtBlock('asg', a.id)}</div>`;
+  return `<div class="card item"><h4>${esc(a.title)}</h4><div class="meta">${a.due ? 'Batas: ' + dueFmt(a) + ' • ' : ''}Nilai maksimal ${a.max_score}</div>${R.text ? `<p>${esc(R.text)}</p>` : ''}${rubBlock(R.rub)}${contentActions(t, 'editAsg', 'deleteAsg', a.id, 'tugas')}${foot}${cmtBlock('asg', a.id)}</div>`;
 }
 
 const cid = () => ({ class_id: C.cls.id });
@@ -2722,8 +2726,8 @@ function rubGrade(aid, sid) {
     toast('Nilai ' + score + '/' + a.max_score + ' tersimpan.'); await cmRefresh();
   }, 'Simpan nilai', { sub: s.full_name + ' • Skor akhir dihitung dari total poin, lalu disesuaikan dengan nilai maksimal tugas (dibulatkan).', busy: 'Menyimpan…' });
 }
-const addAsg = () => modal('Buat tugas', [{n:'title',l:'Judul tugas'},{n:'description',l:'Petunjuk (opsional)',t:'textarea',r:false},{n:'rubric',l:'Rubrik penilaian (opsional): satu kriteria per baris, contoh “Ketepatan isi | 40”',t:'textarea',r:false,rows:4},{n:'due',l:'Batas pengumpulan',t:'date',r:false},{n:'max_score',l:'Nilai maksimal',t:'number',v:100}], async d => { const rub = rubParse(d.rubric), { rubric, ...r } = d; await api('addAssignment', {...r, description: rubEncode(r.description, rub), ...cid()}); toast('Tugas berhasil dibuat.'); reload(CT==='feed'?'feed':'asg'); }, 'Buat tugas', { sub: 'Tentukan petunjuk, rubrik, batas pengumpulan, dan nilai maksimal. Pengumpulan diterima hingga akhir hari pada tanggal batas.', busy: 'Membuat tugas…' });
-const submitIt = id => modal('Kumpulkan tugas', [{n:'file',l:'Berkas (maks. 5 MB)',t:'file',r:false},{n:'note',l:'Catatan (opsional)',t:'textarea',r:false}], async d => { await api('submit', {...d, assignment_id: id}); toast('Tugas berhasil dikumpulkan.'); reload('asg'); }, 'Kumpulkan', { sub: 'Lampirkan berkas dan/atau tuliskan catatan. Pengumpulan ulang akan memperbarui kiriman Anda sebelumnya.', busy: 'Mengirim…' });
+const addAsg = () => modal('Buat tugas', [{n:'title',l:'Judul tugas'},{n:'description',l:'Petunjuk (opsional)',t:'textarea',r:false},{n:'rubric',l:'Rubrik penilaian (opsional): satu kriteria per baris, contoh “Ketepatan isi | 40”',t:'textarea',r:false,rows:4},{n:'due',l:'Batas pengumpulan',t:'date',r:false},{n:'due_time',l:'Jam batas (opsional; kosongkan = berakhir di akhir hari)',t:'time',r:false},{n:'max_score',l:'Nilai maksimal',t:'number',v:100}], async d => { const rub = rubParse(d.rubric), { rubric, ...r } = d; await api('addAssignment', {...r, description: rubEncode(r.description, rub), ...cid()}); toast('Tugas berhasil dibuat.'); reload(CT==='feed'?'feed':'asg'); }, 'Buat tugas', { sub: 'Tentukan petunjuk, rubrik, batas pengumpulan, dan nilai maksimal. Pengumpulan diterima hingga jam batas yang ditentukan, atau hingga akhir hari pada tanggal batas bila jam dikosongkan.', busy: 'Membuat tugas…' });
+const submitIt = id => modal('Kumpulkan tugas', [{n:'file',l:'Berkas (maks. 5 MB)',t:'file',r:false},{n:'link',l:'Atau tautan (Google Drive, YouTube, dll.; opsional)',t:'url',r:false},{n:'note',l:'Catatan (opsional)',t:'textarea',r:false}], async d => { await api('submit', {...d, assignment_id: id}); toast('Tugas berhasil dikumpulkan.'); reload('asg'); }, 'Kumpulkan', { sub: 'Lampirkan berkas, tempel tautan (mis. video praktik di Google Drive atau YouTube), dan/atau tuliskan catatan. Pengumpulan ulang memperbarui kiriman sebelumnya.', busy: 'Mengirim…' });
 async function gradeIt(id) {
   const sc = $('#sc-' + id);
   if (sc.value === '') { toast('Mohon isi nilai terlebih dahulu.', true); sc.focus(); return; }
@@ -2747,17 +2751,18 @@ const FAQ = [
   ['Akun dan Keamanan', 'Bagaimana keamanan data akun saya dijaga?', 'Sandi disimpan dalam bentuk hash sehingga tidak dapat dibaca kembali oleh siapa pun, termasuk administrator. Pilih “Keluar” setelah menggunakan perangkat bersama, dan jangan menyimpan sandi pada peramban perangkat umum.'],
 
   ['Siswa', 'Bagaimana cara bergabung ke sebuah kelas?', 'Buka menu “Kelas saya”, pilih “Gabung kelas”, lalu masukkan kode kelas yang diberikan oleh guru. Setelah berhasil, kelas akan tampil pada daftar kelas Anda.', ['siswa']],
-  ['Siswa', 'Bagaimana cara mengumpulkan tugas?', 'Masuk ke kelas terkait, buka tab Tugas, lalu pilih “Kumpulkan tugas”. Lampirkan berkas (maksimal 5 MB) dan/atau tuliskan catatan. Pengumpulan diterima hingga akhir hari pada tanggal batas yang ditetapkan guru. Selama masih dalam batas waktu, Anda dapat mengumpulkan ulang untuk memperbarui kiriman sebelumnya.', ['siswa']],
+  ['Siswa', 'Bagaimana cara mengumpulkan tugas?', 'Masuk ke kelas terkait, buka tab Tugas, lalu pilih “Kumpulkan tugas”. Lampirkan berkas (maksimal 5 MB), tempel tautan (misalnya video praktik di Google Drive atau YouTube), dan/atau tuliskan catatan. Pengumpulan diterima hingga jam batas yang ditetapkan guru, atau hingga akhir hari pada tanggal batas bila guru tidak menentukan jam. Selama masih dalam batas waktu, Anda dapat mengumpulkan ulang untuk memperbarui kiriman sebelumnya.', ['siswa']],
   ['Siswa', 'Di mana saya dapat melihat nilai dan umpan balik?', 'Nilai dan umpan balik guru tersedia pada menu “Nilai saya”. Nilai kuis ditampilkan segera setelah jawaban dikumpulkan.', ['siswa']],
   ['Siswa', 'Bagaimana saya mengetahui tugas yang mendekati tenggat?', 'Halaman Beranda menampilkan pengingat bagi tugas yang belum dikumpulkan dengan batas waktu dalam tiga hari ke depan, termasuk yang baru saja melewati batas. Lencana pada menu “Tugas saya” menunjukkan jumlah tugas yang belum dikumpulkan.', ['siswa']],
 
   ['Kuis', 'Bagaimana ketentuan pengerjaan kuis?', 'Waktu berjalan sejak tombol “Mulai kuis” dipilih dan tidak dapat dihentikan. Anda dapat berpindah antarsoal dan menandai soal tertentu sebagai “Ragu-ragu” untuk ditinjau kembali sebelum jawaban dikumpulkan. Jika guru menetapkan batas waktu per soal, soal berpindah secara otomatis dan tidak dapat dibuka kembali.'],
-  ['Kuis', 'Bagaimana jika koneksi terputus saat kuis berlangsung?', 'Buka kembali portal pada perangkat dan peramban yang sama, lalu pilih “Lanjutkan” pada kuis tersebut. Selama waktu belum habis, pengerjaan dapat dilanjutkan dengan sisa waktu yang tersedia, dan jawaban yang telah dipilih disimpan sementara pada peramban perangkat tersebut. Jika waktu telah berakhir, kuis ditutup dan dinilai berdasarkan jawaban yang telah terkirim. Pastikan koneksi stabil sebelum memulai.'],
+  ['Kuis', 'Bagaimana jika koneksi terputus saat kuis berlangsung?', 'Masuk kembali ke portal, lalu pilih “Lanjutkan” pada kuis tersebut. Selama waktu belum habis, pengerjaan dapat dilanjutkan dengan sisa waktu yang tersedia. Jawaban yang telah dipilih disimpan otomatis di server dan di perangkat Anda, sehingga dipulihkan saat dilanjutkan; indikator “Tersimpan otomatis” tampil di bagian atas. Jika guru menetapkan waktu tutup, waktu pengerjaan berakhir paling lambat pada waktu tutup tersebut. Jika waktu telah berakhir, kuis ditutup dan dinilai berdasarkan jawaban yang telah tersimpan. Pastikan koneksi stabil sebelum memulai.'],
   ['Kuis', 'Apa yang dimaksud dengan pembahasan kuis?', 'Pembahasan menampilkan kunci jawaban dan penjelasan setelah kuis dikumpulkan. Fitur ini dapat diaktifkan atau dinonaktifkan oleh guru pada setiap kuis.'],
   ['Kuis', 'Kapan status “Tuntas” ditampilkan?', 'Status “Tuntas” ditampilkan apabila persentase skor Anda mencapai nilai ketuntasan minimal yang ditetapkan guru pada kuis tersebut.'],
 
   ['Guru', 'Bagaimana cara membuat kelas dan membagikan kodenya?', 'Buka menu “Kelas yang dikelola”, lalu pilih “Buat kelas”. Kode kelas dibuat otomatis dan ditampilkan pada halaman kelas. Bagikan kode tersebut kepada siswa agar dapat bergabung.', ['guru']],
-  ['Guru', 'Bagaimana cara membuat kuis?', 'Buka kelas, pilih tab Kuis, kemudian “Buat kuis”. Tentukan durasi, pengaturan acak, batas waktu per soal, serta nilai ketuntasan. Soal dapat ditulis satu per satu atau ditempel sekaligus melalui fitur impor cepat.', ['guru']],
+  ['Guru', 'Bagaimana cara membuat kuis?', 'Buka kelas, pilih tab Kuis, kemudian “Buat kuis”. Tentukan durasi, jadwal buka dan tutup (opsional), pengaturan acak, batas waktu per soal, serta nilai ketuntasan. Soal dapat ditulis satu per satu atau ditempel sekaligus melalui fitur impor cepat.', ['guru']],
+  ['Guru', 'Bagaimana memperbaiki soal kuis yang sudah terbit?', 'Pada kartu kuis, pilih “Edit soal”. Teks, pilihan, kunci jawaban, bobot, dan pembahasan dapat diperbaiki; jenis soal tidak dapat diubah. Setelah disimpan, skor semua siswa yang sudah mengumpulkan dihitung ulang otomatis dan nilai esai yang sudah diberikan tetap dipertahankan.', ['guru']],
   ['Guru', 'Bagaimana format impor cepat soal kuis?', 'Pisahkan setiap soal dengan satu baris kosong. Tulis pertanyaan, diikuti pilihan A hingga D pada baris terpisah, lalu baris “Jawaban: B”. Baris “Pembahasan: …” bersifat opsional. Soal akan ditambahkan ke daftar sehingga tetap dapat diperiksa dan disunting sebelum kuis diterbitkan.', ['guru']],
   ['Guru', 'Bagaimana cara menilai tugas dan memberi umpan balik?', 'Buka menu “Perlu dinilai” atau tab Tugas pada kelas, buka daftar pengumpulan, isi nilai sesuai skor maksimal, tambahkan umpan balik bila diperlukan, lalu pilih “Simpan nilai”.', ['guru']],
   ['Guru', 'Bagaimana membaca analisis soal?', 'Pada kartu kuis, pilih “Analisis soal” untuk melihat persentase siswa yang menjawab benar pada setiap soal. Soal dengan persentase rendah dapat dibahas ulang di kelas.', ['guru']],
@@ -2829,6 +2834,7 @@ function dlg(o) {
 
 const QCFG = /\n?\[\[cfg:(\{.*?\})\]\]\s*$/;
 const qcfg = d => { const m = String(d || '').match(QCFG); let c = {}; try { c = m ? JSON.parse(m[1]) : {}; } catch (e) {} return { c, text: String(d || '').replace(QCFG, '').trim() }; };
+const dtl = ms => { const d = new Date(+ms); return ymd(d) + 'T' + pad2(d.getHours()) + ':' + pad2(d.getMinutes()); };
 const mmss = s => String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
 const seeded = (seed, arr) => { let h = 0; for (const ch of String(seed)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; const r = () => (h = (h * 1664525 + 1013904223) >>> 0) / 4294967296, a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const QICO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></svg>';
@@ -2837,20 +2843,21 @@ function quizCard(q) {
   const t = canManageCurrentClass(), ro = isReadOnlyMonitor(), at = C.attempts.filter(a => a.quiz_id === q.id), { c, text } = qcfg(q.description);
   const fin = at.filter(a => a.submitted), pc = a => a.max ? Math.round(a.score / a.max * 100) : 0;
   const avg = fin.length ? Math.round(fin.reduce((s, a) => s + pc(a), 0) / fin.length) : 0;
-  const chips = [q.qcount + ' soal', q.duration + ' menit', c.qt ? c.qt + ' detik/soal' : '', c.shuf ? 'Soal diacak' : '', c.pass ? 'Ketuntasan ≥ ' + c.pass : ''].filter(Boolean).map(x => `<span>${x}</span>`).join('');
+  const chips = [q.qcount + ' soal', q.duration + ' menit', c.qt ? c.qt + ' detik/soal' : '', c.shuf ? 'Soal diacak' : '', c.pass ? 'Ketuntasan ≥ ' + c.pass : '', c.open ? 'Dibuka ' + tglw(c.open) : '', c.close ? 'Ditutup ' + tglw(c.close) : ''].filter(Boolean).map(x => `<span>${x}</span>`).join('');
   const rows = at.map(a => `<div class="qr"><span>${esc(a.full_name)}</span><b>${a.submitted ? a.score + '/' + a.max : 'Sedang dikerjakan'}</b></div>`).join('') || '<p class="meta">Belum ada hasil.</p>';
   let foot, done = false;
-  if (t || ro) foot = `<div class="qft"><div class="qst"><div><b>${fin.length}</b><small>selesai</small></div><div><b>${fin.length ? avg : '–'}</b><small>rata-rata</small></div><div class="qbm"><i style="width:${avg}%"></i></div></div></div><details><summary>Lihat hasil siswa${ro ? ' • pemantauan' : ''}</summary>${rows}</details>${fin.length ? `<div style="margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap"><button class="btn2" onclick="quizStats(${esc(JSON.stringify(String(q.id)))})">Analisis soal</button>${at.some(a=>a.submitted&&a.grade_status==='pending') ? `<button class="btn2" onclick="gradeQuizEssays(${esc(JSON.stringify(String(q.id)))})">Periksa esai</button>` : ''}</div>` : ''}${t ? `<div class="quiz-actions" aria-label="Aksi kuis"><button type="button" class="content-action" onclick="editQuiz(${esc(JSON.stringify(String(q.id)))})"><span class="action-icon" aria-hidden="true">${lic('edit')}</span><span>Edit</span></button><button type="button" class="content-action content-action--delete" onclick="deleteQuiz(${esc(JSON.stringify(String(q.id)))})"><span class="action-icon" aria-hidden="true">⌫</span><span>Hapus</span></button></div>` : ''}`;
+  if (t || ro) foot = `<div class="qft"><div class="qst"><div><b>${fin.length}</b><small>selesai</small></div><div><b>${fin.length ? avg : '–'}</b><small>rata-rata</small></div><div class="qbm"><i style="width:${avg}%"></i></div></div></div><details><summary>Lihat hasil siswa${ro ? ' • pemantauan' : ''}</summary>${rows}</details>${fin.length ? `<div style="margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap"><button class="btn2" onclick="quizStats(${esc(JSON.stringify(String(q.id)))})">Analisis soal</button>${at.some(a=>a.submitted&&a.grade_status==='pending') ? `<button class="btn2" onclick="gradeQuizEssays(${esc(JSON.stringify(String(q.id)))})">Periksa esai</button>` : ''}</div>` : ''}${t ? `<div class="quiz-actions" aria-label="Aksi kuis"><button type="button" class="content-action" onclick="editQuiz(${esc(JSON.stringify(String(q.id)))})"><span class="action-icon" aria-hidden="true">${lic('edit')}</span><span>Edit</span></button><button type="button" class="content-action" onclick="editQuizQs(${esc(JSON.stringify(String(q.id)))})"><span class="action-icon" aria-hidden="true">${lic('quiz')}</span><span>Edit soal</span></button><button type="button" class="content-action content-action--delete" onclick="deleteQuiz(${esc(JSON.stringify(String(q.id)))})"><span class="action-icon" aria-hidden="true">⌫</span><span>Hapus</span></button></div>` : ''}`;
   else { const a = at[0]; done = !!(a && a.submitted);
+    const nb = !a && c.open && Date.now() < c.open, cl = !a && c.close && Date.now() >= c.close;
     const pass = done && c.pass ? (pc(a) >= c.pass ? '<span class="badge ok">Tuntas</span>' : '<span class="badge warn">Belum tuntas</span>') : '';
-    foot = `<div class="qft">${done ? `<div class="qsc">${a.score}<small> / ${a.max}</small></div>${pass}${c.rev === 0 ? '' : `<button class="btn2" onclick="reviewQuiz(${esc(JSON.stringify(String(q.id)))})">Lihat pembahasan</button>`}` : `<span class="badge${a ? ' warn' : ''}">${a ? 'Sedang dikerjakan' : 'Belum dikerjakan'}</span><button class="btn" onclick="startQuiz(${esc(JSON.stringify(String(q.id)))})">${a ? 'Lanjutkan' : 'Mulai kuis'}</button>`}</div>`; }
+    foot = `<div class="qft">${done ? `<div class="qsc">${a.score}<small> / ${a.max}</small></div>${pass}${c.rev === 0 ? '' : `<button class="btn2" onclick="reviewQuiz(${esc(JSON.stringify(String(q.id)))})">Lihat pembahasan</button>`}` : `<span class="badge${a || nb || cl ? ' warn' : ''}">${a ? 'Sedang dikerjakan' : nb ? 'Belum dibuka' : cl ? 'Sudah ditutup' : 'Belum dikerjakan'}</span><button class="btn"${nb || cl ? ' disabled' : ''} onclick="startQuiz(${esc(JSON.stringify(String(q.id)))})">${a ? 'Lanjutkan' : 'Mulai kuis'}</button>`}</div>`; }
   return `<div class="card qc${done ? ' done' : ''}"><div class="qch"><span class="qic">${QICO}</span><div><h4>${esc(q.title)}</h4><div class="qchips">${chips}</div></div></div>${text ? `<p>${esc(text)}</p>` : ''}${foot}</div>`;
 }
 
 function startQuiz(id) {
   const q = C.quizzes.find(x => x.id === id), resume = C.attempts.some(a => a.quiz_id === id), { c, text } = qcfg(q.description);
   const m = document.createElement('div'); m.className = 'ov';
-  m.innerHTML = `<div class="md qi"><div class="qi-ic">${QICO}</div><h3>${esc(q.title)}</h3><p class="sub">${resume ? 'Lanjutkan kuis dari soal terakhir yang Anda kerjakan.' : 'Kuis ini membantu Anda mengulang dan memantapkan materi. Kerjakan dengan tenang dan teliti.'}</p><div class="qi-g"><div><b>${q.qcount}</b><small>Soal</small></div><div><b>${q.duration}</b><small>Menit</small></div><div><b>${c.qt || '∞'}</b><small>Detik/soal</small></div></div><ul class="qi-l">${text ? `<li>${esc(text)}</li>` : ''}<li>Waktu berjalan setelah tombol “Mulai kuis” ditekan dan tidak dapat dihentikan.</li><li>Jawaban disimpan sementara pada peramban ini selama pengerjaan. Gunakan “Ragu-ragu” untuk menandai soal yang ingin ditinjau kembali.</li>${c.qt ? '<li>Setiap soal memiliki batas waktu dan akan berpindah secara otomatis.</li>' : ''}</ul><div class="row"><button class="btn2" data-x>Kembali</button><button class="btn" data-go>${resume ? 'Lanjutkan' : 'Mulai kuis'}</button></div></div>`;
+  m.innerHTML = `<div class="md qi"><div class="qi-ic">${QICO}</div><h3>${esc(q.title)}</h3><p class="sub">${resume ? 'Lanjutkan kuis dari soal terakhir yang Anda kerjakan.' : 'Kuis ini membantu Anda mengulang dan memantapkan materi. Kerjakan dengan tenang dan teliti.'}</p><div class="qi-g"><div><b>${q.qcount}</b><small>Soal</small></div><div><b>${q.duration}</b><small>Menit</small></div><div><b>${c.qt || '∞'}</b><small>Detik/soal</small></div></div><ul class="qi-l">${text ? `<li>${esc(text)}</li>` : ''}<li>Waktu berjalan setelah tombol “Mulai kuis” ditekan dan tidak dapat dihentikan.</li><li>Jawaban disimpan otomatis di perangkat dan di server selama pengerjaan. Gunakan “Ragu-ragu” untuk menandai soal yang ingin ditinjau kembali.</li>${c.qt ? '<li>Setiap soal memiliki batas waktu dan akan berpindah secara otomatis.</li>' : ''}</ul><div class="row"><button class="btn2" data-x>Kembali</button><button class="btn" data-go>${resume ? 'Lanjutkan' : 'Mulai kuis'}</button></div></div>`;
   document.body.appendChild(m); trapFocus(m);
   m.querySelector('[data-x]').onclick = () => m.remove();
   m.querySelector('[data-go]').focus();
@@ -2868,9 +2875,37 @@ function takeQuiz(d) {
   const isAnswered = q => { const v = ans[q.id]; if (v === undefined || v === null) return false; if (Array.isArray(v)) return v.some(x => String(x || '').trim() !== ''); return String(v).trim() !== ''; };
   let ans = {}, flg = {}, cur = 0, done = false, qEnd = 0;
   try { ans = JSON.parse(sessionStorage.getItem(key)) || {}; flg = JSON.parse(sessionStorage.getItem(key + 'f')) || {}; } catch (e) {}
-  const save = () => { try { sessionStorage.setItem(key, JSON.stringify(ans)); sessionStorage.setItem(key + 'f', JSON.stringify(flg)); } catch (x) {} };
+  /* Pemulihan: gabungkan salinan server (d.draft), penyimpanan perangkat, dan sesi tab ini (yang terbaru menang). */
+  const lk = 'lq_' + d.attempt_id;
+  try { const L = JSON.parse(localStorage.getItem(lk)); if (L && L.a) ans = Object.assign({}, L.a, ans); if (L && L.f) flg = Object.assign({}, L.f, flg); } catch (e) {}
+  if (d.draft) { ans = Object.assign({}, d.draft.a || {}, ans); flg = Object.assign({}, d.draft.f || {}, flg); }
+  /* Simpan otomatis ke server (tanpa indikator pemuatan; jeda minimal 8 detik; tetap dikirim saat tab disembunyikan atau sinyal kembali). */
+  let svT = null, svI = null, svLast = 0, svBusy = false, svDirty = false;
+  const svSet = (t, bad) => { const e = $('#qsv'); if (e) { e.textContent = t ? ' \u2022 ' + t : ''; e.style.color = bad ? 'var(--warn)' : ''; } };
+  const push = async keep => {
+    if (done || svBusy || !svDirty || !API || !S) return;
+    if (navigator.onLine === false) { svSet('Offline: jawaban aman di perangkat ini', true); return; }
+    const body = new URLSearchParams({ action: 'quizSave', token: S.token, attempt_id: d.attempt_id, answers: JSON.stringify(ans), flags: JSON.stringify(flg) });
+    svBusy = true; svDirty = false;
+    try {
+      const r = await fetch(API, { method: 'POST', body, keepalive: !!keep && body.toString().length < 60000 }), j = await r.json();
+      if (j.status !== 'success') { svDirty = true; svSet('Belum tersimpan ke server', true); }
+      else if (j.saved) { svLast = Date.now(); svSet('Tersimpan otomatis'); }
+    } catch (e) { svDirty = true; svSet('Belum tersimpan ke server; jawaban aman di perangkat ini', true); }
+    finally { svBusy = false; }
+  };
+  const sched = () => { svDirty = true; if (svT) return; svT = setTimeout(() => { svT = null; push(); }, Math.max(2500, 8000 - (Date.now() - svLast))); };
+  const onVis = () => { if (document.hidden) { svDirty = true; push(true); } };
+  const onOn = () => { svDirty = true; push(); };
+  document.addEventListener('visibilitychange', onVis); window.addEventListener('pagehide', onVis); window.addEventListener('online', onOn);
+  svI = setInterval(() => { if (svDirty) push(); }, 20000);
+  const save = () => {
+    try { sessionStorage.setItem(key, JSON.stringify(ans)); sessionStorage.setItem(key + 'f', JSON.stringify(flg)); } catch (x) {}
+    try { localStorage.setItem(lk, JSON.stringify({ a: ans, f: flg, t: Date.now() })); } catch (x) {}
+    sched();
+  };
   const optsOf = q => c.shufo ? seeded(d.attempt_id + q.id, q.options.map((o, j) => [o, j])) : q.options.map((o, j) => [o, j]);
-  view(`<div class="qbar"><div><b>${esc(d.quiz.title)}</b><span id="qp"></span></div><div class="qt" id="qt">--:--</div></div><div class="qpg"><i id="qpi"></i></div>
+  view(`<div class="qbar"><div><b>${esc(d.quiz.title)}</b><span id="qp"></span><span id="qsv"></span></div><div class="qt" id="qt">--:--</div></div><div class="qpg"><i id="qpi"></i></div>
     <div class="qw"><div id="qa"></div><aside class="qside"><h5>Navigasi soal</h5><div class="qnav" id="qn"></div><div class="qleg"><span><i></i>Terjawab</span><span><i class="f"></i>Ragu-ragu</span></div><button class="btn" style="width:100%" data-fin>Kumpulkan jawaban</button></aside></div>`);
   const draw = () => {
     const q = qs[cur], os = q.type === 'mcq' ? optsOf(q) : [], answered = qs.filter(isAnswered).length;
@@ -2886,7 +2921,7 @@ function takeQuiz(d) {
     if (qsec && $('#qti')) { const l = Math.max(0, (qEnd - Date.now()) / 1000); $('#qti').style.width = (l / qsec * 100) + '%'; if (l <= 0 && s > 0) { cur < n - 1 ? go(cur + 1) : fin(true); } }
     if (s <= 0) fin(true);
   };
-  const cleanup = () => { clearInterval(QT); window.onbeforeunload = null; document.onkeydown = null; $('#main').onclick = null; };
+  const cleanup = () => { clearInterval(QT); clearInterval(svI); clearTimeout(svT); document.removeEventListener('visibilitychange', onVis); window.removeEventListener('pagehide', onVis); window.removeEventListener('online', onOn); try { localStorage.removeItem(lk); } catch (x) {} window.onbeforeunload = null; document.onkeydown = null; $('#main').onclick = null; };
   const fin = async auto => {
     if (done) return;
     const left = qs.filter(q => !isAnswered(q)).length;
@@ -2925,28 +2960,37 @@ function takeQuiz(d) {
   };
   window.onbeforeunload = e => { e.preventDefault(); return ''; };
   go(0); tick(); QT = setInterval(tick, 500);
+  if (Object.keys(ans).length) sched();
 }
 
-function addQuiz() {
+function addQuiz(ed) {
   const m=document.createElement('div'); m.className='ov';
   let k=0;
-  const blk=(d={})=>{k++;const typ=d.type||'mcq', opts=d.options||[];return `<div class="qb"><div class="qh"><b class="qn"></b><span><button type="button" class="link" data-dup>Gandakan</button><button type="button" class="link" data-rm>Hapus</button></span></div><label>Jenis soal<select data-type><option value="mcq" ${typ==='mcq'?'selected':''}>Pilihan ganda</option><option value="essay" ${typ==='essay'?'selected':''}>Esai</option><option value="truefalse" ${typ==='truefalse'?'selected':''}>Benar / Salah</option><option value="match" ${typ==='match'?'selected':''}>Mencocokkan</option></select></label><label>Pertanyaan<textarea data-t>${esc(d.text||'')}</textarea></label><div data-fields="mcq" ${typ!=='mcq'?'hidden':''}><p class="hint">Tandai satu pilihan sebagai jawaban benar.</p>${[0,1,2,3].map(j=>`<span class="oi"><em>${'ABCD'[j]}</em><input type="radio" name="c${k}" value="${j}"${j===(Number(d.answer)||0)?' checked':''} aria-label="Jawaban benar"><input data-o placeholder="Pilihan ${'ABCD'[j]}" value="${esc(opts[j]||'')}"></span>`).join('')}</div><div data-fields="truefalse" ${typ!=='truefalse'?'hidden':''}><label>Kunci jawaban<select data-tf><option value="true" ${String(d.answer)==='true'?'selected':''}>Benar</option><option value="false" ${String(d.answer)==='false'?'selected':''}>Salah</option></select></label></div><div data-fields="essay" ${typ!=='essay'?'hidden':''}><p class="hint">Jawaban esai akan diperiksa dan diberi nilai oleh guru.</p></div><div data-fields="match" ${typ!=='match'?'hidden':''}><p class="hint">Isi item Kolom A dan pasangan benar dari Kolom B. Siswa akan memilih pasangan untuk setiap item.</p><div data-pairs>${(d.pairs||[{a:'',b:''},{a:'',b:''}]).map((v,i)=>`<div class="oi"><em>${i+1}</em><input data-ma placeholder="Kolom A" value="${esc(v.a||'')}"><input data-mb placeholder="Pasangan benar (Kolom B)" value="${esc(v.b||'')}"></div>`).join('')}</div><button type="button" class="btn2" data-pairadd>+ Tambah pasangan</button></div><label style="margin-top:.6rem">Bobot nilai<input data-points type="number" min="1" max="100" value="${Number(d.points)||1}"></label><label>Pembahasan (opsional)<textarea data-e rows="2">${esc(d.explain||'')}</textarea></label></div>`;};
+  const blk=(d={})=>{k++;const typ=d.type||'mcq', opts=d.options||[];return `<div class="qb"${d.id?` data-qid="${esc(d.id)}"`:''}><div class="qh"><b class="qn"></b>${ed?'':'<span><button type="button" class="link" data-dup>Gandakan</button><button type="button" class="link" data-rm>Hapus</button></span>'}</div><label>Jenis soal<select data-type${ed?' disabled':''}><option value="mcq" ${typ==='mcq'?'selected':''}>Pilihan ganda</option><option value="essay" ${typ==='essay'?'selected':''}>Esai</option><option value="truefalse" ${typ==='truefalse'?'selected':''}>Benar / Salah</option><option value="match" ${typ==='match'?'selected':''}>Mencocokkan</option></select></label><label>Pertanyaan<textarea data-t>${esc(d.text||'')}</textarea></label><div data-fields="mcq" ${typ!=='mcq'?'hidden':''}><p class="hint">Tandai satu pilihan sebagai jawaban benar.</p>${[0,1,2,3].map(j=>`<span class="oi"><em>${'ABCD'[j]}</em><input type="radio" name="c${k}" value="${j}"${j===(Number(d.answer)||0)?' checked':''} aria-label="Jawaban benar"><input data-o placeholder="Pilihan ${'ABCD'[j]}" value="${esc(opts[j]||'')}"></span>`).join('')}</div><div data-fields="truefalse" ${typ!=='truefalse'?'hidden':''}><label>Kunci jawaban<select data-tf><option value="true" ${String(d.answer)==='true'?'selected':''}>Benar</option><option value="false" ${String(d.answer)==='false'?'selected':''}>Salah</option></select></label></div><div data-fields="essay" ${typ!=='essay'?'hidden':''}><p class="hint">Jawaban esai akan diperiksa dan diberi nilai oleh guru.</p></div><div data-fields="match" ${typ!=='match'?'hidden':''}><p class="hint">Isi item Kolom A dan pasangan benar dari Kolom B. Siswa akan memilih pasangan untuk setiap item.</p><div data-pairs>${(d.pairs||[{a:'',b:''},{a:'',b:''}]).map((v,i)=>`<div class="oi"><em>${i+1}</em><input data-ma placeholder="Kolom A" value="${esc(v.a||'')}"><input data-mb placeholder="Pasangan benar (Kolom B)" value="${esc(v.b||'')}"></div>`).join('')}</div><button type="button" class="btn2" data-pairadd>+ Tambah pasangan</button></div><label style="margin-top:.6rem">Bobot nilai<input data-points type="number" min="1" max="100" value="${Number(d.points)||1}"></label><label>Pembahasan (opsional)<textarea data-e rows="2">${esc(d.explain||'')}</textarea></label></div>`;};
   const raw=el=>{const type=el.querySelector('[data-type]').value, text=el.querySelector('[data-t]').value.trim(), points=+el.querySelector('[data-points]').value||1, explain=el.querySelector('[data-e]').value.trim();let options=[],answer;
     if(type==='mcq'){const rs=[...el.querySelectorAll('input[type=radio]')], rawOpts=[...el.querySelectorAll('[data-o]')];let ai=rs.findIndex(r=>r.checked);rawOpts.forEach((o,i)=>{if(o.value.trim()){if(i===ai)answer=options.length;options.push(o.value.trim());}});}
     else if(type==='truefalse') answer=el.querySelector('[data-tf]').value;
     else if(type==='match'){const aa=[...el.querySelectorAll('[data-ma]')],bb=[...el.querySelectorAll('[data-mb]')];options=aa.map((a,i)=>({a:a.value.trim(),b:(bb[i]||{}).value?.trim()||''}));answer=options.map((_,i)=>i);}
     return {type,text,options,answer,points,explain};};
   const sw=(n,t,on)=>`<label class="sw"><input type="checkbox" name="${n}"${on?' checked':''}>${t}</label>`;
-  m.innerHTML=`<form class="md wide" role="dialog" aria-modal="true" aria-labelledby="aqt"><h3 id="aqt">Buat kuis</h3><p class="md-sub">Buat kuis dengan pilihan ganda, esai, benar/salah, atau mencocokkan.</p><div class="qsum" id="qsum"></div><label>Judul kuis<input name="title" required></label><div class="qset"><div class="full"><label>Durasi total (menit)<input name="duration" type="number" min="1" max="300" value="30" required></label><div class="qpre" id="pre">${[10,20,30,45,60,90].map(v=>`<button type="button" data-d="${v}">${v} menit</button>`).join('')}</div></div><label>Waktu per soal (detik; 0 untuk nonaktif)<input name="qt" type="number" min="0" max="600" value="0"></label><label>Nilai ketuntasan minimal (0–100)<input name="pass" type="number" min="0" max="100" value="70"></label>${sw('shuf','Acak urutan soal')}${sw('shufo','Acak pilihan jawaban')}${sw('rev','Tampilkan pembahasan setelah selesai',1)}</div><label>Petunjuk untuk siswa (opsional)<textarea name="description"></textarea></label><div id="qb">${blk()}</div><button type="button" class="btn2" id="qadd">+ Tambah soal</button><div class="row"><button type="button" class="btn2" data-x>Batal</button><button class="btn">Terbitkan kuis</button></div></form>`;
+  m.innerHTML=`<form class="md wide" role="dialog" aria-modal="true" aria-labelledby="aqt"><h3 id="aqt">${ed?'Edit soal kuis':'Buat kuis'}</h3><p class="md-sub">${ed?'Perbaiki teks, pilihan, kunci jawaban, bobot, atau pembahasan. Skor siswa yang sudah mengumpulkan dihitung ulang otomatis; nilai esai yang sudah Anda beri tetap dipertahankan. Jenis soal tidak dapat diubah.':'Buat kuis dengan pilihan ganda, esai, benar/salah, atau mencocokkan.'}</p><div class="qsum" id="qsum"></div>${ed?'':`<label>Judul kuis<input name="title" required></label><div class="qset"><div class="full"><label>Durasi total (menit)<input name="duration" type="number" min="1" max="300" value="30" required></label><div class="qpre" id="pre">${[10,20,30,45,60,90].map(v=>`<button type="button" data-d="${v}">${v} menit</button>`).join('')}</div></div><label>Waktu per soal (detik; 0 untuk nonaktif)<input name="qt" type="number" min="0" max="600" value="0"></label><label>Nilai ketuntasan minimal (0–100)<input name="pass" type="number" min="0" max="100" value="70"></label><label>Dibuka pada (opsional)<input name="open" type="datetime-local"></label><label>Ditutup pada (opsional)<input name="close" type="datetime-local"></label>${sw('shuf','Acak urutan soal')}${sw('shufo','Acak pilihan jawaban')}${sw('rev','Tampilkan pembahasan setelah selesai',1)}</div><label>Petunjuk untuk siswa (opsional)<textarea name="description"></textarea></label>`}<div id="qb">${ed?ed.questions.map(x=>blk(x)).join(''):blk()}</div>${ed?'':'<button type="button" class="btn2" id="qadd">+ Tambah soal</button>'}<div class="row"><button type="button" class="btn2" data-x>Batal</button><button class="btn">${ed?'Simpan perubahan':'Terbitkan kuis'}</button></div></form>`;
   document.body.appendChild(m);const f=m.querySelector('form'),box=m.querySelector('#qb'),kill=()=>m.remove();let dirty=false,busy=false;trapFocus(m);m._close=async()=>{if(busy)return;if(dirty&&!(await dlg(DISCARD)))return;kill();};
-  const num=()=>{box.querySelectorAll('.qn').forEach((e,i)=>e.textContent='Soal '+(i+1));m.querySelector('#qsum').textContent=box.children.length+' soal • '+(f.duration.value||0)+' menit';};
+  const num=()=>{box.querySelectorAll('.qn').forEach((e,i)=>e.textContent='Soal '+(i+1));m.querySelector('#qsum').textContent=box.children.length+' soal'+(ed?'':' • '+(f.duration.value||0)+' menit');};
   const syncType=el=>{const type=el.querySelector('[data-type]').value;el.querySelectorAll('[data-fields]').forEach(x=>x.hidden=x.dataset.fields!==type);};
-  num();m.oninput=()=>{dirty=true;num();};m.onchange=e=>{if(e.target.matches('[data-type]'))syncType(e.target.closest('.qb'));};m.querySelector('[data-x]').onclick=()=>m._close();m.querySelector('#pre').onclick=e=>{if(e.target.dataset.d){f.duration.value=e.target.dataset.d;dirty=true;num();}};
-  m.querySelector('#qadd').onclick=()=>{dirty=true;box.insertAdjacentHTML('beforeend',blk());syncType(box.lastElementChild);num();};
+  num();m.oninput=()=>{dirty=true;num();};m.onchange=e=>{if(e.target.matches('[data-type]'))syncType(e.target.closest('.qb'));};m.querySelector('[data-x]').onclick=()=>m._close();if(!ed)m.querySelector('#pre').onclick=e=>{if(e.target.dataset.d){f.duration.value=e.target.dataset.d;dirty=true;num();}};
+  if(!ed)m.querySelector('#qadd').onclick=()=>{dirty=true;box.insertAdjacentHTML('beforeend',blk());syncType(box.lastElementChild);num();};
   box.onclick=e=>{const el=e.target.closest('.qb');if(!el)return;if(e.target.matches('[data-dup]')){box.insertAdjacentHTML('beforeend',blk(raw(el)));syncType(box.lastElementChild);dirty=true;num();}else if(e.target.matches('[data-rm]')){if(box.children.length>1){el.remove();dirty=true;num();}else toast('Kuis memerlukan sedikitnya satu soal.',true);}else if(e.target.matches('[data-pairadd]')){el.querySelector('[data-pairs]').insertAdjacentHTML('beforeend',`<div class="oi"><em>+</em><input data-ma placeholder="Kolom A"><input data-mb placeholder="Pasangan benar (Kolom B)"></div>`);dirty=true;}};
-  f.onsubmit=async e=>{e.preventDefault();const b=f.querySelector('.row .btn:last-child');busy=true;b.disabled=true;b.textContent='Menerbitkan…';try{const qs=[...box.children].map((el,i)=>{const r=raw(el);if(!r.text)throw Error(`Soal ${i+1}: pertanyaan wajib diisi.`);if(r.type==='mcq'&&(r.options.length<2||!Number.isInteger(r.answer)))throw Error(`Soal ${i+1}: lengkapi pilihan ganda dan tandai kunci.`);if(r.type==='match'){if(r.options.length<2||r.options.some(x=>!x.a||!x.b))throw Error(`Soal ${i+1}: lengkapi minimal dua pasangan.`);r.answer=r.options.map(x=>x.b);}return r;});const cfg={};if(+f.qt.value>0)cfg.qt=+f.qt.value;if(f.shuf.checked)cfg.shuf=1;if(f.shufo.checked)cfg.shufo=1;if(!f.rev.checked)cfg.rev=0;if(+f.pass.value>0)cfg.pass=+f.pass.value;const desc=f.description.value.trim()+(Object.keys(cfg).length?'\n[[cfg:'+JSON.stringify(cfg)+']]':'');await api('addQuiz',{...cid(),title:f.title.value,duration:f.duration.value,description:desc,questions:JSON.stringify(qs)});kill();toast('Kuis berhasil diterbitkan.');reload('qz');}catch(er){busy=false;toast(er.message,true);b.disabled=false;b.textContent='Terbitkan kuis';}};
+  f.onsubmit=async e=>{e.preventDefault();const b=f.querySelector('.row .btn:last-child');busy=true;b.disabled=true;b.textContent=ed?'Menyimpan…':'Menerbitkan…';try{const qs=[...box.children].map((el,i)=>{const r=raw(el);if(!r.text)throw Error(`Soal ${i+1}: pertanyaan wajib diisi.`);if(r.type==='mcq'&&(r.options.length<2||!Number.isInteger(r.answer)))throw Error(`Soal ${i+1}: lengkapi pilihan ganda dan tandai kunci.`);if(r.type==='match'){if(r.options.length<2||r.options.some(x=>!x.a||!x.b))throw Error(`Soal ${i+1}: lengkapi minimal dua pasangan.`);r.answer=r.options.map(x=>x.b);}return r;});if(ed){const o=await api('editQuestions',{quiz_id:ed.id,questions:JSON.stringify(qs.map((r,i)=>Object.assign({id:box.children[i].dataset.qid},r)))});kill();toast('Soal diperbarui. '+(o.rescored?o.rescored+' hasil siswa dihitung ulang.':'Belum ada hasil siswa yang perlu dihitung ulang.'));reload('qz');return;}const cfg={};if(+f.qt.value>0)cfg.qt=+f.qt.value;if(f.shuf.checked)cfg.shuf=1;if(f.shufo.checked)cfg.shufo=1;if(!f.rev.checked)cfg.rev=0;if(+f.pass.value>0)cfg.pass=+f.pass.value;const wo=f.open.value?new Date(f.open.value).getTime():0,wc=f.close.value?new Date(f.close.value).getTime():0;if((f.open.value&&isNaN(wo))||(f.close.value&&isNaN(wc)))throw Error('Format tanggal buka/tutup tidak valid.');if(wc&&wc<=Date.now())throw Error('Waktu tutup harus di masa depan.');if(wo&&wc&&wc<=wo)throw Error('Waktu tutup harus setelah waktu buka.');if(wo)cfg.open=wo;if(wc)cfg.close=wc;const desc=f.description.value.trim()+(Object.keys(cfg).length?'\n[[cfg:'+JSON.stringify(cfg)+']]':'');await api('addQuiz',{...cid(),title:f.title.value,duration:f.duration.value,description:desc,questions:JSON.stringify(qs)});kill();toast('Kuis berhasil diterbitkan.');reload('qz');}catch(er){busy=false;toast(er.message,true);b.disabled=false;b.textContent=ed?'Simpan perubahan':'Terbitkan kuis';}};
 }
 
+
+async function editQuizQs(id) {
+  try {
+    const r = await api('quizQuestions', { quiz_id: id });
+    if (r.submitted && !(await dlg({ title: 'Ubah soal yang sudah dikerjakan?', msg: r.submitted + ' siswa sudah mengumpulkan kuis ini. Setelah disimpan, skor mereka dihitung ulang dengan soal dan kunci yang baru. Mengubah teks pilihan atau pasangan dapat membuat jawaban lama dinilai salah.', ok: 'Lanjut edit', tone: 'warn' }))) return;
+    addQuiz({ id, questions: r.items.map(x => Object.assign({}, x, { pairs: x.type === 'match' ? x.options : undefined })) });
+  } catch (e) { toast(e.message, true); }
+}
 
 async function gradeQuizEssays(id) {
   try {
@@ -3150,9 +3194,10 @@ async function adminUsersPage(role) {
     <div class="card" style="overflow-x:auto;padding:0"><table style="margin:0"><thead><tr><th>Nama</th><th>Username</th><th>Peran</th><th>Status</th>${w ? '<th>Aksi</th>' : ''}</tr></thead><tbody>${list.map(x=>`<tr><td><b>${esc(x.full_name)}</b><div class="meta">${esc(x.email||'')}</div></td><td>${esc(x.username)}</td><td><span class="badge">${esc(roleLabel(x.role))}</span>${x.extra_roles ? `<div class="meta">Tambahan: ${esc(String(x.extra_roles).split(/[,;|]/).map(r => roleLabel(r.trim())).join(', '))}</div>`:''}</td><td><span class="badge ${String(x.status).toLowerCase()==='aktif'?'ok':'warn'}">${String(x.status).toLowerCase()==='aktif'?'Aktif':String(x.status).toLowerCase()==='nonaktif'?'Nonaktif':esc(x.status||'—')}</span></td>${w ? `<td><div class="acts" style="justify-content:flex-start"><button class="btn2" style="padding:.4rem .8rem" onclick="editAdminUser('${role}',${jsq(x.user_id)})">Ubah</button><button class="btn2" style="padding:.4rem .8rem" onclick="resetAdminAccount(${jsq(x.user_id)},${jsq(x.username)})">Reset sandi</button><button class="link" onclick="deleteAdminUser(${jsq(x.user_id)},${jsq(x.full_name)},'${role}')">Hapus</button></div></td>` : ''}</tr>`).join('') || `<tr><td colspan="${w ? 5 : 4}" style="text-align:center;padding:2rem">Belum ada akun ${nm}.</td></tr>`}</tbody></table></div>`);
   } catch(e) { view(`<div class="card empty"><b>Data belum dapat dimuat</b>${esc(e.message)}<p><button class="btn2" onclick="adminUsersPage('${role}')">Coba lagi</button></p></div>`); }
 }
-function csvCell(v) { 
-  const s = String(v ?? ''); 
-  return '"' + s.replace(/"/g, '""') + '"'; 
+function csvCell(v) {
+  let s = String(v ?? '');
+  if (/^[=+\-@\t\r]/.test(s) && !/^-?\d+(?:[.,]\d+)?$/.test(s)) s = "'" + s;
+  return '"' + s.replace(/"/g, '""') + '"';
 }
 function downloadCsv(filename, rows) {
   const csv='\ufeff'+rows.map(row=>row.map(csvCell).join(',')).join('\r\n');
@@ -3561,15 +3606,18 @@ async function page(k, title, sub, render, force) {
 const cname = id => (O.classes.find(c => c.id === id) || {}).name || '';
 const subOf = a => O.submissions.find(s => s.assignment_id === a.id);
 const asgOf = id => O.assignments.find(a => a.id === id) || {};
-const isLate = a => a.due && Date.now() > new Date(a.due).getTime() + 86400000;
-const dueTxt = a => a.due ? 'Batas ' + tgl(a.due) : 'Tanpa batas waktu';
+/* Akhir waktu pengumpulan: tugas berjam memakai due_end dari server; tugas lama = akhir hari (aturan lama). */
+const dEnd = a => a && a.due ? (Number(a.due_end) || new Date(a.due).getTime() + 864e5) : 0;
+const dueFmt = a => { if (!a || !a.due) return ''; const m = Number(a.due_time); return tgl(a.due) + (a.due_end && isFinite(m) ? ' pukul ' + String(Math.floor(m / 60)).padStart(2, '0') + '.' + String(m % 60).padStart(2, '0') : ''); };
+const isLate = a => a.due && Date.now() > dEnd(a);
+const dueTxt = a => a.due ? 'Batas ' + dueFmt(a) : 'Tanpa batas waktu';
 const pills = (cur, list, fn) => `<div class="pills">${list.map(([k, l, n]) => `<button class="pill${k === cur ? ' on' : ''}" onclick="${fn}('${k}')">${l}<i>${n}</i></button>`).join('')}</div>`;
 const kpi = (label, val, sub, click, id) => {
   const inn = '<span class="kl">' + esc(label) + '</span><b class="kv"' + (id ? ' id="' + id + '"' : '') + '>' + esc(val) + '</b><span class="ks"' + (id ? ' id="' + id + 's"' : '') + '>' + esc(sub) + '</span>';
   return click ? '<button type="button" class="card kp" onclick="' + click + '">' + inn + '</button>' : '<div class="card kp">' + inn + '</div>';
 };
 const row = (title, meta, right, click) => `<button class="li" onclick="${click}"><span class="lt"><b>${esc(title)}</b><small>${meta}</small></span>${right}</button>`;
-const tagDue = a => isLate(a) ? '<span class="badge warn">Melewati batas</span>' : a.due ? `<span class="badge">${tgl(a.due)}</span>` : '';
+const tagDue = a => isLate(a) ? '<span class="badge warn">Melewati batas</span>' : a.due ? `<span class="badge">${dueFmt(a)}</span>` : '';
 const asgTag = a => { const s = subOf(a); return s ? (s.score !== '' ? `<span class="badge ok">Nilai ${s.score}/${a.max_score}</span>` : '<span class="badge warn">Menunggu nilai</span>') : tagDue(a); };
 
 function vTasks(f) {
@@ -3597,7 +3645,8 @@ function vQuiz(f) {
     const tag = q => {
       if (t) return `<span class="badge">${O.attempts.filter(a => a.quiz_id === q.id && a.submitted).length} selesai</span>`;
       const a = at(q);
-      return a && a.submitted ? `<span class="badge ok">Nilai ${a.score}/${a.max}</span>` : `<span class="badge${a ? ' warn' : ''}">${a ? 'Sedang dikerjakan' : 'Belum dikerjakan'}</span>`;
+      const qc = qcfg(q.description).c, nb = !a && qc.open && Date.now() < qc.open, cl = !a && qc.close && Date.now() >= qc.close;
+      return a && a.submitted ? `<span class="badge ok">Nilai ${a.score}/${a.max}</span>` : `<span class="badge${a || nb || cl ? ' warn' : ''}">${a ? 'Sedang dikerjakan' : nb ? 'Belum dibuka' : cl ? 'Sudah ditutup' : 'Belum dikerjakan'}</span>`;
     };
     return (t ? '' : pills(f, tabs, 'vQuiz')) + `<div class="card">${list.map(q => row(q.title, esc(cname(q.class_id)) + ' • ' + q.qcount + ' soal • ' + q.duration + ' menit', tag(q), `openClass('${q.class_id}','qz')`)).join('') || '<p class="empty">Tidak ada kuis pada kategori ini.</p>'}</div>`;
   });
@@ -3687,7 +3736,7 @@ function rkLoad() {
 function rkCompute(d, cid, O) {
   var now = Date.now(), DAY = 864e5, aid = {};
   var asg = O.assignments.filter(function (a) { return a.class_id === cid; }); asg.forEach(function (a) { aid[a.id] = a; });
-  var due = asg.filter(function (a) { return a.due && new Date(a.due).getTime() + DAY < now; }), qid = {};
+  var due = asg.filter(function (a) { return a.due && dEnd(a) < now; }), qid = {};
   O.quizzes.forEach(function (q) { if (q.class_id === cid) qid[q.id] = 1; });
   return d.rows.map(function (r) {
     var uid = r.user_id != null && r.user_id !== '' ? String(r.user_id) : '', nm = String(r.full_name || '').trim().toLowerCase();
@@ -3773,13 +3822,14 @@ function buildNotifs() {
       var s = subOf(a);
       if (s && s.score !== '' && s.score != null) L.push({ id: 'g:' + s.id, t: 'Nilai tugas sudah keluar', m: a.title + ' • ' + s.score + '/' + a.max_score, k: oc(a.class_id, 'asg') });
       else if (!s && a.due) {
-        var dl = new Date(a.due).getTime();
+        var dl = dEnd(a) - DAY;
         if (now > dl + DAY) L.push({ id: 'l:' + a.id, u: 1, t: 'Tugas melewati batas waktu', m: a.title + ' • ' + cname(a.class_id), k: oc(a.class_id, 'asg') });
-        else if (dl + DAY - now < 3 * DAY) L.push({ id: 'd:' + a.id, u: 1, t: 'Tenggat segera berakhir', m: a.title + ' • ' + tgl(a.due), k: oc(a.class_id, 'asg') });
+        else if (dl + DAY - now < 3 * DAY) L.push({ id: 'd:' + a.id, u: 1, t: 'Tenggat segera berakhir', m: a.title + ' • ' + dueFmt(a), k: oc(a.class_id, 'asg') });
       }
     });
     O.quizzes.forEach(function (q) {
       var at = O.attempts.find(function (x) { return x.quiz_id === q.id && String(x.user_id) === me; });
+      var qc = qcfg(q.description).c; if (!at && qc.close && now >= qc.close) return;
       if (!at || !at.submitted) L.push({ id: 'q:' + q.id, t: 'Kuis menunggu dikerjakan', m: q.title + ' • ' + cname(q.class_id), k: oc(q.class_id, 'qz') });
     });
   }
@@ -3827,7 +3877,7 @@ function vAgenda() {
     var t = isT(), now = Date.now(), DAY = 86400000, g = { late: [], today: [], week: [], later: [] };
     O.assignments.forEach(function (a) {
       if (!a.due || (!t && subOf(a))) return;
-      var d = new Date(a.due).getTime() + DAY - now;
+      var d = dEnd(a) - now;
       if (d < 0) { if (!t) g.late.push(a); } else if (d < DAY) g.today.push(a); else if (d < 7 * DAY) g.week.push(a); else g.later.push(a);
     });
     Object.keys(g).forEach(function (k) { g[k].sort(function (a, b) { return String(a.due).localeCompare(String(b.due)); }); });
