@@ -2,7 +2,7 @@
  * - Cangkang aplikasi (index.html, config.js, ikon) disimpan di perangkat agar cepat dibuka dan tetap tampil saat sinyal lemah.
  * - Permintaan ke layanan data (Google Apps Script) TIDAK pernah dicegat atau disimpan: data selalu diambil langsung dari server.
  * Naikkan VERSI setiap kali index.html atau berkas statis lain diperbarui di hosting. */
-const VERSI = 'lms-v7';
+const VERSI = 'lms-v8';
 const CANGKANG = ['./', 'index.html', 'config.js', 'manifest.webmanifest', 'icon-152.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png'];
 const BATAS_HALAMAN = 3000; /* ms menunggu jaringan sebelum memakai salinan tersimpan */
 
@@ -27,8 +27,10 @@ function simpan(e, c, key, r) {
 /* Halaman: ambil dari jaringan; bila lebih dari 3 detik atau gagal, pakai salinan tersimpan. */
 async function halaman(e, req) {
   const c = await caches.open(VERSI);
-  const net = fetch(req).then(function (r) { simpan(e, c, 'index.html', r); return r; });
-  net.catch(function () {});
+  /* waitUntil didaftarkan sekarang (sinkron), bukan setelah respons tiba, agar penyimpanan tidak gagal bila worker sudah berhenti. */
+  let putP = Promise.resolve();
+  const net = fetch(req).then(function (r) { if (r && r.ok && r.status !== 206) putP = c.put('index.html', r.clone()).catch(function () {}); return r; });
+  e.waitUntil(net.then(function () { return putP; }, function () {}));
   const lama = (await c.match('index.html')) || (await c.match('./'));
   if (!lama) return net;
   return Promise.race([net, new Promise(function (ok) { setTimeout(function () { ok(lama); }, BATAS_HALAMAN); })]).catch(function () { return lama; });
