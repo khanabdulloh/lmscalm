@@ -1718,9 +1718,9 @@ details.mod{margin:0 0 1rem;border-top:0;padding-top:0}
 .bnav button{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.15rem;min-height:3.2rem;border:0;border-radius:.8rem;background:none;color:var(--mut);font-size:.72rem;font-weight:600;transition:color .15s,background .15s}
 .bnav svg{width:1.35rem;height:1.35rem}
 .bnav button.on{color:var(--navy);background:var(--soft)}
-body:has(.bnav:not(.hide)) main{padding-bottom:calc(5.5rem + env(safe-area-inset-bottom,0px))}
-body:has(.bnav:not(.hide)) .rf{bottom:calc(5rem + env(safe-area-inset-bottom,0px))}
-body:has(.bnav:not(.hide)) #toast{margin-bottom:4.5rem}
+body.has-bnav main{padding-bottom:calc(5.5rem + env(safe-area-inset-bottom,0px))}
+body.has-bnav .rf{bottom:calc(5rem + env(safe-area-inset-bottom,0px))}
+body.has-bnav #toast{margin-bottom:4.5rem}
 body:has(.qw) .bnav{display:none}
 }
 [data-theme=dark] :is(.btn2,.content-action,.kc-more,.social-kc,.wstep,.rhint,.bnav){background:var(--card);color:var(--ink);border-color:var(--line2)}
@@ -1748,6 +1748,19 @@ tbody tr:hover{background:var(--tint)}
 .hm-clock{text-align:left}
 input,select,textarea{font-size:16px}
 }
+
+/* ===== Progres belajar ===== */
+.md-b{display:inline-flex;align-items:center;gap:.45rem;margin-top:.8rem;padding:.5rem .95rem;border:1px solid var(--line2);border-radius:99px;background:var(--card);color:var(--mut);font-weight:600;font-size:.84rem;transition:border-color .15s,color .15s,background .15s}
+.md-b:hover{border-color:var(--navy);color:var(--navy)}
+.md-b.on{background:color-mix(in srgb,#047857 12%,var(--card));border-color:color-mix(in srgb,#047857 40%,var(--line2));color:#047857}
+.md-b:disabled{opacity:.6;cursor:progress}
+.md-t{display:flex;align-items:center;gap:.4rem;margin-top:.8rem;font-size:.82rem;color:var(--mut)}
+.md-p{margin-top:.85rem;max-width:26rem}
+.md-pt{display:flex;justify-content:space-between;gap:.6rem;margin-bottom:.35rem;font-size:.8rem;color:var(--mut)}
+.md-pt b{font-weight:600;color:var(--ink)}
+.md-bar{height:.45rem;border-radius:99px;background:var(--soft);overflow:hidden}
+.md-bar i{display:block;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--navy),var(--gold));transition:width .35s}
+[data-theme=dark] .md-b.on{color:#6ee7b7}
 </style>
 </head>
 <body>
@@ -2663,7 +2676,7 @@ function ytPlay(btn) {
   const w = btn.parentNode, id = w.dataset.id; if (!/^[\w-]{11}$/.test(id)) return;
   w.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + id + '?rel=0&autoplay=1" title="Video materi" loading="lazy" allow="accelerometer; autoplay; encrypted-media; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';
 }
-const matCard = (m, t, hideMod) => { const x = mcfg(m.description); return `<div class="card item"><h4>${esc(m.title)}</h4>${x.c.n && !hideMod ? `<div class="meta"><span class="badge">${esc(x.c.n)}</span></div>` : ''}${x.text ? `<p>${esc(x.text)}</p>` : ''}${ytBlock(m.file_url)}${fileLink('mat', m.id, m.file_url, 'sp-file')}${contentActions(t, 'editMat', 'deleteMat', m.id, 'materi')}${cmtBlock('mat', m.id)}</div>`; };
+const matCard = (m, t, hideMod) => { const x = mcfg(m.description); return `<div class="card item"><h4>${esc(m.title)}</h4>${x.c.n && !hideMod ? `<div class="meta"><span class="badge">${esc(x.c.n)}</span></div>` : ''}${x.text ? `<p>${esc(x.text)}</p>` : ''}${ytBlock(m.file_url)}${fileLink('mat', m.id, m.file_url, 'sp-file')}${contentActions(t, 'editMat', 'deleteMat', m.id, 'materi')}${matDoneUi(m, t)}${cmtBlock('mat', m.id)}</div>`; };
 const MOD = { shut: {} };
 function matList(t) {
   const L = C.materials || [], tn = C.cls.teacher_name, cidv = C.cls.id;
@@ -2679,6 +2692,31 @@ function matList(t) {
   let out = keys.map(k => sec(k, k, g[k].slice().sort((a, b) => (a.o || 9999) - (b.o || 9999) || cr(a, b)), true)).join('');
   if (g['']) out += sec('', 'Materi lainnya', g[''].slice().sort((a, b) => cr(b, a)), false);
   return out;
+}
+/* Progres belajar: tandai materi selesai (siswa), ringkasan jumlah (guru). */
+const MD = { busy: false };
+function matDoneUi(m, t) {
+  if (t ? C.matDoneCount === undefined : C.matDone === undefined) return ''; /* backend belum diperbarui: fitur disembunyikan */
+  if (t) { const n = (C.matDoneCount || {})[m.id] || 0; return `<div class="md-t">${lic('users')} ${n} dari ${C.memberCount} siswa menandai selesai</div>`; }
+  if (isReadOnlyMonitor()) return '';
+  const d = (C.matDone || []).includes(m.id);
+  return `<button type="button" class="md-b${d ? ' on' : ''}" aria-pressed="${d}" onclick="toggleMat(${jsq(m.id)},this)">${lic('check')}<span>${d ? 'Selesai dipelajari' : 'Tandai selesai'}</span></button>`;
+}
+function matProg() {
+  const L = C.materials || []; if (!L.length || C.matDone === undefined) return '';
+  const ids = new Set(L.map(m => m.id)), n = (C.matDone || []).filter(i => ids.has(i)).length, pct = Math.round(n / L.length * 100);
+  return `<div class="md-p" id="mdp"><div class="md-pt"><span>Progres materi</span><b>${n} dari ${L.length} selesai</b></div><div class="md-bar" role="progressbar" aria-label="Progres materi" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div></div>`;
+}
+async function toggleMat(id, btn) {
+  if (MD.busy) return; MD.busy = true; if (btn) btn.disabled = true;
+  try {
+    const r = await api('toggleMatDone', { ...cid(), material_id: id }), s = new Set(C.matDone || []);
+    r.done ? s.add(id) : s.delete(id); C.matDone = [...s];
+    document.querySelectorAll('.md-b').forEach(b => { if (b.getAttribute('onclick').includes(jsq(id))) { b.classList.toggle('on', r.done); b.setAttribute('aria-pressed', r.done); b.querySelector('span').textContent = r.done ? 'Selesai dipelajari' : 'Tandai selesai'; } });
+    const e = $('#mdp'); if (e) e.outerHTML = matProg();
+    toast(r.done ? 'Ditandai selesai.' : 'Tanda selesai dibatalkan.');
+  } catch (e) { toast(e.message, true); }
+  finally { MD.busy = false; if (btn) btn.disabled = false; }
 }
 function copyCode(c) { try { navigator.clipboard.writeText(c).then(() => toast('Kode kelas disalin.'), () => toast('Salin kode secara manual: ' + c, true)); } catch (e) { toast('Salin kode secara manual: ' + c, true); } }
 function feedView(t, readOnly) {
@@ -2715,7 +2753,7 @@ function drawClass(tab) {
   const ini = String(cls.name || 'K').split(/\s+/).map(w => w.charAt(0)).join('').slice(0, 3).toUpperCase();
   const nPost = (C.announcements || []).length + (C.materials || []).length + (C.assignments || []).length + (C.quizzes || []).length;
   view(`<button class="back" onclick="home()">← Kembali ke daftar kelas</button>${offn}
-    <div class="sc"><div class="sc-ban" aria-hidden="true"></div><div class="sc-in"><span class="sc-av" aria-hidden="true">${esc(ini)}</span><div class="sc-tx"><h1>${esc(cls.name)}</h1><p>${esc(cls.subject || '—')} • ${esc(cls.teacher_name || '—')}${readOnly ? ' • Mode pemantauan' : ''}</p><div class="sc-st"><span>${lic('users')} ${C.memberCount} anggota</span><span>${lic('book')} ${(C.materials || []).length} materi</span><span>${lic('task')} ${(C.assignments || []).length} tugas</span><span>${lic('quiz')} ${(C.quizzes || []).length} kuis</span>${t ? `<button type="button" class="sc-code" onclick="copyCode(${jsq(cls.code)})" title="Salin kode kelas">${lic('key')} ${esc(cls.code)} • Salin</button>` : ''}</div></div></div></div>
+    <div class="sc"><div class="sc-ban" aria-hidden="true"></div><div class="sc-in"><span class="sc-av" aria-hidden="true">${esc(ini)}</span><div class="sc-tx"><h1>${esc(cls.name)}</h1><p>${esc(cls.subject || '—')} • ${esc(cls.teacher_name || '—')}${readOnly ? ' • Mode pemantauan' : ''}</p><div class="sc-st"><span>${lic('users')} ${C.memberCount} anggota</span><span>${lic('book')} ${(C.materials || []).length} materi</span><span>${lic('task')} ${(C.assignments || []).length} tugas</span><span>${lic('quiz')} ${(C.quizzes || []).length} kuis</span>${t ? `<button type="button" class="sc-code" onclick="copyCode(${jsq(cls.code)})" title="Salin kode kelas">${lic('key')} ${esc(cls.code)} • Salin</button>` : ''}</div>${!t && !readOnly ? matProg() : ''}</div></div></div>
     <div class="tabs sc-tabs" role="tablist">${[['feed', lic('home') + 'Beranda'], ['ann', lic('megaphone') + 'Info'], ['mat', lic('book') + 'Materi'], ['asg', lic('task') + 'Tugas'], ['qz', lic('quiz') + 'Kuis'], ['fr', lic('forum') + 'Forum']].map(([k, l]) => `<button role="tab" aria-selected="${k === tab}" class="${k === tab ? 'on' : ''}" onclick="drawClass('${k}')">${l}</button>`).join('')}</div><div class="sp-feed">${body}</div>`);
   const tb = document.querySelector('.sc-tabs'), on = tb && tb.querySelector('.on');
   if (tb && on && tb.scrollWidth > tb.clientWidth) tb.scrollLeft = on.offsetLeft - (tb.clientWidth - on.offsetWidth) / 2;
@@ -3627,7 +3665,7 @@ function buildMenu() {
   const canStaffData = rs.includes('admin') || rs.includes('staff') || rs.includes('staf');
   
   const groups = [];
-  { const bn = document.getElementById('bnav'); if (bn) bn.classList.toggle('hide', !(teacher || rs.includes('siswa'))); }
+  { const bn = document.getElementById('bnav'), on = teacher || rs.includes('siswa'); if (bn) bn.classList.toggle('hide', !on); document.body.classList.toggle('has-bnav', !!on); }
   
   groups.push({ 
     id: 'g-dash', 
