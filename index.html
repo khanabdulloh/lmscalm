@@ -3328,8 +3328,15 @@ async function adminSchedulesPage() {
     const r=await api('adminSchedules'); _adminSchedulesCache=r;
     const days=['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'];
     view(`<div class="top"><div><h2>Data Jadwal</h2><p>Kelola hari, waktu, ruang, mata pelajaran, dan kelas.</p></div><button class="btn" onclick="editAdminSchedule()">+ Tambah jadwal</button></div>
+      ${r.blok?`<div class="card" style="display:flex;gap:1rem;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:1rem"><div><b>Blok aktif minggu ini: Blok ${esc(r.blok.now)}</b><div style="font-size:.85rem;color:var(--mut)">Minggu depan giliran Blok ${esc(r.blok.next)}. Berganti otomatis setiap Senin; jadwal tanpa blok berlaku setiap minggu.</div></div><button class="btn2" onclick="setBlokAktif(${esc(JSON.stringify(String(r.blok.now)))})">Ubah blok minggu ini</button></div>`:''}
       <div class="card" style="overflow-x:auto;padding:0"><table style="margin:0"><thead><tr><th>Hari / Waktu</th><th>Kelas / Mapel</th><th>Guru</th><th>Ruang</th><th>Aksi</th></tr></thead><tbody>${r.schedules.slice().sort((a,b)=>days.indexOf(a.day)-days.indexOf(b.day)||String(a.start_time).localeCompare(String(b.start_time))).map(x=>`<tr><td><b>${esc(x.day)}</b><div style="font-size:.85rem;color:var(--mut)">${esc(x.start_time)}–${esc(x.end_time)}</div></td><td><b>${esc(x.class_name)}</b><div class="meta">${esc(x.subject||'—')}</div></td><td>${esc(x.teacher_name||'—')}</td><td>${esc(x.room||'—')}</td><td><div class="acts" style="justify-content:flex-start"><button class="btn2" style="padding:.4rem .8rem" onclick="editAdminSchedule(${jsq(x.id)})">Ubah</button><button class="link" onclick="deleteAdminSchedule(${jsq(x.id)})">Hapus</button></div></td></tr>`).join('')||'<tr><td colspan="5" style="text-align:center;padding:2rem">Belum ada jadwal.</td></tr>'}</tbody></table></div>`);
   } catch(e){view(`<div class="card empty">${esc(e.message)}<p><button class="btn2" onclick="adminSchedulesPage()">Coba lagi</button></p></div>`);}
+}
+function setBlokAktif(cur) {
+  if(!canManageStaffData()) return;
+  modal('Blok aktif minggu ini',[{n:'blok',l:'Blok yang masuk minggu ini',t:'select',v:cur||'A',opts:[{v:'A',l:'Blok A'},{v:'B',l:'Blok B'}]}],
+    async d=>{await api('blokSave',{blok:d.blok});toast('Blok aktif diperbarui.');adminSchedulesPage();},'Simpan',
+    {sub:'Blok berganti otomatis setiap Senin. Ubah hanya bila tidak sesuai dengan Portal Akademik.'});
 }
 function editAdminSchedule(id) {
   if(!canManageStaffData()) return;
@@ -3343,9 +3350,10 @@ function editAdminSchedule(id) {
     {n:'end_time',l:'Jam selesai (format 24 jam, contoh 08:00)',v:x.end_time||'08:00'},
     {n:'subject',l:'Mata pelajaran',v:x.subject||'',r:false},
     {n:'room',l:'Ruang',v:x.room||'',r:false},
-    {n:'notes',l:'Catatan',t:'textarea',v:x.notes||'',r:false},
+    {n:'blok',l:'Blok (pilih "Setiap minggu" bila tidak bergantian)',t:'select',v:((String(x.notes||'').match(/\bblok\s*([AB])\b/i)||[])[1]||'').toUpperCase(),r:false,opts:[{v:'',l:'Setiap minggu'},{v:'A',l:'Blok A (minggu bergantian)'},{v:'B',l:'Blok B (minggu bergantian)'}]},
+    {n:'notes',l:'Catatan',t:'textarea',v:String(x.notes||'').replace(/\bblok\s*[AB]\b[\s,;:\u2014-]*/ig,'').trim(),r:false},
     ...(id?[{n:'schedule_id',l:'',t:'hidden',v:id}]:[])
-  ],async d=>{await api('adminSaveSchedule',d);toast('Jadwal berhasil disimpan.');adminSchedulesPage();});
+  ],async d=>{const nt=String(d.notes||'').trim();d.notes=d.blok?('Blok '+d.blok+(nt?' \u2014 '+nt:'')):nt;delete d.blok;await api('adminSaveSchedule',d);toast('Jadwal berhasil disimpan.');adminSchedulesPage();});
 }
 async function deleteAdminSchedule(id){if(!canManageStaffData()||!(await dlg({ title: 'Hapus jadwal?', msg: 'Jadwal yang dihapus tidak dapat dipulihkan.', ok: 'Hapus jadwal', tone: 'danger' })))return;try{await api('adminDeleteSchedule',{schedule_id:id});toast('Jadwal berhasil dihapus.');adminSchedulesPage();}catch(e){toast(e.message,true);}}
 
@@ -4266,16 +4274,22 @@ function hmIcon(t) {
   if (t === 'sore') return '<path d="M17 18a5 5 0 0 0-10 0M12 9v3M4.2 10.2l1.4 1.4M1 18h2M21 18h2M18.4 11.6l1.4-1.4M23 22H1M16 5l-4-3-4 3"/>';
   return '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M6.3 17.7l-1.4 1.4M19.1 4.9l-1.4 1.4"/>';
 }
+/* Jadwal yang berlaku minggu ini: jadwal Blok A/B hanya tampil pada minggu gilirannya (penanda aktif dari server). */
+function hmSch() { return HM.data ? HM.data.schedules.filter(function (s) { return s.aktif !== false; }) : []; }
+function hmHid() { return HM.data ? HM.data.schedules.length - hmSch().length : 0; }
 function hmToday() {
   if (!HM.data) return [];
   var tn = HM_DAYS[hmDayIdx(new Date())];
-  return HM.data.schedules.filter(function (s) { return s.day === tn; }).sort(function (a, b) { return hmMin(a.start_time) - hmMin(b.start_time); });
+  return hmSch().filter(function (s) { return s.day === tn; }).sort(function (a, b) { return hmMin(a.start_time) - hmMin(b.start_time); });
 }
 function hmLine() {
   var mode = hmMode(), d = HM.data;
   if (EM && EM.on) return 'Mode darurat: pembelajaran hari ini dilaksanakan daring. Ikuti petunjuk guru dan pantau jadwal pada kartu di bawah.';
   if (!d) return mode === 'teacher' ? 'Semoga hari ini berjalan lancar bersama para siswa.' : mode === 'student' ? 'Semoga hari ini menyenangkan dan penuh semangat belajar, Ananda.' : 'Semoga pemantauan pembelajaran hari ini berjalan lancar.';
   var td = hmToday(), n = td.length, now = hmNowMin(), last = n ? hmMin(td[n - 1].end_time) : -1, wk = hmDayIdx(new Date()) >= 5;
+  if (d.blok && !hmSch().length && hmHid() && (mode === 'teacher' || mode === 'student')) return mode === 'teacher'
+    ? 'Minggu ini giliran Blok ' + d.blok.now + '. Jadwal mengajar Anda (Blok ' + d.blok.next + ') mulai minggu depan; manfaatkan waktu untuk menyiapkan materi dan tugas daring.'
+    : 'Minggu ini giliran Blok ' + d.blok.now + '. Kelas Anda (Blok ' + d.blok.next + ') masuk minggu depan; kerjakan materi dan tugas daring di LMS.';
   if (mode === 'teacher') {
     if (!n) return wk ? 'Tidak ada jadwal mengajar hari ini. Selamat menikmati akhir pekan.' : 'Tidak ada jadwal mengajar hari ini. Waktu yang pas untuk menyiapkan materi.';
     if (now >= last) return 'Seluruh sesi hari ini sudah selesai. Terima kasih atas dedikasinya.';
@@ -4351,7 +4365,7 @@ function hmJoin(cid, date) {
   if (hmMode() === 'student') { try { fetch(API, { method: 'POST', keepalive: true, body: new URLSearchParams({ action: 'sessionJoin', token: S ? S.token : '', class_id: String(cid), date: date }) }).catch(function () {}); } catch (e) {} }
 }
 function hmSesEdit(cid, date) {
-  var se = hmSes(cid, date) || {}, sc = HM.data.schedules.find(function (x) { return String(x.class_id) === String(cid); }) || {};
+  var se = hmSes(cid, date) || {}, sc = hmSch().find(function (x) { return String(x.class_id) === String(cid); }) || {};
   var emd = !!(EM && EM.on && EM.date === date);
   modal('Atur pertemuan', [
     { n: 'mode', l: 'Mode pertemuan', t: 'select', v: se.mode || 'tatap_muka', r: false, opts: [{ v: 'tatap_muka', l: 'Tatap muka' }, { v: 'daring', l: 'Daring (Google Meet, Zoom, atau WhatsApp)' }, { v: 'mandiri', l: 'Belajar mandiri' }].filter(function (o) { return !(emd && o.v === 'tatap_muka'); }) },
@@ -4366,7 +4380,7 @@ function hmSesEdit(cid, date) {
 }
 function hmShare(cid, date) {
   var se = hmSes(cid, date); if (!se) return;
-  var s = HM.data.schedules.find(function (x) { return String(x.class_id) === String(cid) && x.day === HM.day; }) || {};
+  var s = hmSch().find(function (x) { return String(x.class_id) === String(cid) && x.day === HM.day; }) || {};
   var L = [(s.subject || s.class_name || 'Pelajaran') + (s.class_name && s.subject !== s.class_name ? ' – ' + s.class_name : ''), HM.day + ', ' + fmtD(date) + (s.start_time ? ' pukul ' + s.start_time + '–' + s.end_time : ''), 'Mode: ' + SES_L[se.mode]];
   if (se.topic) L.push('Topik: ' + se.topic);
   if (se.note) L.push(se.note);
@@ -4394,7 +4408,7 @@ function hmSched() {
   var el = $('#hm-sched'); if (!el || !HM.data) return;
   var mode = hmMode(), nowI = hmDayIdx(new Date()), nowM = hmNowMin(), by = {}, done = (HM.data.done_today || []).map(String);
   HM_DAYS.forEach(function (d) { by[d] = []; });
-  HM.data.schedules.forEach(function (s) { if (by[s.day]) by[s.day].push(s); });
+  hmSch().forEach(function (s) { if (by[s.day]) by[s.day].push(s); });
   HM_DAYS.forEach(function (d) { by[d].sort(function (a, b) { return hmMin(a.start_time) - hmMin(b.start_time); }); });
   if (!HM.day) HM.day = HM_DAYS[nowI];
   var shown = HM_DAYS.map(function (d, i) { return i; }).filter(function (i) { return i < 6 || by[HM_DAYS[i]].length || i === nowI; });
@@ -4414,10 +4428,10 @@ function hmSched() {
     var dt = hmDateOf(HM.day), se = hmSes(s.class_id, dt), sx = hmSesTxt(se);
     return '<div class="hm-it ' + st + '"><div class="hm-t"><b>' + esc(s.start_time) + '</b>' + esc(s.end_time) + '</div><div class="hm-b"><div class="hm-bh"><strong>' + esc(title) + '</strong>' + tag + '</div>' + (meta ? '<span class="m">' + meta + '</span>' : '') + (s.notes ? '<span class="m">' + esc(s.notes) + '</span>' : '') + sx + pg + hmBtns(act, s, dt, se, isToday, mode) + '</div></div>';
   }).join('');
-  var total = HM.data.schedules.length;
-  var empty = '<div class="hm-empty"><b>' + (isToday ? 'Tidak ada jadwal hari ini' : 'Tidak ada jadwal pada hari ' + HM.day) + '</b>' + (total ? 'Pilih hari lain untuk melihat jadwal lainnya.' : 'Jadwal akan tampil di sini setelah ditetapkan oleh sekolah.') + '</div>';
+  var total = hmSch().length, bk = HM.data.blok, bkTxt = bk && (hmHid() || hmSch().some(function (s) { return s.blok; })) ? ' • Blok ' + bk.now + ' minggu ini' : '';
+  var empty = '<div class="hm-empty"><b>' + (isToday ? 'Tidak ada jadwal hari ini' : 'Tidak ada jadwal pada hari ' + HM.day) + '</b>' + (total ? 'Pilih hari lain untuk melihat jadwal lainnya.' : (hmHid() && bk ? 'Minggu ini giliran Blok ' + bk.now + '. Jadwal Blok ' + bk.next + ' berlaku minggu depan.' : 'Jadwal akan tampil di sini setelah ditetapkan oleh sekolah.')) + '</div>';
   var ttl = mode === 'teacher' ? 'Jadwal mengajar' : mode === 'student' ? 'Jadwal pelajaran' : 'Jadwal pembelajaran';
-  el.innerHTML = '<div class="hm-h"><div><h3>' + ttl + '</h3><small>' + HM.day + ' • ' + list.length + ' sesi</small></div></div><div class="hm-days" role="group" aria-label="Pilih hari">' + tabs + '</div>' + (items ? '<div class="hm-list">' + items + '</div>' : empty);
+  el.innerHTML = '<div class="hm-h"><div><h3>' + ttl + '</h3><small>' + HM.day + ' • ' + list.length + ' sesi' + bkTxt + '</small></div></div><div class="hm-days" role="group" aria-label="Pilih hari">' + tabs + '</div>' + (items ? '<div class="hm-list">' + items + '</div>' : empty);
   var on = el.querySelector('.hm-d.on'), bar = el.querySelector('.hm-days');
   if (on && bar) bar.scrollLeft = on.offsetLeft - (bar.clientWidth - on.clientWidth) / 2;
 }
