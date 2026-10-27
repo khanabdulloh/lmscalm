@@ -2700,7 +2700,7 @@ function matDoneUi(m, t) {
   if (t) { const n = (C.matDoneCount || {})[m.id] || 0; return `<div class="md-t">${lic('users')} ${n} dari ${C.memberCount} siswa menandai selesai</div>`; }
   if (isReadOnlyMonitor()) return '';
   const d = (C.matDone || []).includes(m.id);
-  return `<button type="button" class="md-b${d ? ' on' : ''}" aria-pressed="${d}" onclick="toggleMat(${jsq(m.id)},this)">${lic('check')}<span>${d ? 'Selesai dipelajari' : 'Tandai selesai'}</span></button>`;
+  return `<button type="button" class="md-b${d ? ' on' : ''}" data-mid="${esc(m.id)}" aria-pressed="${d}" onclick="toggleMat(${jsq(m.id)},this)">${lic('check')}<span>${d ? 'Selesai dipelajari' : 'Tandai selesai'}</span></button>`;
 }
 function matProg() {
   const L = C.materials || []; if (!L.length || C.matDone === undefined) return '';
@@ -2712,7 +2712,7 @@ async function toggleMat(id, btn) {
   try {
     const r = await api('toggleMatDone', { ...cid(), material_id: id }), s = new Set(C.matDone || []);
     r.done ? s.add(id) : s.delete(id); C.matDone = [...s];
-    document.querySelectorAll('.md-b').forEach(b => { if (b.getAttribute('onclick').includes(jsq(id))) { b.classList.toggle('on', r.done); b.setAttribute('aria-pressed', r.done); b.querySelector('span').textContent = r.done ? 'Selesai dipelajari' : 'Tandai selesai'; } });
+    document.querySelectorAll('.md-b').forEach(b => { if (b.dataset.mid === String(id)) { b.classList.toggle('on', r.done); b.setAttribute('aria-pressed', r.done); b.querySelector('span').textContent = r.done ? 'Selesai dipelajari' : 'Tandai selesai'; } });
     const e = $('#mdp'); if (e) e.outerHTML = matProg();
     toast(r.done ? 'Ditandai selesai.' : 'Tanda selesai dibatalkan.');
   } catch (e) { toast(e.message, true); }
