@@ -1831,6 +1831,39 @@ td .badge.ok::before,td .badge.warn::before{content:"";display:inline-block;widt
 @media(max-width:900px){.cal-w{grid-template-columns:minmax(0,1fr)}.cal-p{position:static}}
 @media(max-width:560px){.cal-g{padding:.5rem}.cal-d{min-height:3.5rem;padding:.3rem .35rem}.cal-n h3{min-width:0;font-size:1.15rem}.cal-wd,.cal-gr{gap:.2rem}}
 .skip{position:fixed;left:.75rem;top:-4rem;z-index:10000;padding:.6rem 1rem;background:var(--navy);color:#fff;border-radius:.6rem;font-weight:700;text-decoration:none;transition:top .15s}.skip:focus{top:.75rem;outline:3px solid var(--gold)}#main:focus{outline:none}
+
+/* ===== LOGIN: tata letak fluid & proporsional (tidak terpotong di semua ukuran layar desktop/laptop) ===== */
+@media(min-width:901px){
+html:has(#login:not(.hide)){font-size:clamp(12px,min(1.08vw,2.05vh),17px)}
+#login.lw{height:100vh;height:100dvh;min-height:0;overflow:hidden;grid-template-columns:minmax(0,5fr) minmax(0,6fr)}
+#login .ls{min-height:0;gap:1rem;padding:clamp(1.25rem,4.2vh,2.5rem) clamp(1.75rem,3.6vw,3.5rem)}
+#login .ls .hero-l{max-width:30rem}
+#login .ls .hero-l h1{font-size:clamp(2rem,3.1vw,2.8rem)}
+#login .ls .hero-l>p{margin-top:.8rem;font-size:.85rem;line-height:1.65}
+#login .ls .fe{gap:.55rem}
+#login .ls .lf{padding-top:.85rem}
+#login .lm{min-height:0;overflow-y:auto;padding:clamp(1rem,3vh,2.5rem) clamp(1.25rem,3.5vw,3.5rem)}
+#login .lc{max-width:27rem;margin:auto}
+#login .lc h2{font-size:2rem}
+#login .lc .sub{margin:.35rem 0 1.1rem;font-size:.9rem}
+#login .rh{min-height:0;margin-bottom:.55rem}
+#login .rg{gap:.5rem}
+#login .rt{min-height:3.1rem;padding:.65rem 1.8rem .65rem .8rem}
+#login .rx small{display:none}
+#login .rx b{font-size:.86rem;line-height:1.25}
+#login .rhint{margin:.7rem 0 1rem;padding:.6rem .8rem;font-size:.8rem;line-height:1.5}
+#login .fl{margin-bottom:.35rem}
+#login .fd{margin-bottom:.85rem}
+#login .fld{min-height:3rem}
+#login .rrow{margin:.1rem 0 1rem}
+#login .sb{min-height:3.05rem}
+#login .srv{margin-top:.9rem}
+#login .help{margin-top:.8rem;padding-top:.8rem}
+}
+@media(min-width:901px) and (max-height:620px){
+#login .rhint{display:none}
+#login .lc .sub{display:none}
+}
 </style>
 </head>
 <body>
