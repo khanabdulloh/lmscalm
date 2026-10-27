@@ -2,7 +2,7 @@
  * - Cangkang aplikasi (index.html, config.js, ikon) disimpan di perangkat agar cepat dibuka dan tetap tampil saat sinyal lemah.
  * - Permintaan ke layanan data (Google Apps Script) TIDAK pernah dicegat atau disimpan: data selalu diambil langsung dari server.
  * Naikkan VERSI setiap kali index.html atau berkas statis lain diperbarui di hosting. */
-const VERSI = 'lms-v5';
+const VERSI = 'lms-v6';
 const CANGKANG = ['./', 'index.html', 'config.js', 'manifest.webmanifest', 'icon-152.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png'];
 const BATAS_HALAMAN = 3000; /* ms menunggu jaringan sebelum memakai salinan tersimpan */
 
