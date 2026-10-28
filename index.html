@@ -2516,6 +2516,14 @@ body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-r
 [data-theme=dark] .hm-hero[data-tod=malam] .hm-clock .hm-ic{background:rgba(129,140,248,.18);color:#aab4ff}
 @media(max-width:560px){.hm-hero .hm-clock{padding:.2rem 0!important;margin-top:.2rem}}
 </style>
+<style id="hmx-eq-style">
+/* Kartu Jadwal & Kehadiran di Beranda: tinggi sama (hanya desktop; HP tetap 1 kolom) */
+@media(min-width:1001px){
+.hm-grid{align-items:stretch}
+#hm-sched{display:flex;flex-direction:column}
+#hm-sched .hm-list{flex:1 1 0;min-height:14rem;max-height:none;contain:size}
+}
+</style>
 <script id="hmx-tod-script">
 (function(){"use strict";
 function mv(h){return h.replace(/(<div class="hm-hl">)(<span class="hm-ic"[\s\S]*?<\/span>)/,"$1").replace(/<div class="hm-clock">([\s\S]*?)<\/div><\/section>/,function(m,c){var ic=(h.match(/<span class="hm-ic"[\s\S]*?<\/span>/)||[""])[0];var b=c.match(/<b id="dash-clock">[\s\S]*?<\/b>/),sm=c.match(/<small>[\s\S]*?<\/small>/);return b&&sm&&ic?'<div class="hm-clock">'+ic+'<div class="hm-ct">'+b[0]+sm[0]+"</div></div></section>":m})}
