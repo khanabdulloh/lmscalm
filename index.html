@@ -1905,6 +1905,127 @@ html:has(#login:not(.hide)){font-size:clamp(12px,min(1.08vw,2.05vh),17px)}
 #login .srv{margin-top:1rem;font-size:.75rem}
 #login .help{margin-top:.6rem;padding-top:0;border:0;font-size:.75rem;color:#9aa6b9}
 }
+
+/* ===== Penyempurnaan tampilan v2 (aditif, hanya CSS; tanpa mengubah HTML/JS) ===== */
+:root{--pl-r:1.25rem;--pl-line:color-mix(in srgb,var(--line) 70%,transparent);--pl-shadow:0 1px 2px rgba(10,34,80,.04),0 12px 28px -18px rgba(10,34,80,.18);--pl-shadow-hv:0 2px 4px rgba(10,34,80,.05),0 22px 40px -22px rgba(10,34,80,.28)}
+
+/* Latar halaman: lebih bersih, dua cahaya lembut */
+:root:not([data-theme=dark]) body{background:radial-gradient(60rem 26rem at 100% -10%,#e8f0fc,transparent 62%),radial-gradient(44rem 24rem at -8% 108%,#f8f1df,transparent 62%),#f6f8fb;background-attachment:fixed}
+
+/* Ritme konten */
+main{padding-top:2.4rem;padding-bottom:5rem}
+@media(min-width:901px){main{padding-top:3.8rem}}
+.top{margin-bottom:1.4rem}
+.top h2{letter-spacing:-.025em}
+.top h2::after{width:2.2rem;height:3px;background:linear-gradient(90deg,var(--gold),transparent)}
+
+/* Sidebar: lebih rapi dan tenang */
+aside{background:radial-gradient(18rem 14rem at 0 0,rgba(96,150,240,.22),transparent 70%),linear-gradient(185deg,#0b3077 0%,#072155 55%,#051640 100%)}
+aside .nm{letter-spacing:.02em}
+.sb-user{background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px rgba(255,255,255,.1);border-radius:.9rem}
+#menu .mg{text-transform:uppercase;font-size:.72rem;letter-spacing:.09em;color:#8fa6cf;margin-top:.9rem}
+#menu .mg:hover,#menu .mg[aria-expanded="true"]{color:#fff}
+aside .mi{border-radius:.85rem}
+aside .mi.on{background:linear-gradient(90deg,rgba(125,180,255,.26),rgba(125,180,255,.05));box-shadow:inset 0 0 0 1px rgba(147,185,255,.24)}
+aside .mi.on svg{background:var(--gold);color:#061f4d}
+aside .mi.top.on{background:linear-gradient(90deg,rgba(125,180,255,.26),rgba(125,180,255,.05))}
+
+/* Toolbar atas (cari, tema, notifikasi) */
+#tb{background:color-mix(in srgb,var(--card,#fff) 86%,transparent);border:1px solid var(--pl-line);box-shadow:var(--pl-shadow)}
+#tb button:hover{background:var(--soft);color:var(--navy)}
+
+/* Kartu hero sapaan */
+.hm-hero{border-radius:1.6rem;padding:2rem 2.25rem;border:1px solid rgba(214,180,106,.28);box-shadow:var(--pl-shadow)}
+.hm-hero h2{font-size:clamp(1.7rem,3vw,2.35rem);letter-spacing:-.025em}
+.hm-hero p{font-size:.97rem;max-width:42rem}
+.hm-ic{width:3.6rem;height:3.6rem;box-shadow:0 10px 24px -10px rgba(183,121,31,.55),inset 0 0 0 1px rgba(255,255,255,.7)}
+.hm-clock{padding:.9rem 1.3rem;border-radius:1.1rem;background:rgba(255,255,255,.55);border:1px solid rgba(255,255,255,.7);box-shadow:0 10px 24px -18px rgba(10,34,80,.35)}
+.hm-clock b{font-size:2.1rem;letter-spacing:.02em}
+.hm-hero[data-tod=malam] .hm-clock,[data-theme=dark] .hm-hero .hm-clock{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14)}
+
+/* Kartu ringkasan: aksen warna tiap kartu, angka lebih tegas */
+.kp-grid{gap:1.1rem}
+.kp{border-radius:var(--pl-r);padding:1.15rem 1.3rem 1.15rem 1.45rem;border:1px solid var(--pl-line);box-shadow:var(--pl-shadow);transition:transform .2s,box-shadow .2s,border-color .2s}
+.kp::before{top:1rem;bottom:1rem;width:4px;border-radius:0 4px 4px 0}
+.kp-grid>.kp:nth-child(2)::before{background:linear-gradient(180deg,#34d399,#059669)}
+.kp-grid>.kp:nth-child(3)::before{background:linear-gradient(180deg,#fbbf24,#d97706)}
+.kp-grid>.kp:nth-child(4)::before{background:linear-gradient(180deg,#a78bfa,#6d28d9)}
+.kp .kl{font-size:.78rem;letter-spacing:.05em;text-transform:uppercase;font-weight:700}
+.kp .kv{font-size:2.35rem;letter-spacing:-.02em;margin:.1rem 0}
+.kp .ks{font-size:.85rem}
+button.kp:hover,.kp:hover{box-shadow:var(--pl-shadow-hv);border-color:var(--line2)}
+.kp-grid .kp:has(#kp-s){border-radius:var(--pl-r);box-shadow:0 22px 40px -22px rgba(8,42,107,.7)}
+
+/* Kartu umum, widget jadwal, dan kehadiran */
+.card,.hm-c,.sp,.sp-comp{border-radius:var(--pl-r);border-color:var(--pl-line);box-shadow:var(--pl-shadow)}
+.card:hover{box-shadow:var(--pl-shadow-hv)}
+.hm-c{padding:1.5rem}
+.hm-h h3,.sec h3{font-size:1.08rem;letter-spacing:-.015em}
+.hm-h small{font-size:.82rem}
+
+/* Pilih hari: lebih jelas, hari terpilih emas di bawah */
+.hm-days{gap:.4rem}
+.hm-d{border-radius:.9rem;padding:.55rem .35rem;min-width:3.1rem}
+.hm-d.on{box-shadow:0 10px 18px -10px rgba(11,61,145,.7)}
+.hm-d.td:not(.on){background:var(--gold-soft);border-color:rgba(214,180,106,.5)}
+
+/* Item jadwal */
+.hm-b{border-radius:1rem;border-left-width:4px;padding:.85rem 1rem}
+.hm-it.live .hm-b{box-shadow:0 10px 22px -16px rgba(16,185,129,.7)}
+.hm-it.next .hm-b{box-shadow:0 10px 22px -16px rgba(214,180,106,.8)}
+
+/* Keadaan kosong: ramah, ada ikon lembut */
+.hm-empty,.empty{border-radius:1rem}
+.hm-empty{padding:2.2rem 1rem;background:linear-gradient(180deg,transparent,color-mix(in srgb,var(--soft) 55%,transparent));border-radius:1rem}
+.hm-empty::before{content:"";display:block;width:3rem;height:3rem;margin:0 auto .9rem;border-radius:50%;background:var(--soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%235b8ff0' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='17' rx='2.5'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18'/%3E%3C/svg%3E") center/1.4rem no-repeat}
+.hm-empty b{font-size:1.02rem;color:var(--navyd)}
+
+/* Cincin dan grafik kehadiran */
+.hm-ring{filter:drop-shadow(0 6px 10px rgba(16,185,129,.16))}
+.hm-rn{font-size:24px}
+.hm-lg{gap:.4rem 1rem}
+.hm-lg span{padding:.15rem 0}
+.hm-bar:hover rect{opacity:.85}
+
+/* Daftar (tugas menunggu, pengumuman) */
+.li{border-radius:.9rem}
+.badge{font-weight:600}
+
+/* Tombol */
+.btn{border-radius:.85rem;box-shadow:0 10px 20px -12px rgba(11,61,145,.75)}
+.btn:hover{box-shadow:0 14px 24px -12px rgba(11,61,145,.85)}
+.btn2,.pill{border-radius:.85rem}
+.pill{border-radius:99px}
+.hm-act{border-radius:99px}
+
+/* Kalender: sel lebih lega */
+.cal-d{border-radius:.9rem}
+.cal-g{border-radius:var(--pl-r)}
+
+/* Banner mode darurat / pengumuman sekolah */
+.eb,.ntb{border-radius:var(--pl-r)}
+
+/* Tabel */
+table{font-size:.88rem}
+tbody tr:hover td{background:var(--tint)}
+
+/* Mode gelap */
+[data-theme=dark] .kp,[data-theme=dark] .card,[data-theme=dark] .hm-c{box-shadow:0 10px 26px -16px rgba(0,0,0,.65)}
+[data-theme=dark] .hm-clock{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14)}
+[data-theme=dark] .hm-d.td:not(.on){background:var(--gold-soft)}
+[data-theme=dark] .hm-hero{border-color:var(--line2)}
+
+/* HP */
+@media(max-width:767px){
+.hm-hero{padding:1.4rem 1.2rem;border-radius:1.3rem}
+.hm-clock{padding:.7rem 1rem;width:100%}
+.hm-clock b{font-size:1.7rem}
+.kp .kv{font-size:1.9rem}
+.hm-c{padding:1.15rem}
+}
+
+/* Hormati preferensi gerak */
+@media(prefers-reduced-motion:reduce){.kp,.card{transition:none}}
 </style>
 </head>
 <body>
@@ -2156,6 +2277,366 @@ document.addEventListener("keydown",function(e){var t=e.target;if(!t||t.getAttri
 var l=[].slice.call(t.parentNode.querySelectorAll('[role="tab"]')),i=l.indexOf(t);if(i<0)return;e.preventDefault();
 var n=k==="Home"?0:k==="End"?l.length-1:(i+(k==="ArrowRight"?1:-1)+l.length)%l.length;l[n].click();
 setTimeout(function(){var b=document.getElementById(l[n].id)||document.querySelector('[role="tab"][aria-selected="true"]');if(b)b.focus()},0)});
+})();
+</script>
+<style id="hmx-style">
+/* ===== Peningkatan dashboard (aditif): donut komposisi, grafik mingguan, keadaan kosong ===== */
+.hm-dn{padding-bottom:1.1rem;margin-bottom:.2rem;border-bottom:1px solid var(--line)}
+.hm-dn .at-dw{justify-content:flex-start;gap:1.4rem}
+.hm-dn .at-dn{width:9.5rem;height:9.5rem}
+.hm-dn .at-dl{font-size:9.5px;letter-spacing:.03em}
+.hm-dn .at-dv{font-size:26px}
+.hm-dn .at-lg{flex:1 1 9rem;font-size:.86rem}
+.hmx-wk{margin-top:1.1rem;padding-bottom:1.1rem;border-bottom:1px solid var(--line)}
+.hmx-wh{display:flex;justify-content:space-between;align-items:baseline;gap:.6rem;flex-wrap:wrap;margin-bottom:.9rem}
+.hmx-wh b{font-size:.95rem;color:var(--navyd)}
+.hmx-wh small{font-size:.8125rem;color:var(--mut)}
+.hmx-bars{display:grid;grid-template-columns:repeat(var(--n,6),minmax(0,1fr));gap:.55rem;height:10.5rem;align-items:stretch}
+.hmx-col{display:flex;flex-direction:column;align-items:center;gap:.3rem;min-width:0}
+.hmx-v{font-size:.8125rem;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);line-height:1.2}
+.hmx-v.na{color:var(--faint);font-weight:500}
+.hmx-track{flex:1;min-height:0;width:100%;max-width:2.4rem;display:flex;align-items:flex-end;border-radius:99px;background:var(--soft);overflow:hidden}
+.hmx-fill{display:block;width:100%;border-radius:99px;transform-origin:bottom;animation:hmxg .7s cubic-bezier(.2,.7,.2,1) both}
+.hmx-d{font-size:.8125rem;font-weight:600;color:var(--mut)}
+.hmx-col.td .hmx-d{color:var(--navy);font-weight:800}
+.hmx-col.td .hmx-track{box-shadow:0 0 0 2px var(--gold)}
+@keyframes hmxg{from{transform:scaleY(0)}}
+.hmx-cap{margin-top:.8rem;font-size:.82rem;line-height:1.6;color:var(--mut)}
+.hmx-cap b{color:var(--ink)}
+.hmx-lg{display:flex;flex-wrap:wrap;gap:.3rem 1rem;margin-top:.5rem;font-size:.8125rem;color:var(--mut)}
+.hmx-lg i{display:inline-block;width:.6rem;height:.6rem;border-radius:3px;margin-right:.35rem;vertical-align:-.05em}
+.hmx-xp{margin-top:.2rem}
+.hmx-nx{display:flex;align-items:center;gap:.9rem;margin:0 0 1rem;padding:.85rem 1rem;border-radius:1rem;background:var(--gold-soft);border:1px solid rgba(214,180,106,.45)}
+.hmx-nx>i{flex:none;display:grid;place-items:center;width:2.4rem;height:2.4rem;border-radius:.8rem;background:var(--card);color:var(--gold-ink)}
+.hmx-nx>i svg{width:1.2rem;height:1.2rem}
+.hmx-nx small{display:block;font-size:.8125rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--gold-ink)}
+.hmx-nx b{display:block;font-size:.95rem;color:var(--navyd);line-height:1.35}
+.hmx-nx span{display:block;font-size:.82rem;color:var(--mut)}
+.hmx-ch{display:flex;flex-wrap:wrap;gap:.5rem;margin:0 0 1rem}
+.hmx-ch span{padding:.3rem .8rem;border-radius:99px;background:var(--soft);border:1px solid var(--line);font-size:.82rem;color:var(--mut)}
+.hmx-ch span b{color:var(--ink);font-variant-numeric:tabular-nums}
+.hmx-qa{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));gap:.6rem}
+.hmx-qa button{display:flex;align-items:center;gap:.6rem;padding:.65rem .8rem;border:1px solid var(--line);border-radius:.9rem;background:var(--card);color:var(--navyd);font-size:.86rem;font-weight:600;text-align:left;transition:border-color .15s,background .15s}
+.hmx-qa button:hover{border-color:var(--navy);background:var(--soft)}
+.hmx-qa svg{flex:none;width:1.1rem;height:1.1rem;color:var(--navy)}
+@media(max-width:560px){.hm-dn .at-dw{justify-content:center}.hmx-bars{gap:.35rem;height:9.5rem}}
+</style>
+<script id="hmx-script">
+(function(){
+"use strict";
+var QI={
+ att:'<rect x="4" y="3.5" width="16" height="18" rx="2.5"/><path d="M9 3.5V3h6v.5M8.5 9h7M8.5 13h2"/><path d="m12.5 17 1.7 1.7 3.3-3.6"/>',
+ task:'<rect x="5" y="4" width="14" height="17" rx="2.5"/><path d="M9 4V3h6v1M9 13l2 2 4-4"/>',
+ cal:'<rect x="3" y="4" width="18" height="18" rx="2.5"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+ book:'<path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/>',
+ quiz:'<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17h.01"/>',
+ chk:'<path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="m9 14 2 2 4-4"/>',
+ rec:'<path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/>',
+ clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'
+};
+function ic(k){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+QI[k]+'</svg>'}
+function dIdx(ds){var p=String(ds).slice(0,10).split("-"),d=new Date(+p[0],+p[1]-1,+p[2]);return(d.getDay()+6)%7}
+function col(p){return p>=90?ATC.H:p>=75?ATC.S:"#e11d48"}
+function weekly(ms,stu){
+ var w=[],i;for(i=0;i<7;i++)w.push({n:0,H:0,S:0,I:0,A:0,t:0});
+ ms.forEach(function(m){
+  var o=w[dIdx(m.date)];
+  if(stu){if(!m.status)return;o.n++;o[m.status]++;o.t++}
+  else{if(!m.total)return;o.n++;o.H+=m.H;o.S+=m.S;o.I+=m.I;o.A+=m.A;o.t+=m.total}
+ });
+ w.forEach(function(o){o.p=o.t?Math.round(o.H/o.t*100):null});
+ return w}
+function enhanceAtt(){
+ var a=document.getElementById("hm-att");
+ if(!a||!HM.data)return;
+ var list=HM.data.attendance||[];if(!list.length)return;
+ var stu=HM.data.mode==="student",ms=[],sum={H:0,S:0,I:0,A:0,total:0};
+ if(stu){list.forEach(function(c){ms=ms.concat(c.meetings||[]);["H","S","I","A"].forEach(function(k){sum[k]+=c.sum[k]});sum.total+=c.sum.total})}
+ else{
+  var t=list.find(function(c){return String(c.class_id)===String(HM.cid)});
+  if(!t)return;ms=t.meetings||[];sum=Object.assign({},t.sum)}
+ sum.total=sum.H+sum.S+sum.I+sum.A;
+ sum.pct=sum.total?Math.round(sum.H/sum.total*100):0;
+ if(!sum.total)return;
+ var sh=a.querySelector(".hm-sh");
+ if(sh){sh.className="hm-dn";sh.innerHTML='<div class="at-dw">'+attDonut(sum)+attLegend(sum)+'</div>'}
+ var w=weekly(ms,stu),has=w.filter(function(o){return o.n}).length;
+ if(!has)return;
+ var last=w[6].n?7:6,tdi=dIdx(ymd(new Date)),bars="",best=-1,low=-1,k;
+ for(k=0;k<last;k++){if(w[k].p===null)continue;
+  if(best<0||w[k].p>w[best].p)best=k;
+  if(low<0||w[k].p<w[low].p)low=k}
+ for(k=0;k<last;k++){
+  var o=w[k],lbl=HM_DAYS[k]+": "+(o.p===null?"belum ada data":"hadir "+o.H+", sakit "+o.S+", izin "+o.I+", alpa "+o.A+" ("+o.p+"%) dari "+o.n+" pertemuan");
+  bars+='<div class="hmx-col'+(k===tdi?" td":"")+'" title="'+esc(lbl)+'" role="img" aria-label="'+esc(lbl)+'"><span class="hmx-v'+(o.p===null?" na":"")+'">'+(o.p===null?"–":o.p+"%")+'</span><span class="hmx-track"><i class="hmx-fill" style="height:'+(o.p===null?0:Math.max(o.p,4))+'%;background:'+(o.p===null?"transparent":col(o.p))+';animation-delay:'+(k*60)+'ms"></i></span><span class="hmx-d">'+HM_SHORT[k]+'</span></div>'}
+ var cap=has>1&&best!==low&&best>=0?'Kehadiran tertinggi pada hari <b>'+HM_DAYS[best]+'</b> ('+w[best].p+'%), terendah pada hari <b>'+HM_DAYS[low]+'</b> ('+w[low].p+'%).':'Pola per hari akan lebih jelas setelah lebih banyak pertemuan tercatat.';
+ var html='<div class="hmx-wk"><div class="hmx-wh"><b>Pola kehadiran per hari</b><small>Rata-rata kehadiran per hari, dari '+ms.length+' pertemuan terakhir</small></div><div class="hmx-bars" style="--n:'+last+'" role="group" aria-label="Grafik kehadiran per hari dalam seminggu">'+bars+'</div><div class="hmx-lg"><span><i style="background:'+ATC.H+'"></i>≥ 90%</span><span><i style="background:'+ATC.S+'"></i>75–89%</span><span><i style="background:#e11d48"></i>di bawah 75%</span></div><p class="hmx-cap">'+cap+'</p></div>';
+ if(sh)sh.insertAdjacentHTML("afterend",html);else a.insertAdjacentHTML("beforeend",html)}
+function nextSession(){
+ var now=new Date,nm=now.getHours()*60+now.getMinutes(),base=dIdx(ymd(now)),off,all=hmSch();
+ for(off=0;off<7;off++){
+  var dn=HM_DAYS[(base+off)%7],ls=all.filter(function(s){return s.day===dn&&(off>0||hmMin(s.start_time)>nm)}).sort(function(x,y){return hmMin(x.start_time)-hmMin(y.start_time)});
+  if(ls.length)return{s:ls[0],off:off,day:dn}}
+ return null}
+function enhanceSched(){
+ var c=document.getElementById("hm-sched");
+ if(!c||!HM.data)return;
+ var e=c.querySelector(".hm-empty");
+ if(!e||c.querySelector(".hmx-xp"))return;
+ var mode=hmMode(),h="";
+ try{
+  var nx=nextSession();
+  if(nx){
+   var s=nx.s,when=nx.off===0?"Hari ini":nx.off===1?"Besok":nx.day;
+   h+='<div class="hmx-nx"><i>'+ic("clock")+'</i><div><small>Jadwal berikutnya</small><b>'+esc(s.subject||s.class_name||"Pelajaran")+'</b><span>'+esc(when)+' • '+esc(s.start_time)+'–'+esc(s.end_time)+(s.class_name&&s.subject&&s.subject!==s.class_name?' • '+esc(s.class_name):'')+(s.room?' • Ruang '+esc(s.room):'')+'</span></div></div>'}
+ }catch(err){}
+ var q=mode==="teacher"?[["att","Isi presensi","attendance"],["chk","Perlu dinilai","review"],["task","Tugas kelas","tasks"],["cal","Kalender","calendar"]]
+  :mode==="student"?[["task","Tugas saya","tasks"],["quiz","Kuis saya","quizzes"],["book","Kelas saya","home"],["cal","Kalender","calendar"]]
+  :[["rec","Rekap kelas","recap"],["att","Presensi","attendance"],["book","Daftar kelas","home"],["cal","Kalender","calendar"]];
+ h+='<div class="hmx-qa">'+q.map(function(x){return'<button type="button" onclick="go(\''+x[2]+'\')">'+ic(x[0])+'<span>'+x[1]+'</span></button>'}).join("")+'</div>';
+ e.insertAdjacentHTML("afterend",'<div class="hmx-xp">'+h+'</div>')}
+var oA=window.hmAtt,oS=window.hmSched;
+if(typeof oA==="function")window.hmAtt=function(){var r=oA.apply(this,arguments);try{enhanceAtt()}catch(e){console.error("[LMS]",e)}return r};
+if(typeof oS==="function")window.hmSched=function(){var r=oS.apply(this,arguments);try{enhanceSched()}catch(e){console.error("[LMS]",e)}return r};
+try{if(HM.data){if(document.querySelector("#hm-att .hm-sh"))enhanceAtt();enhanceSched()}}catch(e){}
+})();
+</script>
+<style id="hmx-warm-style">
+/* ===== Sentuhan hangat pada banner & kartu ringkasan (aditif) ===== */
+.hmx-sem{display:inline-flex;align-items:center;gap:.4rem;margin-bottom:.45rem;padding:.22rem .75rem;border-radius:99px;background:rgba(255,255,255,.7);border:1px solid rgba(214,180,106,.5);font-size:.8125rem;font-weight:700;color:var(--gold-ink)}
+.hmx-sem::before{content:"";width:.45rem;height:.45rem;border-radius:50%;background:var(--gold)}
+.hm-hero[data-tod=malam] .hmx-sem,[data-theme=dark] .hmx-sem{background:rgba(255,255,255,.08);border-color:rgba(214,180,106,.4);color:var(--gold)}
+.hmx-hb{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:.9rem}
+.hmx-hb button{display:inline-flex;align-items:center;gap:.45rem;min-height:2.5rem;padding:.5rem 1.1rem;border-radius:99px;font-size:.86rem;font-weight:700;transition:transform .15s,box-shadow .2s,background .15s}
+.hmx-hb svg{width:1rem;height:1rem}
+.hmx-hb .p{border:0;background:var(--btn);color:#fff;box-shadow:0 10px 18px -12px rgba(11,61,145,.85)}
+.hmx-hb .p:hover{background:var(--navyd)}
+.hmx-hb .s{border:1px solid rgba(11,61,145,.14);background:rgba(255,255,255,.85);color:var(--navyd)}
+.hmx-hb .s:hover{background:#fff;border-color:var(--navy)}
+[data-theme=dark] .hmx-hb .s,.hm-hero[data-tod=malam] .hmx-hb .s{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.18);color:#e8eefc}
+.kp-grid>.kp:nth-child(2){background:linear-gradient(160deg,color-mix(in srgb,#10b981 9%,var(--card)),var(--card) 70%)}
+.kp-grid>.kp:nth-child(3){background:linear-gradient(160deg,color-mix(in srgb,#f59e0b 10%,var(--card)),var(--card) 70%)}
+.kp-grid>.kp:nth-child(4){background:linear-gradient(160deg,color-mix(in srgb,#8b5cf6 9%,var(--card)),var(--card) 70%)}
+@media(max-width:560px){.hmx-hb button{flex:1 1 auto;justify-content:center}}
+</style>
+<script id="hmx-warm-script">
+(function(){
+"use strict";
+var P='<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+var G='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>';
+function sem(){var d=new Date,y=d.getFullYear(),m=d.getMonth();return m>=6?"Semester Ganjil • TA "+y+"/"+(y+1):"Semester Genap • TA "+(y-1)+"/"+y}
+function btns(){
+ var m=hmMode();
+ if(m==="teacher")return[["p",P,"Mulai presensi kelas","attendance"],["s",G,"Tugas perlu dinilai","review"]];
+ if(m==="student")return[["p",P,"Lihat tugas","tasks"],["s",G,"Lihat nilai","grades"]];
+ return[["p",P,"Lihat rekap kelas","recap"],["s",G,"Lihat presensi","attendance"]]}
+var o=window.hmHero;
+if(typeof o!=="function")return;
+window.hmHero=function(a){
+ var h=o.apply(this,arguments);
+ try{
+  var chip='<span class="hmx-sem">'+esc(sem())+'</span>';
+  var b='<div class="hmx-hb">'+btns().map(function(x){return'<button type="button" class="'+x[0]+'" onclick="go(\''+x[3]+'\')">'+x[1]+'<span>'+x[2]+'</span></button>'}).join("")+'</div>';
+  var h2=h.replace('<div><h2>','<div>'+chip+'<h2>');
+  h2=h2.replace('</p></div></div><div class="hm-clock">','</p>'+b+'</div></div><div class="hm-clock">');
+  return h2
+ }catch(e){return h}
+};
+
+try{
+ var el=document.querySelector(".hm-hero");
+ if(el&&!el.querySelector(".hmx-sem")){var t=el.querySelector("#hm-line");el.outerHTML=window.hmHero(t?t.textContent:undefined);if(typeof startClock==="function")startClock()}
+}catch(e){}
+})();
+</script>
+<style id="hmx-polish-style">
+.hmx-sem{white-space:nowrap}
+@media(max-width:560px){.hmx-sem{font-size:.6875rem;padding:4px 10px}}
+[data-theme=dark] .hm-top .link,[data-theme=dark] .hm-h .link,[data-theme=dark] .card-h .link{color:#8fb4ff}
+</style>
+<script id="hmx-polish-script">
+(function(){"use strict";
+function fix(){try{document.querySelectorAll("#hm-att .hm-note").forEach(function(n){if(n.dataset.hmxFix)return;n.innerHTML=n.innerHTML.replace(/\s*P menunjukkan nomor pertemuan\./,' <span style="opacity:.75">(P = nomor pertemuan)</span>');n.dataset.hmxFix=1})}catch(e){}}
+var o=window.hmAtt;if(typeof o==="function"){window.hmAtt=function(){var r=o.apply(this,arguments);fix();return r}}
+fix();
+})();
+</script>
+<style id="hmx-soft-style">
+/* === Soft & refined pass (additive, visual only) === */
+:root{
+--sf-line:rgba(15,40,90,.07);
+--sf-sh:0 1px 1px rgba(15,40,90,.03),0 8px 24px -16px rgba(15,40,90,.14);
+--sf-sh-hv:0 1px 2px rgba(15,40,90,.04),0 18px 36px -20px rgba(15,40,90,.22);
+--sf-r:1.35rem;--sf-ease:cubic-bezier(.22,.7,.2,1)}
+body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+/* Cards: hairline border, airy shadow, gentle radius */
+.card,.hm-card,.kp{border:1px solid var(--sf-line)!important;border-radius:var(--sf-r)!important;box-shadow:var(--sf-sh)!important;transition:box-shadow .35s var(--sf-ease),transform .35s var(--sf-ease),border-color .35s!important}
+.card:hover,.kp:hover{box-shadow:var(--sf-sh-hv)!important;transform:translateY(-2px)}
+.card{padding-inline:1.5rem}
+/* Hero */
+.hm-hero{border:1px solid var(--sf-line)!important;border-radius:1.75rem!important;box-shadow:0 1px 1px rgba(15,40,90,.03),0 24px 48px -32px rgba(15,40,90,.2);padding:1.9rem 2.2rem}
+.hm-hero h2{font-weight:500!important;letter-spacing:-.012em;line-height:1.2}
+.hm-hero p{opacity:.82;line-height:1.6}
+.hmx-sem{background:rgba(214,180,106,.14)!important;border:1px solid rgba(214,180,106,.32)!important;color:var(--gold-ink)!important;font-weight:600!important;letter-spacing:.01em;box-shadow:none!important}
+.hmx-hb button{border-radius:999px!important;padding:.62rem 1.25rem!important;font-weight:600!important;letter-spacing:.005em;transition:transform .25s var(--sf-ease),box-shadow .3s,background .25s!important}
+.hmx-hb .p{background:linear-gradient(180deg,#2a5fc4,#164aa3)!important;box-shadow:0 10px 20px -12px rgba(22,74,163,.65)!important}
+.hmx-hb .s{background:rgba(255,255,255,.55)!important;border:1px solid var(--sf-line)!important;backdrop-filter:blur(6px);color:var(--navyd)!important}
+.hmx-hb button:hover{transform:translateY(-1px)}
+.hm-clock{border:1px solid var(--sf-line)!important;border-radius:1.2rem!important;box-shadow:none!important;background:rgba(255,255,255,.6)!important;backdrop-filter:blur(8px)}
+/* KPI */
+.kp{padding:1.15rem 1.4rem 1.15rem 1.5rem!important}
+.kp small,.kp .kl,.kp-grid .kp>span:first-child{letter-spacing:.09em!important;font-weight:600!important;opacity:.78}
+.kp b,.kp strong{font-weight:500!important}
+.kp-grid{gap:1.15rem!important}
+.kp-grid .kp:has(#kp-s){background:radial-gradient(18rem 9rem at 100% 0,rgba(214,180,106,.22),transparent 62%),linear-gradient(135deg,#1a4fa8,#10306d)!important;border-color:transparent!important;box-shadow:0 18px 34px -22px rgba(16,48,109,.55)!important}
+.kp-grid>.kp:nth-child(2){background:linear-gradient(145deg,#fff,#f1faf6)!important}
+.kp-grid>.kp:nth-child(3){background:linear-gradient(145deg,#fff,#fdf8ee)!important}
+.kp-grid>.kp:nth-child(4){background:linear-gradient(145deg,#fff,#f5f2fc)!important}
+/* Section headings */
+.hm-h h3,.card h3{font-weight:600;letter-spacing:-.005em}
+.hm-h small{opacity:.8}
+/* Day pills */
+.hm-d{border-radius:1rem!important;transition:background .3s var(--sf-ease),color .3s,transform .3s var(--sf-ease)!important}
+.hm-d:hover{background:var(--soft)}
+.hm-d.on{background:linear-gradient(180deg,#1f56b4,#12408c)!important;box-shadow:0 10px 18px -12px rgba(18,64,140,.7)!important}
+/* Schedule items & empty state */
+.hm-it .hm-b{border-radius:1.1rem}
+.hm-empty{border:1px dashed rgba(15,40,90,.12)!important;background:linear-gradient(180deg,rgba(238,243,251,.5),rgba(238,243,251,.15))!important;border-radius:1.25rem!important}
+.hm-empty b{font-weight:600}
+/* Next-session card & quick actions */
+.hmx-nx{border-radius:1.15rem!important;border:1px solid rgba(214,180,106,.3)!important;background:linear-gradient(135deg,#fffaf0,#fbf3de)!important;box-shadow:none!important}
+.hmx-qa button,.hmx-qa a{border-radius:999px!important;border:1px solid var(--sf-line)!important;background:#fff!important;box-shadow:none!important;font-weight:550;transition:background .25s,transform .25s var(--sf-ease),box-shadow .3s!important}
+.hmx-qa button:hover,.hmx-qa a:hover{background:var(--soft)!important;transform:translateY(-1px);box-shadow:0 8px 16px -12px rgba(15,40,90,.3)!important}
+/* Weekly bars: slimmer, softer */
+.hmx-track{background:rgba(15,40,90,.045)!important;border:0!important}
+.hmx-fill{opacity:.88;transition:opacity .3s}
+.hmx-col:hover .hmx-fill{opacity:1}
+.hmx-v{font-weight:600;opacity:.8}
+.hmx-cap,.hm-note{line-height:1.65;opacity:.85}
+/* Controls */
+.sel{border-radius:999px!important;border:1px solid var(--sf-line)!important;background-color:rgba(238,243,251,.5)!important;box-shadow:none!important}
+.link{text-underline-offset:3px;text-decoration-thickness:1px;transition:opacity .2s}
+.link:hover{opacity:.75}
+.btn{border-radius:999px!important;transition:transform .25s var(--sf-ease),box-shadow .3s!important}
+.btn:hover{transform:translateY(-1px)}
+/* Sidebar active item softer */
+.side a.on,.side .nv.on,.nav-item.on{border-radius:.9rem!important}
+/* Entry animation: slower, gentler */
+.kp-grid>*{animation-duration:.7s!important;animation-timing-function:var(--sf-ease)!important}
+/* Scrollbar */
+*{scrollbar-width:thin;scrollbar-color:rgba(15,40,90,.18) transparent}
+/* Dark mode */
+[data-theme=dark]{--sf-line:rgba(255,255,255,.07);--sf-sh:0 1px 1px rgba(0,0,0,.2),0 10px 28px -16px rgba(0,0,0,.55);--sf-sh-hv:0 18px 36px -18px rgba(0,0,0,.65)}
+[data-theme=dark] .hmx-sem{background:rgba(214,180,106,.12)!important;color:#e4c887!important;border-color:rgba(214,180,106,.28)!important}
+[data-theme=dark] .hmx-hb .s{background:rgba(255,255,255,.05)!important;color:#dbe6ff!important}
+[data-theme=dark] .hm-clock{background:rgba(255,255,255,.04)!important}
+[data-theme=dark] .kp-grid>.kp:nth-child(n+2){background:linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.015))!important}
+[data-theme=dark] .hm-empty{background:rgba(255,255,255,.025)!important;border-color:rgba(255,255,255,.1)!important}
+[data-theme=dark] .hmx-nx{background:linear-gradient(135deg,rgba(214,180,106,.12),rgba(214,180,106,.05))!important;border-color:rgba(214,180,106,.25)!important}
+[data-theme=dark] .hmx-qa button,[data-theme=dark] .hmx-qa a{background:rgba(255,255,255,.04)!important}
+[data-theme=dark] .hmx-track{background:rgba(255,255,255,.06)!important}
+[data-theme=dark] .sel{background-color:rgba(255,255,255,.04)!important}
+@media(max-width:560px){.hm-hero{padding:1.35rem 1.2rem}.card{padding-inline:1.1rem}.kp-grid{gap:.8rem!important}}
+@media(prefers-reduced-motion:reduce){.card,.kp,.hmx-hb,.btn{transition:none!important}.card:hover,.kp:hover{transform:none}}
+
+.hmx-hb{padding:0!important;margin-left:0!important}
+.hmx-hb .p{background:linear-gradient(180deg,#2a5fc4,#164aa3)!important;color:#fff!important}
+[data-theme=dark] .card .link,[data-theme=dark] .sec .link{color:#9dbcff!important}
+[data-theme=dark] .kp-grid>.kp:nth-child(n+2) small,[data-theme=dark] .kp-grid>.kp:nth-child(n+2) .kp-s{opacity:.95}
+</style>
+<style id="hmx-min-style">
+/* === Minimal / professional / user-friendly pass (visual only) === */
+:root{--mn-line:rgba(15,40,90,.08);--mn-sh:0 1px 2px rgba(15,40,90,.04);--mn-r:1.1rem}
+[data-theme=dark]{--mn-line:rgba(255,255,255,.08);--mn-sh:none}
+/* Calm surfaces: flat, hairline, no lift */
+.card,.hm-card,.kp{border:1px solid var(--mn-line)!important;border-radius:var(--mn-r)!important;box-shadow:var(--mn-sh)!important;background:var(--card)!important}
+.card:hover,.kp:hover{transform:none!important;box-shadow:var(--mn-sh)!important}
+.kp{cursor:default}
+/* Hero: quiet, no gradient/ornament */
+.hm-hero{background:var(--card)!important;border:1px solid var(--mn-line)!important;box-shadow:var(--mn-sh)!important;border-radius:1.4rem!important;padding:1.6rem 2rem!important}
+.hm-hero::before,.hm-hero::after{display:none!important}
+.hm-hero h2{font-size:1.75rem!important;font-weight:500!important}
+.hm-hero p{opacity:.75;max-width:40rem}
+.hmx-sem{background:transparent!important;border:0!important;padding:0!important;color:var(--mut)!important;font-weight:500!important;font-size:.8125rem!important;letter-spacing:.02em;margin-bottom:.35rem!important}
+.hmx-sem::before,.hmx-sem i{display:none!important}
+.hm-clock{background:transparent!important;border:0!important;backdrop-filter:none!important;box-shadow:none!important;text-align:right}
+.hm-clock *{font-weight:500}
+/* One primary action, secondary as quiet text button */
+.hmx-hb .p{background:var(--navy)!important;box-shadow:none!important;border-radius:.8rem!important}
+.hmx-hb .s{background:transparent!important;border:1px solid var(--mn-line)!important;backdrop-filter:none!important;border-radius:.8rem!important;box-shadow:none!important;color:var(--ink)!important}
+.hmx-hb button{min-height:2.75rem}
+/* KPI: neutral, one accent only */
+.kp-grid{gap:1rem!important}
+.kp-grid>.kp:nth-child(n){background:var(--card)!important}
+.kp-grid .kp:has(#kp-s){background:var(--card)!important;color:var(--ink)!important;border-color:var(--mn-line)!important;box-shadow:var(--mn-sh)!important}
+.kp-grid .kp:has(#kp-s) *{color:inherit}
+.kp-grid .kp{border-left:1px solid var(--mn-line)!important}
+.kp-grid .kp::before{width:3px!important;opacity:.55;border-radius:3px}
+.kp small,.kp .kl,.kp-grid .kp>span:first-child{font-size:.6875rem!important;letter-spacing:.08em!important;opacity:.7;font-weight:600!important}
+[data-theme=dark] .kp-grid>.kp:nth-child(n),[data-theme=dark] .kp-grid .kp:has(#kp-s){background:var(--card)!important;color:inherit!important}
+/* Headings: clear hierarchy, less weight */
+.hm-h h3,.card h3,.sec h3{font-size:1rem;font-weight:600}
+.hm-h small{font-weight:400;opacity:.7}
+/* Schedule: simple day tabs */
+.hm-d{border-radius:.75rem!important;min-height:3.25rem}
+.hm-d.on{background:var(--navy)!important;box-shadow:none!important;color:#fff}
+.hm-empty{background:transparent!important;border:0!important;padding:1.6rem 1rem!important}
+.hm-empty b{font-weight:600}
+/* Next session: neutral soft panel */
+.hmx-nx{background:var(--soft)!important;border:0!important;border-radius:.9rem!important}
+[data-theme=dark] .hmx-nx{background:rgba(255,255,255,.04)!important}
+.hmx-nx *{color:inherit}
+/* Quick actions: lightweight, big touch targets */
+.hmx-qa button,.hmx-qa a{background:transparent!important;border:1px solid var(--mn-line)!important;border-radius:.8rem!important;min-height:2.75rem;box-shadow:none!important;font-weight:500}
+.hmx-qa button:hover,.hmx-qa a:hover{background:var(--soft)!important;transform:none!important;box-shadow:none!important}
+/* Charts: quieter */
+.hmx-track{background:rgba(15,40,90,.05)!important;width:.65rem!important;margin-inline:auto}
+.hmx-fill{opacity:.9}
+.hmx-v{font-weight:500;font-size:.75rem;opacity:.7}
+.hm-svg .hm-gl{opacity:.5}
+.hm-note,.hmx-cap{font-size:.8125rem;opacity:.75}
+/* Controls */
+.sel{border-radius:.75rem!important;background-color:var(--card)!important;min-height:2.75rem}
+.btn{border-radius:.8rem!important}
+.link{font-weight:500;text-decoration:none!important;opacity:.9}
+.link:hover{text-decoration:underline!important;text-underline-offset:3px;opacity:1}
+/* Accessibility: visible, soft focus ring */
+:where(button,a,select,input,textarea,[tabindex]):focus-visible{outline:2px solid color-mix(in srgb,var(--navy) 55%,transparent);outline-offset:2px;border-radius:.6rem}
+/* Section rhythm */
+.kp-grid{margin-bottom:1.5rem!important}
+.hm-hero{margin-bottom:1.5rem!important}
+@media(max-width:560px){
+.hm-hero{padding:1.25rem 1.1rem!important}
+.hm-hero h2{font-size:1.45rem!important}
+.hm-clock{text-align:left}
+.hmx-hb{width:100%}.hmx-hb button{flex:1 1 100%;justify-content:center}
+.hm-d{min-height:3.5rem}
+}
+[data-theme=dark] .hmx-sem{background:transparent!important;border:0!important;color:#aab6cc!important}
+</style>
+<style id="hmx-tod-style">
+[data-theme=dark] .hm-hero .hm-clock,.hm-hero[data-tod=malam] .hm-clock{background:transparent!important;border:0!important}
+.hm-hero .hm-hl{gap:0!important}
+.hm-hero .hm-clock{display:flex!important;align-items:center;gap:.95rem;width:auto!important;text-align:left!important;padding:.4rem 0!important}
+.hm-hero .hm-clock .hm-ct{display:flex;flex-direction:column;align-items:flex-start}
+.hm-hero .hm-clock .hm-ic{display:grid!important;flex:none;width:3.1rem;height:3.1rem;border-radius:50%;box-shadow:none!important;transition:background .6s,color .6s}
+.hm-hero .hm-clock .hm-ic svg{width:1.5rem;height:1.5rem;stroke-width:1.6}
+.hm-hero[data-tod=pagi] .hm-clock .hm-ic{background:#fff3d6;color:#c77d0a}
+.hm-hero[data-tod=siang] .hm-clock .hm-ic{background:#fff0c2;color:#d49a00}
+.hm-hero[data-tod=sore] .hm-clock .hm-ic{background:#ffe5d3;color:#d9622b}
+.hm-hero[data-tod=malam] .hm-clock .hm-ic{background:#e6e8fa;color:#4f55b8}
+[data-theme=dark] .hm-hero[data-tod=pagi] .hm-clock .hm-ic{background:rgba(245,180,60,.16);color:#f6c25b}
+[data-theme=dark] .hm-hero[data-tod=siang] .hm-clock .hm-ic{background:rgba(250,204,21,.15);color:#fcd34d}
+[data-theme=dark] .hm-hero[data-tod=sore] .hm-clock .hm-ic{background:rgba(251,146,60,.16);color:#fdab72}
+[data-theme=dark] .hm-hero[data-tod=malam] .hm-clock .hm-ic{background:rgba(129,140,248,.18);color:#aab4ff}
+@media(max-width:560px){.hm-hero .hm-clock{padding:.2rem 0!important;margin-top:.2rem}}
+</style>
+<script id="hmx-tod-script">
+(function(){"use strict";
+function mv(h){return h.replace(/(<div class="hm-hl">)(<span class="hm-ic"[\s\S]*?<\/span>)/,"$1").replace(/<div class="hm-clock">([\s\S]*?)<\/div><\/section>/,function(m,c){var ic=(h.match(/<span class="hm-ic"[\s\S]*?<\/span>/)||[""])[0];var b=c.match(/<b id="dash-clock">[\s\S]*?<\/b>/),sm=c.match(/<small>[\s\S]*?<\/small>/);return b&&sm&&ic?'<div class="hm-clock">'+ic+'<div class="hm-ct">'+b[0]+sm[0]+"</div></div></section>":m})}
+var o=window.hmHero;
+if(typeof o==="function"){window.hmHero=function(){return mv(o.apply(this,arguments))};
+try{var el=document.querySelector(".hm-hero");if(el&&!el.querySelector(".hm-clock .hm-ic")){var t=el.querySelector("#hm-line");el.outerHTML=window.hmHero(t?t.textContent:undefined);if(typeof startClock==="function")startClock()}}catch(e){}}
 })();
 </script>
 </body>
