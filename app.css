@@ -2171,3 +2171,65 @@ body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-r
   background:linear-gradient(180deg,#3b73d6,#2554b3)!important}
 .hm-hero[data-tod=malam] .hm-clock .hm-ic{
   background:rgba(129,140,248,.2);color:#aab4ff}
+
+
+/* ===== KALENDER: penyegaran tampilan (2026-10-30) =====
+   Hanya gaya; nama kelas & struktur HTML tidak berubah. Ditaruh di paling akhir agar menimpa aturan kalender lama.
+   Untuk kembali ke tampilan lama, hapus seluruh blok ini (sampai penutup "AKHIR KALENDER"). */
+.cal-h{margin-bottom:1.15rem;gap:.8rem 1.2rem}
+.cal-n{gap:.35rem;padding:.25rem;border:1px solid var(--line);border-radius:1rem;background:var(--card);box-shadow:var(--shadow-sm)}
+.cal-n h3{min-width:11rem;font-size:1.4rem;font-weight:600;letter-spacing:-.01em;line-height:1.2}
+.cal-n .btn2{min-width:2.5rem;min-height:2.5rem;padding:.4rem .75rem;border:0;border-radius:.75rem;background:transparent;color:var(--navy);font-weight:600;box-shadow:none}
+@media(hover:hover){.cal-n .btn2:hover{background:var(--soft)}}
+.cal-n .btn2:focus-visible,.cal-d:focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+
+.cal-g{padding:1rem 1.1rem 1.1rem;border-radius:var(--pl-r,1.25rem);box-shadow:var(--shadow-md)}
+.cal-wd,.cal-gr{gap:.35rem}
+.cal-wd{margin-bottom:.35rem}
+.cal-wd span{padding:.45rem 0;font-size:.8125rem;font-weight:600;letter-spacing:.08em;color:var(--faint)}
+.cal-d{position:relative;gap:.3rem;min-height:6rem;padding:.55rem .6rem;border:1px solid transparent;border-radius:.95rem;background:color-mix(in srgb,var(--soft) 55%,var(--card));cursor:pointer;transition:background .18s,border-color .18s,box-shadow .18s,transform .18s}
+.cal-d b{display:inline-grid;place-items:center;align-self:flex-start;min-width:1.85rem;height:1.85rem;padding:0 .3rem;border-radius:99px;font-size:.9rem;font-weight:600;line-height:1}
+.cal-d.o{opacity:.4}
+.cal-d.sd b{color:var(--err)}
+.cal-d.lb{background:color-mix(in srgb,#10b981 11%,var(--card));border-color:color-mix(in srgb,#10b981 28%,transparent)}
+.cal-d.td{box-shadow:none}
+.cal-d.td b{background:var(--gold);color:#3b2a06;box-shadow:0 4px 10px -4px color-mix(in srgb,var(--gold) 80%,transparent)}
+@media(hover:hover){.cal-d:hover{background:var(--tint);border-color:color-mix(in srgb,var(--navy) 35%,transparent);transform:translateY(-1px);box-shadow:var(--shadow-sm)}}
+.cal-d.on{background:linear-gradient(160deg,var(--btn),color-mix(in srgb,var(--btn) 78%,#000));border-color:transparent;color:#fff;box-shadow:0 12px 22px -12px color-mix(in srgb,var(--btn) 85%,transparent);transform:none}
+.cal-d.on b{background:rgba(255,255,255,.18);color:#fff;box-shadow:none}
+.cal-d.on.td b{background:var(--gold);color:#3b2a06}
+.cal-ch{gap:.2rem}
+.cal-ch em{padding:.15rem .45rem;border-radius:.5rem;background:color-mix(in srgb,var(--c) 14%,transparent)}
+.cal-d.on .cal-ch em{border-left-color:rgba(255,255,255,.7)}
+.cal-dots{gap:.25rem}
+.cal-dots i,.cal-lg i{width:.5rem;height:.5rem}
+.cal-d.on .cal-dots i{box-shadow:0 0 0 1.5px rgba(255,255,255,.85)}
+.cal-lg{gap:.5rem .6rem;margin:.9rem 0 0;padding-top:.8rem;border-top:1px solid var(--line)}
+.cal-lg span{padding:.2rem .7rem .2rem .55rem;border-radius:99px;background:var(--soft);font-weight:500}
+
+.cal-p{padding:1.35rem;border-radius:var(--pl-r,1.25rem);box-shadow:var(--shadow-md)}
+.cal-p h3{font-size:1.3rem;line-height:1.25;letter-spacing:-.01em}
+.cal-p h4{display:flex;align-items:center;gap:.6rem;margin:1.25rem 0 .55rem}
+.cal-p h4::after{content:"";flex:1;height:1px;background:var(--line)}
+.cal-e{align-items:stretch;gap:.8rem;margin-top:.5rem;padding:.75rem .9rem .75rem .8rem;border:1px solid var(--line);border-radius:.9rem;background:color-mix(in srgb,var(--soft) 55%,var(--card))}
+.cal-e>i{align-self:stretch;width:.28rem;height:auto;margin:0;border-radius:99px}
+.cal-e b{font-size:.94rem;font-weight:600;line-height:1.35}
+.cal-a{gap:.25rem .9rem;margin-top:.4rem}
+.cal-l{grid-template-columns:5.2rem minmax(0,1fr);padding:.7rem 0;border-bottom:1px dashed var(--line2)}
+.cal-l:last-child{border-bottom:0}
+.cal-l b{font-weight:600}
+@media(max-width:900px){.cal-p{box-shadow:var(--shadow-sm)}}
+@media(max-width:560px){
+  .cal-n{width:100%;justify-content:space-between}
+  .cal-n h3{flex:1;min-width:0;font-size:1.15rem}
+  .cal-n .btn2{min-width:2.75rem;min-height:2.75rem}
+  .cal-g{padding:.6rem}
+  .cal-wd,.cal-gr{gap:.2rem}
+  .cal-wd span{letter-spacing:.02em}
+  .cal-d{align-items:center;min-height:3.7rem;padding:.35rem .2rem;border-radius:.75rem}
+  .cal-d b{align-self:center;min-width:1.7rem;height:1.7rem;font-size:.85rem}
+  .cal-dots{justify-content:center}
+  .cal-p{padding:1.1rem}
+}
+[data-theme=dark] .cal-d.sd b{color:#f87171}
+/* ===== AKHIR KALENDER ===== */
