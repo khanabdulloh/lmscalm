@@ -2233,3 +2233,54 @@ body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-r
 }
 [data-theme=dark] .cal-d.sd b{color:#f87171}
 /* ===== AKHIR KALENDER ===== */
+
+/* ===== EFEK TIMBUL & HALUS (2026-10-30) =====
+   Sistem bayangan 3 tingkat (--el-1/2/3) + sorotan tipis di tepi atas (--hl) agar elemen terasa "terangkat".
+   Ringan: hanya transform & box-shadow yang dianimasikan, hanya saat hover (perangkat dengan mouse), tanpa blur/backdrop-filter baru,
+   tanpa will-change, dan otomatis mati pada .lite, layar sentuh, serta prefers-reduced-motion.
+   Untuk kembali ke tampilan sebelumnya, hapus blok ini sampai penutup "AKHIR EFEK TIMBUL". */
+:root{--el-1:0 1px 2px rgba(10,34,80,.05),0 8px 16px -10px rgba(10,34,80,.16);--el-2:0 2px 4px rgba(10,34,80,.06),0 16px 30px -16px rgba(10,34,80,.26);--el-3:0 4px 10px rgba(10,34,80,.08),0 28px 48px -24px rgba(10,34,80,.38);--hl:inset 0 1px 0 rgba(255,255,255,.75);--ease:cubic-bezier(.2,.7,.2,1)}
+:root[data-theme=dark]{--el-1:0 1px 2px rgba(0,0,0,.4),0 8px 16px -10px rgba(0,0,0,.55);--el-2:0 2px 4px rgba(0,0,0,.45),0 16px 30px -16px rgba(0,0,0,.65);--el-3:0 4px 10px rgba(0,0,0,.5),0 28px 48px -24px rgba(0,0,0,.75);--hl:inset 0 1px 0 rgba(255,255,255,.06)}
+
+/* Kartu: lapisan desain terakhir memakai --mn-sh (hampir tanpa bayangan) dengan !important; variabelnya dinaikkan di sini agar semua kartu,
+   hero, dan kartu statistik otomatis terasa timbul tanpa menimpa aturan satu per satu. Kartu yang bisa diklik naik sedikit saat disorot. */
+:root,:root[data-theme=dark]{--mn-sh:var(--hl),var(--el-1)}
+.hm-c,.sp,.sp-comp,.ntb{box-shadow:var(--hl),var(--el-1)}
+.kc{animation-fill-mode:backwards;transition:transform .24s var(--ease),box-shadow .24s var(--ease),border-color .2s} /* backwards: animasi masuk tidak lagi "mengunci" posisi sehingga hover bisa mengangkat kartu */
+@media(hover:hover) and (pointer:fine){
+  button.kp:hover{transform:translateY(-3px)!important;box-shadow:var(--hl),var(--el-2)!important}
+  .kc:hover{transform:translateY(-3px)}
+}
+button.kp:active,.kc:active{transform:translateY(0) scale(.992)!important;transition-duration:.08s}
+
+/* Tombol: terangkat saat diam, naik tipis saat disorot, "tertekan" saat ditekan */
+.btn{box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 1px 2px rgba(11,61,145,.3),0 10px 18px -10px rgba(11,61,145,.7);transition:transform .16s var(--ease),box-shadow .2s var(--ease),background-color .16s}
+.btn2,.pill{box-shadow:var(--hl),0 1px 2px rgba(10,34,80,.07);transition:transform .16s var(--ease),box-shadow .2s var(--ease),background-color .16s,border-color .16s,color .16s}
+.pill.on{box-shadow:inset 0 1px 0 rgba(255,255,255,.2),var(--el-1)}
+@media(hover:hover) and (pointer:fine){
+  .btn:hover{transform:translateY(-1px);box-shadow:inset 0 1px 0 rgba(255,255,255,.26),0 2px 4px rgba(11,61,145,.3),0 14px 22px -10px rgba(11,61,145,.8)}
+  .btn2:hover,.pill:hover{transform:translateY(-1px);box-shadow:var(--hl),var(--el-1)}
+}
+.btn:active,.btn2:active,.pill:active{transform:translateY(1px) scale(.985);box-shadow:inset 0 1px 3px rgba(10,34,80,.25);transition-duration:.06s}
+
+/* Kolom isian: sedikit "masuk ke dalam" agar kontras dengan kartu yang timbul */
+.fld,.searchbox input,.sel,select,textarea,.fnew,.md input,.md textarea,.md select{box-shadow:inset 0 1px 2px rgba(10,34,80,.06);transition:border-color .18s,box-shadow .18s,background-color .18s}
+.fld:focus,.searchbox input:focus,.fnew:focus,.md input:focus,.md textarea:focus,.md select:focus{box-shadow:var(--ring)}
+
+/* Lapisan melayang: jendela, notifikasi, toast */
+.md{box-shadow:0 4px 10px rgba(7,20,46,.1),0 40px 80px -32px rgba(7,20,46,.55)}
+#np,#toast{box-shadow:var(--el-3)}
+
+/* Daftar & tabel: hanya warna latar yang berubah (paling murah untuk dirender) */
+.li,tbody tr{transition:background-color .15s}
+
+/* Kehalusan umum */
+::selection{background:color-mix(in srgb,var(--navy) 22%,transparent)}
+html,.md,#np,aside{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--navy) 35%,transparent) transparent}
+:where(a,button,summary,[tabindex]):focus-visible{outline:2px solid var(--navy);outline-offset:2px}
+
+/* Pengaman performa & aksesibilitas */
+@media(hover:none),(pointer:coarse){.kc:hover,.btn:hover,.btn2:hover,.pill:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){button.kp:hover,button.kp:active,.kc:hover,.kc:active,.btn:hover,.btn2:hover,.pill:hover,.btn:active,.btn2:active,.pill:active{transform:none!important}}
+.lite .kc,.lite .btn,.lite .btn2,.lite .pill{transition:none!important}
+/* ===== AKHIR EFEK TIMBUL ===== */
