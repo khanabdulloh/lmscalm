@@ -3,25 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<script>/* Frame-guard: portal hanya boleh ditanam (iframe) di situs resmi sekolah. Dibuka langsung sebagai tab/PWA tetap normal.
- * Untuk menambah situs yang diizinkan, edit daftar OK di bawah. Firefox tidak menyediakan ancestorOrigins, sehingga dilewati. */
-(function(){try{
-if(window.top===window)return;
-var OK=["https://smkciledugalmusaddadiyah.sch.id","https://www.smkciledugalmusaddadiyah.sch.id"];
-var ao=window.location.ancestorOrigins;
-if(!ao||!ao.length)return;
-for(var i=0;i<ao.length;i++){if(OK.indexOf(ao[i])<0){
-try{window.stop()}catch(_){}
-document.documentElement.innerHTML='<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Portal LMS SMK CALM</title></head><body style="margin:0;min-height:100vh;display:grid;place-items:center;font:16px/1.6 system-ui,sans-serif;background:#f6f8fb;color:#17233a;text-align:center;padding:1.5rem"><div><h1 style="font-size:1.3rem;margin:0 0 .6rem">Halaman ini tidak dapat ditampilkan di sini</h1><p style="margin:0 0 1rem;color:#53627a">Demi keamanan, Portal LMS hanya dapat dibuka dari situs resmi sekolah.</p><a id="gx" rel="noopener" target="_blank" style="display:inline-block;padding:.7rem 1.2rem;border-radius:.7rem;background:#0b3d91;color:#fff;text-decoration:none;font-weight:700">Buka Portal LMS</a></div></body>';
-var a=document.getElementById("gx");if(a)a.href=String(window.location.href).split("#")[0];
-return}}
-}catch(e){}})();</script>
 <title>Portal LMS | SMK CALM</title>
 <meta name="description" content="Portal LMS SMK CALM: platform pembelajaran terpadu untuk pengelolaan kelas, materi, penugasan, kuis, dan penilaian.">
 <meta name="robots" content="noindex, nofollow">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://blogger.googleusercontent.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://www.youtube-nocookie.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
-<script>document.addEventListener("securitypolicyviolation",function(e){try{(window.__csp=window.__csp||[]).push(e.violatedDirective+" | "+e.blockedURI);console.warn("[CSP] diblokir:",e.violatedDirective,e.blockedURI)}catch(_){}})</script>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https://blogger.googleusercontent.com; connect-src 'self' https://script.google.com https://script.googleusercontent.com; frame-src https://www.youtube-nocookie.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
 <meta name="theme-color" content="#0b3d91">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
@@ -31,10 +17,10 @@ return}}
 <link rel="preconnect" href="https://blogger.googleusercontent.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Newsreader:wght@500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<link id="gfonts" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Newsreader:wght@500;600&display=swap" rel="stylesheet" media="print">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Newsreader:wght@500;600&display=swap" rel="stylesheet"></noscript>
-<script>try{var c=navigator.connection;if(c&&(c.saveData||/(^|slow-)2g|3g/.test(c.effectiveType||"")))document.documentElement.className+=" lite"}catch(e){}</script>
-<link rel="stylesheet" href="app.css?v=17">
+<script src="boot.js?v=18"></script>
+<link rel="stylesheet" href="app.css?v=18">
 </head>
 <body>
 <a class="skip" href="#main">Lompat ke konten utama</a>
@@ -149,43 +135,43 @@ return}}
       <div class="labrow"><label class="fl" for="pw">Sandi</label><span id="caps" class="caps hide" role="status">Caps Lock aktif</span></div>
       <div class="fd pw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><input id="pw" type="password" class="fld" placeholder="Masukkan sandi" autocomplete="current-password">
         <button type="button" class="eye" id="eye" aria-label="Tampilkan sandi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></div>
-      <div class="rrow"><label class="rem"><input type="checkbox" id="rem"><span>Ingat username saya</span></label><button type="button" class="link fgb" id="fgb" aria-expanded="false" aria-controls="fgt" onclick="var t=document.getElementById('fgt'),h=t.classList.toggle('hide');this.setAttribute('aria-expanded',String(!h))">Lupa sandi?</button></div>
-      <p class="fgt hide" id="fgt" role="note">Pengaturan ulang sandi dilakukan oleh administrator atau staf administrasi sekolah. Sampaikan username Anda kepada mereka. <button type="button" class="link" onclick="openFaq()">Lihat panduan</button></p>
+      <div class="rrow"><label class="rem"><input type="checkbox" id="rem"><span>Ingat username saya</span></label><button type="button" class="link fgb" id="fgb" aria-expanded="false" aria-controls="fgt">Lupa sandi?</button></div>
+      <p class="fgt hide" id="fgt" role="note">Pengaturan ulang sandi dilakukan oleh administrator atau staf administrasi sekolah. Sampaikan username Anda kepada mereka. <button type="button" class="link" data-onclick="openFaq()">Lihat panduan</button></p>
       <p id="lmsg" class="alert hide" role="alert"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg><span></span></p>
       <button class="sb" id="lbtn">Masuk</button>
       <div class="srv" id="srv" data-s=""><i class="dot"></i><span id="srvt">Memeriksa koneksi layanan…</span><button type="button" class="link hide" id="srvr">Coba lagi</button></div>
     </form>
-    <p class="help"><button type="button" class="link" onclick="openFaq()">Pusat Bantuan</button><span>Kendala lain? Hubungi administrator sekolah.</span></p>
+    <p class="help"><button type="button" class="link" data-onclick="openFaq()">Pusat Bantuan</button><span>Kendala lain? Hubungi administrator sekolah.</span></p>
   </div></div>
 </div>
 
 <div id="app" class="hide">
-  <div id="tb"><button type="button" onclick="openSearch()" title="Cari (Ctrl+K)" aria-label="Cari"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button><button type="button" onclick="toggleTheme()" title="Mode gelap/terang" aria-label="Ganti tema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></button><button type="button" id="nbtn" onclick="toggleNotifs(event)" title="Notifikasi" aria-label="Notifikasi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span id="nb" class="hide"></span></button></div>
+  <div id="tb"><button type="button" data-onclick="openSearch()" title="Cari (Ctrl+K)" aria-label="Cari"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button><button type="button" data-onclick="toggleTheme()" title="Mode gelap/terang" aria-label="Ganti tema"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"/></svg></button><button type="button" id="nbtn" data-onclick="toggleNotifs(event)" title="Notifikasi" aria-label="Notifikasi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span id="nb" class="hide"></span></button></div>
   <div id="np" class="hide" role="dialog" aria-label="Notifikasi"></div>
-  <header class="mbar"><img decoding="async" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt=""><b>SMK CALM</b><button type="button" id="mnb" onclick="toggleMenu()" aria-label="Buka menu" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></header>
+  <header class="mbar"><img decoding="async" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt=""><b>SMK CALM</b><button type="button" id="mnb" data-onclick="toggleMenu()" aria-label="Buka menu" aria-expanded="false" aria-controls="menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button></header>
   <aside aria-label="Menu utama">
     <img decoding="async" class="logo" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiD-8YPFS6i86EyZZNDUhwuam5ro_mtc9So2muvB7EDWz1Zp6rarLubvVS3vfVVoto_S6SaHlIPPnmNaddUugGUztWkJYhDwwT8CU1BcUuq9TNyxnHKa6B44iDBx6LjR1-z3r7_C34jviaWeOYgk4bNJHsziPV4KR5mQjY69HVhyphenhyphenR3STD4xp-b46x_HeR4/s256/An8Em6pLCtVUNFZTK-rgdQG9pKiDxE1AR7m_1QO_5slD3C5qFXYq7S9suI1ztpViB_aUnbOGE2-Y71AU9SF3GjQzZ09xbw5aat-JT_7ptJ4VcfdGeJ73DWbHD9IDtVHa_16MjCj09HJ4eGBvZMo-removebg-preview.png" alt=""><p class="nm">SMK CALM</p><span class="bd" id="wr"></span><p class="sb-user" id="sbu"></p>
     
-        <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Perkecil menu">
+        <button class="sidebar-toggle" data-onclick="toggleSidebar()" aria-label="Perkecil menu">
       <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
       <span>Perkecil Menu</span>
     </button>
     
     <nav id="menu" aria-label="Navigasi LMS"></nav>
-    <button class="mi hp hide" id="pwa" onclick="pwaInstall()" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span>Pasang di layar HP</span></button>
-    <button class="mi hp" onclick="openFaq()" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></svg><span>Pusat Bantuan</span></button>
-    <button class="mi out" onclick="logout(true)" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg><span>Keluar</span></button>
+    <button class="mi hp hide" id="pwa" data-onclick="pwaInstall()" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg><span>Pasang di layar HP</span></button>
+    <button class="mi hp" data-onclick="openFaq()" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01"/></svg><span>Pusat Bantuan</span></button>
+    <button class="mi out" data-onclick="logout(true)" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg><span>Keluar</span></button>
   </aside>
   <main id="main" tabindex="-1"></main>
-  <nav class="bnav hide" id="bnav" aria-label="Pintasan"><button type="button" data-k="dash" onclick="go('dash')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Beranda</span></button><button type="button" data-k="home" onclick="go('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/></svg><span>Kelas</span></button><button type="button" data-k="tasks" onclick="go('tasks')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg><span>Tugas</span></button><button type="button" data-k="agenda" onclick="go('agenda')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Agenda</span></button><button type="button" onclick="setMenu(true)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Menu</span></button></nav>
-  <button class="rf" id="rf" onclick="refreshData()" type="button" title="Segarkan data" aria-label="Segarkan data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-15.5 6.2M3 12a9 9 0 0 1 15.5-6.2M18.5 2v4h-4M5.5 22v-4h4"/></svg></button>
+  <nav class="bnav hide" id="bnav" aria-label="Pintasan"><button type="button" data-k="dash" data-onclick="go('dash')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg><span>Beranda</span></button><button type="button" data-k="home" data-onclick="go('home')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5"/></svg><span>Kelas</span></button><button type="button" data-k="tasks" data-onclick="go('tasks')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg><span>Tugas</span></button><button type="button" data-k="agenda" data-onclick="go('agenda')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Agenda</span></button><button type="button" data-onclick="setMenu(true)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Menu</span></button></nav>
+  <button class="rf" id="rf" data-onclick="refreshData()" type="button" title="Segarkan data" aria-label="Segarkan data"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-15.5 6.2M3 12a9 9 0 0 1 15.5-6.2M18.5 2v4h-4M5.5 22v-4h4"/></svg></button>
 </div>
 <div id="toast" class="hide" role="status"></div>
 <div id="ldr" class="ldr" aria-hidden="true"><span></span></div>
 <div id="ldc" class="ldc" role="status" aria-live="polite"><i></i><i></i><i></i><b id="ldt">Mengambil data…</b></div>
 
 <script src="config.js"></script>
-<script src="app.js?v=17"></script>
+<script src="app.js?v=18"></script>
 
 </body>
 </html>
