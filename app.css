@@ -2158,3 +2158,16 @@ body{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-r
 .ew-l{max-height:24rem;overflow-y:auto}
 .ew-cap{font-size:.78rem;color:var(--mut);margin-top:.8rem;line-height:1.55}
 @media(max-width:700px){.ew-tabs{grid-template-columns:minmax(0,1fr)}}
+/* Hero Beranda saat malam: tetap biru tua (menimpa kartu putih di baris ±2050) */
+.hm-hero[data-tod=malam]{
+  background:var(--hb)!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  box-shadow:0 24px 44px -28px rgba(8,26,70,.65)!important}
+.hm-hero[data-tod=malam] .hmx-sem{color:#d6b46a!important}
+.hm-hero[data-tod=malam] .hmx-hb .s{
+  color:var(--hf)!important;
+  border-color:rgba(255,255,255,.26)!important}
+.hm-hero[data-tod=malam] .hmx-hb .p{
+  background:linear-gradient(180deg,#3b73d6,#2554b3)!important}
+.hm-hero[data-tod=malam] .hm-clock .hm-ic{
+  background:rgba(129,140,248,.2);color:#aab4ff}
