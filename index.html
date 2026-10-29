@@ -3,6 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script>/* Frame-guard: portal hanya boleh ditanam (iframe) di situs resmi sekolah. Dibuka langsung sebagai tab/PWA tetap normal.
+ * Untuk menambah situs yang diizinkan, edit daftar OK di bawah. Firefox tidak menyediakan ancestorOrigins, sehingga dilewati. */
+(function(){try{
+if(window.top===window)return;
+var OK=["https://smkciledugalmusaddadiyah.sch.id","https://www.smkciledugalmusaddadiyah.sch.id"];
+var ao=window.location.ancestorOrigins;
+if(!ao||!ao.length)return;
+for(var i=0;i<ao.length;i++){if(OK.indexOf(ao[i])<0){
+try{window.stop()}catch(_){}
+document.documentElement.innerHTML='<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Portal LMS SMK CALM</title></head><body style="margin:0;min-height:100vh;display:grid;place-items:center;font:16px/1.6 system-ui,sans-serif;background:#f6f8fb;color:#17233a;text-align:center;padding:1.5rem"><div><h1 style="font-size:1.3rem;margin:0 0 .6rem">Halaman ini tidak dapat ditampilkan di sini</h1><p style="margin:0 0 1rem;color:#53627a">Demi keamanan, Portal LMS hanya dapat dibuka dari situs resmi sekolah.</p><a id="gx" rel="noopener" target="_blank" style="display:inline-block;padding:.7rem 1.2rem;border-radius:.7rem;background:#0b3d91;color:#fff;text-decoration:none;font-weight:700">Buka Portal LMS</a></div></body>';
+var a=document.getElementById("gx");if(a)a.href=String(window.location.href).split("#")[0];
+return}}
+}catch(e){}})();</script>
 <title>Portal LMS | SMK CALM</title>
 <meta name="description" content="Portal LMS SMK CALM: platform pembelajaran terpadu untuk pengelolaan kelas, materi, penugasan, kuis, dan penilaian.">
 <meta name="robots" content="noindex, nofollow">
@@ -941,7 +954,7 @@ body>*:not(#prn){display:none!important}
 .hm-xt{font-size:12px;fill:var(--mut)}
 .hm-pt{font-size:12px;font-weight:700;fill:var(--ink)}
 .hm-bar:hover rect,.hm-bar:focus rect{opacity:.82}
-.hm-bar:focus{outline:none}
+.hm-bar:focus:not(:focus-visible){outline:none}
 .hm-note{margin-top:.9rem;font-size:.82rem;color:var(--mut);line-height:1.6}
 .hm-note b{color:var(--ink)}
 .hm-sr{padding:.85rem 0;border-bottom:1px solid var(--line)}
