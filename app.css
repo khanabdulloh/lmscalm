@@ -2284,3 +2284,34 @@ html,.md,#np,aside{scrollbar-width:thin;scrollbar-color:color-mix(in srgb,var(--
 @media(prefers-reduced-motion:reduce){button.kp:hover,button.kp:active,.kc:hover,.kc:active,.btn:hover,.btn2:hover,.pill:hover,.btn:active,.btn2:active,.pill:active{transform:none!important}}
 .lite .kc,.lite .btn,.lite .btn2,.lite .pill{transition:none!important}
 /* ===== AKHIR EFEK TIMBUL ===== */
+
+/* ===== DASBOR: EFEK TIMBUL HALUS (2026-10-30) =====
+   Melanjutkan blok "EFEK TIMBUL" untuk Beranda. Bayangan statis & kecil (daftar jadwal yang bisa di-scroll hanya memakai bayangan 1-2px),
+   gerakan hanya pada tombol/aksi cepat saat disorot mouse. Aturan !important diperlukan karena lapisan desain minimal di atas meratakannya.
+   Untuk membatalkan, hapus blok ini sampai penutup "AKHIR DASBOR". */
+.hm-hero{box-shadow:var(--hl),var(--el-2)!important}
+.hmx-hb .p{box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 1px 2px rgba(11,61,145,.3),0 10px 18px -10px rgba(11,61,145,.65)!important}
+.hmx-hb .s{box-shadow:var(--hl),0 1px 2px rgba(10,34,80,.07)!important}
+.hm-hero[data-tod=malam] .hmx-hb .s{box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important}
+.hmx-hb button:active{transform:translateY(1px) scale(.985)}
+.hm-d.on{box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 8px 14px -8px rgba(11,61,145,.6)!important}
+.hm-b{box-shadow:var(--hl),0 1px 2px rgba(10,34,80,.06)}
+.hmx-nx{box-shadow:var(--hl),var(--el-1)!important}
+.hmx-qa button,.hmx-qa a{box-shadow:var(--hl),0 1px 2px rgba(10,34,80,.06)!important}
+@media(hover:hover) and (pointer:fine){
+  .hmx-qa button:hover,.hmx-qa a:hover{transform:translateY(-2px)!important;box-shadow:var(--hl),var(--el-1)!important}
+  .hm-act:hover{transform:translateY(-1px)}
+}
+.hmx-qa button:active,.hmx-qa a:active{transform:translateY(1px) scale(.985)!important;box-shadow:inset 0 1px 3px rgba(10,34,80,.2)!important}
+.hm-act{transition:transform .16s var(--ease),box-shadow .2s var(--ease),background-color .16s,color .16s}
+.hm-act.p{box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 6px 12px -8px rgba(11,61,145,.7)}
+.hm-act:active{transform:translateY(1px) scale(.985)}
+.hmx-track{box-shadow:inset 0 1px 2px rgba(15,40,90,.14)!important}
+[data-theme=dark] .hmx-track{box-shadow:inset 0 1px 2px rgba(0,0,0,.4)!important}
+.hmx-fill{box-shadow:0 1px 2px rgba(15,40,90,.18)}
+/* Masuk halus untuk dua kartu utama (Jadwal & Kehadiran); fill-mode backwards agar tidak mengunci posisi. Mati otomatis di .lite / kurangi gerakan. */
+.hm-grid>*{animation:fadeUp .45s var(--ease) backwards}
+.hm-grid>:nth-child(2){animation-delay:.07s}
+@media(hover:none),(pointer:coarse){.hmx-qa button:hover,.hmx-qa a:hover{transform:none!important}.hm-act:hover{transform:none}}
+@media(prefers-reduced-motion:reduce){.hmx-qa button:hover,.hmx-qa a:hover,.hmx-qa button:active,.hmx-qa a:active{transform:none!important}.hm-act:hover,.hm-act:active,.hmx-hb button:active{transform:none}}
+/* ===== AKHIR DASBOR ===== */
