@@ -3,7 +3,7 @@
  * - Permintaan ke layanan data (Google Apps Script) TIDAK pernah dicegat atau disimpan: data selalu diambil langsung dari server.
  * - Ketukan pada notifikasi perangkat (pushShow di index.html) membuka atau memfokuskan kembali aplikasi.
  * Naikkan VERSI setiap kali index.html atau berkas statis lain diperbarui di hosting. */
-const VERSI = 'lms-v14';
+const VERSI = 'lms-v15';
 /* './' sengaja tidak disertakan: halaman utama disimpan sekali dengan kunci 'index.html' (hemat satu unduhan ±500 KB saat pemasangan). */
 const CANGKANG = ['index.html', 'config.js', 'manifest.webmanifest', 'icon-152.png', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png'];
 const BATAS_HALAMAN = 3000; /* ms menunggu jaringan sebelum memakai salinan tersimpan (halaman utama) */
